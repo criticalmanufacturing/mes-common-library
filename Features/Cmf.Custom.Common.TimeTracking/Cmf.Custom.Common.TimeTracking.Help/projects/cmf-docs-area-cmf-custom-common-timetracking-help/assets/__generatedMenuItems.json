@@ -1,0 +1,92 @@
+[
+  {
+    "id": "cmf-custom-common-timetracking-help.connectiot",
+    "menuGroupId": "cmf-custom-common-timetracking-help.techspec",
+    "title": "Connect IoT",
+    "actionId": ""
+  },
+  {
+    "id": "cmf-custom-common-timetracking-help.erpintegration",
+    "menuGroupId": "cmf-custom-common-timetracking-help.techspec",
+    "title": "ERP Integration",
+    "actionId": ""
+  },
+  {
+    "id": "cmf-custom-common-timetracking-help.features",
+    "menuGroupId": "cmf-custom-common-timetracking-help.techspec",
+    "title": "Features",
+    "actionId": ""
+  },
+  {
+    "id": "index",
+    "menuGroupId": "cmf-custom-common-timetracking-help.techspec",
+    "title": "MES Administration Useful Links",
+    "actionId": ""
+  },
+  {
+    "id": "customautocheckinemployee",
+    "menuGroupId": "cmf-custom-common-timetracking-help.deeactions",
+    "title": "CustomAutoCheckInEmployee",
+    "actionId": ""
+  },
+  {
+    "id": "cmf-custom-common-timetracking-help.iotequipmenttypes",
+    "menuGroupId": "cmf-custom-common-timetracking-help.connectiot",
+    "title": "Equipment Types",
+    "actionId": ""
+  },
+  {
+    "id": "cmf-custom-common-timetracking-help.equipmenttypea",
+    "menuGroupId": "cmf-custom-common-timetracking-help.iotequipmenttypes",
+    "title": "Equipment Type A",
+    "actionId": ""
+  },
+  {
+    "id": "cmf-custom-common-timetracking-help.equipmenttypea-configuration",
+    "menuGroupId": "cmf-custom-common-timetracking-help.equipmenttypea",
+    "title": "Configuration",
+    "actionId": ""
+  },
+  {
+    "id": "cmf-custom-common-timetracking-help.equipmenttypea-features",
+    "menuGroupId": "cmf-custom-common-timetracking-help.equipmenttypea",
+    "title": "Features",
+    "actionId": ""
+  },
+  {
+    "id": "cmf-custom-common-timetracking-help.equipmenttypea-setup",
+    "menuGroupId": "cmf-custom-common-timetracking-help.equipmenttypea",
+    "title": "Setup",
+    "actionId": ""
+  },
+  {
+    "id": "cmf-custom-common-timetracking-help.equipmenttypea-workflows",
+    "menuGroupId": "cmf-custom-common-timetracking-help.equipmenttypea",
+    "title": "Workflows",
+    "actionId": ""
+  },
+  {
+    "id": "cmf-custom-common-timetracking-help.erpfeatures",
+    "menuGroupId": "cmf-custom-common-timetracking-help.erpintegration",
+    "title": "ERP Features",
+    "actionId": ""
+  },
+  {
+    "id": "cmf-custom-common-timetracking-help.erphandlers",
+    "menuGroupId": "cmf-custom-common-timetracking-help.erpintegration",
+    "title": "ERP Handlers",
+    "actionId": ""
+  },
+  {
+    "id": "timetrackingautocheckinwhentrackin",
+    "menuGroupId": "cmf-custom-common-timetracking-help.features",
+    "title": "[Time Tracking] Auto Check-In when Track-In Material",
+    "actionId": ""
+  },
+  {
+    "id": "timetrackingautocheckoutwhencheckintonewresource",
+    "menuGroupId": "cmf-custom-common-timetracking-help.features",
+    "title": "[Time Tracking] Auto Check-out when Check-in to new resource",
+    "actionId": ""
+  }
+]
