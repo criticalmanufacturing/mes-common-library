@@ -1,0 +1,24 @@
+{
+    "<SM>DEEAction": {
+      "1": {
+        "Action": "CustomAutoCheckOutWhenCheckInToNewResource",
+        "Description": "DEE Action to Automatically CheckOut an employee out of a Resource when he is Checked-In into an Exclusive Resource",
+        "ActionGroup": "",
+        "CodeFileRelativePath": "TimeTracking//CustomAutoCheckOutWhenCheckInToNewResource.cs",
+        "IsEnabled": "Yes",
+        "Classification": ""
+      }
+    },
+  "DEEActionOrder": {
+    "1": {
+      "ActionGroup": "LaborManagement.LaborManagementOrchestration.CheckInEmployees.Pre",
+      "Action": "CustomAutoCheckOutWhenCheckInToNewResource",
+      "Order": "1"
+    },
+    "2": {
+      "ActionGroup": "LaborManagement.LaborManagementOrchestration.SpecialCheckInEmployees.Pre",
+      "Action": "CustomAutoCheckOutWhenCheckInToNewResource",
+      "Order": "1"
+    }
+  }
+}

@@ -1,0 +1,24 @@
+{
+    "packageId": "Cmf.Custom.Package",
+    "version": "0.1.0",
+    "description": "This package deploys Critical Manufacturing  Customization",
+    "packageType": "Root",
+    "isInstallable": true,
+    "isUniqueInstall": false,
+    "dependencies": [
+        {
+            "id": "Cmf.Environment",
+            "version": "11.1.4",
+            "mandatory": false
+        },
+        {
+            "id": "CriticalManufacturing.DeploymentMetadata",
+            "version": "11.1.4",
+            "mandatory": false
+        },
+        {
+            "id": "Cmf.Custom.Common.TimeTracking",
+            "version": "0.1.0"
+        }
+    ]
+}
