@@ -3,7 +3,7 @@ name: MES Common Library Build and Release
 on:
   workflow_dispatch:
   push:
-    branches: [ "main*", "*/dev", "*/dev/*" ]
+    branches: [ "*/dev", "*/dev/*", "*/fix/*" ]
   pull_request:
     branches: [ "main*", "*/dev", "*/dev/*" ]
 
@@ -44,6 +44,9 @@ jobs:
         echo '</configuration>' >> NuGet.config
     - name: Add NuGet source with credentials
       run: |
+          # Force remove the source if it exists to clear any old encrypted entries
+          dotnet nuget remove source CMFeed --configfile NuGet.config || true
+          
           dotnet nuget add source https://criticalmanufacturing.io/repository/nuget/ \
           --name CMFeed \
           --username ${{ secrets.NUGET_USERNAME }} \
