@@ -8,12 +8,12 @@
   "dependencies": [
     {
       "id": "Cmf.Environment",
-      "version": "11.1.4",
+      "version": "11.2.7",
       "mandatory": false
     },
     {
       "id": "CriticalManufacturing.DeploymentMetadata",
-      "version": "11.1.4",
+      "version": "11.2.7",
       "mandatory": false
     },
     {

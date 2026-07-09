@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
 		<TargetFramework>net8.0</TargetFramework>
 		<OutputType>Library</OutputType>
@@ -8,11 +8,11 @@
 		<RootNamespace>Cmf.Custom.Actions</RootNamespace>
 	</PropertyGroup>
 	<ItemGroup>
-	  <PackageReference Include="Cmf.Common.CustomActionUtilities" Version="11.1.0.1091576" />
-	  <PackageReference Include="Cmf.Foundation.Security" Version="11.1.4" />
-	  <PackageReference Include="Cmf.Foundation.Services.HostStartup" Version="11.1.4" />
-	  <PackageReference Include="Cmf.Navigo.BusinessObjects" Version="11.1.4" />
-	  <PackageReference Include="Cmf.Navigo.BusinessOrchestration" Version="11.1.4" />
+	  <PackageReference Include="Cmf.Common.CustomActionUtilities" Version="11.2.7" />
+	  <PackageReference Include="Cmf.Foundation.Security" Version="11.2.7" />
+	  <PackageReference Include="Cmf.Foundation.Services.HostStartup" Version="11.2.7" />
+	  <PackageReference Include="Cmf.Navigo.BusinessObjects" Version="11.2.7" />
+	  <PackageReference Include="Cmf.Navigo.BusinessOrchestration" Version="11.2.7" />
 	  <PackageReference Include="Microsoft.AspNetCore" Version="2.3.0" />
 	  <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.3.0" />
 	  <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.3.0" />
