@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
 <PropertyGroup>
 	<TargetFramework>net8.0</TargetFramework>
@@ -10,9 +10,9 @@
 </PropertyGroup>
 
 <ItemGroup>
-	<PackageReference Include="Cmf.Foundation.BaseTestsUtils" Version="11.1.2" />
-	<PackageReference Include="Cmf.MessageBus.Client" Version="11.1.4" />
-	<PackageReference Include="Cmf.Navigo.BusinessObjects" Version="11.1.4" />
+	<PackageReference Include="Cmf.Foundation.BaseTestsUtils" Version="11.2.7" />
+	<PackageReference Include="Cmf.MessageBus.Client" Version="11.2.7" />
+	<PackageReference Include="Cmf.Navigo.BusinessObjects" Version="11.2.7" />
 	<PackageReference Include="coverlet.collector" Version="6.0.0">
 		<PrivateAssets>all</PrivateAssets>
 		<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
