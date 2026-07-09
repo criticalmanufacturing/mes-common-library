@@ -14,7 +14,7 @@
 		<OutputPath>..\Release</OutputPath>
 	</PropertyGroup>
 	<ItemGroup>
-	  <PackageReference Include="Cmf.Common.CustomActionUtilities" Version="11.2.7" />
+	  <PackageReference Include="Cmf.Common.CustomActionUtilities" Version="11.2.0.1196317" />
 	  <PackageReference Include="Cmf.Foundation.Security" Version="11.2.7" />
 	  <PackageReference Include="Cmf.Foundation.Services.HostStartup" Version="11.2.7" />
 	  <PackageReference Include="Cmf.Navigo.BusinessObjects" Version="11.2.7" />
