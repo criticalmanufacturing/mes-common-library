@@ -1,0 +1,21 @@
+{
+  "packageId": "Cmf.Community.IoTDataPlatformHelperSuite.IoT.Python",
+  "version": "1.0.0",
+  "description": "Cmf Custom CMFLabs Cmf.Community.IoTDataPlatformHelperSuite.IoT.Python Package",
+  "packageType": "IoT",
+  "isInstallable": true,
+  "isUniqueInstall": false,
+  "contentToPack": [
+    {
+      "source": "projects/*",
+      "target": "node_modules",
+      "ignoreFiles": [
+        ".npmignore"
+      ]
+    }
+  ],
+  "xmlInjection": [
+    "ui.xml"
+  ],
+  "relatedPackages": []
+}

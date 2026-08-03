@@ -1,0 +1,8 @@
+{
+"$schema": "../../node_modules/ng-packagr/ng-package.schema.json",
+"deleteDestPath": false,
+  "dest": "../../dist/customization-json-persistency",
+  "lib": {
+    "entryFile": "src/public-api.ts"
+  }
+}
