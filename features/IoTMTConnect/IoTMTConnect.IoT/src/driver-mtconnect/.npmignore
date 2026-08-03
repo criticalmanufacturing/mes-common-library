@@ -1,0 +1,9 @@
+.vscode
+*.ts
+!*.d.ts
+test
+coverage
+tsconfig.json
+tslint.json
+.git*
+.connect_package_done

@@ -1,0 +1,24 @@
+{
+  "features": {
+    "ghcr.io/criticalmanufacturing/cli/install:1": {
+      "version": "1.0.0",
+      "resolved": "ghcr.io/criticalmanufacturing/cli/install@sha256:e1f3c79c24ef2acac53ebcced426651bcb89c3b5d1f2bfcdb962413b3026da3f",
+      "integrity": "sha256:e1f3c79c24ef2acac53ebcced426651bcb89c3b5d1f2bfcdb962413b3026da3f"
+    },
+    "ghcr.io/criticalmanufacturing/portal-sdk/install:1": {
+      "version": "1.0.0",
+      "resolved": "ghcr.io/criticalmanufacturing/portal-sdk/install@sha256:436a472eaf42454c05cab6732c62e0b9b14b46ca089383a72b973656d5fcc7cf",
+      "integrity": "sha256:436a472eaf42454c05cab6732c62e0b9b14b46ca089383a72b973656d5fcc7cf"
+    },
+    "ghcr.io/devcontainers/features/docker-in-docker": {
+      "version": "4.0.0",
+      "resolved": "ghcr.io/devcontainers/features/docker-in-docker@sha256:4fa87399214366e320d489991769c4f3f461e1ffe461f54eea78a41b34945bb5",
+      "integrity": "sha256:4fa87399214366e320d489991769c4f3f461e1ffe461f54eea78a41b34945bb5"
+    },
+    "ghcr.io/kreemer/features/chrometesting": {
+      "version": "1.0.1",
+      "resolved": "ghcr.io/kreemer/features/chrometesting@sha256:8c36da43f778161aa80cee4f73396a62cb98f070375bb1e5c7ed7688b395a604",
+      "integrity": "sha256:8c36da43f778161aa80cee4f73396a62cb98f070375bb1e5c7ed7688b395a604"
+    }
+  }
+}
