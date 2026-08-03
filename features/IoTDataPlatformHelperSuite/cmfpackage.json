@@ -1,5 +1,5 @@
 {
-  "packageId": "Cmf.Community.IoTDataPlatformHelperSuite.IoT",
+  "packageId": "Cmf.Community.IoTDataPlatformHelperSuite",
   "version": "1.0.0",
   "description": "This package deploys Critical Manufacturing Community Customization",
   "packageType": "Root",
@@ -8,12 +8,12 @@
   "dependencies": [
     {
       "id": "Cmf.Environment",
-      "version": "11.3.1",
+      "version": "11.3.3",
       "mandatory": false
     },
     {
       "id": "CriticalManufacturing.DeploymentMetadata",
-      "version": "11.3.1",
+      "version": "11.3.3",
       "mandatory": false
     },
     {

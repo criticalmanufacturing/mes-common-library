@@ -1,5 +1,5 @@
 {
-  "packageId": "Cmf.Custom.IoT.Packages",
+  "packageId": "Cmf.Community.IoTMTConnect.IoT",
   "version": "1.0.0",
   "description": "Cmf Custom Community Cmf.Custom.IoT.Packages Package",
   "packageType": "IoT",
