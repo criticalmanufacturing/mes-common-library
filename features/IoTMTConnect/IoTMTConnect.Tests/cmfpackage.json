@@ -1,0 +1,23 @@
+{
+  "packageId": "Cmf.Community.IoTMTConnect.Tests",
+  "version": "11331.0.0",
+  "description": "This package tests Critical Manufacturing MES Demo Customization",
+  "packageType": "Tests",
+  "isInstallable": false,
+  "isUniqueInstall": false,
+  "contentToPack": [
+    {
+      "source": "Release/**",
+      "target": ""
+    }
+  ],
+  "relatedPackages": [
+    {
+      "path": "../IoTMTConnect.IoT",
+      "preBuild": true,
+      "postBuild": false,
+      "prePack": true,
+      "postPack": false
+    }
+  ]
+}

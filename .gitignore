@@ -1,0 +1,6 @@
+# Root-level tooling (husky, commitlint) dependencies
+node_modules/
+
+# Scratch folder used by `npm run iot:test-packages` to pack IoT packages
+# for local `cmf dev iot rebuildDatabase` testing.
+/IoTRepository/

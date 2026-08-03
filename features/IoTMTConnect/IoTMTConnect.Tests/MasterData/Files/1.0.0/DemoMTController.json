@@ -1,0 +1,828 @@
+{
+  "<DM>AutomationProtocol": {
+    "1": {
+      "Name": "Demo MTConnect [A.2]",
+      "IsTemplate": "No",
+      "Type": "General",
+      "Package": "@criticalmanufacturing/connect-iot-driver-mtconnect",
+      "PackageVersion": "1.0.0",
+      "HasCommands": "Yes",
+      "HasEvents": "Yes",
+      "HasProperties": "Yes"
+    }
+  },
+  "AutomationProtocolParameter": {
+    "1": {
+      "AutomationProtocol": "Demo MTConnect [A.2]",
+      "Name": "netCoreSdkVersion",
+      "Description": "Set the .net core SDK version to use, when multiple are installed in the system where the driver is running. Leave empty to ignore this setting.",
+      "DataType": "String",
+      "IsMandatory": "No",
+      "IsTemplate": "No",
+      "Label": ".Net Core SDK Version",
+      "ReferenceType": "None"
+    },
+    "2": {
+      "AutomationProtocol": "Demo MTConnect [A.2]",
+      "Name": "address",
+      "Description": "Ip or Hostname of the MTConnect Agent",
+      "DataType": "String",
+      "IsMandatory": "No",
+      "IsTemplate": "No",
+      "Label": "MTConnect Agent Address",
+      "ReferenceType": "None"
+    },
+    "3": {
+      "AutomationProtocol": "Demo MTConnect [A.2]",
+      "Name": "port",
+      "Description": "Port of the MTConnect Agent (leave as -1 for it to not be added)",
+      "DataType": "Integer",
+      "DefaultValue": "__DEFAULTPORT__",
+      "IsMandatory": "No",
+      "IsTemplate": "No",
+      "Label": "MTConnect Agent port",
+      "ReferenceType": "None"
+    },
+    "4": {
+      "AutomationProtocol": "Demo MTConnect [A.2]",
+      "Name": "device",
+      "Description": "When specifying a device, all MTConnect interactions will filter by device.",
+      "DataType": "String",
+      "IsMandatory": "No",
+      "IsTemplate": "No",
+      "Label": "MTConnect Device",
+      "ReferenceType": "None"
+    }
+  },
+  "<DM>AutomationDriverDefinition": {
+    "1": {
+      "Name": "Demo MTConnect Driver Definition [A.1]",
+      "IsTemplate": "No",
+      "Type": "General",
+      "AutomationProtocol": "Demo MTConnect [A]",
+      "ObjectType": "Site"
+    }
+  },
+  "<DM>AutomationController": {
+    "1": {
+      "Name": "Demo MTConnect Controller [A.1]",
+      "IsTemplate": "No",
+      "Type": "General",
+      "ControllerPackageVersion": "11.3.3",
+      "ObjectType": "Site",
+      "TasksPackages": [
+        "@criticalmanufacturing/connect-iot-controller-engine-core-tasks"
+      ],
+      "Scope": "ConnectIoT",
+      "LinkConnector": "Smooth",
+      "LinkRouter": "Normal",
+      "TasksLibraryPackages": [
+        "@criticalmanufacturing/connect-iot-controller-engine-core-tasks@11.3.3"
+      ],
+      "DefaultWorkflowType": "ControlFlow"
+    }
+  },
+  "AutomationControllerDriverDef": {
+    "1": {
+      "AutomationController": "Demo MTConnect Controller [A.1]",
+      "Name": "MTConnect",
+      "DisplayName": "MTConnect",
+      "AutomationDriverDefinition": "Demo MTConnect Driver Definition [A]",
+      "Color": "#578fcb",
+      "IsTemplate": "No",
+      "Order": "1"
+    }
+  },
+  "AutomationControllerWorkflow": {
+    "1": {
+      "AutomationController": "Demo MTConnect Controller [A.1]",
+      "Name": "AutomationWorkflow_549ae047-2bd8-4efa-9150-fff3d0895bc0",
+      "DisplayName": "Setup",
+      "IsFile": "false",
+      "Workflow": {
+        "tasks": [
+          {
+            "id": "1755527833922490",
+            "name": "driverEvent_ffda",
+            "type": {
+              "name": "driverEvent",
+              "package": "@criticalmanufacturing/connect-iot-controller-engine-core-tasks",
+              "version": "11.3.3"
+            },
+            "x": 100,
+            "y": 100,
+            "isCollapsed": false,
+            "isDisabled": false,
+            "settings": {
+              "autoEnable": true,
+              "event": "OnInitialize",
+              "autoSetup": true
+            },
+            "inputs": [],
+            "outputs": [
+              {
+                "name": "communicationState",
+                "value": "{{ $this.communicationState }}",
+                "dataType": "String"
+              }
+            ],
+            "driver": "MTConnect",
+            "caption": "When connection to driver notifies a {{event}} event",
+            "color": "#578fcb",
+            "branches": [
+              {
+                "name": "handler",
+                "tasks": [
+                  {
+                    "id": "1755527833923491",
+                    "name": "equipmentConfig_3954",
+                    "type": {
+                      "name": "equipmentConfig",
+                      "package": "@criticalmanufacturing/connect-iot-controller-engine-core-tasks",
+                      "version": "11.3.3"
+                    },
+                    "isCollapsed": false,
+                    "isDisabled": false,
+                    "settings": {
+                      "connectingTimeout": 30000,
+                      "setupTimeout": 10000,
+                      "intervalBeforeReconnect": 5000,
+                      "heartbeatInterval": 60000,
+                      "_inputs": [
+                        {
+                          "name": "netCoreSdkVersion",
+                          "label": ".Net Core SDK Version",
+                          "defaultValue": "",
+                          "parameter": {
+                            "$type": "Cmf.Foundation.BusinessObjects.AutomationProtocolParameter, Cmf.Foundation.BusinessObjects",
+                            "Name": "netCoreSdkVersion"
+                          },
+                          "dataType": "String",
+                          "automationDataType": 0,
+                          "referenceType": 0,
+                          "description": "Set the .net core SDK version to use, when multiple are installed in the system where the driver is running. Leave empty to ignore this setting."
+                        },
+                        {
+                          "name": "address",
+                          "label": "MTConnect Agent Address",
+                          "defaultValue": "localhost",
+                          "parameter": {
+                            "$type": "Cmf.Foundation.BusinessObjects.AutomationProtocolParameter, Cmf.Foundation.BusinessObjects",
+                            "Name": "address"
+                          },
+                          "dataType": "String",
+                          "automationDataType": 0,
+                          "referenceType": 0,
+                          "description": "Ip or Hostname of the MTConnect Agent"
+                        },
+                        {
+                          "name": "port",
+                          "label": "MTConnect Agent port",
+                          "defaultValue": "__DEFAULTPORT__",
+                          "parameter": {
+                            "$type": "Cmf.Foundation.BusinessObjects.AutomationProtocolParameter, Cmf.Foundation.BusinessObjects",
+                            "Name": "port"
+                          },
+                          "dataType": "Integer",
+                          "automationDataType": 5,
+                          "referenceType": 0,
+                          "description": "Port of the MTConnect Agent (leave as -1 for it to not be added)"
+                        },
+                        {
+                          "name": "device",
+                          "label": "MTConnect Device",
+                          "defaultValue": "Mazak",
+                          "parameter": {
+                            "$type": "Cmf.Foundation.BusinessObjects.AutomationProtocolParameter, Cmf.Foundation.BusinessObjects",
+                            "Name": "device"
+                          },
+                          "dataType": "String",
+                          "automationDataType": 0,
+                          "referenceType": 0,
+                          "description": "When specifying a device, all MTConnect interactions will filter by device."
+                        }
+                      ]
+                    },
+                    "inputs": [
+                      {
+                        "name": "netCoreSdkVersion",
+                        "displayName": "netCoreSdkVersion",
+                        "value": "",
+                        "dataType": "String"
+                      },
+                      {
+                        "name": "address",
+                        "displayName": "address",
+                        "value": "",
+                        "dataType": "String"
+                      },
+                      {
+                        "name": "port",
+                        "displayName": "port",
+                        "value": "__DEFAULTPORT__",
+                        "dataType": "Integer"
+                      },
+                      {
+                        "name": "device",
+                        "displayName": "device",
+                        "value": "Mazak",
+                        "dataType": "String"
+                      }
+                    ],
+                    "outputs": [],
+                    "driver": "MTConnect",
+                    "caption": "Configure connection with equipment",
+                    "color": "#578fcb",
+                    "branches": []
+                  },
+                  {
+                    "id": "1755527833928492",
+                    "name": "driverCommand_09c0",
+                    "type": {
+                      "name": "driverCommand",
+                      "package": "@criticalmanufacturing/connect-iot-controller-engine-core-tasks",
+                      "version": "11.3.3"
+                    },
+                    "isCollapsed": false,
+                    "isDisabled": false,
+                    "settings": {
+                      "command": "Connect"
+                    },
+                    "inputs": [],
+                    "outputs": [],
+                    "driver": "MTConnect",
+                    "caption": "Send {{command}} message to driver connection",
+                    "color": "#578fcb",
+                    "branches": []
+                  }
+                ],
+                "settings": {}
+              }
+            ]
+          }
+        ],
+        "$id": "1",
+        "layout": {
+          "general": {
+            "color": null
+          },
+          "drawer": {
+            "tasks": {},
+            "x": -100,
+            "y": -100,
+            "zoom": 1,
+            "fill": true
+          }
+        }
+      },
+      "Order": "1",
+      "IsTemplate": "No",
+      "IsShared": "No",
+      "Indentation": "0",
+      "WorkflowType": "ControlFlow"
+    },
+    "2": {
+      "AutomationController": "Demo MTConnect Controller [A.1]",
+      "Name": "AutomationWorkflow_386e68b5-b0c0-4c21-9ec5-8711d32e8831",
+      "DisplayName": "Probe Event",
+      "IsFile": "false",
+      "Workflow": {
+        "tasks": [
+          {
+            "id": "17556008717781121",
+            "name": "probe",
+            "type": {
+              "name": "equipmentEvent",
+              "package": "@criticalmanufacturing/connect-iot-controller-engine-core-tasks",
+              "version": "11.3.3"
+            },
+            "x": 110,
+            "y": 90,
+            "isCollapsed": false,
+            "isDisabled": false,
+            "settings": {
+              "_autoActivate": true,
+              "_customEvents": true,
+              "_events": [
+                {
+                  "Name": "ProbeReceived",
+                  "ExtendedData": {}
+                }
+              ],
+              "_message": {
+                "Name": "ProbeReceived"
+              },
+              "_messageFullName": "ProbeReceived",
+              "_automationEventProperties": [
+                {
+                  "Name": "header"
+                },
+                {
+                  "Name": "devices"
+                },
+                {
+                  "Name": "components"
+                }
+              ],
+              "_outputs": [
+                {
+                  "name": "header",
+                  "propertyId": "header",
+                  "valueType": "Object",
+                  "deviceDataType": "Object",
+                  "defaultValue": null,
+                  "outputType": "Value"
+                },
+                {
+                  "name": "devices",
+                  "propertyId": "devices",
+                  "valueType": "Object",
+                  "deviceDataType": "Object",
+                  "defaultValue": null,
+                  "outputType": "Value"
+                },
+                {
+                  "name": "components",
+                  "propertyId": "components",
+                  "valueType": "Object",
+                  "deviceDataType": "Object",
+                  "defaultValue": null,
+                  "outputType": "Value"
+                }
+              ],
+              "_event": {
+                "Name": "ProbeReceived"
+              },
+              "_workingMode": "AlwaysActive"
+            },
+            "inputs": [],
+            "outputs": [
+              {
+                "name": "event",
+                "displayName": "event",
+                "value": "{{ $this.event }}",
+                "dataType": "Any"
+              },
+              {
+                "name": "timestamp",
+                "displayName": "timestamp",
+                "value": "{{ $this.timestamp }}",
+                "dataType": "Any"
+              },
+              {
+                "name": "eventRawData",
+                "displayName": "eventRawData",
+                "value": "{{ $this.eventRawData }}",
+                "dataType": "Any"
+              },
+              {
+                "name": "header",
+                "displayName": "header",
+                "value": "{{ $this.header }}",
+                "dataType": "Object"
+              },
+              {
+                "name": "devices",
+                "displayName": "devices",
+                "value": "{{ $this.devices }}",
+                "dataType": "Object"
+              },
+              {
+                "name": "components",
+                "displayName": "components",
+                "value": "{{ $this.components }}",
+                "dataType": "Object"
+              }
+            ],
+            "driver": "MTConnect",
+            "caption": "When equipment triggers the event {{_messageFullName}}",
+            "color": "#578fcb",
+            "branches": [
+              {
+                "name": "handler",
+                "tasks": [
+                  {
+                    "id": "17556008790991152",
+                    "name": "logMessage_45a7",
+                    "type": {
+                      "name": "logMessage",
+                      "package": "@criticalmanufacturing/connect-iot-controller-engine-core-tasks",
+                      "version": "11.3.3"
+                    },
+                    "isCollapsed": false,
+                    "isDisabled": false,
+                    "settings": {
+                      "mode": "RawText",
+                      "verbosity": "Warning",
+                      "clearInputs": true,
+                      "message": "RECEIVED A PROBE"
+                    },
+                    "inputs": [],
+                    "outputs": [],
+                    "caption": "Log {{message}} as {{verbosity}}",
+                    "branches": []
+                  },
+                  {
+                    "id": "17556075114122501",
+                    "name": "logMessage_aad9",
+                    "type": {
+                      "name": "logMessage",
+                      "package": "@criticalmanufacturing/connect-iot-controller-engine-core-tasks",
+                      "version": "11.3.3"
+                    },
+                    "isCollapsed": false,
+                    "isDisabled": false,
+                    "settings": {
+                      "mode": "RawText",
+                      "verbosity": "Warning",
+                      "clearInputs": true,
+                      "message": "{{ stringify($probe) }}"
+                    },
+                    "inputs": [],
+                    "outputs": [],
+                    "caption": "Log {{message}} as {{verbosity}}",
+                    "branches": []
+                  }
+                ],
+                "settings": {}
+              }
+            ]
+          }
+        ],
+        "$id": "1",
+        "layout": {
+          "general": {
+            "color": null
+          },
+          "drawer": {
+            "tasks": {},
+            "x": 2.2737367544323206E-13,
+            "y": 0,
+            "zoom": 1,
+            "fill": true
+          }
+        }
+      },
+      "Order": "2",
+      "IsTemplate": "No",
+      "IsShared": "No",
+      "Indentation": "0",
+      "WorkflowType": "ControlFlow"
+    },
+    "3": {
+      "AutomationController": "Demo MTConnect Controller [A.1]",
+      "Name": "AutomationWorkflow_2f4e3d9e-f17a-442c-a2ba-f90191195cc9",
+      "DisplayName": "Current Command",
+      "IsFile": "false",
+      "Workflow": {
+        "tasks": [
+          {
+            "id": "task_1879",
+            "reference": {
+              "name": "onTimer",
+              "package": {
+                "name": "@criticalmanufacturing/connect-iot-controller-engine-core-tasks",
+                "version": "11.3.3"
+              }
+            },
+            "settings": {
+              "autoEnable": true,
+              "interval": 5000,
+              "numberOfOccurrences": 1
+            }
+          },
+          {
+            "id": "task_1934",
+            "reference": {
+              "name": "equipmentCommand",
+              "package": {
+                "name": "@criticalmanufacturing/connect-iot-controller-engine-core-tasks",
+                "version": "11.3.3"
+              }
+            },
+            "settings": {
+              "_inputs": [
+                {
+                  "name": "device",
+                  "friendlyName": "device",
+                  "propertyId": "Device",
+                  "deviceType": {
+                    "$type": "Cmf.Foundation.BusinessObjects.AutomationProtocolDataType, Cmf.Foundation.BusinessObjects",
+                    "Name": "String"
+                  },
+                  "valueType": {
+                    "collectionType": null,
+                    "name": "String",
+                    "type": 4
+                  },
+                  "defaultValue": "Mazak",
+                  "settingKey": "name"
+                },
+                {
+                  "name": "path",
+                  "friendlyName": "path",
+                  "propertyId": "Path",
+                  "deviceType": {
+                    "$type": "Cmf.Foundation.BusinessObjects.AutomationProtocolDataType, Cmf.Foundation.BusinessObjects",
+                    "Name": "String"
+                  },
+                  "valueType": {
+                    "collectionType": null,
+                    "name": "String",
+                    "type": 4
+                  },
+                  "defaultValue": "",
+                  "settingKey": "name"
+                },
+                {
+                  "name": "at",
+                  "friendlyName": "at",
+                  "propertyId": "At",
+                  "deviceType": {
+                    "$type": "Cmf.Foundation.BusinessObjects.AutomationProtocolDataType, Cmf.Foundation.BusinessObjects",
+                    "Name": "Integer"
+                  },
+                  "valueType": {
+                    "collectionType": null,
+                    "name": "Integer",
+                    "type": 5
+                  },
+                  "defaultValue": "",
+                  "settingKey": "name"
+                }
+              ],
+              "_customCommands": true,
+              "_clearInputs": false,
+              "_command": {
+                "Name": "Current Command",
+                "Parameters": [
+                  {
+                    "Name": "device",
+                    "DefaultValue": "Mazak",
+                    "IsMandatory": true,
+                    "DataType": "String",
+                    "AutomationProtocolDataType": "String",
+                    "ExtendedData": {}
+                  },
+                  {
+                    "Name": "path",
+                    "DefaultValue": "",
+                    "IsMandatory": true,
+                    "DataType": "String",
+                    "AutomationProtocolDataType": "String",
+                    "ExtendedData": {}
+                  },
+                  {
+                    "Name": "at",
+                    "DefaultValue": "",
+                    "IsMandatory": true,
+                    "DataType": "Integer",
+                    "AutomationProtocolDataType": "Integer",
+                    "ExtendedData": {}
+                  }
+                ],
+                "DeviceCommandId": "CurrentCommand",
+                "ExtendedData": {
+                  "commandType": "Current"
+                }
+              },
+              "_message": {
+                "Name": "Current Command"
+              },
+              "_messageFullName": "CurrentCommand",
+              "_timeout": 60000,
+              "___cmf___name": "Execute Equipment Command"
+            },
+            "driver": "MTConnect"
+          },
+          {
+            "id": "task_1979",
+            "reference": {
+              "name": "logMessage",
+              "package": {
+                "name": "@criticalmanufacturing/connect-iot-controller-engine-core-tasks",
+                "version": "11.3.3"
+              }
+            },
+            "settings": {
+              "inputs": [],
+              "mode": "RawText",
+              "verbosity": "Information",
+              "clearInputs": true
+            }
+          }
+        ],
+        "converters": [
+          {
+            "id": "@criticalmanufacturing/connect-iot-controller-engine-core-tasks#anyToString",
+            "reference": {
+              "name": "anyToString",
+              "package": {
+                "name": "@criticalmanufacturing/connect-iot-controller-engine-core-tasks",
+                "version": "11.3.3"
+              }
+            }
+          }
+        ],
+        "links": [
+          {
+            "id": "ceccf0bb-91b7-4aec-bbf5-04f8fe112eaa",
+            "sourceId": "task_1934",
+            "targetId": "task_1979",
+            "inputName": "message",
+            "outputName": "reply",
+            "converters": [
+              {
+                "id": "@criticalmanufacturing/connect-iot-controller-engine-core-tasks#anyToString",
+                "params": {}
+              }
+            ]
+          },
+          {
+            "id": "b3272e8a-d4bd-4103-b567-4726bda33a9c",
+            "sourceId": "task_1934",
+            "targetId": "task_1979",
+            "inputName": "activate",
+            "outputName": "success"
+          },
+          {
+            "id": "6ff6828c-c038-406a-9a86-ddb77951f9d8",
+            "sourceId": "task_1879",
+            "targetId": "task_1934",
+            "inputName": "activate",
+            "outputName": "success"
+          }
+        ],
+        "$id": "1",
+        "layout": {
+          "general": {
+            "color": null,
+            "notes": []
+          },
+          "drawers": {
+            "DIAGRAM": {
+              "tasks": {
+                "task_1979": {
+                  "collapsed": false,
+                  "position": {
+                    "x": 955,
+                    "y": 174
+                  },
+                  "outdated": true
+                },
+                "task_1879": {
+                  "collapsed": false,
+                  "position": {
+                    "x": 36,
+                    "y": 209
+                  },
+                  "outdated": true
+                },
+                "task_1934": {
+                  "collapsed": false,
+                  "position": {
+                    "x": 503,
+                    "y": 167
+                  },
+                  "outdated": true
+                }
+              },
+              "links": {
+                "b3272e8a-d4bd-4103-b567-4726bda33a9c": {
+                  "vertices": []
+                },
+                "ceccf0bb-91b7-4aec-bbf5-04f8fe112eaa": {
+                  "vertices": []
+                },
+                "6ff6828c-c038-406a-9a86-ddb77951f9d8": {
+                  "vertices": []
+                }
+              },
+              "notes": {},
+              "pan": {
+                "x": 2,
+                "y": 0
+              }
+            }
+          }
+        }
+      },
+      "Order": "3",
+      "IsTemplate": "No",
+      "IsShared": "No",
+      "Indentation": "0",
+      "WorkflowType": "DataFlow"
+    },
+    "4": {
+      "AutomationController": "Demo MTConnect Controller [A.1]",
+      "Name": "AutomationWorkflow_49628f4f-97f2-44c2-b478-47f065088791",
+      "DisplayName": "Custom Templates",
+      "IsFile": "false",
+      "Workflow": {
+        "tasks": [
+          {
+            "id": "task_413",
+            "reference": {
+              "name": "customTemplates",
+              "package": {
+                "name": "@criticalmanufacturing/connect-iot-controller-engine-core-tasks",
+                "version": "11.3.3"
+              }
+            },
+            "settings": {
+              "values": [
+                {
+                  "name": "Probe",
+                  "json": {
+                    "property": [
+                      {
+                        "Name": "components",
+                        "Description": "Components Data",
+                        "DevicePropertyId": "components",
+                        "DataType": "Object",
+                        "IsWritable": true,
+                        "IsReadable": true,
+                        "AutomationProtocolDataType": "Object",
+                        "ExtendedData": {
+                          "expression": "devices.Components.{\"name\": Name, \"type\": Type}"
+                        },
+                        "isCustom": true
+                      }
+                    ],
+                    "event": [
+                      {
+                        "Name": "ProbeReceived",
+                        "Description": "ProbeReceived should receive one after start",
+                        "DeviceEventId": "Probe",
+                        "IsEnabled": true,
+                        "ExtendedData": {},
+                        "EventProperties": [
+                          {
+                            "Property": "header",
+                            "Order": 1,
+                            "ExtendedData": {}
+                          },
+                          {
+                            "Property": "devices",
+                            "Order": 2,
+                            "ExtendedData": {}
+                          },
+                          {
+                            "Property": "components",
+                            "Order": 3,
+                            "ExtendedData": {}
+                          }
+                        ],
+                        "isCustom": true
+                      }
+                    ]
+                  },
+                  "dataType": "valueType",
+                  "settingKey": "name",
+                  "defaultValue": "Probe"
+                }
+              ],
+              "___cmf___name": "Custom Templates",
+              "driverName": "MTConnect"
+            },
+            "driver": "MTConnect"
+          }
+        ],
+        "converters": [],
+        "links": [],
+        "$id": "1",
+        "layout": {
+          "general": {
+            "color": null,
+            "notes": []
+          },
+          "drawers": {
+            "DIAGRAM": {
+              "tasks": {
+                "task_413": {
+                  "collapsed": false,
+                  "position": {
+                    "x": 334.6666564941406,
+                    "y": 212
+                  },
+                  "outdated": false
+                }
+              },
+              "links": {},
+              "notes": {},
+              "pan": {
+                "x": 0,
+                "y": 0
+              }
+            }
+          }
+        }
+      },
+      "Order": "4",
+      "IsTemplate": "No",
+      "IsShared": "No",
+      "Indentation": "0",
+      "WorkflowType": "DataFlow"
+    }
+  }
+}

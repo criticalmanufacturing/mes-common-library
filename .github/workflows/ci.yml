@@ -1,0 +1,19 @@
+name: CI
+
+on:
+  push:
+    branches: [ "*/dev*", "*/dev*/*", "*/fix/*", "*/feat/*" ]
+
+# contents: write is needed by _build-changed.yml's "promote" job, which
+# publishes tested package builds to the internal/ci-latest GitHub Release
+# (the persistent CI package store).
+permissions:
+  contents: write
+
+jobs:
+  build-changed:
+    uses: ./.github/workflows/_build-changed.yml
+    with:
+      base-sha: ${{ github.event.before }}
+      head-sha: ${{ github.sha }}
+    secrets: inherit

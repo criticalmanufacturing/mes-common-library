@@ -1,0 +1,52 @@
+{
+  "property": [
+    {
+      "Name": "header",
+      "Description": "Header Data",
+      "DevicePropertyId": "header",
+      "DataType": "Object",
+      "IsWritable": true,
+      "IsReadable": true,
+      "AutomationProtocolDataType": "Object",
+      "ExtendedData": {
+        "expression": "header"
+      }
+    },
+    {
+      "Name": "devices",
+      "Description": "Devices Data",
+      "DevicePropertyId": "devices",
+      "DataType": "Object",
+      "IsWritable": true,
+      "IsReadable": true,
+      "AutomationProtocolDataType": "Object",
+      "ExtendedData": {
+        "expression": "devices"
+      }
+    },
+    {
+      "Name": "assets",
+      "Description": "Assets Data",
+      "DevicePropertyId": "devices",
+      "DataType": "Object",
+      "IsWritable": true,
+      "IsReadable": true,
+      "AutomationProtocolDataType": "Object",
+      "ExtendedData": {
+        "expression": "assets"
+      }
+    },
+    {
+      "Name": "observations",
+      "Description": "Observations Data",
+      "DevicePropertyId": "observations",
+      "DataType": "Object",
+      "IsWritable": true,
+      "IsReadable": true,
+      "AutomationProtocolDataType": "Object",
+      "ExtendedData": {
+        "expression": "observations"
+      }
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "packageId": "Cmf.Community.IoTMTConnect.IoT",
+  "version": "11331.0.0",
+  "description": "Cmf Custom Community Cmf.Custom.IoT.Packages Package",
+  "packageType": "IoT",
+  "isInstallable": true,
+  "isUniqueInstall": false,
+  "isToForceInstall": true,
+  "forceRerunAfterDatabaseRestore": true,
+  "contentToPack": [
+    {
+      "source": "src/*",
+      "target": "node_modules",
+      "ignoreFiles": [
+        ".npmignore"
+      ]
+    }
+  ],
+  "xmlInjection": [
+    "ui.xml"
+  ]
+}

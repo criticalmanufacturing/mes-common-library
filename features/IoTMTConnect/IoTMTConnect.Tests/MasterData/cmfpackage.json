@@ -1,0 +1,20 @@
+﻿{
+  "packageId": "Cmf.Community.IoTMTConnect.Tests.MasterData",
+  "version": "11331.0.0",
+  "description": "Cmf Demo Test MasterData Package",
+  "packageType": "Data",
+  "isInstallable": false,
+  "isUniqueInstall": true,
+  "contentToPack": [
+    {
+      "source": "Files/*",
+      "target": "MasterData",
+      "contentType": "MasterData"
+    },
+    {
+      "source": "Files/ExportedObjects/*",
+      "target": "ExportedObjects",
+      "contentType": "ExportedObjects"
+    }
+  ]
+}

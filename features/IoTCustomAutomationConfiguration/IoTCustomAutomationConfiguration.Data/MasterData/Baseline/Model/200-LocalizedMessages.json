@@ -1,0 +1,773 @@
+{
+  "Index": {
+    "1": {
+      "Tab Name": "Index",
+      "Object Type": "",
+      "Description": "Have the description for each tab in the excel",
+      "Execution Order": "0"
+    },
+    "2": {
+      "Tab Name": "Formats",
+      "Object Type": "",
+      "Description": "Have the specific cell content format for specific tabs and columns",
+      "Execution Order": "0"
+    },
+    "3": {
+      "Tab Name": "Assumptions",
+      "Object Type": "",
+      "Description": "Have assumptions for each tab",
+      "Execution Order": "0"
+    },
+    "4": {
+      "Tab Name": "WorksheetNameMapping",
+      "Object Type": "",
+      "Description": "Used to workaround the 31-character limit of the excel worksheet name. \nDefine your tab name using the tag <LOOKUP> and append a shortname for the object (e.g, <LOOKUP>MySmartTable). Then, in this tab,  map it to the tab name you would define otherwise (e.g, MySmartTable/<ST>TheRealNameForMySmartTable).",
+      "Execution Order": "0"
+    },
+    "5": {
+      "Tab Name": "<SM>Role",
+      "Object Type": "Static Model",
+      "Description": "Role details to be created in the system",
+      "Execution Order": "1"
+    },
+    "6": {
+      "Tab Name": "<SM>Features",
+      "Object Type": "Static Model",
+      "Description": "Features details to be created in the system",
+      "Execution Order": "2"
+    },
+    "7": {
+      "Tab Name": "<SM>DataGroup",
+      "Object Type": "Static Model",
+      "Description": "DataGroup details to be created in the system",
+      "Execution Order": "3"
+    },
+    "8": {
+      "Tab Name": "<SM>User",
+      "Object Type": "Static Model",
+      "Description": "User details to be created in the system",
+      "Execution Order": "4"
+    },
+    "9": {
+      "Tab Name": "<SM>LookupTableValues",
+      "Object Type": "Static Model",
+      "Description": "LookupTableValues details to be created in the system",
+      "Execution Order": "5"
+    },
+    "10": {
+      "Tab Name": "<SM>EntityType",
+      "Object Type": "Static Model",
+      "Description": "EntityType details to be created in the system",
+      "Execution Order": "6"
+    },
+    "11": {
+      "Tab Name": "<SM>EntityTypeProperty",
+      "Object Type": "Static Model",
+      "Description": "EntityTypeProperty details to be created in the system",
+      "Execution Order": "7"
+    },
+    "12": {
+      "Tab Name": "<SM>StateModel",
+      "Object Type": "Static Model",
+      "Description": "StateModel details to be created in the system",
+      "Execution Order": "8"
+    },
+    "13": {
+      "Tab Name": "StateModelStates",
+      "Object Type": "",
+      "Description": "Have the Details for the states of the State Models",
+      "Execution Order": "8"
+    },
+    "14": {
+      "Tab Name": "StateModelTransitions",
+      "Object Type": "",
+      "Description": "Have the Details for the Transitions of the State Models",
+      "Execution Order": "8"
+    },
+    "15": {
+      "Tab Name": "<SM>DEEAction",
+      "Object Type": "Static Model",
+      "Description": "DEEAction details to be created in the system",
+      "Execution Order": "9"
+    },
+    "16": {
+      "Tab Name": "<SM>NameGenerator",
+      "Object Type": "Static Model",
+      "Description": "NameGenerator details to be created in the system",
+      "Execution Order": "10"
+    },
+    "17": {
+      "Tab Name": "<DM>Certification",
+      "Object Type": "Dynamic Model",
+      "Description": "Certification details to be created in the system",
+      "Execution Order": "11"
+    },
+    "18": {
+      "Tab Name": "<DM>Rule",
+      "Object Type": "Dynamic Model",
+      "Description": "Rule details to be created in the system",
+      "Execution Order": "12"
+    },
+    "19": {
+      "Tab Name": "<DM>Checklist",
+      "Object Type": "Dynamic Model",
+      "Description": "Checklist details to be created in the system",
+      "Execution Order": "13"
+    },
+    "20": {
+      "Tab Name": "ChecklistItems",
+      "Object Type": "",
+      "Description": "List of Items for the checklists",
+      "Execution Order": "13"
+    },
+    "21": {
+      "Tab Name": "ChecklistItemParameters",
+      "Object Type": "",
+      "Description": "list of parameters for the checklist items",
+      "Execution Order": "13"
+    },
+    "22": {
+      "Tab Name": "<DM>Enterprise",
+      "Object Type": "Dynamic Model",
+      "Description": "Enterprise details to be created in the system",
+      "Execution Order": "13"
+    },
+    "23": {
+      "Tab Name": "<DM>Site",
+      "Object Type": "Dynamic Model",
+      "Description": "Site details to be created in the system",
+      "Execution Order": "14"
+    },
+    "24": {
+      "Tab Name": "<DM>Calendar",
+      "Object Type": "Dynamic Model",
+      "Description": "Calendar details to be created in the system",
+      "Execution Order": "15"
+    },
+    "25": {
+      "Tab Name": "<DM>Team",
+      "Object Type": "Dynamic Model",
+      "Description": "Team details to bre created in the system",
+      "Execution Order": "16"
+    },
+    "26": {
+      "Tab Name": "<DM>ShiftDefinition",
+      "Object Type": "Dynamic Model",
+      "Description": "ShiftDefinition details to be created in the system",
+      "Execution Order": "17"
+    },
+    "27": {
+      "Tab Name": "ShiftDefinitionShift",
+      "Object Type": "",
+      "Description": "tDefinitionShift details to be created in the system",
+      "Execution Order": "17"
+    },
+    "28": {
+      "Tab Name": "<DM>Facility",
+      "Object Type": "Dynamic Model",
+      "Description": "Facility details to be created in the system",
+      "Execution Order": "18"
+    },
+    "29": {
+      "Tab Name": "<DM>Schedule",
+      "Object Type": "Dynamic Model",
+      "Description": "Schedule Details to be created in the system",
+      "Execution Order": "19"
+    },
+    "30": {
+      "Tab Name": "ScheduleSortRule",
+      "Object Type": "",
+      "Description": "",
+      "Execution Order": "19"
+    },
+    "31": {
+      "Tab Name": "ScheduleOptimizationCriteria",
+      "Object Type": "",
+      "Description": "",
+      "Execution Order": "19"
+    },
+    "32": {
+      "Tab Name": "<DM>Area",
+      "Object Type": "Dynamic Model",
+      "Description": "Area details to be created in the system",
+      "Execution Order": "20"
+    },
+    "33": {
+      "Tab Name": "<DM>AreaSupplyArea",
+      "Object Type": "Dynamic Model",
+      "Description": "AreaSupplyArea details to be created in the system",
+      "Execution Order": "21"
+    },
+    "34": {
+      "Tab Name": "<DM>AreaTransferRequirementType",
+      "Object Type": "Dynamic Model",
+      "Description": "AreaTransferRequirementType details to be created in the system",
+      "Execution Order": "22"
+    },
+    "35": {
+      "Tab Name": "<DM>Document",
+      "Object Type": "Dynamic Model",
+      "Description": "Documents to be created in the system",
+      "Execution Order": "23"
+    },
+    "36": {
+      "Tab Name": "<DM>CalendarDay",
+      "Object Type": "Dynamic Model",
+      "Description": "CalendarDay details to be created in the system",
+      "Execution Order": "24"
+    },
+    "37": {
+      "Tab Name": "<UP>TeamShiftAssociation",
+      "Object Type": "Update Model",
+      "Description": "Updates already created calendar days, associating teams to shifts.",
+      "Execution Order": "25"
+    },
+    "38": {
+      "Tab Name": "<DM>Employee",
+      "Object Type": "Dynamic Model",
+      "Description": "Employee details to be created in the system.",
+      "Execution Order": "26"
+    },
+    "39": {
+      "Tab Name": "<DM>EmployeeCertification",
+      "Object Type": "Dynamic Model",
+      "Description": "Employee Certification relations to be created in the system.",
+      "Execution Order": "26"
+    },
+    "40": {
+      "Tab Name": "<DM>BusinessPartner",
+      "Object Type": "Dynamic Model",
+      "Description": "Business Partner to be created in the system.",
+      "Execution Order": "27"
+    },
+    "41": {
+      "Tab Name": "<DM>SamplingPlan",
+      "Object Type": "Dynamic Model",
+      "Description": "Sampling Plan details to be created in the system.",
+      "Execution Order": "28"
+    },
+    "42": {
+      "Tab Name": "SPContextInformation",
+      "Object Type": "",
+      "Description": "Sampling Plan Context Information to be associated on the creation of the Sampling Plans.",
+      "Execution Order": "28"
+    },
+    "43": {
+      "Tab Name": "<DM>SamplingPlanInstance",
+      "Object Type": "Dynamic Model",
+      "Description": "Sampling Plan Instance details to be created in the system.",
+      "Execution Order": "29"
+    },
+    "44": {
+      "Tab Name": "<DM>Reason",
+      "Object Type": "Dynamic Model",
+      "Description": "Reason details to be created in the system",
+      "Execution Order": "30"
+    },
+    "45": {
+      "Tab Name": "<DM>SortRuleSet",
+      "Object Type": "Dynamic Model",
+      "Description": "SortRuleSet details to be created in the system",
+      "Execution Order": "31"
+    },
+    "46": {
+      "Tab Name": "<DM>Service",
+      "Object Type": "Dynamic Model",
+      "Description": "Service details to be created in the system",
+      "Execution Order": "32"
+    },
+    "47": {
+      "Tab Name": "<DM>Step",
+      "Object Type": "Dynamic Model",
+      "Description": "Step details to be created in the system",
+      "Execution Order": "33"
+    },
+    "48": {
+      "Tab Name": "StepReason",
+      "Object Type": "",
+      "Description": "List of Reasons to be added to the steps",
+      "Execution Order": "33"
+    },
+    "49": {
+      "Tab Name": "StepSamplingPlan",
+      "Object Type": "",
+      "Description": "List of Sampling Plan to be added to the steps",
+      "Execution Order": "33"
+    },
+    "50": {
+      "Tab Name": "<UP>StepFutureActions",
+      "Object Type": "",
+      "Description": "Step Future Actions",
+      "Execution Order": "34"
+    },
+    "51": {
+      "Tab Name": "<DM>ScheduleFeedStep",
+      "Object Type": "Dynamic Model",
+      "Description": "List of feed steps for Schedule",
+      "Execution Order": "35"
+    },
+    "52": {
+      "Tab Name": "<DM>ProducGroup",
+      "Object Type": "Dynamic Model",
+      "Description": "Product Groups to be created in the system",
+      "Execution Order": "36"
+    },
+    "53": {
+      "Tab Name": "ProductGroupParameters",
+      "Object Type": "",
+      "Description": "Product Group Parameters",
+      "Execution Order": "36"
+    },
+    "54": {
+      "Tab Name": "<DM>Flow",
+      "Object Type": "Dynamic Model",
+      "Description": "Flow details to be created in the system",
+      "Execution Order": "37"
+    },
+    "55": {
+      "Tab Name": "FlowStructures",
+      "Object Type": "",
+      "Description": "Flow Structure details for the Flows",
+      "Execution Order": "37"
+    },
+    "56": {
+      "Tab Name": "<DM>Product",
+      "Object Type": "Dynamic Model",
+      "Description": "Products details to be created in the system",
+      "Execution Order": "38"
+    },
+    "57": {
+      "Tab Name": "<DM>SetupMatrix",
+      "Object Type": "Dynamic Model",
+      "Description": "Setup Matrix to be created in the System",
+      "Execution Order": "39"
+    },
+    "58": {
+      "Tab Name": "SetupMatrixTransitions",
+      "Object Type": "",
+      "Description": "Setup Matrix Transitions",
+      "Execution Order": "39"
+    },
+    "59": {
+      "Tab Name": "<DM>Resource",
+      "Object Type": "Dynamic Model",
+      "Description": "Resources details to be created in the system",
+      "Execution Order": "40"
+    },
+    "60": {
+      "Tab Name": "StorageBin",
+      "Object Type": "",
+      "Description": "Storagebins details to be created in the System",
+      "Execution Order": "40"
+    },
+    "61": {
+      "Tab Name": "ResourceInventory",
+      "Object Type": "",
+      "Description": "Resource Inventory details to be created in the System",
+      "Execution Order": "40"
+    },
+    "62": {
+      "Tab Name": "<DM>ShiftPlan",
+      "Object Type": "Dynamic Model",
+      "Description": "Shift Plans to be created in the system",
+      "Execution Order": "41"
+    },
+    "63": {
+      "Tab Name": "ShiftPlanWorkgroups",
+      "Object Type": "",
+      "Description": "Workgroups to be associated with shift plans",
+      "Execution Order": "41"
+    },
+    "64": {
+      "Tab Name": "<UP>EmployeeShiftDetails",
+      "Object Type": "",
+      "Description": "Assign (with special manage) Team, Shiftplan, Workgroup and position to Employee",
+      "Execution Order": "42"
+    },
+    "65": {
+      "Tab Name": "<DM>Parameter",
+      "Object Type": "Dynamic Model",
+      "Description": "Parameter details to be created in the system",
+      "Execution Order": "43"
+    },
+    "66": {
+      "Tab Name": "<DM>Protocol",
+      "Object Type": "Dynamic Model",
+      "Description": "Protocol details to be created in the system",
+      "Execution Order": "44"
+    },
+    "67": {
+      "Tab Name": "ProtocolStates",
+      "Object Type": "",
+      "Description": "List of State Details for the protocol",
+      "Execution Order": "44"
+    },
+    "68": {
+      "Tab Name": "<DM>KPI",
+      "Object Type": "Dynamic Model",
+      "Description": "KPI details to be created in the system",
+      "Execution Order": "45"
+    },
+    "69": {
+      "Tab Name": "<DM>KPITimeFrame",
+      "Object Type": "Dynamic Model",
+      "Description": "KPITimeFrame details to be created in the system",
+      "Execution Order": "46"
+    },
+    "70": {
+      "Tab Name": "<DM>DataCollection",
+      "Object Type": "Dynamic Model",
+      "Description": "DataCollection details to be created in the system",
+      "Execution Order": "47"
+    },
+    "71": {
+      "Tab Name": "DataCollectionParameters",
+      "Object Type": "",
+      "Description": "List of parameters for Data Collections",
+      "Execution Order": "47"
+    },
+    "72": {
+      "Tab Name": "<DM>DataCollectionLimitSets",
+      "Object Type": "Dynamic Model",
+      "Description": "DataCollectionLimitSets details to be created in the system",
+      "Execution Order": "48"
+    },
+    "73": {
+      "Tab Name": "<DM>BOM",
+      "Object Type": "Dynamic Model",
+      "Description": "BOM details to be created in the system",
+      "Execution Order": "49"
+    },
+    "74": {
+      "Tab Name": "BOMProducts",
+      "Object Type": "",
+      "Description": "List of BOM Products for the BOMs",
+      "Execution Order": "49"
+    },
+    "75": {
+      "Tab Name": "<DM>Chart",
+      "Object Type": "Dynamic Model",
+      "Description": "Chart details to be created in the system",
+      "Execution Order": "50"
+    },
+    "76": {
+      "Tab Name": "<DM>LogicalChart",
+      "Object Type": "Dynamic Model",
+      "Description": "Logical chart details to be created in the system",
+      "Execution Order": "51"
+    },
+    "77": {
+      "Tab Name": "<DM>Recipe",
+      "Object Type": "Dynamic Model",
+      "Description": "Recipes to be created in the system",
+      "Execution Order": "52"
+    },
+    "78": {
+      "Tab Name": "RecipeParameters",
+      "Object Type": "",
+      "Description": "List of Recipe Parameters for each Recipe created",
+      "Execution Order": "52"
+    },
+    "79": {
+      "Tab Name": "SubRecipes",
+      "Object Type": "",
+      "Description": "List of SubRecipe relations",
+      "Execution Order": "52"
+    },
+    "80": {
+      "Tab Name": "SubRecipeParameters",
+      "Object Type": "",
+      "Description": "List of SubRecipe parameter mappings",
+      "Execution Order": "52"
+    },
+    "81": {
+      "Tab Name": "<DM>MaintenancePlan",
+      "Object Type": "Dynamic Model",
+      "Description": "List of Maintenance Plans to add",
+      "Execution Order": "53"
+    },
+    "82": {
+      "Tab Name": "MaintenancePlanActivities",
+      "Object Type": "",
+      "Description": "List of Activities for Maintenance Plans",
+      "Execution Order": "53"
+    },
+    "83": {
+      "Tab Name": "MaintenancePlanActivityCharts",
+      "Object Type": "",
+      "Description": "List of Activity charts for Maintenante Plans",
+      "Execution Order": "53"
+    },
+    "84": {
+      "Tab Name": "<DM>MaintenancePlanInstance",
+      "Object Type": "Dynamic Model",
+      "Description": "List of Maintenance Plans Instances to add",
+      "Execution Order": "54"
+    },
+    "85": {
+      "Tab Name": "<GT>GenericTable",
+      "Object Type": "Generic Table",
+      "Description": "List of Generic Tables to be Created / Updated in the System\nEach Table can have one Tab with the data to be loaded - \"<GT>[GenericTableName]\"",
+      "Execution Order": "55"
+    },
+    "86": {
+      "Tab Name": "GenericTableProperties",
+      "Object Type": "",
+      "Description": "List of Properties of Generic Table",
+      "Execution Order": "55"
+    },
+    "87": {
+      "Tab Name": "<GT>MaterialFormRelation",
+      "Object Type": "Generic Table",
+      "Description": "",
+      "Execution Order": "56"
+    },
+    "88": {
+      "Tab Name": "<ST>SmartTable",
+      "Object Type": "Smart Table",
+      "Description": "List of Smart Tables to be Created / Updated in the System\nEach Table can have one Tab with the data to be loaded - \"<ST>[SmartTableName]\"",
+      "Execution Order": "57"
+    },
+    "89": {
+      "Tab Name": "SmartTableProperties",
+      "Object Type": "",
+      "Description": "",
+      "Execution Order": "57"
+    },
+    "90": {
+      "Tab Name": "SmartTablePrecedenceKeys",
+      "Object Type": "",
+      "Description": "",
+      "Execution Order": "57"
+    },
+    "91": {
+      "Tab Name": "<DM>Container",
+      "Object Type": "Dynamic Model",
+      "Description": "Container details to be created in the system",
+      "Execution Order": "58"
+    },
+    "92": {
+      "Tab Name": "<DM>Material",
+      "Object Type": "Dynamic Model",
+      "Description": "Material details to be created in the system",
+      "Execution Order": "59"
+    },
+    "93": {
+      "Tab Name": "<DM>MapDefinition",
+      "Object Type": "Dynamic Model",
+      "Description": "Map Definitions to be created in the system",
+      "Execution Order": "60"
+    },
+    "94": {
+      "Tab Name": "MapDefinitionLayers",
+      "Object Type": "",
+      "Description": "Layers of Map Definiton",
+      "Execution Order": "60"
+    },
+    "95": {
+      "Tab Name": "<DM>Map",
+      "Object Type": "Dynamic Model",
+      "Description": "Maps to be created in the system",
+      "Execution Order": "61"
+    },
+    "96": {
+      "Tab Name": "<SM>Config",
+      "Object Type": "Static Model",
+      "Description": "Config details to be created in the system",
+      "Execution Order": "62"
+    },
+    "97": {
+      "Tab Name": "<DM>AutomationManager",
+      "Object Type": "Dynamic Model",
+      "Description": "Automation Managers to create",
+      "Execution Order": "63"
+    },
+    "98": {
+      "Tab Name": "<DM>AutomationProtocol",
+      "Object Type": "Dynamic Model",
+      "Description": "Automation Protocols to create (versioned). Depends on AutomationProtocolDataType, AutomationProtocolParameter and AutomationProtocolExtendedData Tabs",
+      "Execution Order": "64"
+    },
+    "99": {
+      "Tab Name": "<DM>AutomationDriverDefinition",
+      "Object Type": "Dynamic Model",
+      "Description": "Automation Driver Definitions to create (versioned). Depends on AutomationProperty, AutomationEvent, AutomationEventProperty AutomationCommand and AutomationCommandParameter Tabs",
+      "Execution Order": "65"
+    },
+    "100": {
+      "Tab Name": "<DM>AutomationController",
+      "Object Type": "Dynamic Model",
+      "Description": "Automation Controllers to create along with the workflows. Depends on AutomationControllerDriverDef, AutomationControllerIoTEventDef, AutomationControllerWorkflow tabs",
+      "Execution Order": "66"
+    },
+    "101": {
+      "Tab Name": "<DM>AutomationWorkflow",
+      "Object Type": "Dynamic Model",
+      "Description": "Standalone Automation Workflows to create",
+      "Execution Order": "67"
+    },
+    "102": {
+      "Tab Name": "AutomationInstances",
+      "Object Type": "",
+      "Description": "Automation Instances to create",
+      "Execution Order": "67"
+    },
+    "103": {
+      "Tab Name": "<DM>ExperimentDefinition",
+      "Object Type": "Dynamic Model",
+      "Description": "ExperimentDefinition details to be created in the system",
+      "Execution Order": "68"
+    },
+    "104": {
+      "Tab Name": "ExperimentDefinitionSteps",
+      "Object Type": "",
+      "Description": "List of Experiment Definition Step for the experiment definition",
+      "Execution Order": "68"
+    }
+  },
+  "Formats": {
+    "1": {
+      "Sheet": "All Objects",
+      "Column": "MainStateModel",
+      "Format Sample": "SEMI E10 > Standby",
+      "Description": "State Model Name , \">\", State Name\nif the \">\" is not provided then the value will be the StateModel Name, and the object will be setted in the default state for the state model"
+    },
+    "2": {
+      "Sheet": "All Objects",
+      "Column": "OtherStateModels",
+      "Format Sample": "SEMI E10 > Standby; SEMI E10 > Standby; SEMI E10 > Standby",
+      "Description": "Each item is delimited by a semi-colon ';'\nFormat of each item is:\nState Model Name , \">\", State Name\nif the \">\" is not provided then the value will be the StateModel Name, and the object will be setted in the default state for the state model"
+    },
+    "3": {
+      "Sheet": "All Objects",
+      "Column": "Attributes",
+      "Format Sample": "Name[Basic] ScalarType[VarChar] Value[Up];\nName[Scheduled] ScalarType[VarChar] Value[Scheduled Up]",
+      "Description": "Each item is delimited by a semi-colon ';'\nFormat of each item is:\nName[AttributeName] ScalarType[ScalarTypeName] Value[AttributeValue]\nIf Attribute is Array Values will be separated by comma (',')"
+    },
+    "4": {
+      "Sheet": "StateModelStates",
+      "Column": "Forbiden Operations",
+      "Format Sample": "Save;Terminate",
+      "Description": "Each item is delimited by a semi-colon ';'\nEach item must be the name of one Operation of the State Model Entity Type"
+    },
+    "5": {
+      "Sheet": "StateModelTransitions",
+      "Column": "Allowed Operations",
+      "Format Sample": "Save;Terminate",
+      "Description": "Each item is delimited by a semi-colon ';'\nEach item must be the name of one Operation of the State Model Entity Type"
+    },
+    "6": {
+      "Sheet": "ShiftDefinitionShift",
+      "Column": "NonWorkingTime",
+      "Format Sample": "Name[Lunch] Start[12:00] End[13:00]",
+      "Description": "Each non working time is delimited by a semi-colon ';'\nEach item is described by tokens according to the sample on the left."
+    },
+    "7": {
+      "Sheet": "SortRuleSets",
+      "Column": "Rules",
+      "Format Sample": "Name[ResourceQueueSize] Direction[Ascending]",
+      "Description": "Each rule is delimited by a semi-colon ';', the sequence is the order in which it appears, starting with 1 and the format is Name[SortRuleName] Direction[Ascending] (Direction can be 'Ascending' or 'Descending')"
+    },
+    "8": {
+      "Sheet": "FlowStructures",
+      "Column": "Reworks",
+      "Format Sample": "GotoFlowPath[Mold Rework:1/Remove Mold:1] ReturnStep[Packaging:5] Reason[Mold Damage]",
+      "Description": "Each item is delimited by a semi-colon ';'\nFormat of each item is like:\nGotoFlowPath[TargetFlowPath] ReturnStep[ReturnStep] Reason[ReworkReason]\n\nwhere the ReturnStep must include the information about the Correlation Id ( for example \"Step:2\" )"
+    },
+    "9": {
+      "Sheet": "Products",
+      "Column": "Unit Conversion Factors",
+      "Format Sample": "FromUnit[Wafers] ToUnit[Dies] Factor[100]",
+      "Description": "Each item is delimited by a semi-colon ';'\nFormat of each item is like:\nFromUnit[unitA] ToUnit[unitB] Factor[factor]\n\nWhere \n - Units must exist in lookupTable Units\n - factor can have decimal places"
+    },
+    "10": {
+      "Sheet": "Products",
+      "Column": "Sub Products",
+      "Format Sample": "TargetProduct[WAFCOMP1] Facility[Null] Step[Wafer Saw] ProductChangeDescription[Standard] Type[Standard] IsChangeAutomatic[Yes]",
+      "Description": "Each item is delimited by a semi-colon ';'\nFormat of each item is like:\nTargetProduct[ProductName] Facility[Null] Step[StepName] ProductChangeDescription[Standard] Type[Standard] IsChangeAutomatic[Yes]"
+    },
+    "11": {
+      "Sheet": "Products",
+      "Column": "Binning Tree",
+      "Format Sample": "TargetProduct[PRODUCTA] BinGroup[Null] BinNumber[1] BinType[MainProduct] Reason[Null] Step[Null]",
+      "Description": "Each item is delimited by a semi-colon ';'\nFormat of each item is like:\nTargetProduct[PRODUCTA] BinGroup[Null] BinNumber[1] BinType[MainProduct] Reason[Null] Step[Null]\n\nWhere BinType must be one of the following\n - MainProduct\n - SubProduct\n - Loss\nWhere Reason must be the name of one valid Reason"
+    },
+    "12": {
+      "Sheet": "Protocols",
+      "Column": "Parameters",
+      "Format Sample": "Name[MyString] DataType[String] DefaultValue[Null];\nName[MyLong] DataType[Long] DefaultValue[0];\nName[MyDecimal] DataType[Decimal] DefaultValue[0]",
+      "Description": "Each item is delimited by a semi-colon ';'\nFormat of each item is like:\nName[ParameterName] DataType[String] DefaultValue[Null]\n\nDataType=Long or String or Decimal or Boolean or DateTime\nDefaultValue= Value or Null"
+    },
+    "13": {
+      "Sheet": "ProtocolStates",
+      "Column": "Parameters",
+      "Format Sample": "Name[MyString] IsOptional[No] IsReadOnly[No] SourceType[FreeText] Source[Null];\nName[MyLong] IsOptional[Yes] IsReadOnly[No] SourceType[FreeText] Source[Null]",
+      "Description": "Each item is delimited by a semi-colon ';'\nFormat of each item is like:\nName[ParameterName] IsOptional[No] IsReadOnly[No] SourceType[] Source[Null]\n\nSourceType=FreeText, LookupTable or Query"
+    },
+    "14": {
+      "Sheet": "Data Collection Limit Sets",
+      "Column": "Parameter Limits",
+      "Format Sample": "Parameter[Scratch Count] LimitType[Absolute] LowerErrorLimit[0] \nLowerWarningLimit[0] Target[0] UpperErrorLimit[105] UpperWarningLimit[50]",
+      "Description": "Each parameter is delimited by a semi-colon (';')\nWhen the text is 'Null' it means that there is no value\nThe decimal separator can be either '.' or ','\nFormat is:\nParameter[ParamName] LimitType[Absolute] LowerErrorLimit[0] LowerWarningLimit[1] Target[0] UpperWarningLimit[49] UpperErrorLimit[50]\n\nLimitType can be 'Absolute' or 'Relative'"
+    },
+    "15": {
+      "Sheet": "BOMProducts",
+      "Column": "Substitutes",
+      "Format Sample": "SourceProduct[UMG] Step[Crystallization] Quantity[0,8]",
+      "Description": "Each item is delimited by a semi-colon ';'\nFormat of each item is like:\nSourceProduct[ProductName] Step[StepName] Quantity[1]"
+    },
+    "16": {
+      "Sheet": "Charts",
+      "Column": "Rules",
+      "Format Sample": "Rule[UpperSpecSpcViolationRule] Protocol[PDCA]",
+      "Description": "Each item is delimeted by a semi-colon ';'\nformat of each item is like:\nRule[RuleName] Protocol[ProtocolName]\n\nProtocol can be null"
+    },
+    "17": {
+      "Sheet": "Charts",
+      "Column": "Contexts",
+      "Format Sample": "KeyOrder[1] Name[Resource] Description[Resource] Type[Object] Source[Resource]",
+      "Description": "Each item is delimeted by a semi-colon ';'\nformat of each item is like:\nKeyOrder[1] Name[Resource] Description[Resource] Type[Object] Source[Resource]\nWhere \n - Type=Object, FreeText or LookupTable\n - KeyOrder (or zero if non-key)"
+    },
+    "18": {
+      "Sheet": "SubRecipes",
+      "Column": "ParameterMapping",
+      "Format Sample": "Parameter1=Expression1;Parameter2=Expression2",
+      "Description": "Each item is delimited by a semi-colon ';'\nFormat of each item is:\nParameterName, equals ('='), Expression\nWhere \n - ParameterName should be the name of a valid Parameter in the subrecipe."
+    }
+  },
+  "Assumptions": {
+    "1": {
+      "Sheet": "All Objects",
+      "Assumption": "- Name Field is Mandatory\n - All Excel columns must match the Object properties (if defined)\n - Column \"MainStateModel\" can set the Main State Model to the object\n - Column \"OtherStateModel\" can set other State Models to the Object\n - Column \"DataGroup\" can set DataGroup to the Object"
+    },
+    "2": {
+      "Sheet": "All Objects",
+      "Assumption": "FlowPath\nIt represents the position in one Flow, for example\nFlowA:1/FlowB:2/FlowC:1/StepA:1\n\nEach Flow Part in the FlowPath is delimited by '/'\nEach Flow Part is splited in two by ':'\n 1) the first part is the name of the Object (Flow Name, or Step Name if is the last flow part in the FlowPath)\n 2) the second part is the CorrelationId, or it can be the position on the parent flow"
+    },
+    "3": {
+      "Sheet": "Rules",
+      "Assumption": "Rule Type will be UserDefined"
+    },
+    "4": {
+      "Sheet": "Generic Tables",
+      "Assumption": "If you want the first field to be empty, type \"NULL\" without the quotes."
+    },
+    "5": {
+      "Sheet": "Smart Tables",
+      "Assumption": "If you want the first field to be empty, type \"NULL\" without the quotes."
+    }
+  },
+  "WorksheetNameMapping": {},
+  "<SM>LocalizedMessageKey": {
+    "1": {
+      "Name": "Cmf.Custom.CustomAutomationConfiguration.BusinessObjects.CustomAutomationConfiguration",
+      "Description": "",
+      "MessageType": "Message",
+      "en-US": "Automation Configuration",
+      "de-DE": "",
+      "zh-CN": "",
+      "pt-PT": "Configuração de Automação",
+      "zh-TW": ""
+    }
+  }
+}
