@@ -1,0 +1,341 @@
+{
+  "converters": [],
+  "tasks": [
+    {
+      "name": "equipmentEventWithDataplatform",
+      "displayName": "Equipment Event & Post",
+      "iconClass": "icon-coreatl-tasks-connect-iot-lg-on-equipment-event",
+      "category": "Equipment",
+      "section": "Triggers",
+      "dependsOnDesignerScope": [
+        "DataFlow",
+        "ControlFlow"
+      ],
+      "isProtocol": true,
+      "isController": false,
+      "lifecycle": "",
+      "lifecycleMessage": "",
+      "dependsOnProtocol": [],
+      "dependsOnScope": [
+        "ConnectIoT"
+      ],
+      "inputs": {
+        "activate": {
+          "type": "Activate",
+          "dataType": "Boolean",
+          "displayName": "Enable/Disable"
+        }
+      },
+      "outputs": {
+        "event": {
+          "type": "AutomationEvent",
+          "displayName": "event"
+        },
+        "timestamp": {
+          "type": "DateTime",
+          "displayName": "timestamp"
+        },
+        "eventRawData": {
+          "type": "Object",
+          "displayName": "eventRawData"
+        },
+        "placeholder": {
+          "type": "Dynamic",
+          "settings": {
+            "settingKey": "_outputs",
+            "canAdd": false,
+            "canDelete": false,
+            "canSort": true,
+            "captionKey": "name",
+            "subCaptionKey": "outputType",
+            "leafDefinition": [
+              {
+                "name": "name",
+                "displayName": "Name",
+                "settingKey": "name",
+                "dataType": "String",
+                "isMandatory": false,
+                "settings": {
+                  "disabled": true
+                }
+              },
+              {
+                "name": "propertyId",
+                "displayName": "Property Id",
+                "settingKey": "propertyId",
+                "dataType": "String",
+                "isMandatory": false,
+                "settings": {
+                  "disabled": true
+                }
+              },
+              {
+                "name": "valueType",
+                "displayName": "Data Type",
+                "settingKey": "valueType",
+                "dataType": "String",
+                "defaultValue": "Any",
+                "isMandatory": false,
+                "settings": {
+                  "disabled": true
+                }
+              },
+              {
+                "name": "deviceDataType",
+                "displayName": "Device Data Type",
+                "settingKey": "deviceDataType",
+                "dataType": "String",
+                "isMandatory": false,
+                "settings": {
+                  "disabled": true
+                }
+              },
+              {
+                "name": "outputType",
+                "displayName": "Output Type",
+                "settingKey": "outputType",
+                "dataType": "Enum",
+                "defaultValue": "Value",
+                "settings": {
+                  "enumValues": [
+                    "Value",
+                    "RawValue"
+                  ]
+                }
+              },
+              {
+                "name": "extendedData",
+                "displayName": "Property Extended Data",
+                "settingKey": "_apExtendedData",
+                "dataType": "ExtendedPropertiesViewer",
+                "settings": {
+                  "extendedDataType": "AutomationProperty",
+                  "dynamicDependency": "name"
+                }
+              },
+              {
+                "name": "extendedData",
+                "displayName": "Event Property Extended Data",
+                "settingKey": "_aepExtendedData",
+                "dataType": "ExtendedPropertiesViewer",
+                "settings": {
+                  "extendedDataType": "AutomationEventProperty",
+                  "dynamicDependency": "name",
+                  "dependency": "_event"
+                }
+              },
+              {
+                "name": "isToPostToDP",
+                "displayName": "Is To Post To DP",
+                "settingKey": "isToPostToDP",
+                "dataType": "Boolean",
+                "defaultValue": true,
+                "infoMessage": "If the event property should be posted to the Data Platform"
+              },
+              {
+                "name": "class",
+                "displayName": "Class",
+                "settingKey": "class",
+                "dataType": "Enum",
+                "isMandatory": true,
+                "condition": "isToPostToDP",
+                "settings": {
+                  "enumValues": [
+                    "Sensor",
+                    "Property",
+                    "State"
+                  ]
+                },
+                "defaultValue": "Sensor",
+                "infoMessage": "The class of the event property to be posted to the Data Platform"
+              },
+              {
+                "name": "unitOfMeasure",
+                "displayName": "Unit Of Measure",
+                "settingKey": "unitOfMeasure",
+                "dataType": "String",
+                "isMandatory": false,
+                "condition": "isToPostToDP",
+                "infoMessage": "The unit of measure of the event property to be posted to the Data Platform"
+              }
+            ]
+          }
+        },
+        "success": {
+          "type": "Success",
+          "displayName": "Success"
+        },
+        "error": {
+          "type": "Error",
+          "displayName": "Error"
+        }
+      },
+      "settings": {
+        "General": {
+          "DataPlatform": [
+            {
+              "name": "isToPostToDP",
+              "settingKey": "_isToPostToDP",
+              "dataType": "Boolean",
+              "defaultValue": true,
+              "displayName": "Is To Post To DP",
+              "infoMessage": "If the event property should be posted to the Data Platform"
+            },
+            {
+              "name": "continueOnDPError",
+              "settingKey": "_continueOnDPError",
+              "dataType": "Boolean",
+              "defaultValue": true,
+              "displayName": "Continue On DataPlatform Error",
+              "infoMessage": "If the task should continue executing and emit success even if it fails to post to Dataplatform.",
+              "condition": "_isToPostToDP"
+            },
+            {
+              "name": "resolveISA95OnEachEvent",
+              "displayName": "Resolve ISA-95 On Each Event",
+              "settingKey": "_resolveISA95OnEachEvent",
+              "condition": "_isToPostToDP",
+              "dataType": "Boolean",
+              "defaultValue": false,
+              "infoMessage": "Resolve the ISA-95 hierarchy on each event. If false, the ISA-95 hierarchy will be resolved only once per Controller, will only update on restart."
+            },
+            {
+              "name": "applicationName",
+              "settingKey": "_applicationName",
+              "dataType": "String",
+              "displayName": "Application Name",
+              "infoMessage": "Name of the application posting to the Data Platform (Default: ConnectIoT).",
+              "isMandatory": false,
+              "condition": "_isToPostToDP"
+            },
+            {
+              "name": "isToBatchPost",
+              "settingKey": "_isToBatchPost",
+              "dataType": "Boolean",
+              "defaultValue": false,
+              "displayName": "Batch Post To DP",
+              "infoMessage": "If events should be queued and posted to the Data Platform in batches instead of posting each one immediately.",
+              "condition": "_isToPostToDP"
+            }
+          ],
+          "Event": [
+            {
+              "name": "autoActivate",
+              "settingKey": "_autoActivate",
+              "dataType": "Boolean",
+              "defaultValue": true,
+              "displayName": "Auto Enable",
+              "infoMessage": "If the event is activated by the register of an event of that type or if it is only activated by the activate input"
+            },
+            {
+              "name": "acceptAllEvents",
+              "settingKey": "_acceptAllEvents",
+              "dataType": "Boolean",
+              "displayName": "All Events",
+              "infoMessage": "The task event triggers whenever there is an event.",
+              "settings": {
+                "onChange": {
+                  "type": "Reference",
+                  "script": "reset_on_accept_all_events_change"
+                }
+              }
+            },
+            {
+              "name": "equipmentEvent",
+              "settingKey": "_event",
+              "dataType": "FindEntity",
+              "displayName": "Equipment Event",
+              "isMandatory": true,
+              "propertiesToSave": [
+                "Name"
+              ],
+              "settings": {
+                "referenceTypeName": "AutomationEvent",
+                "data": {
+                  "type": "Reference",
+                  "script": "load_all_events"
+                },
+                "onChange": {
+                  "type": "Reference",
+                  "script": "handle_event_change"
+                }
+              },
+              "condition": "not _acceptAllEvents"
+            },
+            {
+              "name": "workingMode",
+              "settingKey": "_workingMode",
+              "dataType": "Enum",
+              "settings": {
+                "enumValues": [
+                  "AlwaysActive",
+                  "OneEvent"
+                ]
+              },
+              "displayName": "Working Mode",
+              "defaultValue": "AlwaysActive"
+            },
+            {
+              "name": "timeout",
+              "settingKey": "_waitTimeout",
+              "dataType": "Long",
+              "disabled": true,
+              "displayName": "Timeout",
+              "infoMessage": "Maximum ammount of time (in ms) to wait for the event to occur before disable the handler",
+              "condition": "compareText(_workingMode, 'OneEvent') == 0"
+            },
+            {
+              "name": "messageFullName",
+              "settingKey": "_messageFullName",
+              "dataType": "String",
+              "settings": {
+                "disabled": true
+              },
+              "displayName": "Event Device Id",
+              "infoMessage": "Only used by Control Flow to display the name of the event",
+              "condition": "false"
+            },
+            {
+              "name": "extendedData",
+              "settingKey": "_aeExtendedData",
+              "dataType": "ExtendedPropertiesViewer",
+              "settings": {
+                "extendedDataType": "AutomationEvent",
+                "dependency": "_event"
+              },
+              "condition": "_event != null",
+              "displayName": "Extended Event Data"
+            }
+          ]
+        }
+      },
+      "triggers": {},
+      "scripts": {
+        "load_all_events": "${script(./scripts/equipmentEventWithDataplatform/load_all_events.ts)}",
+        "handle_event_change": "${script(./scripts/equipmentEventWithDataplatform/handle_event_change.ts)}",
+        "reset_on_accept_all_events_change": "${script(./scripts/equipmentEventWithDataplatform/reset_on_accept_all_events_change.ts)}"
+      },
+      "designer": {
+        "controlFlow": {
+          "type": "Start",
+          "displayName": "When equipment triggers the event {{_messageFullName}}",
+          "branches": [
+            {
+              "name": "handler",
+              "settings": []
+            }
+          ],
+          "inputs": {
+            "displayName": "Enable/Disable Rules",
+            "isCollapsedWhenEmpty": true,
+            "infoMessage": "Definition of rules that will enable/disable the event handler"
+          },
+          "outputs": {
+            "displayName": "Event Properties",
+            "infoMessage": "Properties available when the event is triggered"
+          }
+        }
+      }
+    }
+  ]
+}

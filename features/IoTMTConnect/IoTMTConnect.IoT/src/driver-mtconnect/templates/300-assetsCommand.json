@@ -1,0 +1,13 @@
+{
+  "command": [
+    {
+      "Name": "Assets Command",
+      "Description": "Assets Command",
+      "DeviceCommandId": "AssetsCommand",
+      "ExtendedData": {
+        "commandType": "Assets"
+      },
+      "CommandParameters": []
+    }
+  ]
+}

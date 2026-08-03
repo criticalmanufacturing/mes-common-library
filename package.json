@@ -1,0 +1,15 @@
+{
+  "name": "mes-common-library",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Repository-level tooling (git hooks, commit linting) for mes-common-library.",
+  "scripts": {
+    "prepare": "husky",
+    "validate:versions": ".github/scripts/validate-package-versions.sh"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^19.5.0",
+    "@commitlint/config-conventional": "^19.5.0",
+    "husky": "^9.1.7"
+  }
+}
