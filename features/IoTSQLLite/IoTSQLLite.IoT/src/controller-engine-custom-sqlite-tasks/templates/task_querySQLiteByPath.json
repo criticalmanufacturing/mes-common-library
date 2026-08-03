@@ -1,0 +1,87 @@
+{
+  "converters": [],
+  "tasks": [
+    {
+      "name": "querySQLiteByPath",
+      "displayName": "Query SQLite By Path",
+      "iconClass": "icon-coreatl-tasks-connect-iot-lg-retrieve-data",
+      "isProtocol": false,
+      "isController": true,
+      "lifecycle": "Productive",
+      "lifecycleMessage": "",
+      "dependsOnProtocol": [],
+      "dependsOnScope": [],
+      "inputs": {
+        "tableName": {
+          "type": "Static",
+          "dataType": "String",
+          "displayName": "tableName",
+          "defaultValue": ""
+        },
+        "jsonPath": {
+          "type": "Static",
+          "dataType": "String",
+          "displayName": "jsonPath",
+          "defaultValue": ""
+        },
+        "value": {
+          "type": "Static",
+          "dataType": "String",
+          "displayName": "value",
+          "defaultValue": ""
+        },
+        "activate": {
+          "type": "Activate",
+          "dataType": "String",
+          "displayName": "Activate",
+          "defaultValue": ""
+        }
+      },
+      "outputs": {
+        "result": {
+          "type": "Static",
+          "dataType": "Object",
+          "displayName": "Result"
+        },
+        "success": {
+          "type": "Success",
+          "displayName": "Success"
+        },
+        "error": {
+          "type": "Error",
+          "displayName": "Error"
+        }
+      },
+      "settings": {
+        "General": {
+          "Settings": [
+            {
+              "name": "tableName",
+              "displayName": "Default Table Name",
+              "settingKey": "tableName",
+              "dataType": "String",
+              "infoMessage": "Default Table Name",
+              "defaultValue": ""
+            },
+            {
+              "name": "jsonPath",
+              "displayName": "Default JSON Path",
+              "settingKey": "jsonPath",
+              "dataType": "String",
+              "infoMessage": "Default JSON Path",
+              "defaultValue": ""
+            },
+            {
+              "name": "value",
+              "displayName": "Default Value",
+              "settingKey": "value",
+              "dataType": "String",
+              "infoMessage": "Default Value",
+              "defaultValue": ""
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

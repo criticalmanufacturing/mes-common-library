@@ -1,0 +1,164 @@
+<div class="persistency-designer">
+    <div class="designer-meta">
+        <span class="meta-chip meta-chip--accent">{{ activeListKeys.length }} total keys</span>
+        <span class="meta-chip" *ngIf="selectedKey !== null">Key: '{{ selectedKey.name }}'</span>
+    </div>
+
+    <div class="selector-card">
+        <cmf-core-business-controls-propertyEditor
+            label="Persistency Key"
+            placeholder="select persistency key..."
+            nestedEditorType="ComboBox"
+            dataNameField="name"
+            [data]="activeListKeys"
+            [value]="selectedKey"
+            (valueChange)="onControlValueChange($event)">
+        </cmf-core-business-controls-propertyEditor>
+    </div>
+
+    <div class="empty-state" *ngIf="keyValue === undefined">
+        <span class="empty-state__title">Select a key to open the designer</span>
+        <span class="empty-state__text">
+            Choose a persistency key above to load the payload and switch between tree, graph, and editor views.
+        </span>
+    </div>
+
+    <ng-container *ngIf="keyValue !== undefined">
+        <ng-container *ngIf="isKeyValueObject; else primitiveValueTemplate">
+            <div class="workspace-card">
+                <div class="card-header">
+                    <div>
+                        <div class="card-title">Visualization Workspace</div>
+                        <div class="card-subtitle">
+                            {{ viewMode === 'editor'
+                                ? 'Edit the serialized payload in the same panel layout used by the explorer views.'
+                                : 'Compare structure and relationships without leaving the same surface.' }}
+                        </div>
+                    </div>
+
+                    <div class="view-switcher">
+                        <button
+                            type="button"
+                            class="view-button"
+                            [class.is-active]="viewMode === 'tree'"
+                            [disabled]="viewMode === 'tree'"
+                            (click)="viewMode = 'tree'">
+                            Tree
+                        </button>
+                        <button
+                            type="button"
+                            class="view-button"
+                            [class.is-active]="viewMode === 'split'"
+                            [disabled]="viewMode === 'split'"
+                            (click)="viewMode = 'split'">
+                            Tree + Graph
+                        </button>
+                        <button
+                            type="button"
+                            class="view-button"
+                            [class.is-active]="viewMode === 'editor'"
+                            [disabled]="viewMode === 'editor'"
+                            (click)="viewMode = 'editor'">
+                            Editor
+                        </button>
+                    </div>
+                </div>
+
+                <div class="panel-grid panel-grid--single" *ngIf="viewMode === 'tree'">
+                    <section class="designer-panel">
+                        <div class="designer-panel__header">
+                            <div>
+                                <span class="designer-panel__eyebrow">Structure</span>
+                                <span class="designer-panel__title">JSON Tree</span>
+                            </div>
+                            <span class="designer-panel__hint">Expand and collapse nested values</span>
+                        </div>
+                        <div class="designer-panel__body">
+                            <lib-json-tree-viewer [data]="keyValue"></lib-json-tree-viewer>
+                        </div>
+                    </section>
+                </div>
+
+                <div class="panel-grid panel-grid--split" *ngIf="viewMode === 'split'">
+                    <section class="designer-panel">
+                        <div class="designer-panel__header">
+                            <div>
+                                <span class="designer-panel__eyebrow">Navigator</span>
+                                <span class="designer-panel__title">Hierarchy Tree</span>
+                            </div>
+                        </div>
+                        <div class="designer-panel__body">
+                            <lib-json-tree-viewer [data]="keyValue"></lib-json-tree-viewer>
+                        </div>
+                    </section>
+
+                    <section class="designer-panel">
+                        <div class="designer-panel__header">
+                            <div>
+                                <span class="designer-panel__eyebrow">Diagram</span>
+                                <span class="designer-panel__title">Relationship Graph</span>
+                            </div>
+                            <span class="designer-panel__hint">Pan, zoom, and inspect nested containers visually</span>
+                        </div>
+                        <div class="designer-panel__body designer-panel__body--flush">
+                            <div class="graph-surface">
+                                <lib-json-graph-view [data]="keyValue"></lib-json-graph-view>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+
+                <div class="panel-grid panel-grid--single" *ngIf="viewMode === 'editor'">
+                    <section class="designer-panel">
+                        <div class="designer-panel__header">
+                            <div>
+                                <span class="designer-panel__eyebrow">Editor</span>
+                                <span class="designer-panel__title">JSON Editor</span>
+                            </div>
+                            <span class="designer-panel__hint">Work directly on the serialized payload</span>
+                        </div>
+                        <div class="designer-panel__body">
+                            <cmf-core-business-controls-propertyEditor
+                                class="json-editor"
+                                [required]="false"
+                                [(value)]="editedValue"
+                                (valueChange)="onEditorValueChange($event)"
+                                nestedEditorType="CodeEditor"
+                                #codeEditor>
+                            </cmf-core-business-controls-propertyEditor>
+                        </div>
+                        <div class="designer-panel__button">
+                            <button class="cmf-btn"
+                                    (click)="saveKeyValue()"
+                                    data-tag='jsonpersistency.saveButton'>Save</button>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </ng-container>
+
+        <ng-template #primitiveValueTemplate>
+            <div class="editor-card">
+                <div class="card-header">
+                    <div>
+                        <div class="card-title">Value</div>
+                        <div class="card-subtitle">This persistency key resolves to a primitive value.</div>
+                    </div>
+                </div>
+                <div class="editor-shell">
+                    <cmf-core-business-controls-propertyEditor
+                        label="Value"
+                        nestedEditorType="Input"
+                        [value]="editedValue"
+                        (valueChange)="onEditorValueChange($event)">
+                    </cmf-core-business-controls-propertyEditor>
+                    <div class="editor-actions">
+                        <button class="cmf-btn"
+                                (click)="saveKeyValue()"
+                                data-tag='jsonpersistency.saveButton'>Save</button>
+                    </div>
+                </div>
+            </div>
+        </ng-template>
+    </ng-container>
+</div>

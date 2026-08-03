@@ -1,0 +1,116 @@
+{
+  "packageId": "Cmf.Community.IoTCustomAutomationConfiguration.Data",
+  "version": "11331.0.0",
+  "description": "Cmf Custom Community Cmf.Community.IoTCustomAutomationConfiguration.Data Package",
+  "packageType": "Data",
+  "isInstallable": true,
+  "isUniqueInstall": true,
+  "contentToPack": [
+    {
+      "source": "DEEs/*",
+      "target": "DeeRules",
+      "ignoreFiles": [
+        "../.cmfpackageignore"
+      ],
+      "contentType": "DEE"
+    },
+    {
+      "source": "ChecklistImages/*",
+      "target": "ChecklistImages",
+      "ignoreFiles": [
+        "../.cmfpackageignore"
+      ],
+      "contentType": "ChecklistImages"
+    },
+    {
+      "source": "Documents/*",
+      "target": "Documents",
+      "ignoreFiles": [
+        "../.cmfpackageignore"
+      ],
+      "contentType": "Documents"
+    },
+    {
+      "source": "Maps/*",
+      "target": "Maps",
+      "ignoreFiles": [
+        "../.cmfpackageignore"
+      ],
+      "contentType": "Maps"
+    },
+    {
+      "source": "ExportedObjects/*",
+      "target": "ExportedObjects",
+      "ignoreFiles": [
+        "../.cmfpackageignore"
+      ],
+      "contentType": "ExportedObjects"
+    },
+    {
+      "source": "DEEs/ProcessRules/EntityTypes/*",
+      "target": "DeeRules/ProcessRules/EntityTypes/",
+      "contentType": "EntityTypes"
+    },
+    {
+      "source": "DEEs/ProcessRules/Baseline/Before/*",
+      "target": "DeeRules/ProcessRules/Baseline/Before/",
+      "contentType": "ProcessRulesPre"
+    },
+    {
+      "source": "DEEs/ProcessRules/$(version)/Before/*",
+      "target": "DeeRules/ProcessRules/$(version)/Before",
+      "contentType": "ProcessRulesPre"
+    },
+    {
+      "source": "MasterData/App/$(version)/*",
+      "target": "MasterData/$(version)/",
+      "contentType": "MasterData",
+      "targetFramework": "AppFramework"
+    },
+    {
+      "source": "MasterData/Framework/$(version)/*",
+      "target": "MasterData/$(version)/",
+      "contentType": "MasterData",
+      "targetFramework": "Self"
+    },
+    {
+      "source": "MasterData/$(version)/*",
+      "target": "MasterData/$(version)/",
+      "contentType": "MasterData"
+    },
+    {
+      "source": "MasterData/Baseline/DEEs/*",
+      "target": "MasterData/Baseline/DEEs/",
+      "contentType": "MasterData"
+    },
+    {
+      "source": "MasterData/Baseline/Model/*",
+      "target": "MasterData/Baseline/Model/",
+      "contentType": "MasterData"
+    },
+    {
+      "source": "MasterData/Baseline/SecondaryModel/*",
+      "target": "MasterData/Baseline/SecondaryModel/",
+      "contentType": "MasterData"
+    },
+    {
+      "source": "DEEs/ProcessRules/$(version)/After/*",
+      "target": "DeeRules/ProcessRules/$(version)/After",
+      "contentType": "ProcessRulesPost"
+    },
+    {
+      "source": "DEEs/ProcessRules/Baseline/After/*",
+      "target": "DeeRules/ProcessRules/Baseline/After",
+      "contentType": "ProcessRulesPost"
+    }
+  ],
+  "relatedPackages": [
+    {
+      "path": "../IoTCustomAutomationConfiguration.Business/",
+      "preBuild": true,
+      "postBuild": false,
+      "prePack": false,
+      "postPack": false
+    }
+  ]
+}

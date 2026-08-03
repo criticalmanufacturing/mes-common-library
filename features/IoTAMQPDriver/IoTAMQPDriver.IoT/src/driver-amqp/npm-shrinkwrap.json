@@ -1,0 +1,655 @@
+{
+  "name": "@criticalmanufacturing/connect-iot-driver-amqp",
+  "version": "0.0.0",
+  "packages": {
+    "drivers/connect-iot-custom-driver-amqp": {
+      "name": "@criticalmanufacturing/connect-iot-driver-amqp",
+      "version": "0.0.0",
+      "dependencies": {
+        "@criticalmanufacturing/connect-iot-common": "release-1115",
+        "@criticalmanufacturing/connect-iot-driver": "release-1115",
+        "@opentelemetry/exporter-trace-otlp-http": "0.50.0",
+        "fs-extra": "11.1.0",
+        "inversify": "6.0.2",
+        "moment": "2.29.4",
+        "reflect-metadata": "0.1.13",
+        "rhea": "^3.0.4",
+        "uuid": "9.0.0",
+        "yargs": "17.7.1"
+      },
+      "devDependencies": {
+        "@criticalmanufacturing/node-package-bundler": "latest",
+        "@types/chai": "4.3.4",
+        "@types/chai-spies": "1.0.3",
+        "@types/fs-extra": "11.0.1",
+        "@types/mocha": "10.0.1",
+        "@types/node": "18.14.4",
+        "@types/semver": "7.3.13",
+        "@types/uuid": "9.0.1",
+        "@types/yargs": "17.0.22",
+        "chai": "4.3.7",
+        "chai-spies": "1.0.0",
+        "gulp": "3.9.1",
+        "mocha": "10.2.0",
+        "mocha-junit-reporter": "2.2.0",
+        "mocha-lcov-reporter": "1.3.0",
+        "nyc": "15.1.0",
+        "testcontainers": "^10.11.0",
+        "tslint": "6.1.3",
+        "typescript": "4.9.5"
+      }
+    },
+    "drivers/connect-iot-custom-driver-amqp/node_modules/@opentelemetry/exporter-trace-otlp-http": {
+      "version": "0.50.0",
+      "resolved": "https://criticalmanufacturing.io/repository/npm/@opentelemetry/exporter-trace-otlp-http/-/exporter-trace-otlp-http-0.50.0.tgz",
+      "integrity": "sha512-L7OtIMT7MsFqkmhbQlPBGRXt7152VN5esHpQEJYIBFedOEo3Da+yHpu5ojMZtPzpIvSpB5Xr5lnJUjJCbkttCA==",
+      "license": "Apache-2.0",
+      "dependencies": {
+        "@opentelemetry/core": "1.23.0",
+        "@opentelemetry/otlp-exporter-base": "0.50.0",
+        "@opentelemetry/otlp-transformer": "0.50.0",
+        "@opentelemetry/resources": "1.23.0",
+        "@opentelemetry/sdk-trace-base": "1.23.0"
+      },
+      "engines": {
+        "node": ">=14"
+      },
+      "peerDependencies": {
+        "@opentelemetry/api": "^1.0.0"
+      }
+    },
+    "drivers/connect-iot-custom-driver-amqp/node_modules/@types/chai": {
+      "version": "4.3.4",
+      "resolved": "https://criticalmanufacturing.io/repository/npm/@types/chai/-/chai-4.3.4.tgz",
+      "integrity": "sha512-KnRanxnpfpjUTqTCXslZSEdLfXExwgNxYPdiO2WGUj8+HDjFi8R3k5RVKPeSCzLjCcshCAtVO2QBbVuAV4kTnw==",
+      "dev": true,
+      "license": "MIT"
+    },
+    "drivers/connect-iot-custom-driver-amqp/node_modules/@types/mocha": {
+      "version": "10.0.1",
+      "resolved": "https://criticalmanufacturing.io/repository/npm/@types/mocha/-/mocha-10.0.1.tgz",
+      "integrity": "sha512-/fvYntiO1GeICvqbQ3doGDIP97vWmvFt83GKguJ6prmQM2iXZfFcq6YE8KteFyRtX2/h5Hf91BYvPodJKFYv5Q==",
+      "dev": true,
+      "license": "MIT"
+    },
+    "drivers/connect-iot-custom-driver-amqp/node_modules/chai": {
+      "version": "4.3.7",
+      "resolved": "https://criticalmanufacturing.io/repository/npm/chai/-/chai-4.3.7.tgz",
+      "integrity": "sha512-HLnAzZ2iupm25PlN0xFreAlBA5zaBSv3og0DdeGA4Ar6h6rJ3A0rolRUKJhSF2V10GZKDgWF/VmAEsNWjCRB+A==",
+      "dev": true,
+      "license": "MIT",
+      "dependencies": {
+        "assertion-error": "^1.1.0",
+        "check-error": "^1.0.2",
+        "deep-eql": "^4.1.2",
+        "get-func-name": "^2.0.0",
+        "loupe": "^2.3.1",
+        "pathval": "^1.1.1",
+        "type-detect": "^4.0.5"
+      },
+      "engines": {
+        "node": ">=4"
+      }
+    },
+    "drivers/connect-iot-custom-driver-amqp/node_modules/cliui": {
+      "version": "7.0.4",
+      "resolved": "https://criticalmanufacturing.io/repository/npm/cliui/-/cliui-7.0.4.tgz",
+      "integrity": "sha512-OcRE68cOsVMXp1Yvonl/fzkQOyjLSu/8bhPDfQt0e0/Eb283TKP20Fs2MqoPsr9SwA595rRCA+QMzYc9nBP+JQ==",
+      "dev": true,
+      "license": "ISC",
+      "dependencies": {
+        "string-width": "^4.2.0",
+        "strip-ansi": "^6.0.0",
+        "wrap-ansi": "^7.0.0"
+      }
+    },
+    "drivers/connect-iot-custom-driver-amqp/node_modules/loupe": {
+      "version": "2.3.7",
+      "resolved": "https://criticalmanufacturing.io/repository/npm/loupe/-/loupe-2.3.7.tgz",
+      "integrity": "sha512-zSMINGVYkdpYSOBmLi0D1Uo7JU9nVdQKrHxC8eYlV+9YKK9WePqAlL7lSlorG/U2Fw1w0hTBmaa/jrQ3UbPHtA==",
+      "dev": true,
+      "license": "MIT",
+      "dependencies": {
+        "get-func-name": "^2.0.1"
+      }
+    },
+    "drivers/connect-iot-custom-driver-amqp/node_modules/mocha": {
+      "version": "10.2.0",
+      "resolved": "https://criticalmanufacturing.io/repository/npm/mocha/-/mocha-10.2.0.tgz",
+      "integrity": "sha512-IDY7fl/BecMwFHzoqF2sg/SHHANeBoMMXFlS9r0OXKDssYE1M5O43wUY/9BVPeIvfH2zmEbBfseqN9gBQZzXkg==",
+      "dev": true,
+      "license": "MIT",
+      "dependencies": {
+        "ansi-colors": "4.1.1",
+        "browser-stdout": "1.3.1",
+        "chokidar": "3.5.3",
+        "debug": "4.3.4",
+        "diff": "5.0.0",
+        "escape-string-regexp": "4.0.0",
+        "find-up": "5.0.0",
+        "glob": "7.2.0",
+        "he": "1.2.0",
+        "js-yaml": "4.1.0",
+        "log-symbols": "4.1.0",
+        "minimatch": "5.0.1",
+        "ms": "2.1.3",
+        "nanoid": "3.3.3",
+        "serialize-javascript": "6.0.0",
+        "strip-json-comments": "3.1.1",
+        "supports-color": "8.1.1",
+        "workerpool": "6.2.1",
+        "yargs": "16.2.0",
+        "yargs-parser": "20.2.4",
+        "yargs-unparser": "2.0.0"
+      },
+      "bin": {
+        "_mocha": "bin/_mocha",
+        "mocha": "bin/mocha.js"
+      },
+      "engines": {
+        "node": ">= 14.0.0"
+      },
+      "funding": {
+        "type": "opencollective",
+        "url": "https://opencollective.com/mochajs"
+      }
+    },
+    "drivers/connect-iot-custom-driver-amqp/node_modules/mocha-junit-reporter": {
+      "version": "2.2.0",
+      "resolved": "https://criticalmanufacturing.io/repository/npm/mocha-junit-reporter/-/mocha-junit-reporter-2.2.0.tgz",
+      "integrity": "sha512-W83Ddf94nfLiTBl24aS8IVyFvO8aRDLlCvb+cKb/VEaN5dEbcqu3CXiTe8MQK2DvzS7oKE1RsFTxzN302GGbDQ==",
+      "dev": true,
+      "license": "MIT",
+      "dependencies": {
+        "debug": "^4.3.4",
+        "md5": "^2.3.0",
+        "mkdirp": "~1.0.4",
+        "strip-ansi": "^6.0.1",
+        "xml": "^1.0.1"
+      },
+      "peerDependencies": {
+        "mocha": ">=2.2.5"
+      }
+    },
+    "drivers/connect-iot-custom-driver-amqp/node_modules/mocha/node_modules/yargs": {
+      "version": "16.2.0",
+      "resolved": "https://criticalmanufacturing.io/repository/npm/yargs/-/yargs-16.2.0.tgz",
+      "integrity": "sha512-D1mvvtDG0L5ft/jGWkLpG1+m0eQxOfaBvTNELraWj22wSVUMWxZUvYgJYcKh6jGGIkJFhH4IZPQhR4TKpc8mBw==",
+      "dev": true,
+      "license": "MIT",
+      "dependencies": {
+        "cliui": "^7.0.2",
+        "escalade": "^3.1.1",
+        "get-caller-file": "^2.0.5",
+        "require-directory": "^2.1.1",
+        "string-width": "^4.2.0",
+        "y18n": "^5.0.5",
+        "yargs-parser": "^20.2.2"
+      },
+      "engines": {
+        "node": ">=10"
+      }
+    },
+    "drivers/connect-iot-custom-driver-amqp/node_modules/typescript": {
+      "version": "4.9.5",
+      "resolved": "https://criticalmanufacturing.io/repository/npm/typescript/-/typescript-4.9.5.tgz",
+      "integrity": "sha512-1FXk9E2Hm+QzZQ7z+McJiHL4NW1F2EzMu9Nq9i3zAaGqibafqYwCVU6WyWAuyQRRzOlxou8xZSyXLEN8oKj24g==",
+      "dev": true,
+      "license": "Apache-2.0",
+      "bin": {
+        "tsc": "bin/tsc",
+        "tsserver": "bin/tsserver"
+      },
+      "engines": {
+        "node": ">=4.2.0"
+      }
+    },
+    "drivers/connect-iot-custom-driver-amqp/node_modules/wrap-ansi": {
+      "version": "7.0.0",
+      "resolved": "https://criticalmanufacturing.io/repository/npm/wrap-ansi/-/wrap-ansi-7.0.0.tgz",
+      "integrity": "sha512-YVGIj2kamLSTxw6NsZjoBxfSwsn0ycdesmc4p+Q21c5zPuZ1pl+NfxVdxPtdHvmNVOQ6XSYG4AUtyt/Fi7D16Q==",
+      "dev": true,
+      "license": "MIT",
+      "dependencies": {
+        "ansi-styles": "^4.0.0",
+        "string-width": "^4.1.0",
+        "strip-ansi": "^6.0.0"
+      },
+      "engines": {
+        "node": ">=10"
+      },
+      "funding": {
+        "url": "https://github.com/chalk/wrap-ansi?sponsor=1"
+      }
+    },
+    "node_modules/@criticalmanufacturing/connect-iot-common": {
+      "version": "11.1.5",
+      "resolved": "https://criticalmanufacturing.io/repository/npm/@criticalmanufacturing/connect-iot-common/-/connect-iot-common-11.1.5.tgz",
+      "integrity": "sha512-kjjB+m35151UppZWdRb5ShyYvMq6tDmpROvsEt10qzushLJ5MPei3Pv6N4M5OL+7E4MCZMFRn9X3/0/HDVJaRA==",
+      "dependencies": {
+        "@criticalmanufacturing/lbos-node": "11.1.5",
+        "@criticalmanufacturing/messagebus-client": "11.1.5",
+        "@opentelemetry/exporter-logs-otlp-http": "0.50.0",
+        "@opentelemetry/instrumentation-express": "0.39.0",
+        "@opentelemetry/instrumentation-http": "0.50.0",
+        "@opentelemetry/instrumentation-undici": "0.2.0",
+        "@opentelemetry/instrumentation-winston": "0.37.0",
+        "@opentelemetry/sdk-node": "0.50.0",
+        "@opentelemetry/winston-transport": "0.3.0",
+        "bottleneck": "2.19.5",
+        "btoa": "1.2.1",
+        "fecha": "4.2.3",
+        "fs-extra": "11.2.0",
+        "inversify": "6.0.2",
+        "moment": "2.29.4",
+        "reflect-metadata": "0.2.2",
+        "superagent": "9.0.2",
+        "uuid": "10.0.0",
+        "winston": "3.13.0",
+        "winston-daily-rotate-file": "5.0.0",
+        "ws": "8.17.1",
+        "yargs": "17.7.2"
+      }
+    },
+    "node_modules/@criticalmanufacturing/connect-iot-common/node_modules/@opentelemetry/api-logs": {
+      "version": "0.50.0",
+      "resolved": "https://criticalmanufacturing.io/repository/npm/@opentelemetry/api-logs/-/api-logs-0.50.0.tgz",
+      "integrity": "sha512-JdZuKrhOYggqOpUljAq4WWNi5nB10PmgoF0y2CvedLGXd0kSawb/UBnWT8gg1ND3bHCNHStAIVT0ELlxJJRqrA==",
+      "license": "Apache-2.0",
+      "dependencies": {
+        "@opentelemetry/api": "^1.0.0"
+      },
+      "engines": {
+        "node": ">=14"
+      }
+    },
+    "node_modules/@criticalmanufacturing/connect-iot-common/node_modules/@opentelemetry/exporter-logs-otlp-http": {
+      "version": "0.50.0",
+      "resolved": "https://criticalmanufacturing.io/repository/npm/@opentelemetry/exporter-logs-otlp-http/-/exporter-logs-otlp-http-0.50.0.tgz",
+      "integrity": "sha512-6s+nzBkIuFJlDoFM5FaLAa5lSmLr7GYMpU6QACIOGYqGsYD90YkP8VHFF0HrXSE3LRsgpvl6BTQbBfTVLtjizQ==",
+      "license": "Apache-2.0",
+      "dependencies": {
+        "@opentelemetry/api-logs": "0.50.0",
+        "@opentelemetry/core": "1.23.0",
+        "@opentelemetry/otlp-exporter-base": "0.50.0",
+        "@opentelemetry/otlp-transformer": "0.50.0",
+        "@opentelemetry/sdk-logs": "0.50.0"
+      },
+      "engines": {
+        "node": ">=14"
+      },
+      "peerDependencies": {
+        "@opentelemetry/api": "^1.0.0"
+      }
+    },
+    "node_modules/@criticalmanufacturing/connect-iot-common/node_modules/@opentelemetry/sdk-logs": {
+      "version": "0.50.0",
+      "resolved": "https://criticalmanufacturing.io/repository/npm/@opentelemetry/sdk-logs/-/sdk-logs-0.50.0.tgz",
+      "integrity": "sha512-PeUEupBB29p9nlPNqXoa1PUWNLsZnxG0DCDj3sHqzae+8y76B/A5hvZjg03ulWdnvBLYpnJslqzylG9E0IL87g==",
+      "license": "Apache-2.0",
+      "dependencies": {
+        "@opentelemetry/core": "1.23.0",
+        "@opentelemetry/resources": "1.23.0"
+      },
+      "engines": {
+        "node": ">=14"
+      },
+      "peerDependencies": {
+        "@opentelemetry/api": ">=1.4.0 <1.9.0",
+        "@opentelemetry/api-logs": ">=0.39.1"
+      }
+    },
+    "node_modules/@criticalmanufacturing/connect-iot-common/node_modules/fs-extra": {
+      "version": "11.2.0",
+      "resolved": "https://criticalmanufacturing.io/repository/npm/fs-extra/-/fs-extra-11.2.0.tgz",
+      "integrity": "sha512-PmDi3uwK5nFuXh7XDTlVnS17xJS7vW36is2+w3xcv8SVxiB4NyATf4ctkVY5bkSjX0Y4nbvZCq1/EjtEyr9ktw==",
+      "license": "MIT",
+      "dependencies": {
+        "graceful-fs": "^4.2.0",
+        "jsonfile": "^6.0.1",
+        "universalify": "^2.0.0"
+      },
+      "engines": {
+        "node": ">=14.14"
+      }
+    },
+    "node_modules/@criticalmanufacturing/connect-iot-common/node_modules/reflect-metadata": {
+      "version": "0.2.2",
+      "resolved": "https://criticalmanufacturing.io/repository/npm/reflect-metadata/-/reflect-metadata-0.2.2.tgz",
+      "integrity": "sha512-urBwgfrvVP/eAyXx4hluJivBKzuEbSQs9rKWCrCkbSxNv8mxPcUZKeuoF3Uy4mJl3Lwprp6yy5/39VWigZ4K6Q==",
+      "license": "Apache-2.0"
+    },
+    "node_modules/@criticalmanufacturing/connect-iot-common/node_modules/uuid": {
+      "version": "10.0.0",
+      "resolved": "https://criticalmanufacturing.io/repository/npm/uuid/-/uuid-10.0.0.tgz",
+      "integrity": "sha512-8XkAphELsDnEGrDxUOHB3RGvXz6TeuYSGEZBOjtTtPm2lwhGBjLgOzLHB63IUWfBpNucQjND6d3AOudO+H3RWQ==",
+      "funding": [
+        "https://github.com/sponsors/broofa",
+        "https://github.com/sponsors/ctavan"
+      ],
+      "license": "MIT",
+      "bin": {
+        "uuid": "dist/bin/uuid"
+      }
+    },
+    "node_modules/@criticalmanufacturing/connect-iot-common/node_modules/yargs": {
+      "version": "17.7.2",
+      "resolved": "https://criticalmanufacturing.io/repository/npm/yargs/-/yargs-17.7.2.tgz",
+      "integrity": "sha512-7dSzzRQ++CKnNI/krKnYRV7JKKPUXMEh61soaHKg9mrWEhzFWhFnxPxGl+69cD1Ou63C13NUPCnmIcrvqCuM6w==",
+      "license": "MIT",
+      "dependencies": {
+        "cliui": "^8.0.1",
+        "escalade": "^3.1.1",
+        "get-caller-file": "^2.0.5",
+        "require-directory": "^2.1.1",
+        "string-width": "^4.2.3",
+        "y18n": "^5.0.5",
+        "yargs-parser": "^21.1.1"
+      },
+      "engines": {
+        "node": ">=12"
+      }
+    },
+    "node_modules/@criticalmanufacturing/connect-iot-common/node_modules/yargs-parser": {
+      "version": "21.1.1",
+      "resolved": "https://criticalmanufacturing.io/repository/npm/yargs-parser/-/yargs-parser-21.1.1.tgz",
+      "integrity": "sha512-tVpsJW7DdjecAiFpbIB1e3qxIQsE6NoPc5/eTdrbbIC4h0LVsWhnoa3g+m2HclBIujHzsxZ4VJVA+GUuc2/LBw==",
+      "license": "ISC",
+      "engines": {
+        "node": ">=12"
+      }
+    },
+    "node_modules/@criticalmanufacturing/connect-iot-driver": {
+      "version": "11.1.5",
+      "resolved": "https://criticalmanufacturing.io/repository/npm/@criticalmanufacturing/connect-iot-driver/-/connect-iot-driver-11.1.5.tgz",
+      "integrity": "sha512-p+lILb7zjUvHKld2VI/C57zJ+cvYZIXVIDTrBTUi6vNVCB2aVIxkizVFML6YslSie+fhGhPFHL2bsObr7tjaqw==",
+      "dependencies": {
+        "@criticalmanufacturing/connect-iot-common": "11.1.5",
+        "anymatch": "3.1.3",
+        "chokidar": "3.6.0",
+        "fs-extra": "11.2.0",
+        "iconv-lite": "0.6.3",
+        "inversify": "6.0.2",
+        "moment": "2.29.4",
+        "nsfw": "2.2.5",
+        "readdirp": "3.6.0",
+        "reflect-metadata": "0.2.2",
+        "uuid": "10.0.0"
+      }
+    },
+    "node_modules/@criticalmanufacturing/connect-iot-driver/node_modules/chokidar": {
+      "version": "3.6.0",
+      "resolved": "https://criticalmanufacturing.io/repository/npm/chokidar/-/chokidar-3.6.0.tgz",
+      "integrity": "sha512-7VT13fmjotKpGipCW9JEQAusEPE+Ei8nl6/g4FBAmIm0GOOLMua9NDDo/DWp0ZAxCr3cPq5ZpBqmPAQgDda2Pw==",
+      "license": "MIT",
+      "dependencies": {
+        "anymatch": "~3.1.2",
+        "braces": "~3.0.2",
+        "glob-parent": "~5.1.2",
+        "is-binary-path": "~2.1.0",
+        "is-glob": "~4.0.1",
+        "normalize-path": "~3.0.0",
+        "readdirp": "~3.6.0"
+      },
+      "engines": {
+        "node": ">= 8.10.0"
+      },
+      "funding": {
+        "url": "https://paulmillr.com/funding/"
+      },
+      "optionalDependencies": {
+        "fsevents": "~2.3.2"
+      }
+    },
+    "node_modules/@criticalmanufacturing/connect-iot-driver/node_modules/fs-extra": {
+      "version": "11.2.0",
+      "resolved": "https://criticalmanufacturing.io/repository/npm/fs-extra/-/fs-extra-11.2.0.tgz",
+      "integrity": "sha512-PmDi3uwK5nFuXh7XDTlVnS17xJS7vW36is2+w3xcv8SVxiB4NyATf4ctkVY5bkSjX0Y4nbvZCq1/EjtEyr9ktw==",
+      "license": "MIT",
+      "dependencies": {
+        "graceful-fs": "^4.2.0",
+        "jsonfile": "^6.0.1",
+        "universalify": "^2.0.0"
+      },
+      "engines": {
+        "node": ">=14.14"
+      }
+    },
+    "node_modules/@criticalmanufacturing/connect-iot-driver/node_modules/reflect-metadata": {
+      "version": "0.2.2",
+      "resolved": "https://criticalmanufacturing.io/repository/npm/reflect-metadata/-/reflect-metadata-0.2.2.tgz",
+      "integrity": "sha512-urBwgfrvVP/eAyXx4hluJivBKzuEbSQs9rKWCrCkbSxNv8mxPcUZKeuoF3Uy4mJl3Lwprp6yy5/39VWigZ4K6Q==",
+      "license": "Apache-2.0"
+    },
+    "node_modules/@criticalmanufacturing/connect-iot-driver/node_modules/uuid": {
+      "version": "10.0.0",
+      "resolved": "https://criticalmanufacturing.io/repository/npm/uuid/-/uuid-10.0.0.tgz",
+      "integrity": "sha512-8XkAphELsDnEGrDxUOHB3RGvXz6TeuYSGEZBOjtTtPm2lwhGBjLgOzLHB63IUWfBpNucQjND6d3AOudO+H3RWQ==",
+      "funding": [
+        "https://github.com/sponsors/broofa",
+        "https://github.com/sponsors/ctavan"
+      ],
+      "license": "MIT",
+      "bin": {
+        "uuid": "dist/bin/uuid"
+      }
+    },
+    "node_modules/@opentelemetry/exporter-trace-otlp-http": {
+      "version": "0.57.2",
+      "resolved": "https://criticalmanufacturing.io/repository/npm/@opentelemetry/exporter-trace-otlp-http/-/exporter-trace-otlp-http-0.57.2.tgz",
+      "integrity": "sha512-sB/gkSYFu+0w2dVQ0PWY9fAMl172PKMZ/JrHkkW8dmjCL0CYkmXeE+ssqIL/yBUTPOvpLIpenX5T9RwXRBW/3g==",
+      "license": "Apache-2.0",
+      "peer": true,
+      "dependencies": {
+        "@opentelemetry/core": "1.30.1",
+        "@opentelemetry/otlp-exporter-base": "0.57.2",
+        "@opentelemetry/otlp-transformer": "0.57.2",
+        "@opentelemetry/resources": "1.30.1",
+        "@opentelemetry/sdk-trace-base": "1.30.1"
+      },
+      "engines": {
+        "node": ">=14"
+      },
+      "peerDependencies": {
+        "@opentelemetry/api": "^1.3.0"
+      }
+    },
+    "node_modules/@opentelemetry/exporter-trace-otlp-http/node_modules/@opentelemetry/core": {
+      "version": "1.30.1",
+      "resolved": "https://criticalmanufacturing.io/repository/npm/@opentelemetry/core/-/core-1.30.1.tgz",
+      "integrity": "sha512-OOCM2C/QIURhJMuKaekP3TRBxBKxG/TWWA0TL2J6nXUtDnuCtccy49LUJF8xPFXMX+0LMcxFpCo8M9cGY1W6rQ==",
+      "license": "Apache-2.0",
+      "peer": true,
+      "dependencies": {
+        "@opentelemetry/semantic-conventions": "1.28.0"
+      },
+      "engines": {
+        "node": ">=14"
+      },
+      "peerDependencies": {
+        "@opentelemetry/api": ">=1.0.0 <1.10.0"
+      }
+    },
+    "node_modules/@opentelemetry/exporter-trace-otlp-http/node_modules/@opentelemetry/otlp-exporter-base": {
+      "version": "0.57.2",
+      "resolved": "https://criticalmanufacturing.io/repository/npm/@opentelemetry/otlp-exporter-base/-/otlp-exporter-base-0.57.2.tgz",
+      "integrity": "sha512-XdxEzL23Urhidyebg5E6jZoaiW5ygP/mRjxLHixogbqwDy2Faduzb5N0o/Oi+XTIJu+iyxXdVORjXax+Qgfxag==",
+      "license": "Apache-2.0",
+      "peer": true,
+      "dependencies": {
+        "@opentelemetry/core": "1.30.1",
+        "@opentelemetry/otlp-transformer": "0.57.2"
+      },
+      "engines": {
+        "node": ">=14"
+      },
+      "peerDependencies": {
+        "@opentelemetry/api": "^1.3.0"
+      }
+    },
+    "node_modules/@opentelemetry/exporter-trace-otlp-http/node_modules/@opentelemetry/otlp-transformer": {
+      "version": "0.57.2",
+      "resolved": "https://criticalmanufacturing.io/repository/npm/@opentelemetry/otlp-transformer/-/otlp-transformer-0.57.2.tgz",
+      "integrity": "sha512-48IIRj49gbQVK52jYsw70+Jv+JbahT8BqT2Th7C4H7RCM9d0gZ5sgNPoMpWldmfjvIsSgiGJtjfk9MeZvjhoig==",
+      "license": "Apache-2.0",
+      "peer": true,
+      "dependencies": {
+        "@opentelemetry/api-logs": "0.57.2",
+        "@opentelemetry/core": "1.30.1",
+        "@opentelemetry/resources": "1.30.1",
+        "@opentelemetry/sdk-logs": "0.57.2",
+        "@opentelemetry/sdk-metrics": "1.30.1",
+        "@opentelemetry/sdk-trace-base": "1.30.1",
+        "protobufjs": "^7.3.0"
+      },
+      "engines": {
+        "node": ">=14"
+      },
+      "peerDependencies": {
+        "@opentelemetry/api": "^1.3.0"
+      }
+    },
+    "node_modules/@opentelemetry/exporter-trace-otlp-http/node_modules/@opentelemetry/resources": {
+      "version": "1.30.1",
+      "resolved": "https://criticalmanufacturing.io/repository/npm/@opentelemetry/resources/-/resources-1.30.1.tgz",
+      "integrity": "sha512-5UxZqiAgLYGFjS4s9qm5mBVo433u+dSPUFWVWXmLAD4wB65oMCoXaJP1KJa9DIYYMeHu3z4BZcStG3LC593cWA==",
+      "license": "Apache-2.0",
+      "peer": true,
+      "dependencies": {
+        "@opentelemetry/core": "1.30.1",
+        "@opentelemetry/semantic-conventions": "1.28.0"
+      },
+      "engines": {
+        "node": ">=14"
+      },
+      "peerDependencies": {
+        "@opentelemetry/api": ">=1.0.0 <1.10.0"
+      }
+    },
+    "node_modules/@opentelemetry/exporter-trace-otlp-http/node_modules/@opentelemetry/sdk-metrics": {
+      "version": "1.30.1",
+      "resolved": "https://criticalmanufacturing.io/repository/npm/@opentelemetry/sdk-metrics/-/sdk-metrics-1.30.1.tgz",
+      "integrity": "sha512-q9zcZ0Okl8jRgmy7eNW3Ku1XSgg3sDLa5evHZpCwjspw7E8Is4K/haRPDJrBcX3YSn/Y7gUvFnByNYEKQNbNog==",
+      "license": "Apache-2.0",
+      "peer": true,
+      "dependencies": {
+        "@opentelemetry/core": "1.30.1",
+        "@opentelemetry/resources": "1.30.1"
+      },
+      "engines": {
+        "node": ">=14"
+      },
+      "peerDependencies": {
+        "@opentelemetry/api": ">=1.3.0 <1.10.0"
+      }
+    },
+    "node_modules/@opentelemetry/exporter-trace-otlp-http/node_modules/@opentelemetry/sdk-trace-base": {
+      "version": "1.30.1",
+      "resolved": "https://criticalmanufacturing.io/repository/npm/@opentelemetry/sdk-trace-base/-/sdk-trace-base-1.30.1.tgz",
+      "integrity": "sha512-jVPgBbH1gCy2Lb7X0AVQ8XAfgg0pJ4nvl8/IiQA6nxOsPvS+0zMJaFSs2ltXe0J6C8dqjcnpyqINDJmU30+uOg==",
+      "license": "Apache-2.0",
+      "peer": true,
+      "dependencies": {
+        "@opentelemetry/core": "1.30.1",
+        "@opentelemetry/resources": "1.30.1",
+        "@opentelemetry/semantic-conventions": "1.28.0"
+      },
+      "engines": {
+        "node": ">=14"
+      },
+      "peerDependencies": {
+        "@opentelemetry/api": ">=1.0.0 <1.10.0"
+      }
+    },
+    "node_modules/@opentelemetry/exporter-trace-otlp-http/node_modules/@opentelemetry/semantic-conventions": {
+      "version": "1.28.0",
+      "resolved": "https://criticalmanufacturing.io/repository/npm/@opentelemetry/semantic-conventions/-/semantic-conventions-1.28.0.tgz",
+      "integrity": "sha512-lp4qAiMTD4sNWW4DbKLBkfiMZ4jbAboJIGOQr5DvciMRI494OapieI9qiODpOt0XBr1LjIDy1xAGAnVs5supTA==",
+      "license": "Apache-2.0",
+      "peer": true,
+      "engines": {
+        "node": ">=14"
+      }
+    },
+    "node_modules/fs-extra": {
+      "version": "11.1.0",
+      "resolved": "https://criticalmanufacturing.io/repository/npm/fs-extra/-/fs-extra-11.1.0.tgz",
+      "integrity": "sha512-0rcTq621PD5jM/e0a3EJoGC/1TC5ZBCERW82LQuwfGnCa1V8w7dpYH1yNu+SLb6E5dkeCBzKEyLGlFrnr+dUyw==",
+      "license": "MIT",
+      "dependencies": {
+        "graceful-fs": "^4.2.0",
+        "jsonfile": "^6.0.1",
+        "universalify": "^2.0.0"
+      },
+      "engines": {
+        "node": ">=14.14"
+      }
+    },
+    "node_modules/inversify": {
+      "version": "6.0.2",
+      "resolved": "https://criticalmanufacturing.io/repository/npm/inversify/-/inversify-6.0.2.tgz",
+      "integrity": "sha512-i9m8j/7YIv4mDuYXUAcrpKPSaju/CIly9AHK5jvCBeoiM/2KEsuCQTTP+rzSWWpLYWRukdXFSl6ZTk2/uumbiA==",
+      "license": "MIT"
+    },
+    "node_modules/moment": {
+      "version": "2.29.4",
+      "resolved": "https://criticalmanufacturing.io/repository/npm/moment/-/moment-2.29.4.tgz",
+      "integrity": "sha512-5LC9SOxjSc2HF6vO2CyuTDNivEdoz2IvyJJGj6X8DJ0eFyfszE0QiEd+iXmBvUP3WHxSjFH/vIsA0EN00cgr8w==",
+      "license": "MIT",
+      "engines": {
+        "node": "*"
+      }
+    },
+    "node_modules/reflect-metadata": {
+      "version": "0.1.13",
+      "resolved": "https://criticalmanufacturing.io/repository/npm/reflect-metadata/-/reflect-metadata-0.1.13.tgz",
+      "integrity": "sha512-Ts1Y/anZELhSsjMcU605fU9RE4Oi3p5ORujwbIKXfWa+0Zxs510Qrmrce5/Jowq3cHSZSJqBjypxmHarc+vEWg==",
+      "license": "Apache-2.0"
+    },
+    "node_modules/rhea": {
+      "version": "3.0.4",
+      "resolved": "https://criticalmanufacturing.io/repository/npm/rhea/-/rhea-3.0.4.tgz",
+      "integrity": "sha512-n3kw8syCdrsfJ72w3rohpoHHlmv/RZZEP9VY5BVjjo0sEGIt4YSKypBgaiA+OUSgJAzLjOECYecsclG5xbYtZw==",
+      "license": "Apache-2.0",
+      "dependencies": {
+        "debug": "^4.3.3"
+      }
+    },
+    "node_modules/uuid": {
+      "version": "9.0.0",
+      "resolved": "https://criticalmanufacturing.io/repository/npm/uuid/-/uuid-9.0.0.tgz",
+      "integrity": "sha512-MXcSTerfPa4uqyzStbRoTgt5XIe3x5+42+q1sDuy3R5MDk66URdLMOZe5aPX/SQd+kuYAh0FdP/pO28IkQyTeg==",
+      "license": "MIT",
+      "bin": {
+        "uuid": "dist/bin/uuid"
+      }
+    },
+    "node_modules/yargs": {
+      "version": "17.7.1",
+      "resolved": "https://criticalmanufacturing.io/repository/npm/yargs/-/yargs-17.7.1.tgz",
+      "integrity": "sha512-cwiTb08Xuv5fqF4AovYacTFNxk62th7LKJ6BL9IGUpTJrWoU7/7WdQGTP2SjKf1dUNBGzDd28p/Yfs/GI6JrLw==",
+      "license": "MIT",
+      "dependencies": {
+        "cliui": "^8.0.1",
+        "escalade": "^3.1.1",
+        "get-caller-file": "^2.0.5",
+        "require-directory": "^2.1.1",
+        "string-width": "^4.2.3",
+        "y18n": "^5.0.5",
+        "yargs-parser": "^21.1.1"
+      },
+      "engines": {
+        "node": ">=12"
+      }
+    },
+    "node_modules/yargs/node_modules/yargs-parser": {
+      "version": "21.1.1",
+      "resolved": "https://criticalmanufacturing.io/repository/npm/yargs-parser/-/yargs-parser-21.1.1.tgz",
+      "integrity": "sha512-tVpsJW7DdjecAiFpbIB1e3qxIQsE6NoPc5/eTdrbbIC4h0LVsWhnoa3g+m2HclBIujHzsxZ4VJVA+GUuc2/LBw==",
+      "license": "ISC",
+      "engines": {
+        "node": ">=12"
+      }
+    }
+  }
+}

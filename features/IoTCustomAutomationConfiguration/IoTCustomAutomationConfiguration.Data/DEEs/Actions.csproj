@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<TargetFramework>net8.0</TargetFramework>
+		<OutputType>Library</OutputType>
+		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+		<AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+		<AssemblyName>Cmf.Community.IoTCustomAutomationConfiguration.Actions</AssemblyName>
+		<RootNamespace>Cmf.Community.IoTCustomAutomationConfiguration.Actions</RootNamespace>
+	</PropertyGroup>
+	<ItemGroup>
+		<PackageReference Include="Cmf.Foundation.BusinessObjects" Version="11.3.3" />
+		<PackageReference Include="cmf.common.customactionutilities" Version="11.3.0.1263488" GeneratePathProperty="true" />
+		<PackageReference Include="Cmf.Navigo.BusinessObjects" Version="11.3.3" />
+	</ItemGroup>
+	<ItemGroup>
+	  <ProjectReference Include="..\..\IoTCustomAutomationConfiguration.Business\Orchestration\Orchestration.csproj" />
+	</ItemGroup>
+</Project>

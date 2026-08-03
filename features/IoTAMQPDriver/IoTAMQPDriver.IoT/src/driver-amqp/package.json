@@ -1,0 +1,259 @@
+{
+  "name": "@criticalmanufacturing/connect-iot-driver-amqp",
+  "version": "11331.0.0",
+  "description": "",
+  "main": "src/index.js",
+  "scripts": {
+    "build": "tsc && tsc -p test/integration/",
+    "lint": "eslint ./**/*.ts",
+    "lint:fix": "eslint ./**/*.ts --fix",
+    "watchPackage": "tsc --preserveWatchOutput -w",
+    "watchTests": "tsc -p test/integration --preserveWatchOutput -w",
+    "test": "npx mocha test/integration/*.test.js --timeout 1200000 --exit",
+    "build:test:cover": "npm run build && npm run test:cover",
+    "test:cover": "npx nyc -r cobertura -r lcov -r text-summary mocha test/*.test.js test/**/*.test.js -- --timeout 120000 --exit -R mocha-multi-reporters --reporter-options configFile=mocha-multi-reporters-config.json",
+    "pretest": "npm run build",
+    "watch": "npm run build -- -w | npx mocha --timeout 10000 --exit --reporter min -w test/*.test.js test/**/*.test.js",
+    "packagePacker": "packageBundler -d -o=."
+  },
+  "keywords": [
+    "CMF",
+    "IoT",
+    "Agent"
+  ],
+  "devDependencies": {
+    "@criticalmanufacturing/node-package-bundler": "latest",
+    "@types/chai": "4.3.4",
+    "@types/chai-spies": "1.0.3",
+    "@types/fs-extra": "11.0.1",
+    "@types/mocha": "10.0.1",
+    "@types/node": "18.14.4",
+    "@types/semver": "7.3.13",
+    "@types/uuid": "9.0.1",
+    "@types/yargs": "17.0.22",
+    "chai": "4.3.7",
+    "chai-spies": "1.0.0",
+    "mocha": "10.2.0",
+    "mocha-junit-reporter": "2.2.0",
+    "mocha-lcov-reporter": "1.3.0",
+    "mocha-multi-reporters": "1.5.1",
+    "nyc": "15.1.0",
+    "testcontainers": "^10.11.0",
+    "tslint": "6.1.3",
+    "typescript": "4.9.5"
+  },
+  "dependencies": {
+    "@criticalmanufacturing/connect-iot-common": "release-1133",
+    "@criticalmanufacturing/connect-iot-driver": "release-1133",
+    "@opentelemetry/exporter-trace-otlp-http": "0.50.0",
+    "fs-extra": "11.1.0",
+    "inversify": "6.0.2",
+    "moment": "2.29.4",
+    "reflect-metadata": "0.1.13",
+    "rhea": "^3.0.4",
+    "uuid": "9.0.0",
+    "yargs": "17.7.1"
+  },
+  "author": "Critical Manufacturing",
+  "criticalManufacturing": {
+    "automationProtocol": {
+      "dataTypes": [
+        {
+          "name": "Integer",
+          "description": "Integer value"
+        },
+        {
+          "name": "Numeric",
+          "description": "Numeric value"
+        },
+        {
+          "name": "String",
+          "description": "String value"
+        },
+        {
+          "name": "Boolean",
+          "description": "Boolean value"
+        },
+        {
+          "name": "DateTime",
+          "description": "Date/Time value"
+        },
+        {
+          "name": "Object",
+          "description": "Json formatted value"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "address",
+          "label": "AMQP Broker Address",
+          "description": "Address where the AMQP Broker interface will be connecting to",
+          "type": "string",
+          "defaultValue": "127.0.0.1"
+        },
+        {
+          "name": "port",
+          "label": "AMQP Broker  Port",
+          "description": "Port where AMQP Broker interface is listening",
+          "type": "integer",
+          "defaultValue": 5672
+        },
+        {
+          "name": "certificatesRootFolder",
+          "label": "Certificates Root Folder",
+          "description": "Absolute path of the root folder for the Public Key Infrastructure. Allows the use of tokens ${temp} or ${tmp} for the OS temporary folder and token ${id} for replacing with the respective driver instance id",
+          "type": "string",
+          "defaultValue": "${temp}/ConnectIoT/AMQP/Certificates/${id}"
+        },
+        {
+          "name": "certificate",
+          "label": "Certificate",
+          "description": "Own certificate - can be either a path to a file or the contents of the file in plain text. Format should be 'pem'",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "name": "privateKey",
+          "label": "Private Key",
+          "description": "Own private key - can be either a path to a file or the contents of the file in plain text. Format should be 'pem'",
+          "type": "text",
+          "defaultValue": ""
+        },
+        {
+          "name": "username",
+          "label": "Driver Username",
+          "description": "Username to use for authentication. Use with amqps.",
+          "type": "string",
+          "defaultValue": ""
+        },
+        {
+          "name": "password",
+          "label": "Driver Password",
+          "description": "Password to use for authentication. Use with amqps.",
+          "type": "password",
+          "defaultValue": ""
+        }
+      ],
+      "extendedData": {
+        "property": [],
+        "event": [],
+        "eventProperty": [],
+        "command": [
+          {
+            "name": "address",
+            "label": "Address of Queue/Exchange/Topic",
+            "description": "Defines the Queue or Exchange name.",
+            "type": "string",
+            "defaultValue": ""
+          },
+          {
+            "name": "durable",
+            "label": "Durable",
+            "description": "How to configure connection durability.\nNotDurable - No durability (default) - Nothing persists if connection drops\nDurable - Configuration persists - Queue config survives, but unsettled messages may be lost\nFullDurability - Full durability  - Queue AND unsettled messages survive connection drops",
+            "type": "enum",
+            "values": [
+              "NotDurable",
+              "Durable",
+              "FullDurability"
+            ],
+            "defaultValue": "NotDurable"
+          },
+          {
+            "name": "expirationPolicy",
+            "label": "ExpirationPolicy",
+            "description": "How to set up the expiration policy.\nSessionEnd - Delete when AMQP session ends (default) - Cleaned up when session closes\nLinkDetach - Delete when link detaches - Cleaned up when sender.close() called\nConnectionClose - Delete when connection closes  - Cleaned up when connection drops\nNever - Never auto-delete (manual cleanup required)  - Persists until manually deleted",
+            "type": "enum",
+            "values": [
+              "SessionEnd",
+              "LinkDetach",
+              "ConnectionClose",
+              "Never"
+            ],
+            "defaultValue": "SessionEnd"
+          },
+          {
+            "name": "capabilities",
+            "label": "Capabilities",
+            "description": "Message send configuration.\nQueue - Direct routing - one-to-one routing based on exact key match\nTopic - Topic routing - pattern-based routing with wildcards\nFanout - Fanout routing - broadcast to all bound queues\nHeaders - Headers-based routing (message headers instead of routing key)",
+            "type": "enum",
+            "values": [
+              "Queue",
+              "Topic",
+              "Fanout",
+              "Headers"
+            ],
+            "defaultValue": "Queue"
+          },
+          {
+            "name": "extraCapabilities",
+            "label": "Additional Capabilities",
+            "description": "Define additional capabilities (i.e. ['alternate-exchange', 'publisher-confirms'], etc).",
+            "type": "object",
+            "defaultValue": null
+          },
+          {
+            "name": "dynamic",
+            "label": "Dynamic",
+            "description": "Auto-create unique queue.",
+            "type": "boolean",
+            "defaultValue": false
+          },
+          {
+            "name": "dynamicNodeProperties",
+            "label": "Dynamic Node Properties",
+            "description": "Define node properties (i.e. { 'queue.max-size':10000, 'queue.message-ttl': 6000 },  etc).",
+            "type": "object",
+            "defaultValue": null
+          },
+          {
+            "name": "timeout",
+            "label": "Sender Timeout",
+            "description": "Auto-delete sender after X amount of seconds of inactivity, in milliseconds",
+            "type": "integer",
+            "defaultValue": null
+          }
+        ],
+        "commandParameter": [
+          {
+            "name": "parameterType",
+            "label": "Parameter Type",
+            "description": "Type of parameter.\nAddress - allows command address override\nBody - will be used as full message body\nSubject - property will be used as message subject\nBody - will be used as full message body\nValue - will be used to create an entry for the message body",
+            "type": "enum",
+            "values": [
+              "Address",
+              "Subject",
+              "Body",
+              "Value"
+            ],
+            "defaultValue": "Value"
+          }
+        ]
+      },
+      "deviceIds": {
+        "property": {
+          "label": "Unique Property",
+          "description": "Describe what the user should enter here",
+          "mandatory": true,
+          "unique": true
+        },
+        "event": {
+          "label": "Unique Event",
+          "description": "Describe what the user should enter here",
+          "mandatory": true,
+          "unique": true
+        },
+        "command": {
+          "label": "Sender Unique Name",
+          "description": "AMQP Sender unique name",
+          "mandatory": true,
+          "unique": true
+        }
+      },
+      "characteristics": {
+        "hasProperties": false,
+        "hasEvents": false,
+        "hasCommands": true
+      }
+    }
+  }
+}

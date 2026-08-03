@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="Mocha Tests" time="76.735" tests="6" failures="0">
+  <testsuite name="Root Suite" timestamp="2025-10-01T10:25:48" tests="0" time="0.000" failures="0">
+  </testsuite>
+  <testsuite name="Solace AMQP Integration Tests - Commands" timestamp="2025-10-01T10:25:48" tests="3" file="/workspaces/Micron/Cmf.Custom.CDM.Exporter/Cmf.Custom.CDM.Exporter.Packages/src/driver-amqp/test/integration/command.test.js" time="40.172" failures="0">
+    <testcase name="Solace AMQP Integration Tests - Commands Publish to Queue" time="0.617" classname="Publish to Queue">
+    </testcase>
+    <testcase name="Solace AMQP Integration Tests - Commands Publish to Queue - Address Override" time="0.385" classname="Publish to Queue - Address Override">
+    </testcase>
+    <testcase name="Solace AMQP Integration Tests - Commands Publish to Queue - Dynamic Address" time="1.444" classname="Publish to Queue - Dynamic Address">
+    </testcase>
+  </testsuite>
+  <testsuite name="Command Tests" timestamp="2025-10-01T10:26:28" tests="3" file="/workspaces/Micron/Cmf.Custom.CDM.Exporter/Cmf.Custom.CDM.Exporter.Packages/src/driver-amqp/test/integration/connection.test.js" time="36.560" failures="0">
+    <testcase name="Command Tests Connect to Solace" time="0.103" classname="Connect to Solace">
+    </testcase>
+    <testcase name="Command Tests Connect to Solace Basic Auth - Happy Path" time="0.439" classname="Connect to Solace Basic Auth - Happy Path">
+    </testcase>
+    <testcase name="Command Tests Connect to Solace Basic Auth - Wrong Auth" time="1.259" classname="Connect to Solace Basic Auth - Wrong Auth">
+    </testcase>
+  </testsuite>
+</testsuites>

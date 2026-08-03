@@ -1,0 +1,218 @@
+name: Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      feature:
+        description: 'Feature folder under features/ to release (or "all")'
+        required: true
+        default: 'all'
+        type: string
+      mes-version:
+        description: 'MES version to tag against (default: each feature''s own Cmf.Environment dependency version)'
+        required: false
+        type: string
+        default: ''
+
+permissions:
+  contents: write
+
+jobs:
+  discover:
+    runs-on: ubuntu-latest
+    outputs:
+      features: ${{ steps.list.outputs.features }}
+    steps:
+    - uses: actions/checkout@v4
+    - name: List feature directories to build/release
+      id: list
+      shell: bash
+      run: |
+        if [ "${{ inputs.feature }}" != "all" ]; then
+          FEATURES=$(printf '%s\n' "${{ inputs.feature }}" | jq -R -s -c 'split("\n")[:-1]')
+        else
+          FEATURES=$(ls -d features/*/ | xargs -n1 basename | jq -R -s -c 'split("\n")[:-1]')
+        fi
+        echo "Features to process: $FEATURES"
+        echo "features=$FEATURES" >> "$GITHUB_OUTPUT"
+
+  # Fetches this feature's packages already built and tested by ci.yml from
+  # the persistent CI package store (see _build-changed.yml's "promote" job
+  # and .github/scripts/promote-to-ci-store.sh) instead of rebuilding
+  # everything from scratch. The feature's Tests-type package (if any) is the
+  # one exception: it's rebuilt and re-run fresh here, against those
+  # CI-sourced dependencies, as a final sanity check before publishing.
+  fetch:
+    needs: discover
+    strategy:
+      matrix:
+        feature: ${{ fromJson(needs.discover.outputs.features) }}
+
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: 8.0.x
+    - name: Use Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20.x'
+    - name: Install @cmf/cli
+      run: npm install -g @criticalmanufacturing/cli
+    - name: Login cmf login
+      run: cmf login -t ${{ secrets.Roque_CM_IO_TOKEN }}
+      
+    - name: Fetch already-tested packages for ${{ matrix.feature }} from the CI package store
+      shell: bash
+      env:
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: |
+          set -euo pipefail
+
+          FEATURE_ROOT="features/${{ matrix.feature }}"
+          CI_DIR="$GITHUB_WORKSPACE/CI-DIR"
+          mkdir -p "$CI_DIR"
+
+          # Every cmfpackage.json under this feature (its own root package
+          # plus every nested package).
+          mapfile -t PACKAGE_FILES < <(find "$FEATURE_ROOT" -name cmfpackage.json -not -path "*/node_modules/*" -not -path "*/bin/*" | sort)
+
+          # The feature's Tests-type package(s), if any, are re-run fresh as
+          # a sanity check in the next step rather than fetched as a
+          # pre-built zip - they're not installable/customer-facing anyway.
+          : > "$RUNNER_TEMP/test-package-dirs.txt"
+
+          for pkg_file in "${PACKAGE_FILES[@]}"; do
+            pkg_dir=$(dirname "$pkg_file")
+            package_id=$(jq -r '.packageId' "$pkg_file")
+            package_type=$(jq -r '.packageType // empty' "$pkg_file")
+            version=$(jq -r '.version' "$pkg_file")
+
+            if [ "$package_type" = "Tests" ]; then
+              echo "$pkg_dir" >> "$RUNNER_TEMP/test-package-dirs.txt"
+              continue
+            fi
+
+            echo "::group::Fetching $package_id.$version.zip from the CI package store"
+            if ! gh release download internal/ci-latest --pattern "$package_id.$version.zip" --dir "$CI_DIR" --clobber; then
+              echo "::error::$package_id.$version.zip was not found in the internal/ci-latest CI package store. Has a CI run ever built and promoted it? A release cannot be produced from a package that was never actually tested."
+              exit 1
+            fi
+            echo "::endgroup::"
+          done
+
+    - name: Sanity-check ${{ matrix.feature }}'s test package(s) against CI-sourced dependencies
+      shell: bash
+      env:
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: |
+          set -euo pipefail
+
+          if [ ! -s "$RUNNER_TEMP/test-package-dirs.txt" ]; then
+            echo "${{ matrix.feature }} has no Tests-type package - nothing to sanity-check."
+            exit 0
+          fi
+
+          while IFS= read -r test_dir; do
+            [ -z "$test_dir" ] && continue
+
+            # Tests-type packages always build AND pack: their
+            # relatedPackages entries (see e.g. IoTMTConnect.Tests's
+            # cmfpackage.json) declare preBuild/prePack hooks on the local
+            # sibling packages they need to run (e.g. IoTMTConnect.IoT), so
+            # packing here is what stages that sibling's build output locally
+            # for scripts/pack-iot-test-packages.sh to pick up.
+            echo "::group::Restoring/building/packing $test_dir"
+            (cd "$test_dir" && cmf restore && cmf build --test && cmf pack)
+            echo "::endgroup::"
+
+            .github/scripts/run-package-tests.sh "$test_dir"
+          done < "$RUNNER_TEMP/test-package-dirs.txt"
+
+    - uses: actions/upload-artifact@v4
+      with:
+        name: ${{ matrix.feature }}-packages
+        path: ${{ github.workspace }}/CI-DIR/*.zip
+        compression-level: 9
+
+  release:
+    needs: [discover, fetch]
+    strategy:
+      matrix:
+        feature: ${{ fromJson(needs.discover.outputs.features) }}
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Read feature version
+      id: version
+      shell: bash
+      run: |
+        VERSION=$(jq -r '.version' "features/${{ matrix.feature }}/cmfpackage.json")
+        echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+    - name: Resolve MES version
+      id: mes
+      shell: bash
+      run: |
+        MES_VERSION="${{ inputs.mes-version }}"
+        if [ -z "$MES_VERSION" ]; then
+          MES_VERSION=$(jq -r '.dependencies[] | select(.id == "Cmf.Environment") | .version' "features/${{ matrix.feature }}/cmfpackage.json")
+        fi
+        if [ -z "$MES_VERSION" ] || [ "$MES_VERSION" = "null" ]; then
+          echo "::error::Could not resolve MES version for feature ${{ matrix.feature }}: no mes-version input and no Cmf.Environment dependency found"
+          exit 1
+        fi
+        echo "version=$MES_VERSION" >> "$GITHUB_OUTPUT"
+    - name: Compute release tag
+      id: tag
+      shell: bash
+      run: |
+        MES_TAG=$(echo "${{ steps.mes.outputs.version }}" | tr '.' '_')
+        PKG_TAG=$(echo "${{ steps.version.outputs.version }}" | tr '.' '_')
+        echo "tag=${{ matrix.feature }}/${MES_TAG}-v${PKG_TAG}" >> "$GITHUB_OUTPUT"
+    - name: Generate release notes for ${{ matrix.feature }}
+      id: notes
+      shell: bash
+      env:
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: |
+        git fetch --tags --force
+
+        # Scope "previous release" to this feature's own tag lineage, so notes
+        # don't pull in commits from other features' releases in between.
+        PREV_TAG=$(git tag --list "${{ matrix.feature }}/*" --sort=-creatordate | head -n1 || true)
+
+        if [ -n "$PREV_TAG" ]; then
+          BODY=$(gh api "repos/${{ github.repository }}/releases/generate-notes" \
+            -f tag_name="${{ steps.tag.outputs.tag }}" \
+            -f target_commitish="${{ github.sha }}" \
+            -f previous_tag_name="$PREV_TAG" \
+            --jq .body)
+        else
+          BODY=$(gh api "repos/${{ github.repository }}/releases/generate-notes" \
+            -f tag_name="${{ steps.tag.outputs.tag }}" \
+            -f target_commitish="${{ github.sha }}" \
+            --jq .body)
+        fi
+
+        {
+          echo "body<<RELEASE_NOTES_EOF"
+          echo "$BODY"
+          echo "RELEASE_NOTES_EOF"
+        } >> "$GITHUB_OUTPUT"
+    - name: Download feature artifacts
+      uses: actions/download-artifact@v4
+      with:
+        name: ${{ matrix.feature }}-packages
+        path: dist
+    - name: Create GitHub release
+      uses: softprops/action-gh-release@v2
+      with:
+        tag_name: ${{ steps.tag.outputs.tag }}
+        target_commitish: ${{ github.sha }}
+        name: "${{ matrix.feature }} ${{ steps.version.outputs.version }} (MES ${{ steps.mes.outputs.version }})"
+        body: ${{ steps.notes.outputs.body }}
+        files: dist/*.zip
