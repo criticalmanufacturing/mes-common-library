@@ -1,0 +1,59 @@
+{
+  "host": {
+    "rest": {
+      "enableSsl": false,
+      "address": "localhost",
+      "port": 80,
+      "timeout": 120000
+    },
+    "tenant": {
+      "name": "Community"
+    },
+    "loadBalancer": {
+      "enableSsl": false,
+      "address": "",
+      "port": 0,
+      "timeout": 120000
+    },
+    "isLoadBalancerEnabled": false
+  },
+  "lboGenerator": {
+    "enableSsl": false,
+    "address": "",
+    "port": 0,
+    "timeout": 120000
+  },
+  "general": {
+    "supportedCultures": [
+      "en-US",
+      "pt-PT",
+      "de-DE",
+      "vi-VN",
+      "zh-CN",
+      "zh-TW",
+      "es-ES",
+      "pl-PL",
+      "sv-SE",
+      "fr-FR"
+    ],
+    "supportedThemes": [
+      "cmf.style.blue",
+      "cmf.style.blue.accessibility",
+      "cmf.style.dark",
+      "cmf.style.dark.accessibility",
+      "cmf.style.gray",
+      "cmf.style.gray.accessibility",
+      "cmf.style.contrast",
+      "cmf.style.contrast.accessibility"
+    ],
+    "defaultDomain": "",
+    "startup": {
+      "startupCulture": "en-US",
+      "startupTheme": "cmf.style.blue"
+    },
+    "localizationFiles": "",
+    "environmentName": "MES"
+  },
+  "cacheId": "",
+  "version": "IoTPersistencyViewer $(Build.BuildNumber) - 11.3.3"
+}

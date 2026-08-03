@@ -1,0 +1,13 @@
+name: CI
+
+on:
+  push:
+    branches: [ "*/dev*", "*/dev*/*", "*/fix/*", "*/feat/*" ]
+
+jobs:
+  build-changed:
+    uses: ./.github/workflows/_build-changed.yml
+    with:
+      base-sha: ${{ github.event.before }}
+      head-sha: ${{ github.sha }}
+    secrets: inherit

@@ -1,0 +1,20 @@
+{
+  "packageId": "Cmf.Community.IoTSecurityToolset.IoT",
+  "version": "11331.0.0",
+  "description": "Cmf Cmf.Community.IoTSecurityToolset.IoT Package",
+  "packageType": "IoT",
+  "isInstallable": true,
+  "isUniqueInstall": false,
+  "contentToPack": [
+    {
+      "source": "src/*",
+      "target": "node_modules",
+      "ignoreFiles": [
+        ".npmignore"
+      ]
+    }
+  ],
+  "xmlInjection": [
+    "ui.xml"
+  ]
+}

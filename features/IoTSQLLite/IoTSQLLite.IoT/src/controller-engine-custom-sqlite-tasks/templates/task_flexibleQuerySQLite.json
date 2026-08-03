@@ -1,0 +1,73 @@
+{
+  "converters": [],
+  "tasks": [
+    {
+      "name": "flexibleQuerySQLite",
+      "displayName": "Flexible Query SQLite",
+      "iconClass": "icon-coreatl-tasks-connect-iot-lg-retrieve-data",
+      "isProtocol": false,
+      "isController": true,
+      "lifecycle": "Productive",
+      "lifecycleMessage": "",
+      "dependsOnProtocol": [],
+      "dependsOnScope": [],
+      "inputs": {
+        "tableName": {
+          "type": "Static",
+          "dataType": "String",
+          "displayName": "tableName",
+          "defaultValue": ""
+        },
+        "criteria": {
+          "type": "Static",
+          "dataType": "Object",
+          "displayName": "criteria",
+          "defaultValue": "{}"
+        },
+        "activate": {
+          "type": "Activate",
+          "dataType": "String",
+          "displayName": "Activate",
+          "defaultValue": ""
+        }
+      },
+      "outputs": {
+        "result": {
+          "type": "Static",
+          "dataType": "Any",
+          "displayName": "Result"
+        },
+        "success": {
+          "type": "Success",
+          "displayName": "Success"
+        },
+        "error": {
+          "type": "Error",
+          "displayName": "Error"
+        }
+      },
+      "settings": {
+        "General": {
+          "Defaults Section": [
+            {
+              "name": "tableName",
+              "displayName": "Default Table Name",
+              "settingKey": "tableName",
+              "dataType": "string",
+              "infoMessage": "Default Table Name to be used",
+              "defaultValue": ""
+            },
+            {
+              "name": "criteria",
+              "displayName": "Crtieria",
+              "settingKey": "criteria",
+              "dataType": "object",
+              "infoMessage": "Default Query Criteria:\n{ jsonFilters: { operator: string; path: string; value: any; }[], limit: number }\noperators:'equals','greater_than','less_than','contains'",
+              "defaultValue": ""
+            }
+          ]
+        }
+      }
+    }
+  ]
+}
