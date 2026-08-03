@@ -1,7 +1,7 @@
 #!/bin/bash
 
 ################################################################################
-# Scaffolding helper for creating a new CM Communityization project and its first
+# Scaffolding helper for creating a new CM customization project and its first
 # feature in this repository.
 #
 # What this script does:
@@ -9,30 +9,24 @@
 # - Resolves the MES-specific `@criticalmanufacturing/ngx-schematics` version.
 # - Creates a project under `features/<ProjectName>`.
 # - Initializes the project root with `cmf init`.
-# - Asks whether to organize the Communityization as a Feature (opt-in) or as a
-#   root package with layer sub-packages (default).
-# - Prompts for the layers to generate:
+# - Prompts for the first feature name and creates it as `Community.<Feature>`.
+# - Prompts for the layers to generate inside that feature:
 #   Business, Data, HTML, Help, IoT, Database, Tests, Reporting, Grafana,
 #   and Security Portal.
 #
 # Naming model:
-# - Root package: `Cmf.Community`
-# - Default (normal) path: layers are sub-packages of the root package, e.g.
-#   `Cmf.Community.Business`, `Cmf.Community.HTML`, generated directly under the
-#   project directory.
-# - Opt-in Features path: creates a `Community.<Feature>` feature under
-#   `Features/` and generates layers inside it, e.g.
-#   `Cmf.Community.Community.<Feature>.Business`. Only used if the user
-#   explicitly asks for this structure.
+# - Root package: `Cmf.Custom`
+# - Feature package: `Community.<Feature>`
+# - Layer generation runs from the feature folder so the generated structure
+#   remains feature-oriented.
 #
-# Current CLI workaround (Features path only):
+# Current CLI workaround:
 # - With tenant fixed to `Community` and feature names also prefixed with
 #   `Community.`, the current CM CLI can generate duplicated namespace/project
 #   segments such as `Community.Community.<Feature>`.
 # - `fix_duplication` normalizes those generated files after layer creation so
 #   packageIds, namespaces, csproj names, and solution references match the
-#   intended feature naming. This is not needed in the default root-package
-#   path since there is no feature/tenant segment to collide.
+#   intended feature naming.
 ################################################################################
 
 # Exit immediately if a command exits with a non-zero status.
@@ -144,22 +138,18 @@ check_cm_package() {
         exit 1
     fi
 
-    
-    local next
-    next=$(npm view "$pkg" dist-tags.next 2>/dev/null)
-
     local installed
     installed=$(npm ls -g --depth=0 "$pkg" 2>/dev/null | grep -oE "${pkg}@[0-9][^ ]*" | head -1 | sed "s|^${pkg}@||")
 
     if [ -z "$installed" ]; then
-        echo "  Error: $pkg is not installed globally (latest is $latest and next is ${next:-<none>})."
-        echo "  Install with: npm install -g ${pkg}@latest" or "npm install -g ${pkg}@next"
+        echo "  Error: $pkg is not installed globally (latest is $latest)."
+        echo "  Install with: npm install -g ${pkg}@latest"
         exit 1
     fi
 
-    if [ "$installed" != "$latest" ] && [ "$installed" != "$next" ]; then
-        echo "  Error: $pkg installed version ($installed) does not match latest ($latest) or next ($next)."
-        echo "  Update with: npm install -g ${pkg}@latest" or "npm install -g ${pkg}@next"
+    if [ "$installed" != "$latest" ]; then
+        echo "  Error: $pkg installed version ($installed) does not match latest ($latest)."
+        echo "  Update with: npm install -g ${pkg}@latest"
         exit 1
     fi
 
@@ -193,7 +183,7 @@ echo "1. Init project at $projectDir"
 if [ -f "$projectDir/cmfpackage.json" ]; then
     echo "  Skipping: $projectDir/cmfpackage.json already exists."
 else
-    cmf -l Debug init "$projectName" "Cmf.Community.$projectName" \
+    cmf -l Debug init "$projectName" "Cmf.Custom" \
         --version 1.0.0 \
         --tenant "Community" \
         --infra "$scriptPath/infra.json" \
@@ -205,49 +195,37 @@ else
         --deploymentDir "$deploymentBaseDir"
 fi
 
-# --- optional Features structure -------------------------------------------
+# --- prompt for first feature ---------------------------------------------
+
+featureSuffix=$(prompt_required "First feature name (will be prefixed with 'Community.'):")
+validate_name "Feature name" "$featureSuffix"
+
+featureFullName="Community.$featureSuffix"
+featurePath="$projectDir/Features/$featureFullName"
 
 ###################
-echo "2. Choose project structure"
+echo "2. Create feature $featureFullName"
 ###################
 
-useFeatureStructure=false
-if prompt_yn "Organize this as a Feature under Features/<Project>/Community.<Feature>? (advanced; default is a root package with layer sub-packages)"; then
-    useFeatureStructure=true
-fi
-
-if [ "$useFeatureStructure" = true ]; then
-    featureSuffix=$(prompt_required "Feature name (will be prefixed with 'Community.'):")
-    validate_name "Feature name" "$featureSuffix"
-
-    featureFullName="Community.$featureSuffix"
-    featurePath="$projectDir/Features/$featureFullName"
-
-    echo "Create feature $featureFullName"
-
-    if [ -d "$featurePath" ]; then
-        echo "  Skipping: $featurePath already exists."
-    else
-        cmf -l Debug new feature "$featureFullName"
-    fi
-
-    cd "$featurePath"
-    packagePrefix="Cmf.Community.$featureFullName"
+if [ -d "$featurePath" ]; then
+    echo "  Skipping: $featurePath already exists."
 else
-    packagePrefix="Cmf.Community"
+    cmf -l Debug new feature "$featureFullName"
 fi
+
+cd "$featurePath"
 
 # --- interactive layer creation -------------------------------------------
 
 echo ""
-echo "Select which Communityization layers to create for $packagePrefix:"
+echo "Select which customization layers to create for $featureFullName:"
 
 if prompt_yn "Add Business layer?"; then
     cmf -l Debug new business
 fi
 
 if prompt_yn "Add Data layer?"; then
-    cmf -l Debug new data --businessPackage "./$packagePrefix.Business/"
+    cmf -l Debug new data --businessPackage "./Cmf.Custom.$featureFullName.Business/"
 fi
 
 if prompt_yn "Add HTML layer?"; then
@@ -259,7 +237,7 @@ if prompt_yn "Add Help layer?"; then
 fi
 
 if prompt_yn "Add IoT layer?"; then
-    cmf -l Debug new iot --htmlPackageLocation "./$packagePrefix.HTML/"
+    cmf -l Debug new iot --htmlPackageLocation "./Cmf.Custom.$featureFullName.HTML/"
 fi
 
 if prompt_yn "Add Database layer?"; then
@@ -282,11 +260,7 @@ if prompt_yn "Add Security Portal layer?"; then
     cmf -l Debug new securityPortal
 fi
 
-if [ "$useFeatureStructure" = true ]; then
-    fix_duplication "$featurePath" "$featureSuffix"
-    echo ""
-    echo "Done. Feature ready at: $featurePath"
-else
-    echo ""
-    echo "Done. Package layers ready at: $projectDir"
-fi
+fix_duplication "$featurePath" "$featureSuffix"
+
+echo ""
+echo "Done. Feature ready at: $featurePath"
