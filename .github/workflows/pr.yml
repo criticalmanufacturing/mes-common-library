@@ -1,0 +1,14 @@
+name: PR
+
+on:
+  pull_request:
+    branches: [ "main*", "*/dev*", "*/dev*/*", "*/fix/*", "*/feat/*" ]
+
+jobs:
+  build-changed:
+    uses: ./.github/workflows/_build-changed.yml
+    with:
+      base-sha: ${{ github.event.pull_request.base.sha }}
+      head-sha: ${{ github.event.pull_request.head.sha }}
+      run-pack: false
+    secrets: inherit
