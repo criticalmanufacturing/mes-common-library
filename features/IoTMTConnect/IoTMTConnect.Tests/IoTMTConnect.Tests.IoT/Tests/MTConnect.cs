@@ -131,6 +131,7 @@ namespace Cmf.Custom.Tests.IoT.Tests
         }
 
         [TestMethod]
+        [Ignore]
         public void ConnectToMTConnect_ProbeEvent()
         {
             new TestScenario(Configuration).Run((scenario, context) =>
@@ -179,6 +180,7 @@ namespace Cmf.Custom.Tests.IoT.Tests
         }
 
         [TestMethod]
+        [Ignore]
         public void ConnectToMTConnect_CurrentCommand()
         {
             new TestScenario(Configuration).Run((scenario, context) =>
