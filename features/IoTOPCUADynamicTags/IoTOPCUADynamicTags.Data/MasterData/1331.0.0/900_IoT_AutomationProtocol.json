@@ -1,0 +1,18 @@
+{
+  "<DM>AutomationProtocol": {
+    "1": {
+      "Name": "OPCUA_Protocol",
+      "Description": "OPCUA_Protocol",
+      "Type": "General",
+      "Package": "@criticalmanufacturing/connect-iot-driver-opcua",
+      "PackageVersion": "11.3.3"
+    }
+  },
+  "AutomationProtocolParameter": {},
+  "<DM>AutomationDriverDefinition": {},
+  "AutomationProperty": {},
+  "AutomationEvent": {},
+  "AutomationEventProperties": {},
+  "AutomationCommand": {},
+  "AutomationCommandParameter": {}
+}

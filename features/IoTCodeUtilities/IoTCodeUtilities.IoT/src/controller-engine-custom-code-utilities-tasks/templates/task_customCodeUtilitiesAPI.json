@@ -1,0 +1,28 @@
+{
+  "converters": [],
+  "tasks": [
+    {
+      "name": "customCodeUtilitiesAPI",
+      "displayName": "Custom Code Utilities API",
+      "iconClass": "icon-core-tasks-connect-iot-lg-codeexecution",
+      "isProtocol": false,
+      "isController": true,
+      "lifecycle": "Productive",
+      "lifecycleMessage": "",
+      "inputs": {},
+      "outputs": {},
+      "settings": {},
+      "scripts": {
+        "injectUtilitiesHTML": "${script(./scripts/customCodeUtilitiesAPI/injectUtilitiesHTML.ts)}"
+      },
+      "triggers": {
+        "beforeInit": [
+          {
+            "type": "Reference",
+            "script": "injectUtilitiesHTML"
+          }
+        ]
+      }
+    }
+  ]
+}

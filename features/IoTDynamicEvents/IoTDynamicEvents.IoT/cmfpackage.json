@@ -1,0 +1,22 @@
+{
+  "packageId": "Cmf.Community.IoTDynamicEvents.IoT.Packages",
+  "version": "11331.0.0",
+  "description": "Cmf Custom Community Cmf.Community.IoTDynamicEvents.IoT.Packages Package",
+  "packageType": "IoT",
+  "isInstallable": true,
+  "isUniqueInstall": false,
+  "isToForceInstall": true,
+  "forceRerunAfterDatabaseRestore": true,
+  "contentToPack": [
+    {
+      "source": "src/*",
+      "target": "node_modules",
+      "ignoreFiles": [
+        ".npmignore"
+      ]
+    }
+  ],
+  "xmlInjection": [
+    "ui.xml"
+  ]
+}

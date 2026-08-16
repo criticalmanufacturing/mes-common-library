@@ -1,0 +1,144 @@
+{
+    "<SM>Config": {
+        "1": {
+            "ParentPath": "/IoT/MaterialTracking/",
+            "Name": "AllowTrackInWithoutMaterialId",
+            "Value": "No",
+            "ValueType": "Boolean"
+        }
+    },
+    "<SM>LocalizedMessageKey": {
+        "1": {
+            "Name": "InvalidMaterial",
+            "Description": "Material is invalid",
+            "MessageType": "Message",
+            "UsageType": "Biz",
+            "en-US": "Material is invalid",
+            "de-DE": "",
+            "zh-CN": "",
+            "pt-PT": "",
+            "zh-TW": "",
+            "vi-VN": "",
+            "pl-PL": ""
+        },
+        "3": {
+            "Name": "InvalidResource",
+            "Description": "Resource is invalid",
+            "MessageType": "Message",
+            "UsageType": "Biz",
+            "en-US": "Resource is invalid",
+            "de-DE": "",
+            "zh-CN": "",
+            "pt-PT": "",
+            "zh-TW": "",
+            "vi-VN": "",
+            "pl-PL": ""
+        },
+        "4": {
+            "Name": "InvalidInputs",
+            "Description": "Inputs are invalid",
+            "MessageType": "Message",
+            "UsageType": "Biz",
+            "en-US": "Inputs are invalid",
+            "de-DE": "",
+            "zh-CN": "",
+            "pt-PT": "",
+            "zh-TW": "",
+            "vi-VN": "",
+            "pl-PL": ""
+        },
+        "5": {
+            "Name": "InvalidMaterialOperation",
+            "Description": "Material Operation is invalid",
+            "MessageType": "Message",
+            "UsageType": "Biz",
+            "en-US": "Material Operation is invalid",
+            "de-DE": "",
+            "zh-CN": "",
+            "pt-PT": "",
+            "zh-TW": "",
+            "vi-VN": "",
+            "pl-PL": ""
+        },
+        "6": {
+            "Name": "InvalidNoMaterialFound",
+            "Description": "No Material found to process",
+            "MessageType": "Message",
+            "UsageType": "Biz",
+            "en-US": "No Material found to process",
+            "de-DE": "",
+            "zh-CN": "",
+            "pt-PT": "",
+            "zh-TW": "",
+            "vi-VN": "",
+            "pl-PL": ""
+        },
+        "7": {
+            "Name": "IoTNoMaterialsInProcess",
+            "Description": "No Materials InProcess on Operation '{materialOperation}",
+            "MessageType": "Message",
+            "UsageType": "Biz",
+            "en-US": "No Materials InProcess on Operation '{0}'",
+            "de-DE": "",
+            "zh-CN": "",
+            "pt-PT": "",
+            "zh-TW": "",
+            "vi-VN": "",
+            "pl-PL": ""
+        },
+        "8": {
+            "Name": "IoTMaterialNotInProcess",
+            "Description": "Material '{material.Name}' is not InProcess on Operation '{materialOperation}'",
+            "MessageType": "Message",
+            "UsageType": "Biz",
+            "en-US": "Material '{0}' is not InProcess on Operation '{1}'",
+            "de-DE": "",
+            "zh-CN": "",
+            "pt-PT": "",
+            "zh-TW": "",
+            "vi-VN": "",
+            "pl-PL": ""
+        },
+        "9": {
+            "Name": "IoTNoMaterialsDispQueuedAtResource",
+            "Description": "No Materials Dispatched/Queued at Resource '{resource.Name}' on Operation '{materialOperation}'",
+            "MessageType": "Message",
+            "UsageType": "Biz",
+            "en-US": "No Materials Dispatched/Queued at Resource '{0}' on Operation '{1}'",
+            "de-DE": "",
+            "zh-CN": "",
+            "pt-PT": "",
+            "zh-TW": "",
+            "vi-VN": "",
+            "pl-PL": ""
+        },
+        "10": {
+            "Name": "IoTMaterialNotDispQueuedAtResource",
+            "Description": "Material '{material.Name}' is not Dispatched/Queued at Resource '{resource.Name}' on Operation '{materialOperation}'",
+            "MessageType": "Message",
+            "UsageType": "Biz",
+            "en-US": "Material '{0}' is not Dispatched/Queued at Resource '{1}' on Operation '{2}'",
+            "de-DE": "",
+            "zh-CN": "",
+            "pt-PT": "",
+            "zh-TW": "",
+            "vi-VN": "",
+            "pl-PL": ""
+        },
+
+        "11": {
+            "Name": "IoTMaterialInvalidMaterialOperationOnResource",
+            "Description": "Material '{0}' is not at Resource '{1}' so operation '{2}' is Invalid",
+            "MessageType": "Message",
+            "UsageType": "Biz",
+            "en-US": "Material '{0}' is not at Resource '{1}' so operation '{2}' is Invalid",
+            "de-DE": "",
+            "zh-CN": "",
+            "pt-PT": "",
+            "zh-TW": "",
+            "vi-VN": "",
+            "pl-PL": ""
+        }
+
+    }
+}

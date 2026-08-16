@@ -1,0 +1,34 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <IsPackable>false</IsPackable>
+    <IsTestProject>true</IsTestProject>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Cmf.Foundation.BaseTestsUtils" Version="11.3.3" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.11.1" />
+    <PackageReference Include="Moq" Version="4.20.72" />
+    <PackageReference Include="xunit" Version="2.9.2" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.8.2">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="../../Orchestration/Orchestration.csproj" />
+    <ProjectReference Include="../../../IoTCustomAutomationConfiguration.Data/DEEs/Actions.csproj" />
+  </ItemGroup>
+  <Target Name="ValidateProductionTestFileParity" BeforeTargets="PrepareForBuild">
+    <ItemGroup>
+      <DeeSource Include="../../../IoTCustomAutomationConfiguration.Data/DEEs/**/*.cs"
+                 Exclude="../../../IoTCustomAutomationConfiguration.Data/DEEs/DeeDevBase.cs;../../../IoTCustomAutomationConfiguration.Data/DEEs/Properties/**/*.cs;../../../IoTCustomAutomationConfiguration.Data/DEEs/bin/**/*.cs;../../../IoTCustomAutomationConfiguration.Data/DEEs/obj/**/*.cs" />
+      <OrchestrationSource Include="../../Orchestration/*.cs"
+                           Exclude="../../Orchestration/OrchestrationStartupModule.cs" />
+      <ExpectedProductionTest Include="@(DeeSource->'$(MSBuildProjectDirectory)/%(Filename)Tests.cs')" />
+      <ExpectedProductionTest Include="@(OrchestrationSource->'$(MSBuildProjectDirectory)/%(Filename)Tests.cs')" />
+      <MissingProductionTest Include="@(ExpectedProductionTest)" Condition="!Exists('%(FullPath)')" />
+    </ItemGroup>
+    <Error Condition="'@(MissingProductionTest)' != ''"
+           Text="Missing dedicated test file(s): @(MissingProductionTest). Add one &lt;SourceName&gt;Tests.cs file for each DEE and orchestration source." />
+  </Target>
+</Project>

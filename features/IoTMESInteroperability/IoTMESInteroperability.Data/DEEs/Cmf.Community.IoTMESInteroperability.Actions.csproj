@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<TargetFramework>net8.0</TargetFramework>
+		<OutputType>Library</OutputType>
+		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+		<AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+		<AssemblyName>Cmf.Community.IoTMESInteroperability.Actions</AssemblyName>
+		<RootNamespace>Cmf.Community.IoTMESInteroperability.Actions</RootNamespace>
+	</PropertyGroup>
+	<ItemGroup>
+		<PackageReference Include="Cmf.Foundation.BusinessObjects" Version="11.3.3" />
+		<PackageReference Include="Cmf.Foundation.BusinessOrchestration" Version="11.3.3" />
+		<PackageReference Include="Cmf.Navigo.BusinessObjects" Version="11.3.3" />
+		<PackageReference Include="Cmf.Navigo.BusinessOrchestration" Version="11.3.0" />
+		<PackageReference Include="cmf.common.customactionutilities" Version="11.3.0.1263488" GeneratePathProperty="true" />
+	</ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\..\IoTMESInteroperability.Business\Cmf.Community.IoTMESInteroperability.Orchestration\Cmf.Community.IoTMESInteroperability.Orchestration.csproj" />
+	</ItemGroup>
+</Project>

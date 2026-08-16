@@ -1,0 +1,46 @@
+{
+  "converters": [],
+  "tasks": [
+    {
+      "name": "customTimer",
+      "displayName": "Custom Timer",
+      "iconClass": "icon-core-tasks-connect-iot-lg-wizarddatetime",
+      "isProtocol": false,
+      "isController": true,
+      "lifecycle": "Productive",
+      "lifecycleMessage": "",
+      "inputs": {
+        "activate": {
+          "type": "Activate",
+          "dataType": "String",
+          "displayName": "Activate",
+          "defaultValue": ""
+        }
+      },
+      "outputs": {
+        "success": {
+          "type": "Success",
+          "displayName": "Success"
+        },
+        "error": {
+          "type": "Error",
+          "displayName": "Error"
+        }
+      },
+      "settings": {
+        "General": {
+          "Example Section": [
+            {
+              "name": "Example",
+              "displayName": "Example Setting",
+              "settingKey": "example",
+              "dataType": "string",
+              "infoMessage": "Information about the example setting",
+              "defaultValue": "Hello World"
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

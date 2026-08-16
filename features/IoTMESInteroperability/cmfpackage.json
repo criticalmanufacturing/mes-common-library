@@ -1,0 +1,28 @@
+{
+  "packageId": "Cmf.Community.IoTMESInteroperability",
+  "version": "11331.0.0",
+  "description": "This package deploys Critical Manufacturing Community Customization",
+  "packageType": "Root",
+  "isInstallable": true,
+  "isUniqueInstall": false,
+  "dependencies": [
+    {
+      "id": "Cmf.Environment",
+      "version": "11.3.3",
+      "mandatory": false
+    },
+    {
+      "id": "CriticalManufacturing.DeploymentMetadata",
+      "version": "11.3.3",
+      "mandatory": false
+    },
+    {
+      "id": "Cmf.Community.IoTMESInteroperability.Business",
+      "version": "11331.0.0"
+    },
+    {
+      "id": "Cmf.Community.IoTMESInteroperability.Data",
+      "version": "11331.0.0"
+    }
+  ]
+}

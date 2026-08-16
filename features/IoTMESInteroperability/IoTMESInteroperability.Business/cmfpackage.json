@@ -1,0 +1,14 @@
+{
+  "packageId": "Cmf.Community.IoTMESInteroperability.Business",
+  "version": "11331.0.0",
+  "description": "Cmf Custom Community Cmf.Community.IoTMESInteroperability.Business Package",
+  "packageType": "Business",
+  "isInstallable": true,
+  "isUniqueInstall": false,
+  "contentToPack": [
+    {
+      "source": "Release/*.dll",
+      "target": ""
+    }
+  ]
+}

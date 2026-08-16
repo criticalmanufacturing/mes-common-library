@@ -1,0 +1,106 @@
+{
+  "<SM>DEEAction": {
+    "1": {
+      "Action": "NotifyMetadataChange",
+      "Description": "Action to notify Connect IoT when there is a change in SmartTable ÍoTMetadataDefinition",
+      "CodeFileRelativePath": "ConnectIoT//NotifyMetadataChange.cs",
+      "IsEnabled": "Yes",
+      "Classification": "ConnectIoT"
+    }
+  },
+  "DEEActionOrder": {},
+  "<DM>Rule": {
+    "1": {
+      "Name": "NotifyMetadataChange",
+      "Description": "Action to notify Connect IoT when there is a change in SmartTable ÍoTMetadataDefinition",
+      "Scope": "SmartTable",
+      "DEERule": "NotifyMetadataChange"
+    }
+  },
+  "<ST>SmartTable": {
+    "1": {
+      "Name": "IoTMetadataDefinition",
+      "Description": "Metadata configuration for equipment integration",
+      "HistoryRetentionTime": "180",
+      "IsHistoryEnabled": "Yes",
+      "IsRepeatedValuesAllowed": "Yes",
+      "DataGroup": "",
+      "PostValidationRule": "NotifyMetadataChange"
+    }
+  },
+  "SmartTableProperties": {
+    "1": {
+      "SmartTable": "IoTMetadataDefinition",
+      "Name": "Resource",
+      "Position": "0",
+      "Description": "Resource Name",
+      "IsKey": "Yes",
+      "IsIndexed": "No",
+      "IsMandatory": "No",
+      "ScalarType": "NVarChar",
+      "Size": "256",
+      "ReferenceType": "EntityType",
+      "ReferenceName": "Resource.Name"
+    },
+    "2": {
+      "SmartTable": "IoTMetadataDefinition",
+      "Name": "ResourceType",
+      "Position": "1",
+      "Description": "Resource Type",
+      "IsKey": "Yes",
+      "IsIndexed": "No",
+      "IsMandatory": "No",
+      "ScalarType": "NVarChar",
+      "Size": "256",
+      "ReferenceType": "LookupValue",
+      "ReferenceName": "ResourceResourceType"
+    },
+    "3": {
+      "SmartTable": "IoTMetadataDefinition",
+      "Name": "Area",
+      "Position": "2",
+      "Description": "Area Name",
+      "IsKey": "Yes",
+      "IsIndexed": "No",
+      "IsMandatory": "No",
+      "ScalarType": "NVarChar",
+      "Size": "256",
+      "ReferenceType": "EntityType",
+      "ReferenceName": "Area.Name"
+    },
+    "4": {
+      "SmartTable": "IoTMetadataDefinition",
+      "Name": "Name",
+      "Position": "3",
+      "Description": "Name of Metadata",
+      "IsKey": "No",
+      "IsIndexed": "No",
+      "IsMandatory": "Yes",
+      "ScalarType": "NVarChar",
+      "Size": "256",
+      "ReferenceType": "None",
+      "ReferenceName": ""
+    },
+    "5": {
+      "SmartTable": "IoTMetadataDefinition",
+      "Name": "Value",
+      "Position": "4",
+      "Description": "Value of Metadata",
+      "IsKey": "No",
+      "IsIndexed": "No",
+      "IsMandatory": "Yes",
+      "ScalarType": "NVarChar",
+      "Size": "256",
+      "ReferenceType": "None",
+      "ReferenceName": ""
+    }
+  },
+  "SmartTablePrecedenceKeys": {
+    "1": {
+      "SmartTable": "IoTMetadataDefinition",
+      "PrecedenceKey1": "Resource",
+      "PrecedenceKey2": "ResourceType",
+      "PrecedenceKey3": "Area"
+    }
+  }
+}

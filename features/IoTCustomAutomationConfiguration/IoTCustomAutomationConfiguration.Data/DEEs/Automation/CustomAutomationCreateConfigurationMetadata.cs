@@ -8,7 +8,7 @@ using Cmf.Community.IoTCustomAutomationConfiguration.Actions.Orchestration.Input
 
 namespace Cmf.Community.IoTCustomAutomationConfiguration.Actions.Actions.Automation
 {
-    internal class CustomAutomationCreateConfigurationMetadata : DeeDevBase
+    public class CustomAutomationCreateConfigurationMetadata : DeeDevBase
     {
 
         public override Dictionary<string, object> DeeActionCode(Dictionary<string, object> Input)
@@ -51,8 +51,8 @@ namespace Cmf.Community.IoTCustomAutomationConfiguration.Actions.Actions.Automat
         public override bool DeeTestCondition(Dictionary<string, object> Input)
         {
             //---Start DEE Condition Code---
-            if (!Input.ContainsKey("ActionGroupName") &&
-                !Input["ActionGroupName"].ToString().Equals("BusinessObjects.AutomationProtocolCollection.CreateVersion.Post"))
+            if (!Input.TryGetValue("ActionGroupName", out var actionGroupName) ||
+                !string.Equals(actionGroupName?.ToString(), "BusinessObjects.AutomationProtocolCollection.CreateVersion.Post", StringComparison.Ordinal))
             {
                 return false;
             }

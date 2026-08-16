@@ -1,0 +1,94 @@
+{
+  "converters": [],
+  "tasks": [
+    {
+      "name": "customDynamicEventTaskRegister",
+      "displayName": "Custom Dynamic Event Task Register",
+      "iconClass": "icon-core-tasks-connect-iot-lg-equipmentevent",
+      "isProtocol": true,
+      "isController": false,
+      "lifecycle": "Productive",
+      "lifecycleMessage": "",
+      "inputs": {
+        "activate": {
+          "type": "Activate",
+          "dataType": "String",
+          "displayName": "Activate",
+          "defaultValue": ""
+        }
+      },
+      "outputs": {
+        "success": {
+          "type": "Success",
+          "displayName": "Success"
+        },
+        "error": {
+          "type": "Error",
+          "displayName": "Error"
+        }
+      },
+      "settings": {
+        "General": {
+          "Task Settings": [
+            {
+              "name": "autoActivate",
+              "displayName": "Auto Activate",
+              "settingKey": "autoActivate",
+              "dataType": "boolean",
+              "infoMessage": "Whether to automatically activate the event template",
+              "defaultValue": false
+            },
+            {
+              "name": "eventTemplateName",
+              "displayName": "Event Template Name",
+              "settingKey": "eventTemplateName",
+              "dataType": "string",
+              "infoMessage": "The name of the event template to use for creating dynamic events",
+              "defaultValue": ""
+            },
+            {
+              "name": "eventTagToken",
+              "displayName": "Event Tag Token",
+              "settingKey": "eventTagToken",
+              "dataType": "string",
+              "infoMessage": "The token of the event tag to use for creating dynamic events",
+              "defaultValue": ""
+            },
+            {
+              "name": "eventTagAliasName",
+              "displayName": "Event Tag Alias Name",
+              "settingKey": "eventTagAliasName",
+              "dataType": "string",
+              "infoMessage": "The alias name of the event tag to use for creating dynamic events",
+              "defaultValue": ""
+            },
+            {
+              "name": "resourceNamePersistedAlias",
+              "displayName": "Resource Name Persisted Alias",
+              "settingKey": "resourceNamePersistedAlias",
+              "dataType": "string",
+              "infoMessage": "The alias name of the resource name to use for creating dynamic events",
+              "defaultValue": ""
+            },
+            {
+              "name": "resourceTypePersistedAlias",
+              "displayName": "Resource Type Persisted Alias",
+              "settingKey": "resourceTypePersistedAlias",
+              "dataType": "string",
+              "infoMessage": "The alias name of the resource type to use for creating dynamic events",
+              "defaultValue": ""
+            },
+            {
+              "name": "subResourceRelationPersistedAlias",
+              "displayName": "Sub Resource Relation Persisted Alias",
+              "settingKey": "subResourceRelationPersistedAlias",
+              "dataType": "string",
+              "infoMessage": "The alias name of the sub resource relation to use for creating dynamic events",
+              "defaultValue": ""
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

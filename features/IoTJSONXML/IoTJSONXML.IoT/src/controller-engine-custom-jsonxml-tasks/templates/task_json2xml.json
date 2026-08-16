@@ -1,0 +1,56 @@
+{
+  "converters": [],
+  "tasks": [
+    {
+      "name": "json2xml",
+      "displayName": "JSON To XML",
+      "iconClass": "icon-core-tasks-connect-iot-lg-arithmeticoperation",
+      "isProtocol": false,
+      "isController": true,
+      "lifecycle": "Productive",
+      "lifecycleMessage": "",
+      "inputs": {
+        "activate": {
+          "type": "Activate",
+          "dataType": "String",
+          "displayName": "Activate",
+          "defaultValue": ""
+        },
+        "key": {
+          "type": "Static",
+          "dataType": "String",
+          "displayName": "Key",
+          "defaultValue": ""
+        },
+        "json": {
+          "type": "Static",
+          "dataType": "Object",
+          "displayName": "JSON",
+          "defaultValue": ""
+        },
+        "options": {
+          "type": "Static",
+          "dataType": "Object",
+          "displayName": "Options",
+          "defaultValue": ""
+        }
+      },
+      "outputs": {
+        "xml": {
+          "type": "Static",
+          "dataType": "String",
+          "displayName": "XML"
+        },
+        "success": {
+          "type": "Success",
+          "displayName": "Success"
+        },
+        "error": {
+          "type": "Error",
+          "displayName": "Error"
+        }
+      },
+      "settings": {}
+    }
+  ]
+}

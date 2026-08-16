@@ -349,12 +349,18 @@ fi
 echo ""
 echo "Select which Communityization layers to create for $packagePrefix:"
 
+biz=false
 if prompt_yn "Add Business layer?"; then
     run_layer_and_rename cmf -l Debug new business
+    biz=true
 fi
 
 if prompt_yn "Add Data layer?"; then
-    run_layer_and_rename cmf -l Debug new data --businessPackage "./$packagePrefix.Business/"
+    if [ "$biz" = true ]; then
+        run_layer_and_rename cmf -l Debug new data --businessPackage "./$packagePrefix.Business/"
+    else
+        run_layer_and_rename cmf -l Debug new data
+    fi  
 fi
 
 if prompt_yn "Add HTML layer?"; then
@@ -366,7 +372,7 @@ if prompt_yn "Add Help layer?"; then
 fi
 
 if prompt_yn "Add IoT layer?"; then
-    run_layer_and_rename cmf -l Debug new iot --htmlPackageLocation "./$packagePrefix.HTML/"
+    run_layer_and_rename cmf -l Debug new iot
 fi
 
 if prompt_yn "Add Database layer?"; then
