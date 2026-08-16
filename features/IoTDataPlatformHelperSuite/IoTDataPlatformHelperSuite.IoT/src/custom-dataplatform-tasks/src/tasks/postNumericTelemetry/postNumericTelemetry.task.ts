@@ -19,19 +19,36 @@ export const SETTINGS_DEFAULTS: PostNumericTelemetrySettings = {
 /**
  * @whatItDoes
  *
- * This task does something ... describe here
+ * Posts one numeric telemetry parameter to the Data Platform. The parameter is
+ * associated with the ISA-95 hierarchy extracted from the supplied instance
+ * (material, resource, area, facility, site, and enterprise when available).
+ *
+ * Values are rounded to eight decimal places before they are posted. ISA-95
+ * data is cached temporarily for non-material instances; material context is
+ * extracted for each activation because it can change over time. If `instance`
+ * is not provided, the telemetry is posted without ISA-95 context.
  *
  * @howToUse
  *
- * yada yada yada
+ * Configure the parameter fields and activate the task. The task resets
+ * `activate` after it starts, allowing the same task instance to be triggered
+ * again. A successful Data Platform response emits `success`; a response with
+ * errors emits `error` with the returned messages.
  *
  * ### Inputs
- * * `any` : **activate** - Activate the task
+ * * `ReferenceType` : **instance** - Entity used to resolve the ISA-95 context. Optional.
+ * * `string` : **class** - Telemetry parameter class.
+ * * `string` : **parameterName** - Telemetry parameter name.
+ * * `string` : **unitOfMeasure** - Unit associated with the numeric value.
+ * * `Object` : **tags** - Optional telemetry tags as `{ Key, Value }` objects.
+ * * `Decimal` : **value** - Numeric value to post.
+ * * `DateTime` : **valueTimestamp** - Timestamp assigned to the numeric value.
+ * * `any` : **activate** - Starts the telemetry post when the value changes.
  *
  * ### Outputs
  *
- * * `bool`  : ** success ** - Triggered when the the task is executed with success
- * * `Error` : ** error ** - Triggered when the task failed for some reason
+ * * `bool` : **success** - Emits `true` when the Data Platform accepts the telemetry.
+ * * `Error` : **error** - Emits when the Data Platform returns errors or the post fails.
  *
  * ### Settings
  * See {@see PostNumericTelemetrySettings}
@@ -166,7 +183,7 @@ export class PostNumericTelemetryTask extends TaskBase implements PostNumericTel
                 Class: className,
                 Name: parameterName,
                 UnitOfMeasure: unitOfMeasure,
-                NumericValues: [value],
+                NumericValues: [Number(value.toFixed(8))],
                 Timestamps: [valueTimestamp]
             }],
             Tags: tags,
@@ -181,18 +198,18 @@ export class PostNumericTelemetryTask extends TaskBase implements PostNumericTel
 }
 
 // Add settings here
-/** PostNumericTelemetry Settings object */
+/** Settings controlling the Data Platform telemetry request. */
 export interface PostNumericTelemetrySettings extends System.TaskDefaultSettings {
-    /** Application name */
+    /** Application name sent with the telemetry request. */
     applicationName: string;
-    /** Event Time */
+    /** Event time setting retained for task compatibility. */
     eventTime: moment.Moment;
-    /** Number of retries until a good answer is received from System */
+    /** Number of retries for the Data Platform request. */
     retries: number;
-    /** Number of milliseconds to wait between retries */
+    /** Delay in milliseconds between Data Platform request retries. */
     sleepBetweenRetries: number;
-    /* Should  the system ignore the last service id */
+    /** Whether to ignore the last service ID when posting telemetry. */
     ignoreLastServiceId: boolean,
-    /* Number of retries on the DEE execution */
+    /** Number of retries for the telemetry-post DEE execution. */
     numberOfRetries: number;
 }

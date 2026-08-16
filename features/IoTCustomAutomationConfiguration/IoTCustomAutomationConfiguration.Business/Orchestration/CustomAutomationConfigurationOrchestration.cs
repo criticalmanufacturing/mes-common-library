@@ -59,6 +59,27 @@ namespace Cmf.Community.IoTCustomAutomationConfiguration.Actions.Orchestration
 
         private string Tenant;
 
+        protected virtual void StartMethod(string methodName, params KeyValuePair<string, object>[] parameters)
+        {
+            Utilities.StartMethod(OBJECT_TYPE_NAME, methodName, parameters);
+        }
+
+        protected virtual void EndMethod(params KeyValuePair<string, object>[] parameters)
+        {
+            Utilities.EndMethod(-1, -1, parameters);
+        }
+
+        protected virtual Type GetAutomationConfigurationEntityType()
+        {
+            return _entityTypeOrchestration.GetEntityTypeByName(new GetEntityTypeByNameInput()
+            { Name = "CustomAutomationConfiguration" }).EntityType.EntityTypeInterface;
+        }
+
+        protected virtual dynamic CreateAutomationConfiguration(Type automationConfigurationType)
+        {
+            return _entityFactory.Create(automationConfigurationType);
+        }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="SMTManagementOrchestration"/> class.
         /// </summary>
@@ -497,7 +518,7 @@ namespace Cmf.Community.IoTCustomAutomationConfiguration.Actions.Orchestration
 
         public CustomAutomationCreateRelatedEntityRelationOnConnectIoTEnabledOutput CustomAutomationCreateRelatedEntityRelationOnConnectIoTEnabled(CustomAutomationCreateRelatedEntityRelationOnConnectIoTEnabledInput customAutomationCreateRelatedEntityRelationOnConnectIoTEnabledInput)
         {
-            Utilities.StartMethod(OBJECT_TYPE_NAME, "CustomAutomationCreateRelatedEntityRelationOnConnectIoTEnabled",
+            StartMethod("CustomAutomationCreateRelatedEntityRelationOnConnectIoTEnabled",
         new KeyValuePair<string, object>(nameof(CustomAutomationCreateRelatedEntityRelationOnConnectIoTEnabledInput),
         customAutomationCreateRelatedEntityRelationOnConnectIoTEnabledInput));
 
@@ -596,16 +617,16 @@ namespace Cmf.Community.IoTCustomAutomationConfiguration.Actions.Orchestration
 
                 }
             }
-            Utilities.EndMethod(-1, -1,
-              new KeyValuePair<string, object>(nameof(CustomAutomationCreateRelatedEntityRelationOnConnectIoTEnabledInput), customAutomationCreateRelatedEntityRelationOnConnectIoTEnabledInput),
-              new KeyValuePair<string, object>(nameof(CustomAutomationCreateRelatedEntityRelationOnConnectIoTEnabledOutput), result));
+            EndMethod(
+  new KeyValuePair<string, object>(nameof(CustomAutomationCreateRelatedEntityRelationOnConnectIoTEnabledInput), customAutomationCreateRelatedEntityRelationOnConnectIoTEnabledInput),
+  new KeyValuePair<string, object>(nameof(CustomAutomationCreateRelatedEntityRelationOnConnectIoTEnabledOutput), result));
             return result;
 
         }
 
         public CustomAutomationUpdateConfigurationEntitiesOutput CustomAutomationUpdateConfigurationEntities(CustomAutomationUpdateConfigurationEntitiesInput customAutomationUpdateConfigurationEntitiesInput)
         {
-            Utilities.StartMethod(OBJECT_TYPE_NAME, "CustomAutomationUpdateConfigurationEntities",
+            StartMethod("CustomAutomationUpdateConfigurationEntities",
             new KeyValuePair<string, object>(nameof(CustomAutomationUpdateConfigurationEntitiesInput),
             customAutomationUpdateConfigurationEntitiesInput));
 
@@ -618,14 +639,11 @@ namespace Cmf.Community.IoTCustomAutomationConfiguration.Actions.Orchestration
 
             if (customAutomationUpdateConfigurationEntitiesInput.ActionGroupName == "ConnectIoTManagement.ConnectIoTManagementOrchestration.FullUpdateAutomationControllerInstance.Pre")
             {
-                Type customAutomationConfigurationType = _entityTypeOrchestration.GetEntityTypeByName(new GetEntityTypeByNameInput()
-                { Name = "CustomAutomationConfiguration" }).EntityType.EntityTypeInterface;
-
-                //List<string> automationConfigurationsToUpdate = new List<string>();
+                Type customAutomationConfigurationType = GetAutomationConfigurationEntityType();
 
                 foreach (string configurationName in customAutomationUpdateConfigurationEntitiesInput.AutomationConfigurationsToUpdate)
                 {
-                    dynamic customAutomationConfiguration = _entityFactory.Create(customAutomationConfigurationType);
+                    dynamic customAutomationConfiguration = (dynamic)CreateAutomationConfiguration(customAutomationConfigurationType);
                     customAutomationConfiguration.Load(configurationName);
                     customAutomationConfiguration.AutomationDriverInstance = null;
                     customAutomationConfiguration.Save();
@@ -633,12 +651,11 @@ namespace Cmf.Community.IoTCustomAutomationConfiguration.Actions.Orchestration
             }
             else if (customAutomationUpdateConfigurationEntitiesInput.ActionGroupName == "ConnectIoTManagement.ConnectIoTManagementOrchestration.FullUpdateAutomationControllerInstance.Post")
             {
-                Type customAutomationConfigurationType = _entityTypeOrchestration.GetEntityTypeByName(new GetEntityTypeByNameInput()
-                { Name = "CustomAutomationConfiguration" }).EntityType.EntityTypeInterface;
+                Type customAutomationConfigurationType = GetAutomationConfigurationEntityType();
 
                 foreach (string configurationName in customAutomationUpdateConfigurationEntitiesInput.AutomationConfigurationsToUpdate)
                 {
-                    dynamic customAutomationConfiguration = _entityFactory.Create(customAutomationConfigurationType);
+                    dynamic customAutomationConfiguration = (dynamic)CreateAutomationConfiguration(customAutomationConfigurationType);
                     customAutomationConfiguration.Load(configurationName);
 
                     customAutomationConfiguration.AutomationDriverInstance = customAutomationUpdateConfigurationEntitiesInput.UpdatedDriverInstance;
@@ -650,7 +667,7 @@ namespace Cmf.Community.IoTCustomAutomationConfiguration.Actions.Orchestration
                 throw new Exception("Action group is invalid, expecting ConnectIoTManagement.ConnectIoTManagementOrchestration.FullUpdateAutomationControllerInstance.Pre/Post.");
             }
 
-            Utilities.EndMethod(-1, -1,
+            EndMethod(
             new KeyValuePair<string, object>(nameof(CustomAutomationUpdateConfigurationEntitiesInput), customAutomationUpdateConfigurationEntitiesInput),
             new KeyValuePair<string, object>(nameof(CustomAutomationUpdateConfigurationEntitiesOutput), result));
             return result;

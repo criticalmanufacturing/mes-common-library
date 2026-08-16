@@ -1,0 +1,24 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<TargetFramework>net8.0</TargetFramework>
+		<OutputType>Library</OutputType>
+		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+		<AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+		<AssemblyName>Cmf.Community.IoTMESInteroperability.Orchestration</AssemblyName>
+		<RootNamespace>Cmf.Community.IoTMESInteroperability.Orchestration</RootNamespace>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+		<OutputPath>../../LocalEnvironment\BusinessTier</OutputPath>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+		<OutputPath>..\Release</OutputPath>
+	</PropertyGroup>
+	<ItemGroup>
+		<PackageReference Include="Cmf.Foundation.BusinessOrchestration" Version="11.3.3"/>
+		<PackageReference Include="Cmf.Navigo.BusinessOrchestration" Version="11.3.0"/>
+		<PackageReference Include="cmf.common.customactionutilities" Version="11.3.0.1263488" GeneratePathProperty="true" />
+	</ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\Cmf.Community.IoTMESInteroperability.Common\Cmf.Community.IoTMESInteroperability.Common.csproj" />
+	</ItemGroup>
+</Project>

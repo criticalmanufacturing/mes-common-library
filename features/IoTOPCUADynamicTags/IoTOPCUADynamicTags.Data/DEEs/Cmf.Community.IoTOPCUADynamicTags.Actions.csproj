@@ -1,0 +1,10 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<TargetFramework>net8.0</TargetFramework>
+		<OutputType>Library</OutputType>
+		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+		<AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+		<AssemblyName>Cmf.Community.IoTOPCUADynamicTags.Actions</AssemblyName>
+		<RootNamespace>Cmf.Community.IoTOPCUADynamicTags.Actions</RootNamespace>
+	</PropertyGroup>
+</Project>

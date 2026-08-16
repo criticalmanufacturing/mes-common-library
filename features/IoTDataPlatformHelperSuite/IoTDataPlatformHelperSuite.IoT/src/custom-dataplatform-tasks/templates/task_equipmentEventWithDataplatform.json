@@ -157,6 +157,16 @@
                 "isMandatory": false,
                 "condition": "isToPostToDP",
                 "infoMessage": "The unit of measure of the event property to be posted to the Data Platform"
+              },
+              {
+                "name": "maxResolution",
+                "displayName": "Max Resolution",
+                "settingKey": "maxResolution",
+                "dataType": "Long",
+                "defaultValue": 8,
+                "isMandatory": false,
+                "condition": "isToPostToDP",
+                "infoMessage": "Maximum number of decimal places for the numeric event property posted to the Data Platform (max 8)"
               }
             ]
           }

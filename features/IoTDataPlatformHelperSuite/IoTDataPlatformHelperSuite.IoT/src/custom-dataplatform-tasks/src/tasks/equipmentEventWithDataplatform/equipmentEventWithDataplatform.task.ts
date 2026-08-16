@@ -25,19 +25,44 @@ import Cmf from "cmf-lbos";
 /**
  * @whatItDoes
  *
- * This task does something ... describe here
+ * Listens for equipment events from the driver and exposes the event data to
+ * the workflow. For each received event, it emits the event reference,
+ * occurrence timestamp, raw occurrence data, and the configured property
+ * outputs. Property outputs can emit either the converted property value or
+ * its raw device value.
+ *
+ * The task can also publish selected event properties as Data Platform
+ * telemetry. Numeric values are rounded using each property's configured
+ * resolution. The current MES instance is used to resolve ISA-95 context, and
+ * events can be posted immediately or queued for batch posting.
  *
  * @howToUse
  *
- * yada yada yada
+ * Configure the event or events to listen for, the working mode, and the
+ * property outputs. Set `activate` to `true` to subscribe to events and to
+ * `false` to unsubscribe. In `AlwaysActive` mode, events continue to be
+ * processed until deactivated. In `OneEvent` mode, the listener deactivates
+ * after the first event; `_waitTimeout` can emit an error if no event arrives
+ * in time. The task emits `success` after event processing completes.
  *
  * ### Inputs
- * * `any` : **activate** - Activate the task
+ * * `boolean` : **activate** - Subscribes when `true` and unsubscribes when `false`.
+ * * `AutomationEvent[]` : **_events** - Events to listen for. An empty list listens for all supported events.
+ * * `EquipmentEventOutputSettings[]` : **_outputs** - Dynamic property outputs and Data Platform mappings.
+ * * `EquipmentEventWorkingMode` : **_workingMode** - `AlwaysActive` or `OneEvent`.
+ * * `number` : **_waitTimeout** - Timeout in milliseconds for `OneEvent` mode.
+ * * `boolean` : **_autoActivate** - Starts listening during task initialization when `true`.
+ * * `boolean` : **_isToPostToDP** - Enables Data Platform posting for received events.
+ * * `boolean` : **_isToBatchPost** - Queues Data Platform events for batch posting when `true`.
  *
  * ### Outputs
  *
- * * `bool`  : ** success ** - Triggered when the the task is executed with success
- * * `Error` : ** error ** - Triggered when the task failed for some reason
+ * * `AutomationEvent` : **event** - The received automation event.
+ * * `DateTime` : **timestamp** - The event occurrence timestamp.
+ * * `Object` : **eventRawData** - The complete raw event occurrence.
+ * * `any` : **dynamic property outputs** - Configured event properties, emitted as converted or raw values.
+ * * `bool` : **success** - Emits `true` after event processing completes.
+ * * `Error` : **error** - Emits on a one-event timeout or when Data Platform errors are configured to stop processing.
  *
  * ### Settings
  * See {@see EquipmentEventWithDataplatformSettings}
@@ -196,11 +221,11 @@ export class EquipmentEventWithDataplatformTask extends TaskBase implements Equi
                                 Class: property.class ?? "Sensor",
                                 Name: name,
                                 UnitOfMeasure: property.unitOfMeasure,
-                                NumericValues: [value.value],
                                 Timestamps: [timestamp]
                             };
                             if (typeof value.value === "number") {
-                                param.NumericValues = [value.value];
+                                const maxResolution = property.maxResolution ?? 8;
+                                param.NumericValues = [Number(value.value.toFixed(maxResolution))];
                             } else {
                                 param.StringValues = [Utilities.objectToString(value.value)];
                             }
@@ -416,32 +441,32 @@ export class EquipmentEventWithDataplatformTask extends TaskBase implements Equi
     }
 }
 
-/** EquipmentEvent task settings*/
+/** Event-listening and output settings for the equipment-event task. */
 export interface EquipmentEventWithDataplatformSettings {
-    /** Selected event (new mode) */
+    /** Selected event in the current event-selection mode. */
     _selectedEvent?: System.LBOS.Cmf.Foundation.BusinessObjects.AutomationEvent;
-    /** Event to listen (if any) */
+    /** Legacy single event selection, migrated into `_events` when present. */
     _event?: System.LBOS.Cmf.Foundation.BusinessObjects.AutomationEvent;
-    /** Events being listened that can trigger this task. Empty for all events */
+    /** Events that can trigger the task. An empty list listens for all supported events. */
     _events: System.LBOS.Cmf.Foundation.BusinessObjects.AutomationEvent[];
-    /** Automation Events Properties */
+    /** Automation event properties available for output configuration. */
     _automationEventProperties: System.LBOS.Cmf.Foundation.BusinessObjects.AutomationProperty[];
-    /** Auto activate the event listeners */
+    /** Whether event listeners start during task initialization. */
     _autoActivate: boolean;
-    /** Task behavior when an event occurs */
+    /** Whether to remain active for all events or stop after one event. */
     _workingMode: EquipmentEventWorkingMode;
-    /** Number of ms to wait for an event, when the workingMode is set to only one event triggering */
+    /** Milliseconds to wait for an event in `OneEvent` mode before emitting an error. */
     _waitTimeout: number;
 
-    /** List of output values and respective expected value */
+    /** Dynamic output definitions and optional Data Platform mappings. */
     _outputs: EquipmentEventOutputSettings[];
-    /** Accept all events flag */
+    /** Whether all event types are accepted. */
     _acceptAllEvents: boolean;
-    /** Custom events flag */
+    /** Whether a custom event is selected. */
     _customEvents: boolean;
-    /** Message Name (if custom) */
+    /** Custom event display name. */
     _message: EventComboBox;
-    /** Message Full Name (if custom) */
+    /** Custom event full name. */
     _messageFullName: string;
 }
 
@@ -473,6 +498,8 @@ export interface EquipmentEventOutputSettings extends System.Property {
     isToPostToDP: boolean;
     /** Unit of measure used when the property is posted to DP as a numeric Parameter */
     unitOfMeasure?: string;
+    /** Maximum number of decimal places when posting a numeric Parameter to DataPlatform */
+    maxResolution?: number;
     /** Class, accepted values Sensor State Property */
     class?: PostTelemetryAcceptedClass;
 }

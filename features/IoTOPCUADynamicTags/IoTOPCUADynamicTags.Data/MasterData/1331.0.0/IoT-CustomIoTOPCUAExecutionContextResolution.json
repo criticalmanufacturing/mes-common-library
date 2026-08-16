@@ -1,0 +1,211 @@
+{
+  "<SM>DEEAction": {
+    "1": {
+      "Action": "CustomIoTOPCUAExecutionContextST",
+      "Description": "Validate the data added in the CustomIoTOPCUAExecutionContext SmartTable",
+      "CodeFileRelativePath": "ConnectIoT//CustomIoTOPCUAExecutionContextST.cs",
+      "IsEnabled": "Yes",
+      "Classification": "ConnectIoT"
+    }
+  },
+  "DEEActionOrder": {},
+  "<DM>Rule": {
+    "1": {
+      "Name": "CustomIoTOPCUAExecutionContextST",
+      "Description": "Validate the data added in the CustomIoTOPCUAExecutionContext SmartTable",
+      "Scope": "SmartTable",
+      "DEERule": "CustomIoTOPCUAExecutionContextST"
+    }
+  },
+  "<ST>SmartTable": {
+    "1": {
+      "Name": "CustomIoTOPCUAExecutionContext",
+      "Description": "Generic table to hold OPC Tags to Execute Event dynamically",
+      "HistoryRetentionTime": "180",
+      "IsHistoryEnabled": "Yes",
+      "IsRepeatedValuesAllowed": "Yes",
+      "DataGroup": "",
+      "PreValidationRule": "CustomIoTOPCUAExecutionContextST",
+      "PostValidationRule": ""
+    }
+  },
+  "SmartTableProperties": {
+    "1": {
+      "SmartTable": "CustomIoTOPCUAExecutionContext",
+      "Name": "ResourceType",
+      "Position": "0",
+      "Description": "Resource Type",
+      "IsKey": "Yes",
+      "IsIndexed": "No",
+      "IsMandatory": "No",
+      "ScalarType": "NVarChar",
+      "Size": "256",
+      "ReferenceType": "LookupValue",
+      "ReferenceName": "ResourceType"
+    },
+    "2": {
+      "SmartTable": "CustomIoTOPCUAExecutionContext",
+      "Name": "Resource",
+      "Position": "1",
+      "Description": "Resource Name",
+      "IsKey": "Yes",
+      "IsIndexed": "No",
+      "IsMandatory": "No",
+      "ScalarType": "NVarChar",
+      "Size": "256",
+      "ReferenceType": "EntityType",
+      "ReferenceName": "Resource.Name"
+    },
+    "3": {
+      "SmartTable": "CustomIoTOPCUAExecutionContext",
+      "Name": "Property",
+      "Position": "2",
+      "Description": "Property Name",
+      "IsKey": "No",
+      "IsIndexed": "No",
+      "IsMandatory": "Yes",
+      "ScalarType": "NVarChar",
+      "Size": "256",
+      "ReferenceType": "None",
+      "ReferenceName": ""
+    },
+    "4": {
+      "SmartTable": "CustomIoTOPCUAExecutionContext",
+      "Name": "Tag",
+      "Position": "3",
+      "Description": "OPCUA Node ID",
+      "IsKey": "No",
+      "IsIndexed": "No",
+      "IsMandatory": "Yes",
+      "ScalarType": "NVarChar",
+      "Size": "256",
+      "ReferenceType": "None",
+      "ReferenceName": ""
+    },
+    "5": {
+      "SmartTable": "CustomIoTOPCUAExecutionContext",
+      "Name": "DataType",
+      "Position": "4",
+      "Description": "OPCUA Node ID Data Type",
+      "IsKey": "No",
+      "IsIndexed": "No",
+      "IsMandatory": "Yes",
+      "ScalarType": "Int",
+      "Size": "0",
+      "ReferenceType": "Enum",
+      "ReferenceName": "Cmf.Foundation.BusinessObjects.AutomationDataType"
+    },
+    "6": {
+      "SmartTable": "CustomIoTOPCUAExecutionContext",
+      "Name": "DeviceType",
+      "Position": "5",
+      "Description": "Automation Protocol Data Type",
+      "IsKey": "No",
+      "IsIndexed": "No",
+      "IsMandatory": "Yes",
+      "ScalarType": "NVarChar",
+      "Size": "256",
+      "ReferenceType": "None",
+      "ReferenceName": ""
+    },
+    "7": {
+      "SmartTable": "CustomIoTOPCUAExecutionContext",
+      "Name": "Event",
+      "Position": "6",
+      "Description": "Event Name",
+      "IsKey": "No",
+      "IsIndexed": "No",
+      "IsMandatory": "Yes",
+      "ScalarType": "NVarChar",
+      "Size": "256",
+      "ReferenceType": "None",
+      "ReferenceName": ""
+    },
+    "8": {
+      "SmartTable": "CustomIoTOPCUAExecutionContext",
+      "Name": "ExecDEE",
+      "Position": "8",
+      "Description": "Execute DEE",
+      "IsKey": "No",
+      "IsIndexed": "No",
+      "IsMandatory": "Yes",
+      "ScalarType": "Bit",
+      "Size": "0",
+      "ReferenceType": "None",
+      "ReferenceName": ""
+    },
+    "9": {
+      "SmartTable": "CustomIoTOPCUAExecutionContext",
+      "Name": "ExecService",
+      "Position": "9",
+      "Description": "Execute Service",
+      "IsKey": "No",
+      "IsIndexed": "No",
+      "IsMandatory": "Yes",
+      "ScalarType": "Bit",
+      "Size": "0",
+      "ReferenceType": "None",
+      "ReferenceName": ""
+    },
+    "10": {
+      "SmartTable": "CustomIoTOPCUAExecutionContext",
+      "Name": "ExecDefinition",
+      "Position": "10",
+      "Description": "Name of DEE or Service",
+      "IsKey": "No",
+      "IsIndexed": "No",
+      "IsMandatory": "No",
+      "ScalarType": "NVarChar",
+      "Size": "256",
+      "ReferenceType": "None",
+      "ReferenceName": ""
+    },
+    "11": {
+      "SmartTable": "CustomIoTOPCUAExecutionContext",
+      "Name": "TriggerOnChange",
+      "Position": "11",
+      "Description": "Trigger DEE or Service on value change",
+      "IsKey": "No",
+      "IsIndexed": "No",
+      "IsMandatory": "Yes",
+      "ScalarType": "Bit",
+      "Size": "0",
+      "ReferenceType": "None",
+      "ReferenceName": ""
+    },
+    "12": {
+      "SmartTable": "CustomIoTOPCUAExecutionContext",
+      "Name": "WriteOnSuccess",
+      "Position": "12",
+      "Description": "Write Values on Execution Success",
+      "IsKey": "No",
+      "IsIndexed": "No",
+      "IsMandatory": "No",
+      "ScalarType": "NVarChar",
+      "Size": "1024",
+      "ReferenceType": "None",
+      "ReferenceName": ""
+    },
+    "13": {
+      "SmartTable": "CustomIoTOPCUAExecutionContext",
+      "Name": "WriteOnError",
+      "Position": "13",
+      "Description": "Write Values on Execution Error",
+      "IsKey": "No",
+      "IsIndexed": "No",
+      "IsMandatory": "No",
+      "ScalarType": "NVarChar",
+      "Size": "1024",
+      "ReferenceType": "None",
+      "ReferenceName": ""
+    }
+  },
+  "SmartTablePrecedenceKeys": {
+    "1": {
+      "SmartTable": "CustomIoTOPCUAExecutionContext",
+      "PrecedenceKey1": "ResourceType+Resource",
+      "PrecedenceKey2": "ResourceType",
+      "PrecedenceKey3": "Resource"
+    }
+  }
+}

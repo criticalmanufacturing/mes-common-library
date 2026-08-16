@@ -8,18 +8,28 @@ import superagent from "superagent";
 /**
  * @whatItDoes
  *
- * This task does something ... describe here
+ * Sends configured input values to an ML Agent and emits the prediction
+ * returned by the selected model. The request includes the model name,
+ * revision, current event ID, and every configured dynamic input. The agent
+ * is called with `POST <mlModelPredictionEndpoint>/ml/predict`.
  *
  * @howToUse
  *
- * yada yada yada
+ * Configure the model name, model revision, and the ML Agent base endpoint.
+ * Define dynamic inputs with their names, value types, and optional defaults;
+ * define dynamic outputs using the property names returned by the model.
+ * Set `activate` to trigger a prediction. The task resets `activate` after
+ * starting, so it can be triggered again with the same value.
  *
  * ### Inputs
- * * `any` : **activate** - Activate the task
+ * * `any` : **activate** - Starts an ML prediction when the value changes.
+ * * `any` : **dynamic inputs** - Values sent using the configured input names.
  *
  * ### Outputs
- * * `bool`  : ** success ** - Triggered when the the task is executed with success
- * * `Error` : ** error ** - Triggered when the task failed for some reason
+ * * `any` : **result** - The complete prediction response returned by the ML Agent.
+ * * `any` : **dynamic outputs** - Individual response properties configured as task outputs.
+ * * `bool` : **success** - Emits `true` when a prediction is returned and emitted successfully.
+ * * `Error` : **error** - Emits when the request fails or a model name/revision is missing.
  *
  * ### Settings
  * See {@see MlPredictionSettings}
@@ -148,29 +158,29 @@ export class MlPredictionTask extends TaskBase implements MlPredictionSettings {
     }
 }
 
-// Add settings here
-/** MlPrediction Settings object */
+/** Settings identifying the ML model and prediction endpoint. */
 export interface MlPredictionSettings extends System.TaskDefaultSettings {
-    /** ML Model Name */
+    /** Name of the ML model to invoke. Required. */
     mlModelName: string;
 
-    /** ML Model Revision */
+    /** Revision of the ML model to invoke. Required. */
     mlModelRevision: string;
 
-    /** ML Model Prediction Endpoint */
+    /** Base URL of the ML Agent. `/ml/predict` is appended to this value. */
     mlModelPredictionEndpoint: string;
 }
 
+/** Definition of a dynamic input passed to the ML Agent. */
 export interface MlPredictionInputSettings extends System.Property {
-    /** Name that will appear in Task */
+    /** Name used in the prediction request and displayed in the task. */
     name: string;
 
-    /** Friendly Name */
+    /** Optional display label for the input. */
     friendlyName?: string;
 
-    /** Value Type */
+    /** Value type used by the task designer. */
     valueType: Task.TaskComplexValueType;
 
-    /** Default value that will be used if no other was retrieved */
+    /** Value assigned during initialization when no runtime value is provided. */
     defaultValue?: any;
 }

@@ -1,0 +1,28 @@
+{
+  "converters": [],
+  "tasks": [
+    {
+      "name": "customCodeUtilitiesObjectTranslator",
+      "displayName": "Custom Code Utilities Obj Translator",
+      "iconClass": "icon-core-tasks-connect-iot-lg-codeexecution",
+      "isProtocol": false,
+      "isController": true,
+      "lifecycle": "Productive",
+      "lifecycleMessage": "",
+      "inputs": {},
+      "outputs": {},
+      "settings": {},
+      "scripts": {
+        "injectUtilitiesHTML": "${script(./scripts/customCodeUtilitiesObjectTranslator/injectUtilitiesHTML.ts)}"
+      },
+      "triggers": {
+        "beforeInit": [
+          {
+            "type": "Reference",
+            "script": "injectUtilitiesHTML"
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -16,19 +16,37 @@ export const SETTINGS_DEFAULTS: PostMultipleNumericTelemetrySettings = {
 /**
  * @whatItDoes
  *
- * This task does something ... describe here
+ * Posts multiple numeric telemetry parameters to the Data Platform in one
+ * request. The task extracts the ISA-95 hierarchy for the supplied instance
+ * and associates it with every parameter in the request.
+ *
+ * Each value is rounded to eight decimal places before it is posted. The
+ * extracted ISA-95 data is cached temporarily using the instance name. The
+ * parameter, unit, value, and timestamp arrays are matched by index, so they
+ * must contain corresponding entries.
  *
  * @howToUse
  *
- * yada yada yada
+ * Configure the shared class, the parameter arrays, tags, and activate the
+ * task. Provide one unit, value, and timestamp for each parameter name. The
+ * task resets `activate` after it starts, allowing the same task instance to
+ * be triggered again. A successful Data Platform response emits `success`; a
+ * response with errors emits `error` with the returned messages.
  *
  * ### Inputs
- * * `any` : **activate** - Activate the task
+ * * `ReferenceType` : **instance** - Entity used to resolve the ISA-95 context.
+ * * `string` : **class** - Shared telemetry parameter class.
+ * * `string[]` : **parametersName** - Parameter names, matched by index with the other arrays.
+ * * `string[]` : **unitsOfMeasure** - Units of measure, matched by index with the parameter names.
+ * * `Object` : **tags** - Optional telemetry tags as `{ Key, Value }` objects.
+ * * `Decimal[]` : **values** - Numeric values, matched by index with the parameter names.
+ * * `DateTime[]` : **valuesTimestamp** - Timestamps matched by index with the values.
+ * * `any` : **activate** - Starts the telemetry post when the value changes.
  *
  * ### Outputs
  *
- * * `bool`  : ** success ** - Triggered when the the task is executed with success
- * * `Error` : ** error ** - Triggered when the task failed for some reason
+ * * `bool` : **success** - Emits `true` when the Data Platform accepts the telemetry.
+ * * `Error` : **error** - Emits when the Data Platform returns errors or the post fails.
  *
  * ### Settings
  * See {@see PostMultipleNumericTelemetrySettings}
@@ -156,7 +174,7 @@ export class PostMultipleNumericTelemetryTask extends TaskBase implements PostMu
                 Class: className,
                 Name: parametersName[index],
                 UnitOfMeasure: unitsOfMeasure[index],
-                NumericValues: [valuesToPost[index]],
+                NumericValues: [Number(valuesToPost[index].toFixed(8))],
                 Timestamps: [timestamp]
             });
         }
@@ -174,19 +192,18 @@ export class PostMultipleNumericTelemetryTask extends TaskBase implements PostMu
     }
 }
 
-// Add settings here
-/** PostMultipleNumericTelemetry Settings object */
+/** Settings controlling the Data Platform telemetry request. */
 export interface PostMultipleNumericTelemetrySettings extends System.TaskDefaultSettings {
-    /** Application name */
+    /** Application name sent with the telemetry request. */
     applicationName: string;
-    /** Event Time */
+    /** Event time setting retained for task compatibility. */
     eventTime: moment.Moment;
-    /** Number of retries until a good answer is received from System */
+    /** Number of retries for the Data Platform request. */
     retries: number;
-    /** Number of milliseconds to wait between retries */
+    /** Delay in milliseconds between Data Platform request retries. */
     sleepBetweenRetries: number;
-    /* Should  the system ignore the last service id */
+    /** Whether to ignore the last service ID when posting telemetry. */
     ignoreLastServiceId: boolean,
-    /* Number of retries on the DEE execution */
+    /** Number of retries for the telemetry-post DEE execution. */
     numberOfRetries: number;
 }

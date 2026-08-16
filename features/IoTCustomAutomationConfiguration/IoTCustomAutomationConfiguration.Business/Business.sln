@@ -17,6 +17,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Orchestration", "Orchestrat
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Actions", "..\IoTCustomAutomationConfiguration.Data\DEEs\Actions.csproj", "{444B3417-A38C-43CB-8CF4-786FAB3BB270}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Orchestration.UnitTests", "Tests\Orchestration.UnitTests\Orchestration.UnitTests.csproj", "{2EC42D6D-17EF-4A08-8DB9-1CDBD58A8792}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{444B3417-A38C-43CB-8CF4-786FAB3BB270}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{444B3417-A38C-43CB-8CF4-786FAB3BB270}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{444B3417-A38C-43CB-8CF4-786FAB3BB270}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2EC42D6D-17EF-4A08-8DB9-1CDBD58A8792}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2EC42D6D-17EF-4A08-8DB9-1CDBD58A8792}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2EC42D6D-17EF-4A08-8DB9-1CDBD58A8792}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2EC42D6D-17EF-4A08-8DB9-1CDBD58A8792}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
