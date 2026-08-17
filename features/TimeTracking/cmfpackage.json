@@ -1,0 +1,32 @@
+{
+  "packageId": "Cmf.Community.TimeTracking",
+  "version": "11271.0.0",
+  "description": "This package deploys Critical Manufacturing Community Customization",
+  "packageType": "Root",
+  "isInstallable": true,
+  "isUniqueInstall": false,
+  "dependencies": [
+    {
+      "id": "Cmf.Environment",
+      "version": "11.2.7",
+      "mandatory": false
+    },
+    {
+      "id": "CriticalManufacturing.DeploymentMetadata",
+      "version": "11.2.7",
+      "mandatory": false
+    },
+    {
+      "id": "Cmf.Community.TimeTracking.Business",
+      "version": "11271.0.0"
+    },
+    {
+      "id": "Cmf.Community.TimeTracking.Data",
+      "version": "11271.0.0"
+    },
+    {
+      "id": "Cmf.Community.TimeTracking.Help",
+      "version": "11271.0.0"
+    }
+  ]
+}

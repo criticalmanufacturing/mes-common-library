@@ -1,0 +1,58 @@
+{
+  "name": "<Scenario Name>",
+  "description": "<Short description>",
+  "scopes": "<Scope1, Scope2>",
+  "conditionType": "JSONata",
+  "condition": "",
+  "metadata": {
+    "start": "<FirstStepName>",
+    "finally": "",
+    "end": "",
+    "resultType": "Custom",
+    "steps": [
+      {
+        "name": "<FirstStepName>",
+        "type": "Question",
+        "resultKey": "<answerKey>",
+        "settings": {
+          "message": "<Prompt to user>",
+          "dataType": "String"
+        },
+        "next": "<NextStepName>"
+      },
+      {
+        "name": "<ConditionStepName>",
+        "type": "Condition",
+        "settings": {
+          "condition": {
+            "<JSONata expr A>": "<TargetStepA>",
+            "<JSONata expr B>": "<TargetStepB>"
+          }
+        },
+        "next": "Error"
+      },
+      {
+        "name": "<ScriptStepName>",
+        "type": "Script",
+        "resultKey": "<optionalKey>",
+        "settings": {
+          "script": [
+            "// TODO: implement script logic",
+            "this.answers.example = 'value';"
+          ]
+        },
+        "next": ""
+      },
+      {
+        "name": "Error",
+        "type": "Script",
+        "settings": {
+          "script": [
+            "throw new Error('Something went wrong with this scenario.');"
+          ]
+        },
+        "next": ""
+      }
+    ]
+  }
+}

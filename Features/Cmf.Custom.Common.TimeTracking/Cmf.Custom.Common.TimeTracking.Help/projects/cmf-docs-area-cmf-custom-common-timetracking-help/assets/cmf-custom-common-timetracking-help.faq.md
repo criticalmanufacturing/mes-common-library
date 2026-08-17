@@ -1,6 +1,0 @@
-﻿# Frequently Asked Questions
-
-This will have a list of frequently asked questions
-
-## Table of Contents
-
