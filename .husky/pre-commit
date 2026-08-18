@@ -1,0 +1,3 @@
+#!/usr/bin/env sh
+.github/scripts/validate-package-ids-versions.sh
+.github/scripts/scan-secrets.sh

@@ -1,0 +1,309 @@
+name: Build changed packages
+
+# Reusable workflow shared by pr.yml and ci.yml: builds+packs only the
+# cmfpackage.json directories affected by the diff between base-sha and head-sha.
+on:
+  workflow_call:
+    inputs:
+      base-sha:
+        required: true
+        type: string
+      head-sha:
+        required: true
+        type: string
+      run-restore:
+        description: 'Whether to run cmf restore'
+        required: false
+        type: boolean
+        default: true
+      run-build:
+        description: 'Whether to run cmf build --test'
+        required: false
+        type: boolean
+        default: true
+      run-pack:
+        description: 'Whether to run cmf pack after build (skip for PR validation)'
+        required: false
+        type: boolean
+        default: true
+      run-tests:
+        description: 'Whether to run the test suite of changed packageType "Tests" packages'
+        required: false
+        type: boolean
+        default: true
+
+env:
+  # dotnet-test-rerun: https://www.nuget.org/packages/dotnet-test-rerun
+  DOTNET_TEST_RERUN_VERSION: '4.2.0'
+
+jobs:
+  validate-versions:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Validate cmfpackage.json version scheme
+      shell: bash
+      run: .github/scripts/validate-package-ids-versions.sh
+
+  discover:
+    runs-on: ubuntu-latest
+    outputs:
+      packages: ${{ steps.list.outputs.packages }}
+      test-packages: ${{ steps.list.outputs.test-packages }}
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+    - name: Find changed cmfpackage.json directories
+      id: list
+      shell: bash
+      run: |
+        BASE_SHA="${{ inputs.base-sha }}"
+        HEAD_SHA="${{ inputs.head-sha }}"
+        ZERO_SHA="0000000000000000000000000000000000000000"
+
+        # First push of a new branch ("before" is the zero SHA), or the base
+        # commit was rewritten by an amend/rebase + force-push and is no longer
+        # reachable: diff against where this branch forked from main instead.
+        if [ -z "$BASE_SHA" ] || [ "$BASE_SHA" = "$ZERO_SHA" ] || ! git cat-file -e "$BASE_SHA^{commit}" 2>/dev/null; then
+          git fetch origin main
+          BASE_SHA=$(git merge-base FETCH_HEAD "$HEAD_SHA" || true)
+          if [ -z "$BASE_SHA" ]; then
+            # Unrelated histories have no merge base; build all packages rather
+            # than silently skipping affected packages.
+            BASE_SHA=$(git hash-object -t tree /dev/null)
+          fi
+        fi
+
+        CHANGED_FILES=$(git diff --name-only "$BASE_SHA" "$HEAD_SHA")
+        echo "Changed files:"
+        echo "$CHANGED_FILES"
+
+        # All package directories, deepest first, so a change in a nested
+        # package (e.g. Foo/Foo.IoT) doesn't also mark its parent (Foo) as changed.
+        mapfile -t PKG_DIRS < <(find . -name cmfpackage.json -exec dirname {} \; | sed 's|^\./||' | awk '{ print length, $0 }' | sort -rn | cut -d' ' -f2-)
+
+        declare -A CHANGED_PKGS
+        while IFS= read -r file; do
+          [ -z "$file" ] && continue
+          for dir in "${PKG_DIRS[@]}"; do
+            case "$file" in
+              "$dir"/*|"$dir")
+                CHANGED_PKGS["$dir"]=1
+                break
+                ;;
+            esac
+          done
+        done <<< "$CHANGED_FILES"
+
+        # Split changed packages into two buckets so "Tests" packages can be
+        # built/run as a separate, later flow instead of alongside everything
+        # else in the same matrix.
+        NON_TEST_PKGS=()
+        declare -A TEST_PKGS_SET
+        for dir in "${!CHANGED_PKGS[@]}"; do
+          PACKAGE_TYPE=$(jq -r '.packageType // empty' "$dir/cmfpackage.json")
+          if [ "$PACKAGE_TYPE" = "Tests" ]; then
+            TEST_PKGS_SET["$dir"]=1
+          else
+            NON_TEST_PKGS+=("$dir")
+          fi
+        done
+
+        # A Tests package validates its whole feature, not just itself - so
+        # also run it when ANY package under the same feature Root changed,
+        # even if the Tests package's own files weren't touched (e.g.
+        # changing IoTMTConnect.IoT should re-run IoTMTConnect.Tests). Repo-wide
+        # packageId -> directory map, to resolve each Root's declared
+        # "testPackages" ids to a local directory.
+        declare -A PACKAGE_ID_DIRS
+        while IFS= read -r pkg_file; do
+          package_id=$(jq -r '.packageId // empty' "$pkg_file")
+          [ -n "$package_id" ] && PACKAGE_ID_DIRS["$package_id"]="$(dirname "$pkg_file" | sed 's|^\./||')"
+        done < <(find . -name cmfpackage.json -not -path "*/node_modules/*" -not -path "*/bin/*")
+
+        while IFS= read -r root_file; do
+          [ "$(jq -r '.packageType // empty' "$root_file")" = "Root" ] || continue
+          root_dir=$(dirname "$root_file" | sed 's|^\./||')
+
+          touched=0
+          for dir in "${!CHANGED_PKGS[@]}"; do
+            case "$dir" in
+              "$root_dir"|"$root_dir"/*) touched=1; break ;;
+            esac
+          done
+          [ "$touched" -eq 1 ] || continue
+
+          while IFS= read -r test_id; do
+            [ -z "$test_id" ] && continue
+            test_dir="${PACKAGE_ID_DIRS[$test_id]:-}"
+            [ -n "$test_dir" ] && TEST_PKGS_SET["$test_dir"]=1
+          done < <(jq -r '.testPackages[]?.id // empty' "$root_file")
+        done < <(find . -name cmfpackage.json -not -path "*/node_modules/*" -not -path "*/bin/*")
+
+        TEST_PKGS=("${!TEST_PKGS_SET[@]}")
+
+        to_json_array() {
+          if [ "$#" -eq 0 ]; then
+            echo "[]"
+          else
+            printf '%s\n' "$@" | jq -R -s -c 'split("\n")[:-1]'
+          fi
+        }
+
+        PACKAGES=$(to_json_array "${NON_TEST_PKGS[@]}")
+        TEST_PACKAGES=$(to_json_array "${TEST_PKGS[@]}")
+
+        echo "Changed packages: $PACKAGES"
+        echo "Changed test packages: $TEST_PACKAGES"
+        echo "packages=$PACKAGES" >> "$GITHUB_OUTPUT"
+        echo "test-packages=$TEST_PACKAGES" >> "$GITHUB_OUTPUT"
+
+  build:
+    needs: [validate-versions, discover]
+    if: needs.discover.outputs.packages != '[]'
+    strategy:
+      fail-fast: false
+      matrix:
+        package: ${{ fromJson(needs.discover.outputs.packages) }}
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: 8.0.x
+    - name: Use Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20.x'
+    - name: Install @cmf/cli
+      run: npm install -g @criticalmanufacturing/cli
+    - name: Login cmf login
+      run: cmf login -t ${{ secrets.Roque_CM_IO_TOKEN }}
+    - name: Build and pack ${{ matrix.package }}
+      shell: pwsh
+      env:
+        RUN_BUILD: ${{ inputs.run-build }}
+        RUN_RESTORE: ${{ inputs.run-restore }}
+        RUN_PACK: ${{ inputs.run-pack }}
+      run: |
+          $CI_TEMP_DIR = "$env:GITHUB_WORKSPACE/CI-TEMP"
+          New-Item -ItemType Directory -Force -Path $CI_TEMP_DIR
+
+          Push-Location -Path "$env:GITHUB_WORKSPACE/${{ matrix.package }}" -ErrorAction Stop
+
+          if ($env:RUN_RESTORE -eq "true") {
+            cmf restore
+          }
+          if ($env:RUN_BUILD -eq "true") {
+            cmf build --test
+          }
+          if ($env:RUN_PACK -eq "true") {
+            cmf pack -o $CI_TEMP_DIR
+          }
+          Pop-Location
+
+    - name: Determine package id
+      id: pkgid
+      if: inputs.run-pack
+      shell: bash
+      run: |
+          PACKAGE_ID=$(jq -r '.packageId' "${{ matrix.package }}/cmfpackage.json")
+          echo "id=$PACKAGE_ID" >> "$GITHUB_OUTPUT"
+
+    - name: Upload packed zip to this run's CI-TEMP staging
+      if: inputs.run-pack
+      uses: actions/upload-artifact@v4
+      with:
+        name: ${{ steps.pkgid.outputs.id }}
+        path: CI-TEMP/*.zip
+
+  # Changed packages of packageType "Tests" are built and run as their own,
+  # later flow rather than being interleaved with the rest of the matrix
+  # above: they only start once "build" has finished (succeeded, failed, or
+  # was skipped), never in parallel with it.
+  build-tests:
+    needs: [validate-versions, discover, build]
+    if: |
+      !cancelled() &&
+      needs.discover.outputs.test-packages != '[]' &&
+      needs.validate-versions.result == 'success'
+    strategy:
+      fail-fast: false
+      matrix:
+        package: ${{ fromJson(needs.discover.outputs.test-packages) }}
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: 8.0.x
+    - name: Use Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20.x'
+    - name: Install @cmf/cli
+      run: npm install -g @criticalmanufacturing/cli
+    - name: Login cmf login
+      run: cmf login -t ${{ secrets.Roque_CM_IO_TOKEN }}
+    # Tests-type packages always build AND pack, regardless of run-build/
+    # run-pack: their relatedPackages entries (see e.g. IoTMTConnect.Tests's
+    # cmfpackage.json) declare preBuild/prePack hooks on the local sibling
+    # packages they need to run (e.g. IoTMTConnect.IoT) - so packing here is
+    # what makes cmf stage that sibling's build output locally, which is what
+    # scripts/pack-iot-test-packages.sh then picks up. run-pack still gates
+    # whether the resulting zip gets uploaded/promoted below.
+    - name: Build and pack ${{ matrix.package }}
+      shell: pwsh
+      env:
+        RUN_BUILD: ${{ inputs.run-build }}
+        RUN_RESTORE: ${{ inputs.run-restore }}
+      run: |
+          $CI_TEMP_DIR = "$env:GITHUB_WORKSPACE/CI-TEMP"
+          New-Item -ItemType Directory -Force -Path $CI_TEMP_DIR
+
+          Push-Location -Path "$env:GITHUB_WORKSPACE/${{ matrix.package }}" -ErrorAction Stop
+
+          if ($env:RUN_RESTORE -eq "true") {
+            cmf restore
+          }
+          if ($env:RUN_BUILD -eq "true") {
+            cmf build --test
+            cmf pack
+          }
+          Pop-Location
+
+    - name: Run tests for ${{ matrix.package }}
+      if: inputs.run-build && inputs.run-tests
+      shell: bash
+      run: .github/scripts/run-package-tests.sh "${{ matrix.package }}"
+
+  # Promotes this run's freshly-built packages into the persistent, cross-run
+  # CI package store (see .github/scripts/promote-to-ci-store.sh) - but only
+  # once the Tests flow has genuinely executed and passed, or was skipped
+  # because this change has no Tests package. "build" is allowed to have
+  # been skipped (e.g. this run only touched Tests-type packages) but not to
+  # have failed.
+  promote:
+    needs: [validate-versions, discover, build, build-tests]
+    if: |
+      !cancelled() &&
+      inputs.run-pack &&
+      inputs.run-tests &&
+      needs.validate-versions.result == 'success' &&
+      (needs.build.result == 'success' || needs.build.result == 'skipped') &&
+      (needs.build-tests.result == 'success' || needs.build-tests.result == 'skipped')
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Download this run's build artifacts
+      uses: actions/download-artifact@v4
+      with:
+        path: CI-TEMP
+    - name: Promote to the CI package store
+      shell: bash
+      env:
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: .github/scripts/promote-to-ci-store.sh CI-TEMP
