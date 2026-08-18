@@ -1,0 +1,39 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+<PropertyGroup>
+	<TargetFramework>net8.0</TargetFramework>
+	<ImplicitUsings>enable</ImplicitUsings>
+	<Nullable>enable</Nullable>
+	<AssemblyName>Cmf.Community.TimeTracking.UnitTests</AssemblyName>
+	<RootNamespace>Cmf.Community.TimeTracking.UnitTests</RootNamespace>
+
+	<IsPackable>false</IsPackable>
+	<IsTestProject>true</IsTestProject>
+</PropertyGroup>
+
+<ItemGroup>
+	<PackageReference Include="Cmf.Foundation.BaseTestsUtils" Version="11.2.7" />
+	<PackageReference Include="Cmf.MessageBus.Client" Version="11.2.7" />
+	<PackageReference Include="Cmf.Navigo.BusinessObjects" Version="11.2.7" />
+	<PackageReference Include="coverlet.collector" Version="6.0.0">
+		<PrivateAssets>all</PrivateAssets>
+		<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+	</PackageReference>
+	<PackageReference Include="FluentAssertions" Version="6.9.0" />
+	<PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.4.1" />
+	<PackageReference Include="MSTest.TestFramework" Version="3.0.2" />
+	<PackageReference Include="xunit" Version="2.4.2" />
+	<PackageReference Include="xunit.runner.visualstudio" Version="2.4.5">
+		<PrivateAssets>all</PrivateAssets>
+		<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+	</PackageReference>
+</ItemGroup>
+
+<ItemGroup>
+	<ProjectReference Include="..\..\TimeTracking.Data\DEEs\Cmf.Community.TimeTracking.Actions.csproj" />
+</ItemGroup>
+
+<ItemGroup>
+	<Using Include="Microsoft.VisualStudio.TestTools.UnitTesting" />
+</ItemGroup>
+</Project>

@@ -1,0 +1,18 @@
+{
+  "packageId": "Cmf.Community.TimeTracking.Help",
+  "version": "11271.0.0",
+  "description": "Cmf Custom Community Cmf.Community.TimeTracking.Help Package",
+  "packageType": "Help",
+  "targetLayer": "reference",
+  "isInstallable": true,
+  "isUniqueInstall": false,
+  "contentToPack": [
+    {
+      "source": "dist/documentation-portal/**",
+      "target": "",
+      "ignoreFiles": [
+        ".npmignore"
+      ]
+    }
+  ]
+}

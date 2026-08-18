@@ -1,0 +1,27 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<TargetFramework>net8.0</TargetFramework>
+		<OutputType>Library</OutputType>
+		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+		<AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+		<AssemblyName>Cmf.Community.TimeTracking.Actions</AssemblyName>
+		<RootNamespace>Cmf.Community.TimeTracking.Actions</RootNamespace>
+	</PropertyGroup>
+	<ItemGroup>
+	  <PackageReference Include="Cmf.Common.CustomActionUtilities" Version="11.2.0.1196317" />
+	  <PackageReference Include="Cmf.Foundation.Security" Version="11.2.7" />
+	  <PackageReference Include="Cmf.Foundation.Services.HostStartup" Version="11.2.7" />
+	  <PackageReference Include="Cmf.Navigo.BusinessObjects" Version="11.2.7" />
+	  <PackageReference Include="Cmf.Navigo.BusinessOrchestration" Version="11.2.7" />
+	  <PackageReference Include="Microsoft.AspNetCore" Version="2.3.0" />
+	  <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.3.0" />
+	  <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.3.0" />
+	  <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.2" />
+	  <PackageReference Include="Moq" Version="4.20.72" />
+	</ItemGroup>
+		<ItemGroup>
+		<ProjectReference Include="..\..\TimeTracking.Business\Cmf.Community.TimeTracking.Common\Cmf.Community.TimeTracking.Common.csproj" />
+		<ProjectReference Include="..\..\TimeTracking.Business\Cmf.Community.TimeTracking.Orchestration\Cmf.Community.TimeTracking.Orchestration.csproj" />
+		<ProjectReference Include="..\..\TimeTracking.Business\Cmf.Community.TimeTracking.Services\Cmf.Community.TimeTracking.Services.csproj" />
+	</ItemGroup>
+</Project>

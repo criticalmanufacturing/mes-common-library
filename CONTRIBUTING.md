@@ -105,3 +105,19 @@ Enhancement suggestions are tracked as [GitHub issues](https://github.com/cmf-mo
 ### Your First Code Contribution
 
 To setup your environment use the Getting Started Guide on Critical Manufacturing [Developer Portal](https://developer.criticalmanufacturing.com).
+
+### Commit Message & Hook Enforcement
+
+This repository uses [Husky](https://typicode.github.io/husky/) to run git hooks and [commitlint](https://commitlint.js.org/) to check commit messages against the [Conventional Commits](https://www.conventionalcommits.org/) format (configured in `.commitlintrc.json`), e.g.:
+
+```
+fix: correct offset calculation in the IoT persistency task
+feat(IoTMTConnect): add support for MTConnect adapters over TLS
+```
+
+Two hooks are installed automatically the first time you run `npm install` at the repository root (this also happens automatically when the devcontainer is created, via `postCreateCommand`):
+
+- **`commit-msg`** — rejects commit messages that don't follow Conventional Commits.
+- **`pre-commit`** — runs `.github/scripts/validate-package-ids-versions.sh`, rejecting the commit if any `cmfpackage.json` version doesn't follow the [`{MES_MAJOR}{MES_MINOR}{MES_PATCH}{MAJOR}.{MINOR}.{PATCH}` rule](README.md#features-versioning).
+
+Both checks are also enforced in CI as a backstop, but the hooks give you the same feedback locally before you push.

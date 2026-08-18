@@ -1,0 +1,5 @@
+{
+    "NPMRegistry": "https://criticalmanufacturing.io/repository/npm/",
+    "CmfPipelineRepository": "https://criticalmanufacturing.io/repository/npm/",
+    "NuGetRegistry": "https://criticalmanufacturing.io/repository/nuget/index.json"
+}
