@@ -282,10 +282,10 @@ jobs:
 
   # Promotes this run's freshly-built packages into the persistent, cross-run
   # CI package store (see .github/scripts/promote-to-ci-store.sh) - but only
-  # once the Tests flow has genuinely executed and passed, so packages only
-  # ever reach the trusted store alongside a real test pass. "build" is
-  # allowed to have been skipped (e.g. this run only touched Tests-type
-  # packages) but not to have failed.
+  # once the Tests flow has genuinely executed and passed, or was skipped
+  # because this change has no Tests package. "build" is allowed to have
+  # been skipped (e.g. this run only touched Tests-type packages) but not to
+  # have failed.
   promote:
     needs: [validate-versions, discover, build, build-tests]
     if: |
@@ -294,7 +294,7 @@ jobs:
       inputs.run-tests &&
       needs.validate-versions.result == 'success' &&
       (needs.build.result == 'success' || needs.build.result == 'skipped') &&
-      needs.build-tests.result == 'success'
+      (needs.build-tests.result == 'success' || needs.build-tests.result == 'skipped')
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
