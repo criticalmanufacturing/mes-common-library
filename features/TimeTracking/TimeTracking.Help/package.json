@@ -1,0 +1,39 @@
+{
+  "name": "documentation-portal",
+  "version": "11.2.7",
+  "scripts": {
+    "ng": "ng",
+    "start": "ng serve",
+    "build": "ng build",
+    "docs-shell": "node ./node_modules/cmf-docs-shell/scripts/index.js",
+    "build-db": "npm run docs-shell build-db",
+    "check-md-links": "npm run docs-shell check-md-links",
+    "watch": "ng build --watch --configuration development",
+    "extract-i18n": "ng extract-i18n --output-path ./src/assets/ --format json",
+    "serve": "cross-env NODE_OPTIONS=--max-old-space-size=8192 npm run start -- --host 0.0.0.0 --disable-host-check --port 7001"
+  },
+  "private": true,
+  "dependencies": {
+    "@angular/core": "^17",
+    "@angular/router": "^17",
+    "@angular/service-worker": "^17",
+    "cmf-core": "release-1135",
+    "cmf-core-business-controls": "release-1135",
+    "cmf-core-controls": "release-1135",
+    "cmf-core-shell": "release-1135",
+    "cmf-docs-area-designsystem": "release-1135",
+    "cmf-docs-controls": "release-1135",
+    "cmf-docs-shell": "release-1135",
+    "mermaid": "9.1.3",
+    "tslib": "^2.3.0"
+  },
+  "devDependencies": {
+    "@angular-devkit/build-angular": "^17",
+    "@angular-eslint/schematics": "17",
+    "@angular/compiler-cli": "^17",
+    "@criticalmanufacturing/ngx-schematics": "11.0.9",
+    "cross-env": "^7.0.3",
+    "ng-packagr": "^17.3.0",
+    "typescript": "~5.4.2"
+  }
+}
