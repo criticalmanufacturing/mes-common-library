@@ -1,6 +1,6 @@
 {
   "packageId": "Cmf.Community.TimeTracking.Business",
-  "version": "11351.0.0",
+  "version": "11341.0.0",
   "description": "Cmf Custom Community Cmf.Community.TimeTracking.Business Package",
   "packageType": "Business",
   "isInstallable": true,

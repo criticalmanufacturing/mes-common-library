@@ -14,8 +14,8 @@
 		<OutputPath>..\Release</OutputPath>
 	</PropertyGroup>
 	<ItemGroup>
-		<PackageReference Include="Cmf.Foundation.BusinessObjects" Version="11.3.5"/>
-		<PackageReference Include="Cmf.Navigo.BusinessObjects" Version="11.3.5"/>
+		<PackageReference Include="Cmf.Foundation.BusinessObjects" Version="11.3.4"/>
+		<PackageReference Include="Cmf.Navigo.BusinessObjects" Version="11.3.4"/>
 	</ItemGroup>
 	<ItemGroup>
 		<None Include="$(Pkgcmf_common_customactionutilities)\lib\$(TargetFramework)\*" CopyToOutputDirectory="PreserveNewest" />
