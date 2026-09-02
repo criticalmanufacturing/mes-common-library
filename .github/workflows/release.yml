@@ -146,7 +146,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    # Full history + tags needed by generate-feature-release-notes.sh's git log/rev-list walk.
     - uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
     - name: Read feature version
       id: version
       shell: bash
@@ -185,18 +188,11 @@ jobs:
         # don't pull in commits from other features' releases in between.
         PREV_TAG=$(git tag --list "${{ matrix.feature }}/*" --sort=-creatordate | head -n1 || true)
 
-        if [ -n "$PREV_TAG" ]; then
-          BODY=$(gh api "repos/${{ github.repository }}/releases/generate-notes" \
-            -f tag_name="${{ steps.tag.outputs.tag }}" \
-            -f target_commitish="${{ github.sha }}" \
-            -f previous_tag_name="$PREV_TAG" \
-            --jq .body)
-        else
-          BODY=$(gh api "repos/${{ github.repository }}/releases/generate-notes" \
-            -f tag_name="${{ steps.tag.outputs.tag }}" \
-            -f target_commitish="${{ github.sha }}" \
-            --jq .body)
-        fi
+        # Further scoped to only PRs/commits that touched this feature's own
+        # folder, since tag lineage alone doesn't stop other features' PRs
+        # merged in the same window from leaking in.
+        BODY=$(.github/scripts/generate-feature-release-notes.sh \
+          "${{ matrix.feature }}" "$PREV_TAG" "${{ github.sha }}" "${{ steps.tag.outputs.tag }}")
 
         {
           echo "body<<RELEASE_NOTES_EOF"
