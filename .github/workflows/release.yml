@@ -174,7 +174,7 @@ jobs:
       shell: bash
       run: |
         MES_TAG=$(echo "${{ steps.mes.outputs.version }}" | tr '.' '_')
-        PKG_TAG=$(echo "${{ steps.version.outputs.version }}" | tr '.' '_')
+        PKG_TAG=$(echo "${{ steps.version.outputs.version }}" | tr '.' '_')        
         echo "tag=${{ matrix.feature }}/${MES_TAG}-v${PKG_TAG}" >> "$GITHUB_OUTPUT"
     - name: Generate release notes for ${{ matrix.feature }}
       id: notes
@@ -184,9 +184,13 @@ jobs:
       run: |
         git fetch --tags --force
 
-        # Scope "previous release" to this feature's own tag lineage, so notes
-        # don't pull in commits from other features' releases in between.
-        PREV_TAG=$(git tag --list "${{ matrix.feature }}/*" --sort=-creatordate | head -n1 || true)
+        # Scope "previous release" to this feature's own tag lineage AND the
+        # same MES major.minor base version, so a release on e.g. 11.2/dev
+        # doesn't pick up a newer tag created on a different base version's
+        # branch (e.g. 11.3/dev) as its "previous" release.
+        
+        MES_MINOR_TAG=$(echo "${{ steps.mes.outputs.version }}" | cut -d. -f1-2 | tr '.' '_')
+        PREV_TAG=$(git tag --list "${{ matrix.feature }}/${MES_MINOR_TAG}_*-v*" --sort=-creatordate | head -n1 || true)
 
         # Further scoped to only PRs/commits that touched this feature's own
         # folder, since tag lineage alone doesn't stop other features' PRs
