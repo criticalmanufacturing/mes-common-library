@@ -188,14 +188,26 @@ jobs:
         # same MES major.minor base version, so a release on e.g. 11.2/dev
         # doesn't pick up a newer tag created on a different base version's
         # branch (e.g. 11.3/dev) as its "previous" release.
-        
         MES_MINOR_TAG=$(echo "${{ steps.mes.outputs.version }}" | cut -d. -f1-2 | tr '.' '_')
         PREV_TAG=$(git tag --list "${{ matrix.feature }}/${MES_MINOR_TAG}_*-v*" --sort=-creatordate | head -n1 || true)
 
         # If this is the feature's first release under this MES minor version:
-        # fall back to its most recent tag from ANY MES version
+        # fall back to this feature's most recent tag (any MES version) that
+        # is still an ancestor of this release commit on the first-parent
+        # chain, so a tag created on an unrelated branch isn't picked just
+        # for being newer.
         if [ -z "$PREV_TAG" ]; then
-          PREV_TAG=$(git tag --list "${{ matrix.feature }}/*-v*" --sort=-creatordate | head -n1 || true)
+          FIRST_PARENT_COMMITS=$(git log --first-parent --format=%H)
+          FEATURE_TAGS=$(git tag --list "${{ matrix.feature }}/*-v*" --sort=-creatordate)
+
+          while IFS= read -r tag; do
+            [ -z "$tag" ] && continue
+            tag_commit=$(git rev-list -n1 "$tag")
+            if grep -qx "$tag_commit" <<< "$FIRST_PARENT_COMMITS"; then
+              PREV_TAG="$tag"
+              break
+            fi
+          done <<< "$FEATURE_TAGS"
         fi
 
         # Further scoped to only PRs/commits that touched this feature's own
