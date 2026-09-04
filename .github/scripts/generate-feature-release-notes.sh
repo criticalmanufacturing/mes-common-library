@@ -27,7 +27,10 @@ REPO="${GITHUB_REPOSITORY:?GITHUB_REPOSITORY must be set}"
 FEATURE_PATH="features/$FEATURE/"
 
 if [ -n "$PREV_TAG" ]; then
-  BASE_SHA=$(git rev-list -n1 "$PREV_TAG")
+  # PREV_TAG may come from a sibling branch (e.g. a later MES-version bump's
+  # tag whose commit isn't actually an ancestor of $TARGET_SHA), so anchor on
+  # their common ancestor rather than the tag's own commit directly.
+  BASE_SHA=$(git merge-base "$PREV_TAG" "$TARGET_SHA")
 else
   # First release for this feature: bound history to when the feature folder
   # was first added, so notes don't include ancient, unrelated commits that

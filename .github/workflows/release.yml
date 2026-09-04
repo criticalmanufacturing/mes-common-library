@@ -192,6 +192,12 @@ jobs:
         MES_MINOR_TAG=$(echo "${{ steps.mes.outputs.version }}" | cut -d. -f1-2 | tr '.' '_')
         PREV_TAG=$(git tag --list "${{ matrix.feature }}/${MES_MINOR_TAG}_*-v*" --sort=-creatordate | head -n1 || true)
 
+        # If this is the feature's first release under this MES minor version:
+        # fall back to its most recent tag from ANY MES version
+        if [ -z "$PREV_TAG" ]; then
+          PREV_TAG=$(git tag --list "${{ matrix.feature }}/*-v*" --sort=-creatordate | head -n1 || true)
+        fi
+
         # Further scoped to only PRs/commits that touched this feature's own
         # folder, since tag lineage alone doesn't stop other features' PRs
         # merged in the same window from leaking in.
