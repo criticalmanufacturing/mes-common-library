@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="../RoslynCode.Contracts/RoslynCode.Contracts.csproj" />
+    <!-- Cmf.LightBusinessObjects.dll's entity attributes require Newtonsoft.Json to be resolvable at runtime -->
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+  </ItemGroup>
+  <ItemGroup>
+    <!-- Shipped alongside RoslynCode.Host.dll so user-compiled code referencing LBO types can be loaded at runtime -->
+    <None Include="dependencies/Cmf.LightBusinessObjects.dll" Link="Cmf.LightBusinessObjects.dll" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" />
+  </ItemGroup>
+</Project>
