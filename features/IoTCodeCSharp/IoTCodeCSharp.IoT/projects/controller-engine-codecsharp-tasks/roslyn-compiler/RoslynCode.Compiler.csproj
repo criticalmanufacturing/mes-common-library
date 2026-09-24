@@ -1,0 +1,35 @@
+<Project Sdk="Microsoft.NET.Sdk.BlazorWebAssembly">
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <AssemblyName>RoslynCode.Compiler</AssemblyName>
+    <RootNamespace>RoslynCode.Compiler</RootNamespace>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+  <ItemGroup>
+    <Content Remove="publish/**" />
+    <None Remove="publish/**" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="8.0.28" />
+    <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.11.0" />
+    <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Features" Version="4.11.0" />
+    <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="4.11.0" />
+    <ProjectReference Include="../roslyn-host/RoslynCode.Contracts/RoslynCode.Contracts.csproj" />
+    <EmbeddedResource Include="../roslyn-host/RoslynCode.Contracts/bin/$(Configuration)/net8.0/RoslynCode.Contracts.dll" LogicalName="References.RoslynCode.Contracts.dll" />
+    <EmbeddedResource Include="../roslyn-host/RoslynCode.Contracts/bin/$(Configuration)/net8.0/RoslynCode.Contracts.xml" LogicalName="References.RoslynCode.Contracts.xml" />
+    <EmbeddedResource Include="dependencies/Cmf.LightBusinessObjects.dll" LogicalName="References.Cmf.LightBusinessObjects.dll" />
+  </ItemGroup>
+  <!-- Embed the BCL reference assemblies from the targeting pack the SDK actually resolved, rather than
+       globbing Microsoft.NETCore.App.Ref/*/ — machines with several 8.0.x packs installed (e.g. CI runners)
+       would otherwise embed each assembly twice and fail with CS1508. -->
+  <Target Name="EmbedFrameworkReferenceAssemblies" AfterTargets="ResolveTargetingPackAssets">
+    <ItemGroup>
+      <_FrameworkReferenceDll Include="@(Reference)" Condition="'%(Reference.FrameworkReferenceName)' == 'Microsoft.NETCore.App'" />
+      <!-- XML API docs shipped alongside the BCL reference assemblies — paired by matching
+           "References.<name>.xml" to "References.<name>.dll" in CompilerInterop so completion/hover
+           shows real descriptions (e.g. List<T>.Add) instead of just signatures. -->
+      <_FrameworkReferenceXml Include="@(_FrameworkReferenceDll->'%(RootDir)%(Directory)%(Filename).xml')" />
+      <EmbeddedResource Include="@(_FrameworkReferenceDll)" LogicalName="References.%(Filename)%(Extension)" />
+      <EmbeddedResource Include="@(_FrameworkReferenceXml)" Condition="Exists('%(FullPath)')" LogicalName="References.%(Filename)%(Extension)" />
+    </ItemGroup>
+  </Target>
+</Project>
