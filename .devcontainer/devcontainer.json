@@ -3,7 +3,7 @@
     "runArgs": [],
     "features": {
         "ghcr.io/criticalmanufacturing/cli/install:1": {
-            "version": "6.0.0-2"
+            "version": "next"
         },
         "ghcr.io/criticalmanufacturing/portal-sdk/install:1": {},
         "ghcr.io/devcontainers/features/docker-in-docker": {
