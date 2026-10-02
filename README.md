@@ -15,6 +15,14 @@ This library focuses on providing:
 * **Samples:**  Reusable master data that can be imported into an empty system.
 * **Tools:**  Scripts or applications that aid in the development, testing, or deployment of CM MES customizations.
 
+## Features Index
+
+This section works as a catalog of the features currently published in this repository. Each entry is added once a feature completes its release and publish process (see [CONTRIBUTING.md](CONTRIBUTING.md) for the feature lifecycle), and links to the feature's own folder/README for usage, versioning, and compatibility details.
+
+| Feature | Description | MES Compatibility | Latest Version |
+| ------- | ------------ | ------------------ | --------------- |
+| _No features published yet._ | | | |
+
 ## File Structure
 
 The repository is organized as follows:
@@ -60,11 +68,8 @@ We support the following branch types:
 | Name         | Convention                                            | Description                                                                                        | Example                                  |
 | ------------ | ----------------------------------------------------- | -------------------------------------------------------------------------------------------------- | ---------------------------------------- |
 | Dev          | `{MES_MAJOR}.{MES_MINOR}/dev`                         | Development branch for features targeting a specific MES major/minor version.                      | `11.2/dev`                               |
-| Dev (Patch)  | `{MES_MAJOR}.{MES_MINOR}.{PATCH}/dev`                 | Development branch for features targeting a specific MES patch version.                            | `11.2.3/dev`                             |
 | Feature      | `{MES_MAJOR}.{MES_MINOR}/feature/{ID}-{Summary}`      | Branch used during development of a specific feature. Should be deleted after merging to dev.      | `11.2/feature/123-add-custom-validation` |
-| Feature (Patch) | `{MES_MAJOR}.{MES_MINOR}.{PATCH}/feature/{ID}-{Summary}` | Feature branch targeting a specific patch version. Should be deleted after merging to dev.   | `11.2/3/feature/123-patch-fix`         |
 | Bug          | `{MES_MAJOR}.{MES_MINOR}/bug/{ID}-{Summary}`          | Branch used during development of a bug fix. Should be deleted after merging to dev.               | `11.2/bug/456-fix-material-handling`     |
-| Bug (Patch)  | `{MES_MAJOR}.{MES_MINOR}.{PATCH}/bug/{ID}-{Summary}`  | Bug fix branch targeting a specific patch version. Should be deleted after merging to dev.         | `11.2.3/bug/456-hotfix`                  |
 | Main         | `main`                                                | The main branch containing repository documentation and usage guidelines.                        | `main`                                   |
 
 ## Release Tags and Versioning Convention
