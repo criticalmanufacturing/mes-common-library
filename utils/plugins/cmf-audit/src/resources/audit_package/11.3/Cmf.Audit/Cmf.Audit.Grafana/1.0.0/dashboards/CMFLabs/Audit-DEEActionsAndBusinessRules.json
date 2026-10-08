@@ -1,0 +1,1682 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": {
+          "type": "grafana",
+          "uid": "-- Grafana --"
+        },
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "id": null,
+  "links": [
+    {
+      "asDropdown": false,
+      "icon": "external link",
+      "includeVars": true,
+      "keepTime": false,
+      "tags": [],
+      "targetBlank": false,
+      "title": "Portfolio Overview",
+      "tooltip": "",
+      "type": "link",
+      "url": "/d/72115905-2918-4cf5-939f-a625a686e620/audit-project-portfolio-overview"
+    },
+    {
+      "asDropdown": false,
+      "icon": "external link",
+      "includeVars": true,
+      "keepTime": false,
+      "tags": [],
+      "targetBlank": false,
+      "title": "Data Model Customization Footprint",
+      "tooltip": "",
+      "type": "link",
+      "url": "/d/ff6b8d81-8687-491d-a779-f9b17cf72638/audit-data-model-customization-footprint"
+    },
+    {
+      "asDropdown": false,
+      "icon": "external link",
+      "includeVars": true,
+      "keepTime": false,
+      "tags": [],
+      "targetBlank": false,
+      "title": "Audit-Custom Entity Type Properties",
+      "tooltip": "",
+      "type": "link",
+      "url": "/d/895b92be-64b3-412d-a17b-63cf0c6211f8/audit-custom-entity-type-properties"
+    },
+    {
+      "asDropdown": false,
+      "icon": "external link",
+      "includeVars": true,
+      "keepTime": false,
+      "tags": [],
+      "targetBlank": false,
+      "title": "Audit-Data Package Overview",
+      "tooltip": "",
+      "type": "link",
+      "url": "/d/bfafcc52-236c-4990-829f-f84a00b36a8a/audit-data-package-overview"
+    },
+    {
+      "asDropdown": false,
+      "icon": "external link",
+      "includeVars": true,
+      "keepTime": false,
+      "tags": [],
+      "targetBlank": false,
+      "title": "Audit-Automation Configuration Map",
+      "tooltip": "",
+      "type": "link",
+      "url": "/d/c5c782e9-4db0-4ec6-a711-496e71474613/audit-automation-configuration-map"
+    },
+    {
+      "asDropdown": false,
+      "icon": "external link",
+      "includeVars": true,
+      "keepTime": false,
+      "tags": [],
+      "targetBlank": false,
+      "title": "Audit-Data Package Structures",
+      "tooltip": "",
+      "type": "link",
+      "url": "/d/d1446721-3b42-4ea5-9c8c-612ae16fe0e9/audit-data-package-structures"
+    },
+    {
+      "asDropdown": false,
+      "icon": "external link",
+      "includeVars": true,
+      "keepTime": false,
+      "tags": [],
+      "targetBlank": false,
+      "title": "Audit-IoT Code Tasks",
+      "tooltip": "",
+      "type": "link",
+      "url": "/d/892a2c3c-ef17-4aee-8b86-69631491d32c/audit-iot-code-tasks"
+    }
+  ],
+  "panels": [
+    {
+      "datasource": {
+        "type": "criticalmanufacturing-odata-datasource",
+        "uid": "PD36424FC765F148A"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "blue"
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 6,
+        "x": 0,
+        "y": 0
+      },
+      "id": 1,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "count"
+          ],
+          "fields": "/^Action$/",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "12.0.4",
+      "targets": [
+        {
+          "datasource": {
+            "type": "criticalmanufacturing-odata-datasource",
+            "uid": "PD36424FC765F148A"
+          },
+          "entitySet": {
+            "entityType": "UserDefined.DEEActionCatalog",
+            "name": "DEEActionCatalog"
+          },
+          "oDataQueryString": "DEEActionCatalog?$filter=Project in (${Project:singlequote})&$select=Action",
+          "refId": "A",
+          "usePost": true
+        }
+      ],
+      "title": "Total DEE Actions (Deduped)",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "criticalmanufacturing-odata-datasource",
+        "uid": "PD36424FC765F148A"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "blue"
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 6,
+        "x": 6,
+        "y": 0
+      },
+      "id": 2,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "count"
+          ],
+          "fields": "/^RuleName$/",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "12.0.4",
+      "targets": [
+        {
+          "datasource": {
+            "type": "criticalmanufacturing-odata-datasource",
+            "uid": "PD36424FC765F148A"
+          },
+          "entitySet": {
+            "entityType": "UserDefined.BusinessRulesInventory",
+            "name": "BusinessRulesInventory"
+          },
+          "oDataQueryString": "BusinessRulesInventory?$filter=Project in (${Project:singlequote})&$select=RuleName",
+          "refId": "A",
+          "usePost": true
+        }
+      ],
+      "title": "Total Business Rules (Deduped)",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "criticalmanufacturing-odata-datasource",
+        "uid": "PD36424FC765F148A"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "blue"
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 6,
+        "x": 12,
+        "y": 0
+      },
+      "id": 3,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "count"
+          ],
+          "fields": "/^ActionGroup$/",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "12.0.4",
+      "targets": [
+        {
+          "datasource": {
+            "type": "criticalmanufacturing-odata-datasource",
+            "uid": "PD36424FC765F148A"
+          },
+          "entitySet": {
+            "entityType": "UserDefined.DEEActionGroupUsage",
+            "name": "DEEActionGroupUsage"
+          },
+          "oDataQueryString": "DEEActionGroupUsage?$select=ActionGroup",
+          "refId": "A",
+          "usePost": true
+        }
+      ],
+      "title": "Distinct Base ActionGroups Extended",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "criticalmanufacturing-odata-datasource",
+        "uid": "PD36424FC765F148A"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "gray"
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 6,
+        "x": 18,
+        "y": 0
+      },
+      "id": 5,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "count"
+          ],
+          "fields": "/^Action$/",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "12.0.4",
+      "targets": [
+        {
+          "datasource": {
+            "type": "criticalmanufacturing-odata-datasource",
+            "uid": "PD36424FC765F148A"
+          },
+          "entitySet": {
+            "entityType": "UserDefined.DEEActionCatalog",
+            "name": "DEEActionCatalog"
+          },
+          "oDataQueryString": "DEEActionCatalog?$filter=IsEnabled ne 'true' and IsEnabled ne 'Yes' and Project in (${Project:singlequote})&$select=Action",
+          "refId": "A",
+          "usePost": true
+        }
+      ],
+      "title": "Disabled DEE Actions",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "criticalmanufacturing-odata-datasource",
+        "uid": "PD36424FC765F148A"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "continuous-GrYlRd"
+          },
+          "fieldMinMax": false,
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 9,
+        "w": 12,
+        "x": 0,
+        "y": 6
+      },
+      "id": 6,
+      "options": {
+        "displayMode": "basic",
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": false
+        },
+        "maxVizHeight": 300,
+        "minVizHeight": 46,
+        "minVizWidth": 8,
+        "namePlacement": "top",
+        "orientation": "horizontal",
+        "reduceOptions": {
+          "calcs": [],
+          "fields": "",
+          "limit": 15,
+          "values": true
+        },
+        "showUnfilled": true,
+        "sizing": "manual",
+        "valueMode": "color"
+      },
+      "pluginVersion": "12.0.4",
+      "targets": [
+        {
+          "datasource": {
+            "type": "criticalmanufacturing-odata-datasource",
+            "uid": "PD36424FC765F148A"
+          },
+          "entitySet": {
+            "entityType": "UserDefined.DEEActionGroupUsage",
+            "name": "DEEActionGroupUsage"
+          },
+          "oDataQueryString": "DEEActionGroupUsage?$select=ActionGroup,DistinctActionsBound&$orderby=DistinctActionsBound desc&$top=15",
+          "refId": "A",
+          "usePost": true
+        }
+      ],
+      "title": "Most-Extended Base ActionGroups (Upgrade Risk)",
+      "type": "bargauge"
+    },
+    {
+      "datasource": {
+        "type": "criticalmanufacturing-odata-datasource",
+        "uid": "PD36424FC765F148A"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "continuous-BlPu"
+          },
+          "fieldMinMax": false,
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 9,
+        "w": 12,
+        "x": 12,
+        "y": 6
+      },
+      "id": 7,
+      "options": {
+        "displayMode": "basic",
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": false
+        },
+        "maxVizHeight": 300,
+        "minVizHeight": 46,
+        "minVizWidth": 8,
+        "namePlacement": "top",
+        "orientation": "horizontal",
+        "reduceOptions": {
+          "calcs": [],
+          "fields": "",
+          "limit": 15,
+          "values": true
+        },
+        "showUnfilled": true,
+        "sizing": "manual",
+        "valueMode": "color"
+      },
+      "pluginVersion": "12.0.4",
+      "targets": [
+        {
+          "datasource": {
+            "type": "criticalmanufacturing-odata-datasource",
+            "uid": "PD36424FC765F148A"
+          },
+          "entitySet": {
+            "entityType": "UserDefined.DEEActionCatalog",
+            "name": "DEEActionCatalog"
+          },
+          "oDataQueryString": "DEEActionCatalog?$filter=Project in (${Project:singlequote})&$select=Package,Action",
+          "refId": "A",
+          "usePost": true
+        }
+      ],
+      "title": "DEE Actions per Package",
+      "transformations": [
+        {
+          "id": "groupBy",
+          "options": {
+            "fields": {
+              "Package": {
+                "operation": "groupby"
+              },
+              "Action": {
+                "aggregations": [
+                  "count"
+                ],
+                "operation": "aggregate"
+              }
+            }
+          }
+        },
+        {
+          "id": "sortBy",
+          "options": {
+            "fields": {},
+            "sort": [
+              {
+                "desc": true,
+                "field": "Action (count)"
+              }
+            ]
+          }
+        }
+      ],
+      "type": "bargauge"
+    },
+    {
+      "datasource": {
+        "type": "criticalmanufacturing-odata-datasource",
+        "uid": "PD36424FC765F148A"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "auto",
+            "cellOptions": {
+              "type": "auto",
+              "wrapText": false
+            },
+            "inspect": false
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "transparent"
+              },
+              {
+                "color": "orange",
+                "value": 2
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Action"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 260
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Description"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 380
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "CodeFileRelativePath"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 300
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Package"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 220
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 12,
+        "w": 24,
+        "x": 0,
+        "y": 15
+      },
+      "id": 8,
+      "options": {
+        "cellHeight": "sm",
+        "footer": {
+          "countRows": false,
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
+        "showHeader": true,
+        "sortBy": [
+          {
+            "asc": true,
+            "displayName": "Project"
+          }
+        ]
+      },
+      "pluginVersion": "12.0.4",
+      "targets": [
+        {
+          "datasource": {
+            "type": "criticalmanufacturing-odata-datasource",
+            "uid": "PD36424FC765F148A"
+          },
+          "entitySet": {
+            "entityType": "UserDefined.DEEActionCatalog",
+            "name": "DEEActionCatalog"
+          },
+          "oDataQueryString": "DEEActionCatalog?$filter=Project in (${Project:singlequote})",
+          "properties": [
+            {
+              "name": "Project",
+              "type": "Edm.String"
+            },
+            {
+              "name": "Package",
+              "type": "Edm.String"
+            },
+            {
+              "name": "Version",
+              "type": "Edm.String"
+            },
+            {
+              "name": "Action",
+              "type": "Edm.String"
+            },
+            {
+              "name": "Description",
+              "type": "Edm.String"
+            },
+            {
+              "name": "CodeFileRelativePath",
+              "type": "Edm.String"
+            },
+            {
+              "name": "IsEnabled",
+              "type": "Edm.String"
+            },
+            {
+              "name": "Classification",
+              "type": "Edm.String"
+            },
+            {
+              "name": "LastAudited",
+              "type": "Edm.DateTimeOffset"
+            }
+          ],
+          "refId": "A",
+          "usePost": true
+        }
+      ],
+      "title": "DEE Action Catalog",
+      "type": "table"
+    },
+    {
+      "datasource": {
+        "type": "criticalmanufacturing-odata-datasource",
+        "uid": "PD36424FC765F148A"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "auto",
+            "cellOptions": {
+              "type": "auto",
+              "wrapText": false
+            },
+            "inspect": false
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "ActionGroup"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 420
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Action"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 260
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Package"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 220
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 12,
+        "w": 24,
+        "x": 0,
+        "y": 27
+      },
+      "id": 9,
+      "options": {
+        "cellHeight": "sm",
+        "footer": {
+          "countRows": false,
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
+        "showHeader": true,
+        "sortBy": [
+          {
+            "asc": true,
+            "displayName": "ActionGroup"
+          }
+        ]
+      },
+      "pluginVersion": "12.0.4",
+      "targets": [
+        {
+          "datasource": {
+            "type": "criticalmanufacturing-odata-datasource",
+            "uid": "PD36424FC765F148A"
+          },
+          "entitySet": {
+            "entityType": "UserDefined.DEEActionOrderCatalog",
+            "name": "DEEActionOrderCatalog"
+          },
+          "oDataQueryString": "DEEActionOrderCatalog?$filter=Project in (${Project:singlequote})",
+          "properties": [
+            {
+              "name": "Project",
+              "type": "Edm.String"
+            },
+            {
+              "name": "Package",
+              "type": "Edm.String"
+            },
+            {
+              "name": "Version",
+              "type": "Edm.String"
+            },
+            {
+              "name": "ActionGroup",
+              "type": "Edm.String"
+            },
+            {
+              "name": "Action",
+              "type": "Edm.String"
+            },
+            {
+              "name": "ExecutionOrder",
+              "type": "Edm.String"
+            },
+            {
+              "name": "LastAudited",
+              "type": "Edm.DateTimeOffset"
+            }
+          ],
+          "refId": "A",
+          "usePost": true
+        }
+      ],
+      "title": "DEE Action → ActionGroup Bindings",
+      "type": "table"
+    },
+    {
+      "datasource": {
+        "type": "criticalmanufacturing-odata-datasource",
+        "uid": "PD36424FC765F148A"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "auto",
+            "cellOptions": {
+              "type": "auto",
+              "wrapText": false
+            },
+            "inspect": false
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "RuleName"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 260
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Description"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 380
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Package"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 220
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 12,
+        "w": 24,
+        "x": 0,
+        "y": 39
+      },
+      "id": 10,
+      "options": {
+        "cellHeight": "sm",
+        "footer": {
+          "countRows": false,
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
+        "showHeader": true,
+        "sortBy": [
+          {
+            "asc": true,
+            "displayName": "Project"
+          }
+        ]
+      },
+      "pluginVersion": "12.0.4",
+      "targets": [
+        {
+          "datasource": {
+            "type": "criticalmanufacturing-odata-datasource",
+            "uid": "PD36424FC765F148A"
+          },
+          "entitySet": {
+            "entityType": "UserDefined.BusinessRulesInventory",
+            "name": "BusinessRulesInventory"
+          },
+          "oDataQueryString": "BusinessRulesInventory?$filter=Project in (${Project:singlequote})",
+          "properties": [
+            {
+              "name": "Project",
+              "type": "Edm.String"
+            },
+            {
+              "name": "Package",
+              "type": "Edm.String"
+            },
+            {
+              "name": "Version",
+              "type": "Edm.String"
+            },
+            {
+              "name": "RuleName",
+              "type": "Edm.String"
+            },
+            {
+              "name": "Description",
+              "type": "Edm.String"
+            },
+            {
+              "name": "Scope",
+              "type": "Edm.String"
+            },
+            {
+              "name": "DEERule",
+              "type": "Edm.String"
+            },
+            {
+              "name": "LastAudited",
+              "type": "Edm.DateTimeOffset"
+            }
+          ],
+          "refId": "A",
+          "usePost": true
+        }
+      ],
+      "title": "Business Rules Inventory",
+      "type": "table"
+    },
+    {
+      "datasource": {
+        "type": "criticalmanufacturing-odata-datasource",
+        "uid": "PD36424FC765F148A"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "auto",
+            "cellOptions": {
+              "type": "auto",
+              "wrapText": false
+            },
+            "inspect": false
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Package"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 260
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 24,
+        "x": 0,
+        "y": 51
+      },
+      "id": 11,
+      "options": {
+        "cellHeight": "sm",
+        "footer": {
+          "countRows": false,
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
+        "showHeader": true,
+        "sortBy": [
+          {
+            "asc": true,
+            "displayName": "Project"
+          }
+        ]
+      },
+      "pluginVersion": "12.0.4",
+      "targets": [
+        {
+          "datasource": {
+            "type": "criticalmanufacturing-odata-datasource",
+            "uid": "PD36424FC765F148A"
+          },
+          "entitySet": {
+            "entityType": "UserDefined.ProcessRulesSummary",
+            "name": "ProcessRulesSummary"
+          },
+          "oDataQueryString": "ProcessRulesSummary?$filter=Project in (${Project:singlequote})",
+          "properties": [
+            {
+              "name": "Project",
+              "type": "Edm.String"
+            },
+            {
+              "name": "Package",
+              "type": "Edm.String"
+            },
+            {
+              "name": "Version",
+              "type": "Edm.String"
+            },
+            {
+              "name": "Stage",
+              "type": "Edm.String"
+            },
+            {
+              "name": "NumberOfRules",
+              "type": "Edm.Decimal"
+            },
+            {
+              "name": "LastAudited",
+              "type": "Edm.DateTimeOffset"
+            }
+          ],
+          "refId": "A",
+          "usePost": true
+        }
+      ],
+      "title": "Process Rules Summary (Pre/Post counts)",
+      "type": "table"
+    },
+    {
+      "datasource": {
+        "type": "criticalmanufacturing-odata-datasource",
+        "uid": "PD36424FC765F148A"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "blue"
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 4,
+        "x": 0,
+        "y": 59
+      },
+      "id": 12,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "count"
+          ],
+          "fields": "/^Action$/",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "12.0.4",
+      "targets": [
+        {
+          "datasource": {
+            "type": "criticalmanufacturing-odata-datasource",
+            "uid": "PD36424FC765F148A"
+          },
+          "entitySet": {
+            "entityType": "UserDefined.DEEActionComplexity",
+            "name": "DEEActionComplexity"
+          },
+          "oDataQueryString": "DEEActionComplexity?$filter=Project in (${Project:singlequote}) and HasMetrics eq 1&$select=Action",
+          "refId": "A",
+          "usePost": true
+        }
+      ],
+      "title": "DEEs with Complexity/LoC Data",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "criticalmanufacturing-odata-datasource",
+        "uid": "PD36424FC765F148A"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "percentage",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "orange",
+                "value": 70
+              },
+              {
+                "color": "red",
+                "value": 85
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 10,
+        "x": 4,
+        "y": 59
+      },
+      "id": 13,
+      "options": {
+        "minVizHeight": 75,
+        "minVizWidth": 75,
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [],
+          "fields": "",
+          "values": true
+        },
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true,
+        "sizing": "auto"
+      },
+      "pluginVersion": "12.0.4",
+      "targets": [
+        {
+          "datasource": {
+            "type": "criticalmanufacturing-odata-datasource",
+            "uid": "PD36424FC765F148A"
+          },
+          "entitySet": {
+            "entityType": "UserDefined.DEEActionComplexity",
+            "name": "DEEActionComplexity"
+          },
+          "oDataQueryString": "DEEActionComplexity?$apply=filter(Project in (${Project:singlequote}) and HasMetrics eq 1)/aggregate(Complexity with average as AvgComplexity,Complexity with min as MinComplexity,Complexity with max as MaxComplexity)",
+          "properties": [],
+          "refId": "A",
+          "usePost": true
+        }
+      ],
+      "title": "DEE Cyclomatic Complexity (Avg / Min / Max)",
+      "type": "gauge"
+    },
+    {
+      "datasource": {
+        "type": "criticalmanufacturing-odata-datasource",
+        "uid": "PD36424FC765F148A"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "percentage",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "orange",
+                "value": 70
+              },
+              {
+                "color": "red",
+                "value": 85
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 10,
+        "x": 14,
+        "y": 59
+      },
+      "id": 14,
+      "options": {
+        "minVizHeight": 75,
+        "minVizWidth": 75,
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [],
+          "fields": "",
+          "values": true
+        },
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true,
+        "sizing": "auto"
+      },
+      "pluginVersion": "12.0.4",
+      "targets": [
+        {
+          "datasource": {
+            "type": "criticalmanufacturing-odata-datasource",
+            "uid": "PD36424FC765F148A"
+          },
+          "entitySet": {
+            "entityType": "UserDefined.DEEActionComplexity",
+            "name": "DEEActionComplexity"
+          },
+          "oDataQueryString": "DEEActionComplexity?$apply=filter(Project in (${Project:singlequote}) and HasMetrics eq 1)/aggregate(LinesOfCode with average as AvgLinesOfCode,LinesOfCode with min as MinLinesOfCode,LinesOfCode with max as MaxLinesOfCode)",
+          "properties": [],
+          "refId": "A",
+          "usePost": true
+        }
+      ],
+      "title": "DEE Lines of Code (Avg / Min / Max)",
+      "type": "gauge"
+    },
+    {
+      "datasource": {
+        "type": "criticalmanufacturing-odata-datasource",
+        "uid": "PD36424FC765F148A"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "auto",
+            "cellOptions": {
+              "type": "auto",
+              "wrapText": false
+            },
+            "inspect": false
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "orange",
+                "value": 20
+              },
+              {
+                "color": "red",
+                "value": 40
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "ActionGroup"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 420
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Package"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 220
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "AvgComplexity"
+            },
+            "properties": [
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "color-background"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 12,
+        "w": 24,
+        "x": 0,
+        "y": 65
+      },
+      "id": 15,
+      "options": {
+        "cellHeight": "sm",
+        "footer": {
+          "countRows": false,
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
+        "showHeader": true,
+        "sortBy": [
+          {
+            "desc": true,
+            "displayName": "AvgComplexity"
+          }
+        ]
+      },
+      "pluginVersion": "12.0.4",
+      "targets": [
+        {
+          "datasource": {
+            "type": "criticalmanufacturing-odata-datasource",
+            "uid": "PD36424FC765F148A"
+          },
+          "entitySet": {
+            "entityType": "UserDefined.DEEActionGroupComplexity",
+            "name": "DEEActionGroupComplexity"
+          },
+          "oDataQueryString": "DEEActionGroupComplexity?$filter=Project in (${Project:singlequote})",
+          "properties": [
+            {
+              "name": "Project",
+              "type": "Edm.String"
+            },
+            {
+              "name": "Package",
+              "type": "Edm.String"
+            },
+            {
+              "name": "Version",
+              "type": "Edm.String"
+            },
+            {
+              "name": "ActionGroup",
+              "type": "Edm.String"
+            },
+            {
+              "name": "DistinctActionsBound",
+              "type": "Edm.Int32"
+            },
+            {
+              "name": "AvgComplexity",
+              "type": "Edm.Decimal"
+            },
+            {
+              "name": "MinComplexity",
+              "type": "Edm.Decimal"
+            },
+            {
+              "name": "MaxComplexity",
+              "type": "Edm.Decimal"
+            },
+            {
+              "name": "AvgLinesOfCode",
+              "type": "Edm.Decimal"
+            },
+            {
+              "name": "MinLinesOfCode",
+              "type": "Edm.Decimal"
+            },
+            {
+              "name": "MaxLinesOfCode",
+              "type": "Edm.Decimal"
+            },
+            {
+              "name": "ActionsWithMetrics",
+              "type": "Edm.Int32"
+            }
+          ],
+          "refId": "A",
+          "usePost": true
+        }
+      ],
+      "title": "Number of DEEs per Action Group — Complexity & LoC",
+      "type": "table"
+    },
+    {
+      "datasource": {
+        "type": "criticalmanufacturing-odata-datasource",
+        "uid": "PD36424FC765F148A"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "auto",
+            "cellOptions": {
+              "type": "auto",
+              "wrapText": false
+            },
+            "inspect": false
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "orange",
+                "value": 20
+              },
+              {
+                "color": "red",
+                "value": 40
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Action"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 300
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Package"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 220
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Complexity"
+            },
+            "properties": [
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "color-background"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 12,
+        "w": 24,
+        "x": 0,
+        "y": 77
+      },
+      "id": 16,
+      "options": {
+        "cellHeight": "sm",
+        "footer": {
+          "countRows": false,
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
+        "showHeader": true,
+        "sortBy": [
+          {
+            "desc": true,
+            "displayName": "Complexity"
+          }
+        ]
+      },
+      "pluginVersion": "12.0.4",
+      "targets": [
+        {
+          "datasource": {
+            "type": "criticalmanufacturing-odata-datasource",
+            "uid": "PD36424FC765F148A"
+          },
+          "entitySet": {
+            "entityType": "UserDefined.DEEActionComplexity",
+            "name": "DEEActionComplexity"
+          },
+          "oDataQueryString": "DEEActionComplexity?$filter=Project in (${Project:singlequote}) and HasMetrics eq 1",
+          "properties": [
+            {
+              "name": "Project",
+              "type": "Edm.String"
+            },
+            {
+              "name": "Package",
+              "type": "Edm.String"
+            },
+            {
+              "name": "Version",
+              "type": "Edm.String"
+            },
+            {
+              "name": "Action",
+              "type": "Edm.String"
+            },
+            {
+              "name": "Classification",
+              "type": "Edm.String"
+            },
+            {
+              "name": "IsEnabled",
+              "type": "Edm.String"
+            },
+            {
+              "name": "Complexity",
+              "type": "Edm.Decimal"
+            },
+            {
+              "name": "LinesOfCode",
+              "type": "Edm.Decimal"
+            },
+            {
+              "name": "LastAudited",
+              "type": "Edm.DateTimeOffset"
+            }
+          ],
+          "refId": "A",
+          "usePost": true
+        }
+      ],
+      "title": "DEE Actions Summary — Sorted by Complexity",
+      "type": "table"
+    }
+  ],
+  "preload": false,
+  "schemaVersion": 41,
+  "tags": [
+    "data-model",
+    "process-logic"
+  ],
+  "templating": {
+    "list": [
+      {
+        "allowCustomValue": false,
+        "current": {
+          "text": "All",
+          "value": [
+            "$__all"
+          ]
+        },
+        "datasource": {
+          "type": "criticalmanufacturing-odata-datasource",
+          "uid": "PD36424FC765F148A"
+        },
+        "definition": "",
+        "description": "Project Name",
+        "includeAll": true,
+        "label": "Project",
+        "multi": true,
+        "name": "Project",
+        "options": [],
+        "query": {
+          "oDataQueryString": "ProjectDataset?$select=Project&$apply=groupby((Project))&$orderby=Project",
+          "usePost": true
+        },
+        "refresh": 1,
+        "regex": "",
+        "type": "query"
+      }
+    ]
+  },
+  "time": {
+    "from": "now-1h",
+    "to": "now"
+  },
+  "timepicker": {},
+  "timezone": "browser",
+  "title": "Audit-DEE Actions and Business Rules",
+  "uid": "1723563b-6d5f-493d-a589-0bc3a59b75fc",
+  "version": 1
+}

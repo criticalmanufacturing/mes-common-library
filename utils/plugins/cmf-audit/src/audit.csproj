@@ -1,0 +1,42 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetName>cmf-audit</TargetName>
+    <ToolCommandName>cmf-audit</ToolCommandName>
+    <AssemblyName>cmf-audit</AssemblyName>
+    <PackageOutputPath>./nupkg</PackageOutputPath>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <RootNamespace>Cmf.Cli.Plugin.Audit</RootNamespace>
+    <PackAsTool>true</PackAsTool>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <GenerateDocumentationFile>false</GenerateDocumentationFile>
+    <DocumentationFile>../docs/cmf-plugin-audit/cmf-plugin-audit.xml</DocumentationFile>
+    <DefaultDocumentationFileNameMode>Name</DefaultDocumentationFileNameMode>
+    <DefaultDocumentationNestedTypeVisibility>Namespace</DefaultDocumentationNestedTypeVisibility>
+    <DefaultDocumentationGeneratedPages>Namespaces</DefaultDocumentationGeneratedPages>
+    <Version>0.0.1-0</Version>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="CriticalManufacturing.CLI.Core" Version="5.10.7" />
+    <PackageReference Include="DocumentFormat.OpenXml" Version="3.3.0" />
+    <PackageReference Include="Microsoft.TeamFoundationServer.Client" Version="20.256.2" />
+    <PackageReference Include="Microsoft.VisualStudio.Services.Client" Version="20.256.2" />
+    <PackageReference Include="SharpCompress" Version="0.39.0" />
+    <PackageReference Include="System.Configuration.ConfigurationManager" Version="10.0.9" />
+    <PackageReference Include="System.CommandLine" Version="2.0.0-beta4.22272.1" />
+    <PackageReference Include="YamlDotNet" Version="16.3.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Remove="resources\**" />
+    <Compile Remove="resources\**" />
+    <None Include="resources\**">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+</Project>

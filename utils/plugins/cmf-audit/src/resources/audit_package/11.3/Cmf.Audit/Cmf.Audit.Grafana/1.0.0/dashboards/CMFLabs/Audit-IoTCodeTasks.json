@@ -1,0 +1,697 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": {
+          "type": "grafana",
+          "uid": "-- Grafana --"
+        },
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "id": null,
+  "links": [
+    {
+      "asDropdown": false,
+      "icon": "external link",
+      "includeVars": true,
+      "keepTime": false,
+      "tags": [],
+      "targetBlank": false,
+      "title": "Portfolio Overview",
+      "tooltip": "",
+      "type": "link",
+      "url": "/d/72115905-2918-4cf5-939f-a625a686e620/audit-project-portfolio-overview"
+    },
+    {
+      "asDropdown": false,
+      "icon": "external link",
+      "includeVars": true,
+      "keepTime": false,
+      "tags": [],
+      "targetBlank": false,
+      "title": "Audit-Data Package Overview",
+      "tooltip": "",
+      "type": "link",
+      "url": "/d/bfafcc52-236c-4990-829f-f84a00b36a8a/audit-data-package-overview"
+    },
+    {
+      "asDropdown": false,
+      "icon": "external link",
+      "includeVars": true,
+      "keepTime": false,
+      "tags": [],
+      "targetBlank": false,
+      "title": "Audit-Data Package Structures",
+      "tooltip": "",
+      "type": "link",
+      "url": "/d/d1446721-3b42-4ea5-9c8c-612ae16fe0e9/audit-data-package-structures"
+    },
+    {
+      "asDropdown": false,
+      "icon": "external link",
+      "includeVars": true,
+      "keepTime": false,
+      "tags": [],
+      "targetBlank": false,
+      "title": "Audit-DEE Actions and Business Rules",
+      "tooltip": "",
+      "type": "link",
+      "url": "/d/1723563b-6d5f-493d-a589-0bc3a59b75fc/audit-dee-actions-and-business-rules"
+    },
+    {
+      "asDropdown": false,
+      "icon": "external link",
+      "includeVars": true,
+      "keepTime": false,
+      "tags": [],
+      "targetBlank": false,
+      "title": "Audit-Data Model Customization Footprint",
+      "tooltip": "",
+      "type": "link",
+      "url": "/d/ff6b8d81-8687-491d-a779-f9b17cf72638/audit-data-model-customization-footprint"
+    },
+    {
+      "asDropdown": false,
+      "icon": "external link",
+      "includeVars": true,
+      "keepTime": false,
+      "tags": [],
+      "targetBlank": false,
+      "title": "Audit-Automation Configuration Map",
+      "tooltip": "",
+      "type": "link",
+      "url": "/d/c5c782e9-4db0-4ec6-a711-496e71474613/audit-automation-configuration-map"
+    },
+    {
+      "asDropdown": false,
+      "icon": "external link",
+      "includeVars": true,
+      "keepTime": false,
+      "tags": [],
+      "targetBlank": false,
+      "title": "Audit-Custom Entity Type Properties",
+      "tooltip": "",
+      "type": "link",
+      "url": "/d/895b92be-64b3-412d-a17b-63cf0c6211f8/audit-custom-entity-type-properties"
+    }
+  ],
+  "panels": [
+    {
+      "datasource": {
+        "type": "criticalmanufacturing-odata-datasource",
+        "uid": "PD36424FC765F148A"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "blue"
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 4,
+        "x": 0,
+        "y": 0
+      },
+      "id": 1,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "count"
+          ],
+          "fields": "/^TaskId$/",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "12.0.4",
+      "targets": [
+        {
+          "datasource": {
+            "type": "criticalmanufacturing-odata-datasource",
+            "uid": "PD36424FC765F148A"
+          },
+          "entitySet": {
+            "entityType": "UserDefined.ProjectDataCodeTasks",
+            "name": "ProjectDataCodeTasks"
+          },
+          "oDataQueryString": "ProjectDataCodeTasks?$filter=Project in (${Project:singlequote})&$select=TaskId",
+          "refId": "A",
+          "usePost": true
+        }
+      ],
+      "title": "Nr of IoT Code Tasks (TypeScript)",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "criticalmanufacturing-odata-datasource",
+        "uid": "PD36424FC765F148A"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "percentage",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "orange",
+                "value": 70
+              },
+              {
+                "color": "red",
+                "value": 85
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 10,
+        "x": 4,
+        "y": 0
+      },
+      "id": 2,
+      "options": {
+        "minVizHeight": 75,
+        "minVizWidth": 75,
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [],
+          "fields": "",
+          "values": true
+        },
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true,
+        "sizing": "auto"
+      },
+      "pluginVersion": "12.0.4",
+      "targets": [
+        {
+          "datasource": {
+            "type": "criticalmanufacturing-odata-datasource",
+            "uid": "PD36424FC765F148A"
+          },
+          "entitySet": {
+            "entityType": "UserDefined.ProjectDataCodeTasks",
+            "name": "ProjectDataCodeTasks"
+          },
+          "oDataQueryString": "ProjectDataCodeTasks?$apply=filter(Project in (${Project:singlequote}))/aggregate(NrServiceCalls with average as AvgMESCalls,NrServiceCalls with min as MinMESCalls,NrServiceCalls with max as MaxMESCalls)",
+          "properties": [],
+          "refId": "A",
+          "usePost": true
+        }
+      ],
+      "title": "MES Calls per Code Task (Avg / Min / Max)",
+      "type": "gauge"
+    },
+    {
+      "datasource": {
+        "type": "criticalmanufacturing-odata-datasource",
+        "uid": "PD36424FC765F148A"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "percentage",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "orange",
+                "value": 70
+              },
+              {
+                "color": "red",
+                "value": 85
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 10,
+        "x": 14,
+        "y": 0
+      },
+      "id": 3,
+      "options": {
+        "minVizHeight": 75,
+        "minVizWidth": 75,
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [],
+          "fields": "",
+          "values": true
+        },
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true,
+        "sizing": "auto"
+      },
+      "pluginVersion": "12.0.4",
+      "targets": [
+        {
+          "datasource": {
+            "type": "criticalmanufacturing-odata-datasource",
+            "uid": "PD36424FC765F148A"
+          },
+          "entitySet": {
+            "entityType": "UserDefined.ProjectDataCodeTasks",
+            "name": "ProjectDataCodeTasks"
+          },
+          "oDataQueryString": "ProjectDataCodeTasks?$apply=filter(Project in (${Project:singlequote}))/aggregate(Complexity with average as AvgComplexity,Complexity with min as MinComplexity,Complexity with max as MaxComplexity)",
+          "properties": [],
+          "refId": "A",
+          "usePost": true
+        }
+      ],
+      "title": "Code Task Complexity (Avg / Min / Max)",
+      "type": "gauge"
+    },
+    {
+      "datasource": {
+        "type": "criticalmanufacturing-odata-datasource",
+        "uid": "PD36424FC765F148A"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "percentage",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "orange",
+                "value": 70
+              },
+              {
+                "color": "red",
+                "value": 85
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 12,
+        "x": 0,
+        "y": 6
+      },
+      "id": 4,
+      "options": {
+        "minVizHeight": 75,
+        "minVizWidth": 75,
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [],
+          "fields": "",
+          "values": true
+        },
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true,
+        "sizing": "auto"
+      },
+      "pluginVersion": "12.0.4",
+      "targets": [
+        {
+          "datasource": {
+            "type": "criticalmanufacturing-odata-datasource",
+            "uid": "PD36424FC765F148A"
+          },
+          "entitySet": {
+            "entityType": "UserDefined.ProjectDataCodeTasks",
+            "name": "ProjectDataCodeTasks"
+          },
+          "oDataQueryString": "ProjectDataCodeTasks?$apply=filter(Project in (${Project:singlequote}))/aggregate(LinesOfCode with average as AvgLinesOfCode,LinesOfCode with min as MinLinesOfCode,LinesOfCode with max as MaxLinesOfCode)",
+          "properties": [],
+          "refId": "A",
+          "usePost": true
+        }
+      ],
+      "title": "Code Task Lines of Code (Avg / Min / Max)",
+      "type": "gauge"
+    },
+    {
+      "datasource": {
+        "type": "criticalmanufacturing-odata-datasource",
+        "uid": "PD36424FC765F148A"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "percentage",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "orange",
+                "value": 70
+              },
+              {
+                "color": "red",
+                "value": 85
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 12,
+        "x": 12,
+        "y": 6
+      },
+      "id": 5,
+      "options": {
+        "minVizHeight": 75,
+        "minVizWidth": 75,
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [],
+          "fields": "",
+          "values": true
+        },
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true,
+        "sizing": "auto"
+      },
+      "pluginVersion": "12.0.4",
+      "targets": [
+        {
+          "datasource": {
+            "type": "criticalmanufacturing-odata-datasource",
+            "uid": "PD36424FC765F148A"
+          },
+          "entitySet": {
+            "entityType": "UserDefined.ProjectDataCodeTasks",
+            "name": "ProjectDataCodeTasks"
+          },
+          "oDataQueryString": "ProjectDataCodeTasks?$apply=filter(Project in (${Project:singlequote}))/aggregate(TaskNrInputs with average as AvgInputs,TaskNrInputs with min as MinInputs,TaskNrInputs with max as MaxInputs,TaskNrOutputs with average as AvgOutputs,TaskNrOutputs with min as MinOutputs,TaskNrOutputs with max as MaxOutputs)",
+          "properties": [],
+          "refId": "A",
+          "usePost": true
+        }
+      ],
+      "title": "Code Task Inputs & Outputs (Avg / Min / Max)",
+      "type": "gauge"
+    },
+    {
+      "datasource": {
+        "type": "criticalmanufacturing-odata-datasource",
+        "uid": "PD36424FC765F148A"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "auto",
+            "cellOptions": {
+              "type": "auto",
+              "wrapText": false
+            },
+            "inspect": false
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "orange",
+                "value": 20
+              },
+              {
+                "color": "red",
+                "value": 40
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Page"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 300
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Package"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 220
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "TaskId"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 140
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "MesEntities"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 300
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Complexity"
+            },
+            "properties": [
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "color-background"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 14,
+        "w": 24,
+        "x": 0,
+        "y": 12
+      },
+      "id": 6,
+      "options": {
+        "cellHeight": "sm",
+        "footer": {
+          "countRows": false,
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
+        "showHeader": true,
+        "sortBy": [
+          {
+            "desc": true,
+            "displayName": "Complexity"
+          }
+        ]
+      },
+      "pluginVersion": "12.0.4",
+      "targets": [
+        {
+          "datasource": {
+            "type": "criticalmanufacturing-odata-datasource",
+            "uid": "PD36424FC765F148A"
+          },
+          "entitySet": {
+            "entityType": "UserDefined.ProjectDataCodeTasks",
+            "name": "ProjectDataCodeTasks"
+          },
+          "oDataQueryString": "ProjectDataCodeTasks?$filter=Project in (${Project:singlequote})",
+          "properties": [
+            {
+              "name": "Project",
+              "type": "Edm.String"
+            },
+            {
+              "name": "Package",
+              "type": "Edm.String"
+            },
+            {
+              "name": "Version",
+              "type": "Edm.String"
+            },
+            {
+              "name": "Page",
+              "type": "Edm.String"
+            },
+            {
+              "name": "TaskPackage",
+              "type": "Edm.String"
+            },
+            {
+              "name": "TaskVersion",
+              "type": "Edm.String"
+            },
+            {
+              "name": "TaskId",
+              "type": "Edm.String"
+            },
+            {
+              "name": "LinesOfCode",
+              "type": "Edm.Decimal"
+            },
+            {
+              "name": "Complexity",
+              "type": "Edm.Decimal"
+            },
+            {
+              "name": "NrServiceCalls",
+              "type": "Edm.Decimal"
+            },
+            {
+              "name": "TaskNrInputs",
+              "type": "Edm.Decimal"
+            },
+            {
+              "name": "TaskNrOutputs",
+              "type": "Edm.Decimal"
+            },
+            {
+              "name": "MesEntities",
+              "type": "Edm.String"
+            }
+          ],
+          "refId": "A",
+          "usePost": true
+        }
+      ],
+      "title": "IoT Code Tasks — Full Inventory (Sorted by Complexity)",
+      "type": "table"
+    }
+  ],
+  "preload": false,
+  "schemaVersion": 41,
+  "tags": [
+    "iot",
+    "code-tasks"
+  ],
+  "templating": {
+    "list": [
+      {
+        "allowCustomValue": false,
+        "current": {
+          "text": "All",
+          "value": [
+            "$__all"
+          ]
+        },
+        "datasource": {
+          "type": "criticalmanufacturing-odata-datasource",
+          "uid": "PD36424FC765F148A"
+        },
+        "definition": "",
+        "description": "Project Name",
+        "includeAll": true,
+        "label": "Project",
+        "multi": true,
+        "name": "Project",
+        "options": [],
+        "query": {
+          "oDataQueryString": "ProjectDataset?$select=Project&$apply=groupby((Project))&$orderby=Project",
+          "usePost": true
+        },
+        "refresh": 1,
+        "regex": "",
+        "type": "query"
+      }
+    ]
+  },
+  "time": {
+    "from": "now-1h",
+    "to": "now"
+  },
+  "timepicker": {},
+  "timezone": "browser",
+  "title": "Audit-IoT Code Tasks",
+  "uid": "892a2c3c-ef17-4aee-8b86-69631491d32c",
+  "version": 1
+}

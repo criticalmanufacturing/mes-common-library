@@ -1,0 +1,17 @@
+{
+  "profiles": {
+    "review (local checkout)": {
+      "commandName": "Project",
+      "commandLineArgs": "-l Debug review",
+      "workingDirectory": "<path-to-checked-out-project>"
+    },
+    "review-remote-ado": {
+      "commandName": "Project",
+      "commandLineArgs": "-l Debug review-remote-ado --azureDevOpsUrl=\"https://dev.azure.com/<organization>\" --teamProject=\"<project>\" --repository=\"<repository>\"",
+      "environmentVariables": {
+        "SYSTEM_ACCESSTOKEN": "<azure-devops-pat>"
+      },
+      "workingDirectory": "<temp-folder>"
+    }
+  }
+}

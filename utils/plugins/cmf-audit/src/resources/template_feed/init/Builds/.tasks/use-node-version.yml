@@ -1,0 +1,11 @@
+steps:
+- task: NodeTool@0
+  displayName: Use Node $(NodeVersion)
+  inputs:
+    versionSpec: $(NodeVersion)
+
+# Create a dummy package.json on the temp folder, where we install our tools (cmf, cmf-pipeline, etc...)
+# to make sure that npm creates the node_modules folder there as well
+- script: npm init -y
+  displayName: Generate package.json in Temp folder
+  workingDirectory: $(Agent.TempDirectory)

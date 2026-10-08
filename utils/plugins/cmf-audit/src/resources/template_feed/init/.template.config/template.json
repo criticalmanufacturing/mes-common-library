@@ -1,0 +1,72 @@
+{
+  "$schema": "http://json.schemastore.org/template",
+  "author": "Critical Manufacturing",
+  "classifications": [ "cmf-audit" ],
+  "description": "Initialize the Azure DevOps audit pipelines",
+  "name": "Initialize Azure DevOps audit pipelines",
+  "identity": "cmf-audit.init",
+  "groupIdentity": "cmf-audit.init",
+  "shortName": "audit-init",
+  "tags": {
+    "language": "C#",
+    "type": "project"
+  },
+  "sourceName": "audit_init",
+  "preferNameDirectory": false,
+  "symbols": {
+    "agentPool": {
+      "type": "parameter",
+      "datatype": "string",
+      "replaces": "<%= $CLI_PARAM_AgentPool %>"
+    },
+    "defaultServiceConnection": {
+      "type": "parameter",
+      "datatype": "string",
+      "defaultValue": "",
+      "replaces": "<%= $CLI_PARAM_DefaultServiceConnection %>"
+    },
+    "containerOptions": {
+      "type": "parameter",
+      "datatype": "string",
+      "defaultValue": "'--volume /mnt:/mnt'",
+      "replaces": "<%= $CLI_PARAM_ContainerOptions %>"
+    },
+    "hasEnvironments": {
+      "type": "parameter",
+      "datatype": "string",
+      "defaultValue": "false"
+    },
+    "defaultEnvironment": {
+      "type": "parameter",
+      "datatype": "string",
+      "defaultValue": "",
+      "replaces": "<%= $CLI_PARAM_DefaultEnvironment %>"
+    },
+    "environmentValues": {
+      "type": "parameter",
+      "datatype": "string",
+      "defaultValue": "",
+      "replaces": "<%= $CLI_PARAM_EnvironmentValues %>"
+    },
+    "securityAccessTokenSecretName": {
+      "type": "parameter",
+      "datatype": "string",
+      "replaces": "<%= $CLI_PARAM_SecurityAccessTokenSecretName %>"
+    },
+    "cmfAuditVersion": {
+      "type": "parameter",
+      "datatype": "string",
+      "replaces": "<%= $CLI_PARAM_CmfAuditVersion %>"
+    },
+    "cmfAuditRegistry": {
+      "type": "parameter",
+      "datatype": "string",
+      "replaces": "<%= $CLI_PARAM_CmfAuditRegistry %>"
+    },
+    "portalLogin": {
+      "type": "parameter",
+      "datatype": "string",
+      "defaultValue": "false"
+    }
+  }
+}

@@ -1,0 +1,20 @@
+# Extract commonly used values from the project's own .project-config.json (requires checkout: self)
+steps:
+- script: |
+    set -e
+    read_value() {
+      # node instead of jq: jq isn't guaranteed to be present on the build-runner image
+      value=$(node -e "process.stdout.write(String(require('./.project-config.json')['$1'] ?? ''))")
+      if [ -z "$value" ]; then
+        echo "##vso[task.logissue type=error]'$1' is missing or empty in .project-config.json"
+        exit 1
+      fi
+      echo "##vso[task.setvariable variable=$2;isOutput=true]$value"
+      echo "$2=$value"
+    }
+    read_value vmHostname HostAddress
+    read_value Tenant TenantName
+    read_value IsSslEnabled UseSSL
+    read_value MESVersion MESVersion
+  name: ProjectConfig
+  displayName: Read Project Config

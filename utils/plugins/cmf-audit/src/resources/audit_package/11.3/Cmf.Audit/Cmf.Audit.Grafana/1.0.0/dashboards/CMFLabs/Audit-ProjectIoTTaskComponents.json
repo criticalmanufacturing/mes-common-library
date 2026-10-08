@@ -1,0 +1,766 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": {
+          "type": "grafana",
+          "uid": "-- Grafana --"
+        },
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "id": null,
+  "links": [
+    {
+      "asDropdown": false,
+      "icon": "external link",
+      "includeVars": true,
+      "keepTime": false,
+      "tags": [],
+      "targetBlank": false,
+      "title": "Portfolio Overview",
+      "tooltip": "",
+      "type": "link",
+      "url": "/d/72115905-2918-4cf5-939f-a625a686e620/audit-project-portfolio-overview"
+    },
+    {
+      "asDropdown": false,
+      "icon": "external link",
+      "includeVars": true,
+      "keepTime": false,
+      "tags": [],
+      "targetBlank": false,
+      "title": "Governance Overview",
+      "tooltip": "",
+      "type": "link",
+      "url": "/d/74965440-fc60-4cd5-be1b-8799b5b7c53b/audit-project-governance-overview"
+    },
+    {
+      "asDropdown": false,
+      "icon": "external link",
+      "includeVars": true,
+      "keepTime": false,
+      "tags": [],
+      "targetBlank": false,
+      "title": "IoT Dependencies",
+      "tooltip": "",
+      "type": "link",
+      "url": "/d/56201941-82ef-469e-aed8-50f196bf403f/audit-projectiotdependencies"
+    },
+    {
+      "asDropdown": false,
+      "icon": "external link",
+      "includeVars": true,
+      "keepTime": false,
+      "tags": [],
+      "targetBlank": false,
+      "title": "Audit-IoT Package Overview",
+      "tooltip": "",
+      "type": "link",
+      "url": "/d/d7faee66-6dfd-4f58-bfe8-a84457f90424/audit-iot-package-overview"
+    },
+    {
+      "asDropdown": false,
+      "icon": "external link",
+      "includeVars": true,
+      "keepTime": false,
+      "tags": [],
+      "targetBlank": false,
+      "title": "Audit-IoT Converters",
+      "tooltip": "",
+      "type": "link",
+      "url": "/d/637551b7-57ef-45e9-8e23-6c6fef7136b8/audit-iot-converters"
+    }
+  ],
+  "panels": [
+    {
+      "datasource": {
+        "type": "criticalmanufacturing-odata-datasource",
+        "uid": "PD36424FC765F148A"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "percentage",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "orange",
+                "value": 70
+              },
+              {
+                "color": "red",
+                "value": 85
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
+      "id": 3,
+      "options": {
+        "minVizHeight": 75,
+        "minVizWidth": 75,
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [],
+          "fields": "",
+          "values": true
+        },
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true,
+        "sizing": "auto"
+      },
+      "pluginVersion": "12.0.4",
+      "targets": [
+        {
+          "datasource": {
+            "type": "criticalmanufacturing-odata-datasource",
+            "uid": "PD36424FC765F148A"
+          },
+          "entitySet": {
+            "entityType": "UserDefined.ProjectIoTTask",
+            "name": "ProjectIoTTask"
+          },
+          "oDataQueryString": "ProjectIoTTask?$apply=filter(Project in (${Project:singlequote}) and Package in (${Package:singlequote}) and Version in (${PackageVersion:singlequote}))/groupby((Project,Package,Version),aggregate(InputsCount with average as AvgNrOfInputs,InputsCount with max as MaxNrOfInputs,InputsCount with min as MinNrOfInputs))",
+          "properties": [],
+          "refId": "A",
+          "usePost": true
+        }
+      ],
+      "title": "Task Inputs",
+      "transformations": [
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "ComponentName": true,
+              "InputsCount": true
+            },
+            "includeByName": {},
+            "indexByName": {},
+            "renameByName": {}
+          }
+        }
+      ],
+      "type": "gauge"
+    },
+    {
+      "datasource": {
+        "type": "criticalmanufacturing-odata-datasource",
+        "uid": "PD36424FC765F148A"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "percentage",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "orange",
+                "value": 70
+              },
+              {
+                "color": "red",
+                "value": 85
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 24,
+        "x": 0,
+        "y": 6
+      },
+      "id": 4,
+      "options": {
+        "minVizHeight": 75,
+        "minVizWidth": 75,
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [],
+          "fields": "",
+          "values": true
+        },
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true,
+        "sizing": "auto"
+      },
+      "pluginVersion": "12.0.4",
+      "targets": [
+        {
+          "datasource": {
+            "type": "criticalmanufacturing-odata-datasource",
+            "uid": "PD36424FC765F148A"
+          },
+          "entitySet": {
+            "entityType": "UserDefined.ProjectIoTTask",
+            "name": "ProjectIoTTask"
+          },
+          "oDataQueryString": "ProjectIoTTask?$apply=filter(Project in (${Project:singlequote}) and Package in (${Package:singlequote}) and Version in (${PackageVersion:singlequote}))/groupby((Project,Package,Version),aggregate(OutputsCount with average as AvgNrOfOutputs,OutputsCount with max as MaxNrOfOutputs,OutputsCount with min as MinNrOfOutputs))",
+          "properties": [],
+          "refId": "A",
+          "usePost": true
+        }
+      ],
+      "title": "Task Outputs",
+      "transformations": [
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "ComponentName": true,
+              "InputsCount": true,
+              "OutputsCount": true
+            },
+            "includeByName": {},
+            "indexByName": {},
+            "renameByName": {}
+          }
+        }
+      ],
+      "type": "gauge"
+    },
+    {
+      "datasource": {
+        "type": "criticalmanufacturing-odata-datasource",
+        "uid": "PD36424FC765F148A"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "percentage",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "orange",
+                "value": 70
+              },
+              {
+                "color": "red",
+                "value": 85
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 9,
+        "w": 24,
+        "x": 0,
+        "y": 12
+      },
+      "id": 2,
+      "options": {
+        "minVizHeight": 75,
+        "minVizWidth": 75,
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [],
+          "fields": "",
+          "values": true
+        },
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true,
+        "sizing": "auto"
+      },
+      "pluginVersion": "12.0.4",
+      "targets": [
+        {
+          "datasource": {
+            "type": "criticalmanufacturing-odata-datasource",
+            "uid": "PD36424FC765F148A"
+          },
+          "entitySet": {
+            "entityType": "UserDefined.ProjectIoTTask",
+            "name": "ProjectIoTTask"
+          },
+          "oDataQueryString": "ProjectIoTTask?$apply=filter(Project in (${Project:singlequote}) and Package in (${Package:singlequote}) and Version in (${PackageVersion:singlequote}))/groupby((Project,Package,Version),aggregate(LinesOfCode with average as AvgLinesOfCode,LinesOfCode with max as MaxLinesOfCode,LinesOfCode with min as MinLinesOfCode))",
+          "properties": [],
+          "refId": "A",
+          "usePost": true
+        }
+      ],
+      "title": "Tasks LoC",
+      "transformations": [
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "ComponentName": true,
+              "LinesOfCode": true
+            },
+            "includeByName": {},
+            "indexByName": {
+              "AvgLinesOfCode": 5,
+              "ComponentName": 3,
+              "LinesOfCode": 4,
+              "MaxLinesOfCode": 7,
+              "MinLinesOfCode": 6,
+              "Package": 1,
+              "Project": 0,
+              "Version": 2
+            },
+            "renameByName": {}
+          }
+        }
+      ],
+      "type": "gauge"
+    },
+    {
+      "datasource": {
+        "type": "criticalmanufacturing-odata-datasource",
+        "uid": "PD36424FC765F148A"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "auto",
+            "cellOptions": {
+              "applyToRow": false,
+              "mode": "gradient",
+              "type": "color-background",
+              "wrapText": false
+            },
+            "filterable": false,
+            "inspect": true,
+            "minWidth": 50
+          },
+          "mappings": [
+            {
+              "options": {
+                "false": {
+                  "color": "green",
+                  "index": 0,
+                  "text": "ATL"
+                },
+                "true": {
+                  "color": "#C4162A",
+                  "index": 1,
+                  "text": "Bundled"
+                }
+              },
+              "type": "value"
+            }
+          ],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "transparent"
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Type"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 86
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Outputs"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 252
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Version"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 73
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Project"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 67
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Package"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 212
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Name"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 284
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Injects"
+            },
+            "properties": [
+              {
+                "id": "custom.width"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Inputs"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 635
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 17,
+        "w": 24,
+        "x": 0,
+        "y": 21
+      },
+      "id": 1,
+      "options": {
+        "cellHeight": "sm",
+        "footer": {
+          "countRows": false,
+          "enablePagination": false,
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
+        "showHeader": true,
+        "sortBy": []
+      },
+      "pluginVersion": "12.0.4",
+      "targets": [
+        {
+          "datasource": {
+            "type": "criticalmanufacturing-odata-datasource",
+            "uid": "PD36424FC765F148A"
+          },
+          "entitySet": {
+            "entityType": "UserDefined.ProjectIoTTask",
+            "name": "ProjectIoTTask"
+          },
+          "oDataQueryString": "ProjectIoTTask?$filter=Project in (${Project:singlequote}) and Package in (${Package:singlequote}) and Version in (${PackageVersion:singlequote})",
+          "properties": [
+            {
+              "name": "Project",
+              "type": "Edm.String"
+            },
+            {
+              "name": "Package",
+              "type": "Edm.String"
+            },
+            {
+              "name": "Version",
+              "type": "Edm.String"
+            },
+            {
+              "name": "ComponentType",
+              "type": "Edm.String"
+            },
+            {
+              "name": "ComponentName",
+              "type": "Edm.String"
+            },
+            {
+              "name": "Bundled",
+              "type": "Edm.String"
+            },
+            {
+              "name": "Injects",
+              "type": "Edm.String"
+            },
+            {
+              "name": "Inputs",
+              "type": "Edm.String"
+            },
+            {
+              "name": "Outputs",
+              "type": "Edm.String"
+            },
+            {
+              "name": "LinesOfCode",
+              "type": "Edm.Decimal"
+            },
+            {
+              "name": "InjectsCount",
+              "type": "Edm.Int64"
+            },
+            {
+              "name": "InputsCount",
+              "type": "Edm.Int64"
+            },
+            {
+              "name": "OutputsCount",
+              "type": "Edm.Int64"
+            }
+          ],
+          "refId": "A",
+          "usePost": true
+        }
+      ],
+      "title": "Task Summary",
+      "transformations": [
+        {
+          "id": "sortBy",
+          "options": {
+            "fields": {},
+            "sort": [
+              {
+                "desc": true,
+                "field": "LinesOfCode"
+              }
+            ]
+          }
+        },
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {},
+            "includeByName": {},
+            "indexByName": {
+              "Bundled": 5,
+              "ComponentName": 4,
+              "ComponentType": 3,
+              "Injects": 8,
+              "Inputs": 6,
+              "LinesOfCode": 9,
+              "Outputs": 7,
+              "Package": 1,
+              "Project": 0,
+              "Version": 2
+            },
+            "renameByName": {
+              "Bundled": "",
+              "ComponentName": "Name",
+              "ComponentType": "Type"
+            }
+          }
+        }
+      ],
+      "type": "table"
+    }
+  ],
+  "preload": false,
+  "schemaVersion": 41,
+  "tags": [
+    "iot",
+    "tasks"
+  ],
+  "templating": {
+    "list": [
+      {
+        "allowCustomValue": false,
+        "current": {
+          "text": "All",
+          "value": [
+            "$__all"
+          ]
+        },
+        "datasource": {
+          "type": "criticalmanufacturing-odata-datasource",
+          "uid": "PD36424FC765F148A"
+        },
+        "definition": "",
+        "includeAll": true,
+        "label": "Project",
+        "multi": true,
+        "name": "Project",
+        "options": [],
+        "query": {
+          "oDataQueryString": "ProjectIoTTask?$select=Project&$apply=groupby((Project))&$orderby=Project",
+          "usePost": true
+        },
+        "refresh": 1,
+        "regex": "",
+        "type": "query"
+      },
+      {
+        "allowCustomValue": false,
+        "current": {
+          "text": "All",
+          "value": [
+            "$__all"
+          ]
+        },
+        "datasource": {
+          "type": "criticalmanufacturing-odata-datasource",
+          "uid": "PD36424FC765F148A"
+        },
+        "definition": "",
+        "includeAll": true,
+        "label": "Package",
+        "multi": true,
+        "name": "Package",
+        "options": [],
+        "query": {
+          "oDataQueryString": "ProjectIoTTask?$select=Package&$apply=groupby((Package))&$orderby=Package"
+        },
+        "refresh": 1,
+        "regex": "",
+        "type": "query"
+      },
+      {
+        "allowCustomValue": false,
+        "current": {
+          "text": "All",
+          "value": "$__all"
+        },
+        "datasource": {
+          "type": "criticalmanufacturing-odata-datasource",
+          "uid": "PD36424FC765F148A"
+        },
+        "definition": "",
+        "includeAll": true,
+        "multi": true,
+        "name": "PackageVersion",
+        "options": [],
+        "query": {
+          "oDataQueryString": "ProjectIoTTask?$select=Version&$apply=groupby((Version))&$orderby=Version"
+        },
+        "refresh": 1,
+        "regex": "",
+        "type": "query"
+      },
+      {
+        "allowCustomValue": false,
+        "current": {
+          "text": "All",
+          "value": "$__all"
+        },
+        "datasource": {
+          "type": "criticalmanufacturing-odata-datasource",
+          "uid": "PD36424FC765F148A"
+        },
+        "definition": "",
+        "includeAll": true,
+        "label": "Type",
+        "multi": true,
+        "name": "ComponentType",
+        "options": [],
+        "query": {
+          "oDataQueryString": "ProjectIoTTask?$select=ComponentType&$apply=groupby((ComponentType))&$orderby=ComponentType"
+        },
+        "refresh": 1,
+        "regex": "",
+        "type": "query"
+      },
+      {
+        "allowCustomValue": false,
+        "current": {
+          "text": "All",
+          "value": [
+            "$__all"
+          ]
+        },
+        "datasource": {
+          "type": "criticalmanufacturing-odata-datasource",
+          "uid": "PD36424FC765F148A"
+        },
+        "definition": "",
+        "includeAll": true,
+        "label": "Name",
+        "multi": true,
+        "name": "ComponentName",
+        "options": [],
+        "query": {
+          "oDataQueryString": "ProjectIoTTask?$select=ComponentName&$apply=groupby((ComponentName))&$orderby=ComponentName"
+        },
+        "refresh": 1,
+        "regex": "",
+        "type": "query"
+      }
+    ]
+  },
+  "time": {
+    "from": "now-6h",
+    "to": "now"
+  },
+  "timepicker": {},
+  "timezone": "browser",
+  "title": "Audit-ProjectIoTTaskComponents",
+  "uid": "92a652c0-7805-4086-9e71-8738e7a47bce",
+  "version": 6
+}

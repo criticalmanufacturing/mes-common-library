@@ -1,0 +1,647 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": {
+          "type": "grafana",
+          "uid": "-- Grafana --"
+        },
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "id": null,
+  "links": [
+    {
+      "asDropdown": false,
+      "icon": "external link",
+      "includeVars": true,
+      "keepTime": false,
+      "tags": [],
+      "targetBlank": false,
+      "title": "Portfolio Overview",
+      "tooltip": "",
+      "type": "link",
+      "url": "/d/72115905-2918-4cf5-939f-a625a686e620/audit-project-portfolio-overview"
+    },
+    {
+      "asDropdown": false,
+      "icon": "external link",
+      "includeVars": true,
+      "keepTime": false,
+      "tags": [],
+      "targetBlank": false,
+      "title": "DEE Actions & Business Rules (deep dive)",
+      "tooltip": "",
+      "type": "link",
+      "url": "/d/1723563b-6d5f-493d-a589-0bc3a59b75fc/audit-dee-actions-and-business-rules"
+    },
+    {
+      "asDropdown": false,
+      "icon": "external link",
+      "includeVars": true,
+      "keepTime": false,
+      "tags": [],
+      "targetBlank": false,
+      "title": "Data Model Customization Footprint (deep dive)",
+      "tooltip": "",
+      "type": "link",
+      "url": "/d/ff6b8d81-8687-491d-a779-f9b17cf72638/audit-data-model-customization-footprint"
+    },
+    {
+      "asDropdown": false,
+      "icon": "external link",
+      "includeVars": true,
+      "keepTime": false,
+      "tags": [],
+      "targetBlank": false,
+      "title": "Automation Configuration Map (deep dive)",
+      "tooltip": "",
+      "type": "link",
+      "url": "/d/c5c782e9-4db0-4ec6-a711-496e71474613/audit-automation-configuration-map"
+    },
+    {
+      "asDropdown": false,
+      "icon": "external link",
+      "includeVars": true,
+      "keepTime": false,
+      "tags": [],
+      "targetBlank": false,
+      "title": "Custom Entity Type Properties (deep dive)",
+      "tooltip": "",
+      "type": "link",
+      "url": "/d/895b92be-64b3-412d-a17b-63cf0c6211f8/audit-custom-entity-type-properties"
+    },
+    {
+      "asDropdown": false,
+      "icon": "external link",
+      "includeVars": true,
+      "keepTime": false,
+      "tags": [],
+      "targetBlank": false,
+      "title": "IoT Task Components (Tasks/CodeTasks)",
+      "tooltip": "",
+      "type": "link",
+      "url": "/d/92a652c0-7805-4086-9e71-8738e7a47bce/audit-projectiottaskcomponents"
+    },
+    {
+      "asDropdown": false,
+      "icon": "external link",
+      "includeVars": true,
+      "keepTime": false,
+      "tags": [],
+      "targetBlank": false,
+      "title": "Data Package Structures (Configs, Tables, Drivers)",
+      "tooltip": "",
+      "type": "link",
+      "url": "/d/d1446721-3b42-4ea5-9c8c-612ae16fe0e9/audit-data-package-structures"
+    },
+    {
+      "asDropdown": false,
+      "icon": "external link",
+      "includeVars": true,
+      "keepTime": false,
+      "tags": [],
+      "targetBlank": false,
+      "title": "Audit-IoT Code Tasks",
+      "tooltip": "",
+      "type": "link",
+      "url": "/d/892a2c3c-ef17-4aee-8b86-69631491d32c/audit-iot-code-tasks"
+    }
+  ],
+  "panels": [
+    {
+      "datasource": {
+        "type": "criticalmanufacturing-odata-datasource",
+        "uid": "PD36424FC765F148A"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "blue"
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 4,
+        "x": 0,
+        "y": 0
+      },
+      "id": 1,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "count"
+          ],
+          "fields": "/^Action$/",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "12.0.4",
+      "targets": [
+        {
+          "datasource": {
+            "type": "criticalmanufacturing-odata-datasource",
+            "uid": "PD36424FC765F148A"
+          },
+          "entitySet": {
+            "entityType": "UserDefined.DEEActionCatalog",
+            "name": "DEEActionCatalog"
+          },
+          "oDataQueryString": "DEEActionCatalog?$filter=Project in (${Project:singlequote})&$select=Action",
+          "refId": "A",
+          "usePost": true
+        }
+      ],
+      "title": "Total DEE Actions",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "criticalmanufacturing-odata-datasource",
+        "uid": "PD36424FC765F148A"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "blue"
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 4,
+        "x": 4,
+        "y": 0
+      },
+      "id": 2,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "count"
+          ],
+          "fields": "/^RuleName$/",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "12.0.4",
+      "targets": [
+        {
+          "datasource": {
+            "type": "criticalmanufacturing-odata-datasource",
+            "uid": "PD36424FC765F148A"
+          },
+          "entitySet": {
+            "entityType": "UserDefined.BusinessRulesInventory",
+            "name": "BusinessRulesInventory"
+          },
+          "oDataQueryString": "BusinessRulesInventory?$filter=Project in (${Project:singlequote})&$select=RuleName",
+          "refId": "A",
+          "usePost": true
+        }
+      ],
+      "title": "Total Business Rules",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "criticalmanufacturing-odata-datasource",
+        "uid": "PD36424FC765F148A"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "blue"
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 4,
+        "x": 8,
+        "y": 0
+      },
+      "id": 3,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "sum"
+          ],
+          "fields": "/^EntityCount$/",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "12.0.4",
+      "targets": [
+        {
+          "datasource": {
+            "type": "criticalmanufacturing-odata-datasource",
+            "uid": "PD36424FC765F148A"
+          },
+          "entitySet": {
+            "entityType": "UserDefined.DataModelCustomizationFootprint",
+            "name": "DataModelCustomizationFootprint"
+          },
+          "oDataQueryString": "DataModelCustomizationFootprint?$filter=Project in (${Project:singlequote})&$select=EntityCount",
+          "refId": "A",
+          "usePost": true
+        }
+      ],
+      "title": "Total DM/SM Entities",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "criticalmanufacturing-odata-datasource",
+        "uid": "PD36424FC765F148A"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "blue"
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 4,
+        "x": 12,
+        "y": 0
+      },
+      "id": 4,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "count"
+          ],
+          "fields": "/^PropertyName$/",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "12.0.4",
+      "targets": [
+        {
+          "datasource": {
+            "type": "criticalmanufacturing-odata-datasource",
+            "uid": "PD36424FC765F148A"
+          },
+          "entitySet": {
+            "entityType": "UserDefined.CustomEntityTypeProperties",
+            "name": "CustomEntityTypeProperties"
+          },
+          "oDataQueryString": "CustomEntityTypeProperties?$filter=Project in (${Project:singlequote})&$select=PropertyName",
+          "refId": "A",
+          "usePost": true
+        }
+      ],
+      "title": "Total Custom Properties",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "criticalmanufacturing-odata-datasource",
+        "uid": "PD36424FC765F148A"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "blue"
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 4,
+        "x": 16,
+        "y": 0
+      },
+      "id": 5,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "count"
+          ],
+          "fields": "/^ControllerName$/",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "12.0.4",
+      "targets": [
+        {
+          "datasource": {
+            "type": "criticalmanufacturing-odata-datasource",
+            "uid": "PD36424FC765F148A"
+          },
+          "entitySet": {
+            "entityType": "UserDefined.AutomationConfigurationMap",
+            "name": "AutomationConfigurationMap"
+          },
+          "oDataQueryString": "AutomationConfigurationMap?$filter=Project in (${Project:singlequote})&$select=ControllerName",
+          "refId": "A",
+          "usePost": true
+        }
+      ],
+      "title": "Total Automation Controllers",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "criticalmanufacturing-odata-datasource",
+        "uid": "PD36424FC765F148A"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "gray"
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 4,
+        "x": 20,
+        "y": 0
+      },
+      "id": 6,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "count"
+          ],
+          "fields": "/^TaskId$/",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "12.0.4",
+      "targets": [
+        {
+          "datasource": {
+            "type": "criticalmanufacturing-odata-datasource",
+            "uid": "PD36424FC765F148A"
+          },
+          "entitySet": {
+            "entityType": "UserDefined.ProjectDataCodeTasks",
+            "name": "ProjectDataCodeTasks"
+          },
+          "oDataQueryString": "ProjectDataCodeTasks?$filter=Project in (${Project:singlequote})&$select=TaskId",
+          "refId": "A",
+          "usePost": true
+        }
+      ],
+      "title": "Total CodeTasks",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "criticalmanufacturing-odata-datasource",
+        "uid": "PD36424FC765F148A"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "continuous-GrYlRd"
+          },
+          "fieldMinMax": false,
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 12,
+        "w": 24,
+        "x": 0,
+        "y": 6
+      },
+      "id": 7,
+      "options": {
+        "displayMode": "basic",
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": false
+        },
+        "maxVizHeight": 300,
+        "minVizHeight": 46,
+        "minVizWidth": 8,
+        "namePlacement": "top",
+        "orientation": "horizontal",
+        "reduceOptions": {
+          "calcs": [],
+          "fields": "",
+          "limit": 20,
+          "values": true
+        },
+        "showUnfilled": true,
+        "sizing": "manual",
+        "valueMode": "color"
+      },
+      "pluginVersion": "12.0.4",
+      "targets": [
+        {
+          "datasource": {
+            "type": "criticalmanufacturing-odata-datasource",
+            "uid": "PD36424FC765F148A"
+          },
+          "entitySet": {
+            "entityType": "UserDefined.ProjectComponentTypeBreakdown",
+            "name": "ProjectComponentTypeBreakdown"
+          },
+          "oDataQueryString": "ProjectComponentTypeBreakdown?$filter=Project in (${Project:singlequote})&$select=Package,ComponentCount",
+          "refId": "A",
+          "usePost": true
+        }
+      ],
+      "title": "Top Packages by Total Component Count (Fleet-wide)",
+      "transformations": [
+        {
+          "id": "groupBy",
+          "options": {
+            "fields": {
+              "Package": {
+                "operation": "groupby"
+              },
+              "ComponentCount": {
+                "aggregations": [
+                  "sum"
+                ],
+                "operation": "aggregate"
+              }
+            }
+          }
+        },
+        {
+          "id": "sortBy",
+          "options": {
+            "fields": {},
+            "sort": [
+              {
+                "desc": true,
+                "field": "ComponentCount (sum)"
+              }
+            ]
+          }
+        }
+      ],
+      "type": "bargauge"
+    }
+  ],
+  "preload": false,
+  "schemaVersion": 41,
+  "tags": [
+    "data-package",
+    "overview",
+    "hub"
+  ],
+  "templating": {
+    "list": [
+      {
+        "allowCustomValue": false,
+        "current": {
+          "text": "All",
+          "value": [
+            "$__all"
+          ]
+        },
+        "datasource": {
+          "type": "criticalmanufacturing-odata-datasource",
+          "uid": "PD36424FC765F148A"
+        },
+        "definition": "",
+        "description": "Project Name",
+        "includeAll": true,
+        "label": "Project",
+        "multi": true,
+        "name": "Project",
+        "options": [],
+        "query": {
+          "oDataQueryString": "ProjectDataset?$select=Project&$apply=groupby((Project))&$orderby=Project",
+          "usePost": true
+        },
+        "refresh": 1,
+        "regex": "",
+        "type": "query"
+      }
+    ]
+  },
+  "time": {
+    "from": "now-1h",
+    "to": "now"
+  },
+  "timepicker": {},
+  "timezone": "browser",
+  "title": "Audit-Data Package Overview",
+  "uid": "bfafcc52-236c-4990-829f-f84a00b36a8a",
+  "version": 1
+}

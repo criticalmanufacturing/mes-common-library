@@ -1,0 +1,977 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": {
+          "type": "grafana",
+          "uid": "-- Grafana --"
+        },
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "id": null,
+  "links": [
+    {
+      "asDropdown": false,
+      "icon": "external link",
+      "includeVars": true,
+      "keepTime": false,
+      "tags": [],
+      "targetBlank": false,
+      "title": "Portfolio Overview",
+      "tooltip": "",
+      "type": "link",
+      "url": "/d/72115905-2918-4cf5-939f-a625a686e620/audit-project-portfolio-overview"
+    },
+    {
+      "asDropdown": false,
+      "icon": "external link",
+      "includeVars": true,
+      "keepTime": false,
+      "tags": [],
+      "targetBlank": false,
+      "title": "IoT Dependencies",
+      "tooltip": "",
+      "type": "link",
+      "url": "/d/56201941-82ef-469e-aed8-50f196bf403f/audit-projectiotdependencies"
+    },
+    {
+      "asDropdown": false,
+      "icon": "external link",
+      "includeVars": true,
+      "keepTime": false,
+      "tags": [],
+      "targetBlank": false,
+      "title": "IoT Task Components",
+      "tooltip": "",
+      "type": "link",
+      "url": "/d/92a652c0-7805-4086-9e71-8738e7a47bce/audit-projectiottaskcomponents"
+    },
+    {
+      "asDropdown": false,
+      "icon": "external link",
+      "includeVars": true,
+      "keepTime": false,
+      "tags": [],
+      "targetBlank": false,
+      "title": "Root Package Overview",
+      "tooltip": "",
+      "type": "link",
+      "url": "/d/ada2a686-159d-4f38-a2e9-7f389c7bdd82/audit-root-package-overview"
+    },
+    {
+      "asDropdown": false,
+      "icon": "external link",
+      "includeVars": true,
+      "keepTime": false,
+      "tags": [],
+      "targetBlank": false,
+      "title": "Data Package Overview",
+      "tooltip": "",
+      "type": "link",
+      "url": "/d/bfafcc52-236c-4990-829f-f84a00b36a8a/audit-data-package-overview"
+    },
+    {
+      "asDropdown": false,
+      "icon": "external link",
+      "includeVars": true,
+      "keepTime": false,
+      "tags": [],
+      "targetBlank": false,
+      "title": "IoT Package Overview",
+      "tooltip": "",
+      "type": "link",
+      "url": "/d/d7faee66-6dfd-4f58-bfe8-a84457f90424/audit-iot-package-overview"
+    }
+  ],
+  "panels": [
+    {
+      "datasource": {
+        "type": "criticalmanufacturing-odata-datasource",
+        "uid": "PD36424FC765F148A"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "blue"
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 5,
+        "x": 0,
+        "y": 0
+      },
+      "id": 1,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "count"
+          ],
+          "fields": "/^MESVersion$/",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "12.0.4",
+      "targets": [
+        {
+          "datasource": {
+            "type": "criticalmanufacturing-odata-datasource",
+            "uid": "PD36424FC765F148A"
+          },
+          "entitySet": {
+            "entityType": "UserDefined.ProjectGovernance",
+            "name": "ProjectGovernance"
+          },
+          "oDataQueryString": "ProjectGovernance?$apply=filter(Project in (${Project:singlequote}))/groupby((MESVersion))&$select=MESVersion",
+          "refId": "A",
+          "usePost": true
+        }
+      ],
+      "title": "Distinct MES Versions in Use",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "criticalmanufacturing-odata-datasource",
+        "uid": "PD36424FC765F148A"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "blue"
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 5,
+        "x": 5,
+        "y": 0
+      },
+      "id": 2,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "count"
+          ],
+          "fields": "/^NuGetRegistry$/",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "12.0.4",
+      "targets": [
+        {
+          "datasource": {
+            "type": "criticalmanufacturing-odata-datasource",
+            "uid": "PD36424FC765F148A"
+          },
+          "entitySet": {
+            "entityType": "UserDefined.ProjectGovernance",
+            "name": "ProjectGovernance"
+          },
+          "oDataQueryString": "ProjectGovernance?$apply=filter(Project in (${Project:singlequote}))/groupby((NuGetRegistry))&$select=NuGetRegistry",
+          "refId": "A",
+          "usePost": true
+        }
+      ],
+      "title": "Distinct NuGet Registries in Use",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "criticalmanufacturing-odata-datasource",
+        "uid": "PD36424FC765F148A"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "blue"
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 5,
+        "x": 10,
+        "y": 0
+      },
+      "id": 3,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "count"
+          ],
+          "fields": "/^NPMRegistry$/",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "12.0.4",
+      "targets": [
+        {
+          "datasource": {
+            "type": "criticalmanufacturing-odata-datasource",
+            "uid": "PD36424FC765F148A"
+          },
+          "entitySet": {
+            "entityType": "UserDefined.ProjectGovernance",
+            "name": "ProjectGovernance"
+          },
+          "oDataQueryString": "ProjectGovernance?$apply=filter(Project in (${Project:singlequote}))/groupby((NPMRegistry))&$select=NPMRegistry",
+          "refId": "A",
+          "usePost": true
+        }
+      ],
+      "title": "Distinct NPM Registries in Use",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "criticalmanufacturing-odata-datasource",
+        "uid": "PD36424FC765F148A"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 1
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 5,
+        "x": 15,
+        "y": 0
+      },
+      "id": 4,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "count"
+          ],
+          "fields": "/^CIRepositoryStatus$/",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "12.0.4",
+      "targets": [
+        {
+          "datasource": {
+            "type": "criticalmanufacturing-odata-datasource",
+            "uid": "PD36424FC765F148A"
+          },
+          "entitySet": {
+            "entityType": "UserDefined.ProjectGovernance",
+            "name": "ProjectGovernance"
+          },
+          "oDataQueryString": "ProjectGovernance?$filter=CIRepositoryStatus eq 'Missing' and Project in (${Project:singlequote})&$select=CIRepositoryStatus",
+          "refId": "A",
+          "usePost": true
+        }
+      ],
+      "title": "Projects Missing CI Repository",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "criticalmanufacturing-odata-datasource",
+        "uid": "PD36424FC765F148A"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "gray"
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 4,
+        "x": 20,
+        "y": 0
+      },
+      "id": 5,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "count"
+          ],
+          "fields": "/^Project$/",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "12.0.4",
+      "targets": [
+        {
+          "datasource": {
+            "type": "criticalmanufacturing-odata-datasource",
+            "uid": "PD36424FC765F148A"
+          },
+          "entitySet": {
+            "entityType": "UserDefined.ProjectGovernance",
+            "name": "ProjectGovernance"
+          },
+          "oDataQueryString": "ProjectGovernance?$filter=Project in (${Project:singlequote})&$select=Project",
+          "refId": "A",
+          "usePost": true
+        }
+      ],
+      "title": "Projects With Governance Data",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "criticalmanufacturing-odata-datasource",
+        "uid": "PD36424FC765F148A"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "continuous-GrYlRd"
+          },
+          "fieldMinMax": false,
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 9,
+        "w": 8,
+        "x": 0,
+        "y": 6
+      },
+      "id": 6,
+      "options": {
+        "displayMode": "basic",
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": false
+        },
+        "maxVizHeight": 300,
+        "minVizHeight": 46,
+        "minVizWidth": 8,
+        "namePlacement": "top",
+        "orientation": "horizontal",
+        "reduceOptions": {
+          "calcs": [],
+          "fields": "",
+          "limit": 20,
+          "values": true
+        },
+        "showUnfilled": true,
+        "sizing": "manual",
+        "valueMode": "color"
+      },
+      "pluginVersion": "12.0.4",
+      "targets": [
+        {
+          "datasource": {
+            "type": "criticalmanufacturing-odata-datasource",
+            "uid": "PD36424FC765F148A"
+          },
+          "entitySet": {
+            "entityType": "UserDefined.ProjectGovernance",
+            "name": "ProjectGovernance"
+          },
+          "oDataQueryString": "ProjectGovernance?$filter=Project in (${Project:singlequote})&$select=MESVersion,Project",
+          "refId": "A",
+          "usePost": true
+        }
+      ],
+      "title": "MES Version Adoption",
+      "transformations": [
+        {
+          "id": "groupBy",
+          "options": {
+            "fields": {
+              "MESVersion": {
+                "operation": "groupby"
+              },
+              "Project": {
+                "aggregations": [
+                  "count"
+                ],
+                "operation": "aggregate"
+              }
+            }
+          }
+        },
+        {
+          "id": "sortBy",
+          "options": {
+            "fields": {},
+            "sort": [
+              {
+                "desc": true,
+                "field": "Project (count)"
+              }
+            ]
+          }
+        }
+      ],
+      "type": "bargauge"
+    },
+    {
+      "datasource": {
+        "type": "criticalmanufacturing-odata-datasource",
+        "uid": "PD36424FC765F148A"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "continuous-BlPu"
+          },
+          "fieldMinMax": false,
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 9,
+        "w": 8,
+        "x": 8,
+        "y": 6
+      },
+      "id": 7,
+      "options": {
+        "displayMode": "basic",
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": false
+        },
+        "maxVizHeight": 300,
+        "minVizHeight": 46,
+        "minVizWidth": 8,
+        "namePlacement": "top",
+        "orientation": "horizontal",
+        "reduceOptions": {
+          "calcs": [],
+          "fields": "",
+          "limit": 20,
+          "values": true
+        },
+        "showUnfilled": true,
+        "sizing": "manual",
+        "valueMode": "color"
+      },
+      "pluginVersion": "12.0.4",
+      "targets": [
+        {
+          "datasource": {
+            "type": "criticalmanufacturing-odata-datasource",
+            "uid": "PD36424FC765F148A"
+          },
+          "entitySet": {
+            "entityType": "UserDefined.ProjectGovernance",
+            "name": "ProjectGovernance"
+          },
+          "oDataQueryString": "ProjectGovernance?$filter=Project in (${Project:singlequote})&$select=NuGetRegistry,Project",
+          "refId": "A",
+          "usePost": true
+        }
+      ],
+      "title": "NuGet Registry Usage",
+      "transformations": [
+        {
+          "id": "groupBy",
+          "options": {
+            "fields": {
+              "NuGetRegistry": {
+                "operation": "groupby"
+              },
+              "Project": {
+                "aggregations": [
+                  "count"
+                ],
+                "operation": "aggregate"
+              }
+            }
+          }
+        },
+        {
+          "id": "sortBy",
+          "options": {
+            "fields": {},
+            "sort": [
+              {
+                "desc": true,
+                "field": "Project (count)"
+              }
+            ]
+          }
+        }
+      ],
+      "type": "bargauge"
+    },
+    {
+      "datasource": {
+        "type": "criticalmanufacturing-odata-datasource",
+        "uid": "PD36424FC765F148A"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "continuous-YlBl"
+          },
+          "fieldMinMax": false,
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 9,
+        "w": 8,
+        "x": 16,
+        "y": 6
+      },
+      "id": 8,
+      "options": {
+        "displayMode": "basic",
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": false
+        },
+        "maxVizHeight": 300,
+        "minVizHeight": 46,
+        "minVizWidth": 8,
+        "namePlacement": "top",
+        "orientation": "horizontal",
+        "reduceOptions": {
+          "calcs": [],
+          "fields": "",
+          "limit": 20,
+          "values": true
+        },
+        "showUnfilled": true,
+        "sizing": "manual",
+        "valueMode": "color"
+      },
+      "pluginVersion": "12.0.4",
+      "targets": [
+        {
+          "datasource": {
+            "type": "criticalmanufacturing-odata-datasource",
+            "uid": "PD36424FC765F148A"
+          },
+          "entitySet": {
+            "entityType": "UserDefined.ProjectGovernance",
+            "name": "ProjectGovernance"
+          },
+          "oDataQueryString": "ProjectGovernance?$filter=Project in (${Project:singlequote})&$select=NPMRegistry,Project",
+          "refId": "A",
+          "usePost": true
+        }
+      ],
+      "title": "NPM Registry Usage",
+      "transformations": [
+        {
+          "id": "groupBy",
+          "options": {
+            "fields": {
+              "NPMRegistry": {
+                "operation": "groupby"
+              },
+              "Project": {
+                "aggregations": [
+                  "count"
+                ],
+                "operation": "aggregate"
+              }
+            }
+          }
+        },
+        {
+          "id": "sortBy",
+          "options": {
+            "fields": {},
+            "sort": [
+              {
+                "desc": true,
+                "field": "Project (count)"
+              }
+            ]
+          }
+        }
+      ],
+      "type": "bargauge"
+    },
+    {
+      "datasource": {
+        "type": "criticalmanufacturing-odata-datasource",
+        "uid": "PD36424FC765F148A"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "auto",
+            "cellOptions": {
+              "type": "auto",
+              "wrapText": false
+            },
+            "inspect": false
+          },
+          "mappings": [
+            {
+              "options": {
+                "Missing": {
+                  "color": "red",
+                  "index": 0
+                },
+                "Configured": {
+                  "color": "green",
+                  "index": 1
+                }
+              },
+              "type": "value"
+            }
+          ],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green"
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "CIRepositoryStatus"
+            },
+            "properties": [
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "color-background"
+                }
+              },
+              {
+                "id": "custom.width",
+                "value": 130
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "RootPackage"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 220
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Project"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 120
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "RootPackageVersion"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 90
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 16,
+        "w": 24,
+        "x": 0,
+        "y": 15
+      },
+      "id": 9,
+      "options": {
+        "cellHeight": "sm",
+        "footer": {
+          "countRows": false,
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
+        "showHeader": true,
+        "sortBy": [
+          {
+            "asc": true,
+            "displayName": "Project"
+          }
+        ]
+      },
+      "pluginVersion": "12.0.4",
+      "targets": [
+        {
+          "datasource": {
+            "type": "criticalmanufacturing-odata-datasource",
+            "uid": "PD36424FC765F148A"
+          },
+          "entitySet": {
+            "entityType": "UserDefined.ProjectGovernance",
+            "name": "ProjectGovernance"
+          },
+          "oDataQueryString": "ProjectGovernance?$filter=Project in (${Project:singlequote})",
+          "properties": [
+            {
+              "name": "Project",
+              "type": "Edm.String"
+            },
+            {
+              "name": "RootPackage",
+              "type": "Edm.String"
+            },
+            {
+              "name": "RootPackageVersion",
+              "type": "Edm.String"
+            },
+            {
+              "name": "MESVersion",
+              "type": "Edm.String"
+            },
+            {
+              "name": "YoGeneratorVersion",
+              "type": "Edm.String"
+            },
+            {
+              "name": "NGXSchematicsVersion",
+              "type": "Edm.String"
+            },
+            {
+              "name": "NugetVersion",
+              "type": "Edm.String"
+            },
+            {
+              "name": "NPMRegistry",
+              "type": "Edm.String"
+            },
+            {
+              "name": "NuGetRegistry",
+              "type": "Edm.String"
+            },
+            {
+              "name": "GlobalJsonVersion",
+              "type": "Edm.String"
+            },
+            {
+              "name": "GlobalJsonStrategy",
+              "type": "Edm.String"
+            },
+            {
+              "name": "CIRepositoryStatus",
+              "type": "Edm.String"
+            },
+            {
+              "name": "TestPackages",
+              "type": "Edm.Decimal"
+            },
+            {
+              "name": "RepositoryCount",
+              "type": "Edm.Decimal"
+            }
+          ],
+          "refId": "A",
+          "usePost": true
+        }
+      ],
+      "title": "Project Governance Inventory",
+      "type": "table"
+    }
+  ],
+  "preload": false,
+  "schemaVersion": 41,
+  "tags": [
+    "governance",
+    "overview"
+  ],
+  "templating": {
+    "list": [
+      {
+        "allowCustomValue": false,
+        "current": {
+          "text": "All",
+          "value": [
+            "$__all"
+          ]
+        },
+        "datasource": {
+          "type": "criticalmanufacturing-odata-datasource",
+          "uid": "PD36424FC765F148A"
+        },
+        "definition": "",
+        "description": "Project Name",
+        "includeAll": true,
+        "label": "Project",
+        "multi": true,
+        "name": "Project",
+        "options": [],
+        "query": {
+          "oDataQueryString": "ProjectDataset?$select=Project&$apply=groupby((Project))&$orderby=Project",
+          "usePost": true
+        },
+        "refresh": 1,
+        "regex": "",
+        "type": "query"
+      }
+    ]
+  },
+  "time": {
+    "from": "now-1h",
+    "to": "now"
+  },
+  "timepicker": {},
+  "timezone": "browser",
+  "title": "Audit-Project Governance Overview",
+  "uid": "74965440-fc60-4cd5-be1b-8799b5b7c53b",
+  "version": 4
+}

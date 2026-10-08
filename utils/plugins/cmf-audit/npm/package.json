@@ -1,0 +1,48 @@
+{
+  "name": "@criticalmanufacturing/audit",
+  "version": "0.0.1",
+  "description": "Plugin used to audit CM CLI based projects",
+  "bin": {
+    "cmf-audit": "./run.js"
+  },
+  "keywords": [
+    "cmf",
+    "cmf-cli",
+    "cmf-cli-plugin",
+    "cmf-audit"
+  ],
+  "scripts": {
+    "postinstall": "node postinstall.js install",
+    "preuninstall": "node postinstall.js uninstall"
+  },
+  "author": "Critical Manufacturing, SA",
+  "license": "BSD-3-Clause",
+  "goBinary": {
+    "name": "cmf-audit",
+    "path": "./bin"
+  },
+  "homepage": "https://github.com/criticalmanufacturing/mes-common-library/tree/main/utils/plugins/cmf-audit#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/criticalmanufacturing/mes-common-library.git",
+    "directory": "utils/plugins/cmf-audit"
+  },
+  "files": [
+    "dist",
+    "postinstall.js",
+    "run.js",
+    "utils.js"
+  ],
+  "dependencies": {
+    "debug": "^4.3.1",
+    "mkdirp": "^1.0.4",
+    "node_modules-path": "^2.0.5",
+    "rimraf": "^3.0.2"
+  },
+  "bugs": {
+    "url": "https://github.com/criticalmanufacturing/mes-common-library/issues"
+  },
+  "engines": {
+    "node": ">=16.7.0"
+  }
+}

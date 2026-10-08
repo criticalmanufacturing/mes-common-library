@@ -1,0 +1,19 @@
+parameters:
+  CmfAuditVersion: '<%= $CLI_PARAM_CmfAuditVersion %>'
+  CmfAuditRegistry: '<%= $CLI_PARAM_CmfAuditRegistry %>'
+//#if (portalLogin == "true")
+  CustomerPortalPAT: $(CustomerPortalPAT)
+//#endif
+
+steps:
+//#if (portalLogin == "true")
+# Login with cmf-cli, so that ~/.npmrc gets the CollabHub registry credentials that the install below needs
+- script: npx --yes --registry $(CmfCliRepository) @criticalmanufacturing/cli@$(CmfCliVersion) login --token ${{ parameters.CustomerPortalPAT }}
+  displayName: Login with Customer Portal PAT
+  workingDirectory: $(Agent.TempDirectory)
+  env:
+    cmf_cli_feature__use_repository_clients: true
+
+//#endif
+- script: npm install @criticalmanufacturing/audit@${{ parameters.CmfAuditVersion }} -g --@criticalmanufacturing:registry=${{ parameters.CmfAuditRegistry }}
+  displayName: Install cmf-audit@${{ parameters.CmfAuditVersion }}

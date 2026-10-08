@@ -1,0 +1,15 @@
+{
+  "packageId": "Cmf.Audit.Grafana",
+  "version": "1.0.0",
+  "description": "Cmf Audit Cmf.Audit.Grafana Package",
+  "packageType": "Grafana",
+  "contentToPack": [
+    {
+      "source": "$(version)/*",
+      "target": "",
+      "ignoreFiles": [
+        "../.cmfpackageignore"
+      ]
+    }
+  ]
+}

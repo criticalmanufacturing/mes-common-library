@@ -1,0 +1,43 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.002.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "utils", "utils", "{0CF0637B-5576-4523-82A7-341013EFF1D1}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "plugins", "plugins", "{04041162-292B-418D-9020-A1240B782449}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "cmf-audit", "cmf-audit", "{453D7383-1451-4260-A729-D299E14FE153}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "audit", "utils\plugins\cmf-audit\src\audit.csproj", "{10E9E748-E791-47D3-9A27-9B1432A55832}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "audit-tests", "utils\plugins\cmf-audit\tests\audit-tests.csproj", "{F937341A-DAB2-4102-89FB-28529FD6083C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{10E9E748-E791-47D3-9A27-9B1432A55832}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{10E9E748-E791-47D3-9A27-9B1432A55832}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{10E9E748-E791-47D3-9A27-9B1432A55832}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{10E9E748-E791-47D3-9A27-9B1432A55832}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F937341A-DAB2-4102-89FB-28529FD6083C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F937341A-DAB2-4102-89FB-28529FD6083C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F937341A-DAB2-4102-89FB-28529FD6083C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F937341A-DAB2-4102-89FB-28529FD6083C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{04041162-292B-418D-9020-A1240B782449} = {0CF0637B-5576-4523-82A7-341013EFF1D1}
+		{453D7383-1451-4260-A729-D299E14FE153} = {04041162-292B-418D-9020-A1240B782449}
+		{10E9E748-E791-47D3-9A27-9B1432A55832} = {453D7383-1451-4260-A729-D299E14FE153}
+		{F937341A-DAB2-4102-89FB-28529FD6083C} = {453D7383-1451-4260-A729-D299E14FE153}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E22E0D47-19E5-4D51-B1B4-EEDB48471B92}
+	EndGlobalSection
+EndGlobal
