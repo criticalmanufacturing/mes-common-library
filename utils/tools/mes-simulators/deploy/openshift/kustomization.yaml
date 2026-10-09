@@ -1,0 +1,9 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+# The ConfigMap with the line (messimulator-line, from the repository's simulationConfiguration.json) and the Secret with the access token
+# (messimulator) are created by deploy.ps1: kustomize can't read simulationConfiguration.json from outside this folder, and the token
+# must not be in a file.
+resources:
+  - build.yaml
+  - deployment.yaml

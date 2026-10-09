@@ -1,0 +1,288 @@
+﻿{
+  "Line": {
+    "Order": {
+      "Products": [
+        {
+          "Product": "Rooftop Unit - HVAC RTU",
+          "Weight": 1,
+          "LotFlowPath": "Final Assembly:A:1/BASE ASM:1",
+          "StartFlowPath": "Final Assembly:A:1/BASE ASM:1",
+          "MinLotQuantity": 1,
+          "MaxLotQuantity": 2,
+          "Characteristics": [
+            { "Name": "Size", "Value": "10TON" },
+            { "Name": "Color", "Value": "Color" }
+          ],
+          "RequiresAtStep": "Kanban Final Assembly",
+          "Requires": [
+            { "Product": "RTU-LATERAL C", "QuantityPerUnit": 2 },
+            { "Product": "RTU-FRONT C", "QuantityPerUnit": 2 },
+            { "Product": "RTU-FRAME C", "QuantityPerUnit": 1 },
+            { "Product": "ALU-COIL-4ROW", "QuantityPerUnit": 3 },
+            { "Product": "COP-COIL-4ROW", "QuantityPerUnit": 2 },
+            { "Product": "FOAM-XR435", "QuantityPerUnit": 2 },
+            { "Product": "VFD-10HP", "QuantityPerUnit": 1 },
+            {
+              "Product": "Roof 10T HVAC",
+              "QuantityPerUnit": 1,
+              "Replenish": { "FlowPath": "Kanban Final Assembly:A:1/Kanban Final Assembly:1", "Quantity": 30, "Form": "Lot" }
+            },
+            {
+              "Product": "Cover Fan HVAC",
+              "QuantityPerUnit": 1,
+              "Replenish": { "FlowPath": "Kanban Final Assembly:A:1/Kanban Final Assembly:1", "Quantity": 60, "Form": "Batch" }
+            }
+          ]
+        },
+        { "Product": "RTU-LATERAL C", "Weight": 0, "LotFlowPath": "Fabrication_Metal Plate:A:1/PUNCH:1", "StartFlowPath": "Fabrication_Metal Plate:A:1/PUNCH:1" },
+        { "Product": "RTU-FRONT C", "Weight": 0, "LotFlowPath": "Fabrication_Metal Plate:A:1/PUNCH:1", "StartFlowPath": "Fabrication_Metal Plate:A:1/PUNCH:1" },
+        { "Product": "RTU-FRAME C", "Weight": 0, "LotFlowPath": "Fabrication_Metal Plate:A:1/PUNCH:1", "StartFlowPath": "Fabrication_Metal Plate:A:1/PUNCH:1" },
+        { "Product": "ALU-COIL-4ROW", "Weight": 0, "LotFlowPath": "Fabrication_Coil - Copper:A:1/START COIL - COPPER:1", "StartFlowPath": "Fabrication_Coil - Copper:A:1/START COIL - COPPER:1" },
+        { "Product": "COP-COIL-4ROW", "Weight": 0, "LotFlowPath": "Fabrication_Coil - Copper:A:1/START COIL - COPPER:1", "StartFlowPath": "Fabrication_Coil - Copper:A:1/START COIL - COPPER:1" },
+        { "Product": "VFD-10HP", "Weight": 0, "LotFlowPath": "Fabrication_Electric:A:1/MAIN BOARD:1", "StartFlowPath": "Fabrication_Electric:A:1/MAIN BOARD:1" },
+        { "Product": "FOAM-XR435", "Weight": 0, "LotFlowPath": "Fabrication_Foam:A:1/FOAM PREP:1", "StartFlowPath": "Fabrication_Foam:A:1/FOAM PREP:1" }
+      ],
+      "Facility": "Production InduTech",
+      "ProductionOrderNameFormat": "PO INDU.{id}",
+      "DiscreteProduct": true,
+      "MaterialType": "Production",
+      "LotForm": "Lot",
+      "PrimaryUnits": "Unit-",
+      "CapacityClass": "Standard",
+      "MinLotQuantity": 5,
+      "MaxLotQuantity": 15,
+      "LaunchIntervalSeconds": 1800,
+      "MaxOrders": 0,
+      "MaxLotsInFlight": 20
+    },
+    "Chaos": {
+      "Seed": null,
+      "MaxReworksPerLot": 1,
+      "ReworkFlows": {},
+      "ScrapProbability": 0,
+      "MaxScrapFraction": 0.5,
+      "ScrapReasons": []
+    },
+    "Startup": {
+      "DisableMail": true,
+      "DisableDeeActions": [
+        "Dee_NotificationEnterStep_IE",
+        "Dee_NotificationExitStep_IE"
+      ],
+      "TerminatePreviousRuns": false,
+      "TerminateReason": "Full Loss",
+      "CheckInOperator": true,
+      "Operator": {
+        "Calendar": "InduTech Calendar",
+        "Type": "Standard",
+        "CostCenter": "Generic"
+      },
+      "DisableTimeConstraints": true
+    },
+    "FailedLots": {
+      "Terminate": true,
+      "TerminateReason": "Full Loss"
+    },
+    "Consumables": {
+      "Default": {
+        "LowQuantity": 200,
+        "ReplacementQuantity": 10000,
+        "TerminateReason": "Scrap Wastes"
+      }
+    },
+    "Steps": {
+      "PUNCH": {
+        "MinSeconds": 270,
+        "MaxSeconds": 380,
+        "Actions": [ "durables", "feeders" ]
+      },
+      "BEND": {
+        "MinSeconds": 150,
+        "MaxSeconds": 220,
+        "Actions": [ "durables" ]
+      },
+      "COATING": {
+        "MinSeconds": 270,
+        "MaxSeconds": 380,
+        "Actions": [ "feeders" ]
+      },
+      "PLATE PAINTING": {
+        "MinSeconds": 270,
+        "MaxSeconds": 380,
+        "Actions": [ "feeders", "dataCollection" ],
+        "DataCollection": {
+          "Instrument": "Paint Thickness Gauge 0001",
+          "Values": {
+            "Paint Thickness - Top Edge": 120,
+            "Paint Thickness - Bottom Edge": 120,
+            "Paint Thickness - Center": 120,
+            "Paint Thickness - Left Side": 120,
+            "Paint Thickness - Right Side": 120
+          }
+        }
+      },
+      "PLATE COLORING": {
+        "MinSeconds": 270,
+        "MaxSeconds": 380,
+        "Actions": [ "feeders", "dataCollection" ],
+        "DataCollection": {
+          "Instrument": "Paint Thickness Gauge 0001",
+          "Values": {
+            "Paint Thickness - Top Edge": 120,
+            "Paint Thickness - Bottom Edge": 120,
+            "Paint Thickness - Center": 120,
+            "Paint Thickness - Left Side": 120,
+            "Paint Thickness - Right Side": 120
+          }
+        }
+      },
+      "RwPolish": {
+        "MinSeconds": 100,
+        "MaxSeconds": 150
+      },
+      "RwInspection": {
+        "MinSeconds": 100,
+        "MaxSeconds": 150
+      },
+      "START COIL - COPPER": {
+        "PassThrough": true
+      },
+      "COIL BEND": {
+        "MinSeconds": 100,
+        "MaxSeconds": 180,
+        "Actions": [ "durables", "assemble" ]
+      },
+      "COPPER BEND": {
+        "MinSeconds": 100,
+        "MaxSeconds": 180,
+        "Actions": [ "durables", "assemble" ]
+      },
+      "INDOOR BRAZE": {
+        "MinSeconds": 170,
+        "MaxSeconds": 200,
+        "Actions": [ "assemble" ]
+      },
+      "OUTDOOR BRAZE": {
+        "MinSeconds": 190,
+        "MaxSeconds": 280,
+        "Actions": [ "assemble" ]
+      },
+      "COMPRESSOR TUB BRAZE": {
+        "MinSeconds": 100,
+        "MaxSeconds": 180,
+        "Actions": [ "lotSplitTrackOut" ]
+      },
+      "COIL TREATMENT": {
+        "MinSeconds": 600,
+        "MaxSeconds": 900,
+        "Batch": {
+          "MinQuantity": 70,
+          "MaxQuantity": 100,
+          "CheckIntervalSeconds": 600
+        }
+      },
+      "MAIN BOARD": {
+        "MinSeconds": 170,
+        "MaxSeconds": 220,
+        "Actions": [ "assemble" ]
+      },
+      "DOOR PREP": {
+        "MinSeconds": 170,
+        "MaxSeconds": 220,
+        "Actions": [ "assemble" ]
+      },
+      "FILTER PREP": {
+        "MinSeconds": 170,
+        "MaxSeconds": 220,
+        "Actions": [ "assemble" ]
+      },
+      "STAGING MB": {
+        "MinSeconds": 170,
+        "MaxSeconds": 220,
+        "Actions": [ "assemble" ]
+      },
+      "FOAM PREP": {
+        "MinSeconds": 170,
+        "MaxSeconds": 220
+      },
+      "FOAM": {
+        "MinSeconds": 170,
+        "MaxSeconds": 220,
+        "Actions": [ "assemble" ]
+      },
+      "Kanban Final Assembly": {
+        "PassThrough": true
+      },
+      "BASE ASM": {
+        "MinSeconds": 180,
+        "MaxSeconds": 600,
+        "Actions": [ "assemble" ]
+      },
+      "HEAT MOD COMP TUB": {
+        "MinSeconds": 180,
+        "MaxSeconds": 600
+      },
+      "INSTALL OD COIL TUBES": {
+        "MinSeconds": 180,
+        "MaxSeconds": 600,
+        "Actions": [ "assemble" ]
+      },
+      "NITROGEN EVAC CHARGE": {
+        "MinSeconds": 180,
+        "MaxSeconds": 600,
+        "Actions": [ "assemble" ]
+      },
+      "APPLY FOAM": {
+        "MinSeconds": 180,
+        "MaxSeconds": 600,
+        "Actions": [ "assemble" ]
+      },
+      "FINAL WIRING": {
+        "MinSeconds": 180,
+        "MaxSeconds": 600,
+        "Actions": [ "feeders", "assemble" ],
+        "FeederProducts": [ "Screws" ]
+      },
+      "Quality INSP": {
+        "MinSeconds": 120,
+        "MaxSeconds": 300
+      },
+      "INSTALL COVERS DOORS FANS AND ROOF": {
+        "MinSeconds": 180,
+        "MaxSeconds": 600,
+        "Actions": [ "feeders", "assemble" ],
+        "FeederProducts": [ "LUBE-OIL-ISO32" ]
+      },
+      "CLEANUP AND INSPECTION": {
+        "MinSeconds": 180,
+        "MaxSeconds": 600
+      },
+      "Final Assembly Wait for Packing": {
+        "PassThrough": true
+      },
+      "RTU PACKING": {
+        "MinSeconds": 120,
+        "MaxSeconds": 300,
+        "Actions": [ "feeders", "lotPack" ]
+      },
+      "SHIPPING WH INDUTECH": {
+        "PassThrough": true,
+        "Ship": true,
+        "ShipTo": "Warehouse InduTech",
+        "Receive": true
+      },
+      "RTU FINAL PACKAGING": {
+        "MinSeconds": 120,
+        "MaxSeconds": 300,
+        "Actions": [ "palletPack" ]
+      },
+      "SHIPPING FINAL CUSTOMER": {
+        "PassThrough": true,
+        "ClosesProductionOrder": true,
+        "Ship": true,
+        "ShipTo": "Final Customer",
+        "Receive": false
+      }
+    }
+  }
+}

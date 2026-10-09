@@ -1,0 +1,17 @@
+# Never in the image: the personal access token lives in appsettings.json (use the MESSIM_ environment variables)
+appsettings.json
+appsettings.*.json
+
+# Not part of the app
+**/bin
+**/obj
+.vs
+.vscode
+.claude
+.github
+.git
+Tests
+deploy
+master data
+**/*.user
+*.md

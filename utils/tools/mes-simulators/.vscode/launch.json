@@ -1,0 +1,30 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            // The semiconductor line, 10x faster. Add "--terminateonstart" to terminate what earlier runs left behind
+            // (it asks first; "--dry-run" only lists it)
+            "name": "MESSimulator (semi line, speed 10)",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build",
+            "program": "${workspaceFolder}/bin/Debug/net8.0/MESSimulator.dll",
+            "args": [
+                "--line", "simulationConfiguration.semi.json",
+                "--speed", "10"
+            ],
+            "cwd": "${workspaceFolder}",
+            "console": "integratedTerminal",
+            "stopAtEntry": false,
+            "env": {
+                // Environment variables override appsettings.json and simulationConfiguration.json ("__" separates the levels);
+                // the command line overrides them. Uncomment to target another environment:
+                // "MESSIM_ClientConfiguration__Connection__EnvironmentAddress": "https://<mes-host>",
+                // "MESSIM_ClientConfiguration__Authentication__SecurityAccessToken": "<token: never commit it>",
+                // "MESSIM_Line__Order__MaxOrders": "20",
+                // The line file, when --line is not given (another line is needed to change steps: their names contain spaces):
+                // "MESSIM_LINE_FILE": "${workspaceFolder}/simulationConfiguration.industrial.json"
+            }
+        }
+    ]
+}

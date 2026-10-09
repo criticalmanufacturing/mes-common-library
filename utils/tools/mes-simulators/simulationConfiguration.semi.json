@@ -1,0 +1,439 @@
+﻿{
+  "Line": {
+    "Order": {
+      "Products": [
+        {
+          "Product": "2EDN7524F",
+          "Weight": 1
+        },
+        {
+          "Product": "2EGN7524G",
+          "Weight": 1,
+          "DiesPerWafer": 984
+        },
+        {
+          "Product": "KommSemi Generic Brand Eice Driver",
+          "Weight": 1,
+          "CapacityClass": "200mm"
+        },
+        {
+          "Product": "KommSemi Generic Brand Gate Driver",
+          "Weight": 1,
+          "CapacityClass": "200mm",
+          "DiesPerWafer": 501
+        },
+        {
+          "Product": "2EDN8524F*",
+          "Weight": 0,
+          "MaterialType": "Engineering",
+          "DiesPerWafer": 990
+        },
+        {
+          "Product": "2EGN7523G*",
+          "Weight": 0,
+          "MaterialType": "Engineering",
+          "DiesPerWafer": 984
+        }
+      ],
+      "Facility": "Production FE SC",
+      "LotFlowPath": "Y31_CSP_3L:A:1/WAFER PREP:A:1/PREPARATION WPREP:1",
+      "WaferFlowPath": "Kanban WPREP:A:1/Kanban WPREP:1",
+      "StartFlowPath": "Y31_CSP_3L:A:1/WAFER PREP:A:1/SILICON WAFER COMPOSE:2",
+      "ProductionOrderNameFormat": "PO SC.{id}",
+      "MinLotQuantity": 5,
+      "MaxLotQuantity": 25,
+      "DiesPerWafer": 500,
+      "LaunchIntervalSeconds": 4800,
+      "MaxOrders": 0,
+      "MaxLotsInFlight": 20,
+      "Characteristics": [
+        {
+          "Name": "Quality",
+          "Value": "QA"
+        },
+        {
+          "Name": "Coating",
+          "Value": "PI"
+        }
+      ]
+    },
+    "Chaos": {
+      "Seed": null,
+      "MaxReworksPerLot": 2,
+      "ReworkFlows": {
+        "RWK_FUSE Photoresist": 0.0075,
+        "RWK_FUSE Photoresist TC": 0.002,
+        "RWK_POLYMIDE Photoresist": 0.0075,
+        "RWK_POLYMIDE Photoresist TC": 0.002,
+        "RWK_AOI FUSE": 0.02,
+        "RWK_AOI POLYMIDE": 0.02,
+        "RWK_PRECURE": 0.0025
+      },
+      "ScrapProbability": 0.8,
+      "MaxScrapFraction": 0.2,
+      "ScrapReasons": [
+        "Broken Wafer",
+        "Contamination",
+        "Scratch-Loss"
+      ]
+    },
+    "Startup": {
+      "DisableMail": true,
+      "DisableDeeActions": [
+        "Dee_Notification_ExitStep",
+        "Dee_Notification_EnterStep"
+      ],
+      "TerminatePreviousRuns": false,
+      "TerminateReason": "Full Loss",
+      "CheckInOperator": true,
+      "Operator": {
+        "Calendar": "KommSemi Calendar",
+        "Type": "Standard",
+        "CostCenter": "Generic"
+      },
+      "DisableTimeConstraints": true
+    },
+    "FailedLots": {
+      "Terminate": true,
+      "TerminateReason": "Full Loss"
+    },
+    "Consumables": {
+      "Default": {
+        "LowQuantity": 2000,
+        "ReplacementQuantity": 60000,
+        "TerminateReason": "Full Loss"
+      },
+      "Products": {
+        "Al Target": {
+          "LowQuantity": 0.1,
+          "ReplacementQuantity": 1
+        },
+        "Ag Target": {
+          "LowQuantity": 0.1,
+          "ReplacementQuantity": 1
+        },
+        "Cu Target": {
+          "LowQuantity": 0.1,
+          "ReplacementQuantity": 1
+        },
+        "Zn Target": {
+          "LowQuantity": 0.1,
+          "ReplacementQuantity": 1
+        },
+        "Nickel Plating": {
+          "LowQuantity": 5,
+          "ReplacementQuantity": 50
+        },
+        "Gold Plating": {
+          "LowQuantity": 5,
+          "ReplacementQuantity": 50
+        },
+        "Pre Clean Plating Chemical": {
+          "LowQuantity": 5,
+          "ReplacementQuantity": 50
+        },
+        "Copper Plating": {
+          "LowQuantity": 5,
+          "ReplacementQuantity": 50
+        },
+        "Rinse Plating Chemical": {
+          "LowQuantity": 5,
+          "ReplacementQuantity": 50
+        },
+        "AZ 100 Removal": {
+          "LowQuantity": 5,
+          "ReplacementQuantity": 25
+        },
+        "CuEtch": {
+          "LowQuantity": 5,
+          "ReplacementQuantity": 25
+        },
+        "TiEtch": {
+          "LowQuantity": 5,
+          "ReplacementQuantity": 25
+        }
+      }
+    },
+    "ResourceOccupancy": {
+      "WaitBetweenChecks": "00:00:30",
+      "MaxChecks": 10
+    },
+    "Steps": {
+      "SILICON WAFER COMPOSE": {
+        "MinSeconds": 300,
+        "MaxSeconds": 600,
+        "MinSecondsPerWafer": 20,
+        "MaxSecondsPerWafer": 40,
+        "Actions": [
+          "compose"
+        ]
+      },
+      "SILICON WAFER LAMINATOR": {
+        "MinSeconds": 300,
+        "MaxSeconds": 600,
+        "MinSecondsPerWafer": 60,
+        "MaxSecondsPerWafer": 90,
+        "Actions": [
+          "feeders"
+        ]
+      },
+      "SILICON WAFER BACK GRINDING": {
+        "MinSeconds": 600,
+        "MaxSeconds": 900,
+        "MinSecondsPerWafer": 240,
+        "MaxSecondsPerWafer": 360,
+        "Actions": [
+          "durables"
+        ]
+      },
+      "SILICON WAFER PEELING": {
+        "MinSeconds": 300,
+        "MaxSeconds": 600,
+        "MinSecondsPerWafer": 60,
+        "MaxSecondsPerWafer": 90,
+        "Actions": [
+          "subMaterialTracking"
+        ]
+      },
+      "PRE_CURE": {
+        "MinSeconds": 5400,
+        "MaxSeconds": 9000,
+        "Batch": {
+          "MinQuantity": 70,
+          "MaxQuantity": 100,
+          "CheckIntervalSeconds": 600
+        }
+      },
+      "ASHING PRE": {
+        "MinSeconds": 600,
+        "MaxSeconds": 900,
+        "MinSecondsPerWafer": 60,
+        "MaxSecondsPerWafer": 120,
+        "Actions": [
+          "splitTrackOut"
+        ]
+      },
+      "COAT": {
+        "MinSeconds": 180,
+        "MaxSeconds": 420,
+        "MinSecondsPerWafer": 90,
+        "MaxSecondsPerWafer": 150,
+        "Actions": [
+          "feeders"
+        ]
+      },
+      "Expose": {
+        "MinSeconds": 600,
+        "MaxSeconds": 900,
+        "MinSecondsPerWafer": 60,
+        "MaxSecondsPerWafer": 90,
+        "Actions": [
+          "durables"
+        ],
+        "SingleMaterial": true
+      },
+      "DEVELOPER": {
+        "MinSeconds": 180,
+        "MaxSeconds": 420,
+        "MinSecondsPerWafer": 90,
+        "MaxSecondsPerWafer": 120,
+        "Actions": [
+          "feeders"
+        ]
+      },
+      "INSP CD": {
+        "MinSeconds": 600,
+        "MaxSeconds": 1200,
+        "Condition": "inspCdRequired"
+      },
+      "CureWafers": {
+        "MinSeconds": 12600,
+        "MaxSeconds": 16200,
+        "Batch": {
+          "MinQuantity": 70,
+          "MaxQuantity": 100,
+          "CheckIntervalSeconds": 600
+        }
+      },
+      "AOI": {
+        "MinSeconds": 300,
+        "MaxSeconds": 600,
+        "MinSecondsPerWafer": 90,
+        "MaxSecondsPerWafer": 180
+      },
+      "METAL THK": {
+        "MinSeconds": 300,
+        "MaxSeconds": 600
+      },
+      "METAL DEPOSITION": {
+        "MinSeconds": 300,
+        "MaxSeconds": 600,
+        "MinSecondsPerWafer": 150,
+        "MaxSecondsPerWafer": 210,
+        "Actions": [
+          "feeders"
+        ]
+      },
+      "INSP OVERLAY": {
+        "MinSeconds": 600,
+        "MaxSeconds": 1200
+      },
+      "METAL PLATING": {
+        "MinSeconds": 600,
+        "MaxSeconds": 900,
+        "MinSecondsPerWafer": 180,
+        "MaxSecondsPerWafer": 300,
+        "LineStepMinSeconds": 120,
+        "LineStepMaxSeconds": 300,
+        "Actions": [
+          "feeders",
+          "lineFlow"
+        ]
+      },
+      "METAL DEPOSITION ANALYSIS": {
+        "MinSeconds": 900,
+        "MaxSeconds": 1800
+      },
+      "METAL PLATING ANALYSIS": {
+        "MinSeconds": 900,
+        "MaxSeconds": 1800
+      },
+      "METAL DEPOSITION + METAL PLATING ANALYSIS": {
+        "MinSeconds": 900,
+        "MaxSeconds": 1800
+      },
+      "METAL WET STRIP": {
+        "MinSeconds": 600,
+        "MaxSeconds": 900,
+        "MinSecondsPerWafer": 60,
+        "MaxSecondsPerWafer": 120,
+        "Actions": [
+          "subMaterialTracking"
+        ]
+      },
+      "METAL WET STRIP MACRO INSP": {
+        "MinSeconds": 300,
+        "MaxSeconds": 600,
+        "MinSecondsPerWafer": 30,
+        "MaxSecondsPerWafer": 60
+      },
+      "METAL WET ETCH": {
+        "MinSeconds": 600,
+        "MaxSeconds": 900,
+        "MinSecondsPerWafer": 60,
+        "MaxSecondsPerWafer": 120,
+        "Actions": [
+          "feeders"
+        ]
+      },
+      "METAL WET ETCH MACRO INSP": {
+        "MinSeconds": 300,
+        "MaxSeconds": 600,
+        "MinSecondsPerWafer": 30,
+        "MaxSecondsPerWafer": 60
+      },
+      "DESCUM": {
+        "MinSeconds": 600,
+        "MaxSeconds": 900,
+        "MinSecondsPerWafer": 60,
+        "MaxSecondsPerWafer": 120,
+        "Actions": [
+          "subMaterialTracking"
+        ]
+      },
+      "RwPGMA": {
+        "MinSeconds": 900,
+        "MaxSeconds": 1500,
+        "MinSecondsPerWafer": 180,
+        "MaxSecondsPerWafer": 300
+      },
+      "RwInspPGMA": {
+        "MinSeconds": 900,
+        "MaxSeconds": 1800
+      },
+      "RwCOAT": {
+        "MinSeconds": 180,
+        "MaxSeconds": 420,
+        "MinSecondsPerWafer": 90,
+        "MaxSecondsPerWafer": 150,
+        "Actions": [
+          "feeders"
+        ]
+      },
+      "RwEXPOSE": {
+        "MinSeconds": 600,
+        "MaxSeconds": 900,
+        "MinSecondsPerWafer": 60,
+        "MaxSecondsPerWafer": 90,
+        "Actions": [
+          "durables"
+        ],
+        "SingleMaterial": true
+      },
+      "RwDEVELOPER": {
+        "MinSeconds": 180,
+        "MaxSeconds": 420,
+        "MinSecondsPerWafer": 90,
+        "MaxSecondsPerWafer": 120,
+        "Actions": [
+          "feeders"
+        ]
+      },
+      "RwINSP CD": {
+        "MinSeconds": 600,
+        "MaxSeconds": 1200
+      },
+      "RwINSP Overlay": {
+        "MinSeconds": 600,
+        "MaxSeconds": 1200
+      },
+      "RwAOI": {
+        "MinSeconds": 300,
+        "MaxSeconds": 600,
+        "MinSecondsPerWafer": 90,
+        "MaxSecondsPerWafer": 180
+      },
+      "RwAOI Manual": {
+        "MinSeconds": 600,
+        "MaxSeconds": 900,
+        "MinSecondsPerWafer": 120,
+        "MaxSecondsPerWafer": 240
+      },
+      "RwASHING PRE": {
+        "MinSeconds": 600,
+        "MaxSeconds": 900,
+        "MinSecondsPerWafer": 60,
+        "MaxSecondsPerWafer": 120,
+        "Actions": [
+          "splitTrackOut"
+        ]
+      },
+      "SORTER": {
+        "MinSeconds": 300,
+        "MaxSeconds": 600,
+        "MinSecondsPerWafer": 20,
+        "MaxSecondsPerWafer": 40,
+        "Actions": [
+          "ship"
+        ]
+      },
+      "Wafer PACKING": {
+        "MinSeconds": 600,
+        "MaxSeconds": 900,
+        "MinSecondsPerWafer": 30,
+        "MaxSecondsPerWafer": 60,
+        "Actions": [
+          "feeders",
+          "pack"
+        ]
+      },
+      "Wafer Shipping FE": {
+        "PassThrough": true,
+        "ClosesProductionOrder": true,
+        "Ship": true,
+        "ShipTo": "Production BE SC",
+        "Receive": false
+      }
+    }
+  }
+}

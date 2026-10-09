@@ -1,0 +1,75 @@
+# A template: deploy.ps1 fills in the @...@ values from its parameters (-EnvironmentAddress, -ClientId, -Speed, ...) and
+# refuses to apply it with one left. Don't apply this file as it is.
+# One simulator per MES: it creates orders and drives lots, so two replicas would compete for the same resources.
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: messimulator
+  annotations:
+    # Redeploy when a new image is built, and resolve the image from the ImageStream (no registry address to write here)
+    image.openshift.io/triggers: >-
+      [{"from":{"kind":"ImageStreamTag","name":"messimulator:latest"},"fieldPath":"spec.template.spec.containers[?(@.name==\"simulator\")].image"}]
+spec:
+  replicas: 1
+  # Recreate: never two simulators at once, not even while rolling out
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: messimulator
+  template:
+    metadata:
+      labels:
+        app: messimulator
+    spec:
+      # SIGTERM lets the lots in progress finish their current step (the simulator waits up to 10 minutes); killing it
+      # sooner leaves lots in process in the MES, which then block their resources until they are cleaned up
+      terminationGracePeriodSeconds: 660
+      containers:
+        - name: simulator
+          image: messimulator:latest
+          env:
+            # deploy.ps1 -EnvironmentAddress (required)
+            - name: MESSIM_ClientConfiguration__Connection__EnvironmentAddress
+              value: "@ENVIRONMENT_ADDRESS@"
+            # deploy.ps1 -ClientId (default MES)
+            - name: MESSIM_ClientConfiguration__Authentication__ClientId
+              value: "@CLIENT_ID@"
+            - name: MESSIM_ClientConfiguration__Authentication__SecurityAccessToken
+              valueFrom:
+                secretKeyRef:
+                  name: messimulator
+                  key: access-token
+            # deploy.ps1 -Speed (default 1, real-fab cadence; a faster demo: e.g. 20)
+            - name: MESSIM_Simulation__Speed
+              value: "@SPEED@"
+            # The line comes from the ConfigMap below (generated from simulationConfiguration.json), not from the one baked in the image
+            - name: MESSIM_LINE_FILE
+              value: /config/simulationConfiguration.json
+            # deploy.ps1 -MaxOrders: orders to launch before stopping (default 0: no limit)
+            - name: MESSIM_Line__Order__MaxOrders
+              value: "@MAX_ORDERS@"
+            # deploy.ps1 -TerminatePreviousRuns: terminate what earlier runs left behind each time the pod starts. It
+            # terminates every simulator order of the MES (named like Line:Order:ProductionOrderNameFormat), so only when
+            # this simulator owns the environment; the pod can't ask, so the switch also turns the confirmation off
+            - name: MESSIM_Line__Startup__TerminatePreviousRuns
+              value: "@TERMINATE_PREVIOUS_RUNS@"
+            - name: MESSIM_Line__Startup__ConfirmTerminate
+              value: "@CONFIRM_TERMINATE@"
+            # @SETTINGS@ (deploy.ps1 -Settings: any other MESSIM_ value)
+          volumeMounts:
+            - name: line
+              mountPath: /config
+              readOnly: true
+          # deploy.ps1 -CpuRequest/-CpuLimit/-MemoryRequest/-MemoryLimit (defaults 100m/500m/256Mi/512Mi)
+          resources:
+            requests:
+              cpu: "@CPU_REQUEST@"
+              memory: "@MEMORY_REQUEST@"
+            limits:
+              cpu: "@CPU_LIMIT@"
+              memory: "@MEMORY_LIMIT@"
+      volumes:
+        - name: line
+          configMap:
+            name: messimulator-line

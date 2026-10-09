@@ -1,0 +1,29 @@
+# The image is built in the cluster from the source uploaded by build.ps1 (a binary build): no local Docker needed,
+# and the personal access token never leaves the cluster's secret.
+apiVersion: image.openshift.io/v1
+kind: ImageStream
+metadata:
+  name: messimulator
+---
+apiVersion: build.openshift.io/v1
+kind: BuildConfig
+metadata:
+  name: messimulator
+spec:
+  source:
+    type: Binary
+  strategy:
+    type: Docker
+    dockerStrategy:
+      dockerfilePath: Dockerfile
+  output:
+    to:
+      kind: ImageStreamTag
+      name: messimulator:latest
+  resources:
+    requests:
+      cpu: 500m
+      memory: 1Gi
+    limits:
+      cpu: "2"
+      memory: 2Gi
