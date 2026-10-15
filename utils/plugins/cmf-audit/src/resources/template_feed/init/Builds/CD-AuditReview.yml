@@ -1,0 +1,55 @@
+# CM DS Audit Review Pipeline
+pool:
+  name: <%= $CLI_PARAM_AgentPool %>
+
+# Manual trigger only
+trigger: none
+pr: none
+
+resources:
+  containers:
+  - container: build-runner
+    image: $(BuildRunner)
+//#if (defaultServiceConnection != "")
+    endpoint: <%= $CLI_PARAM_DefaultServiceConnection %>
+//#endif
+    options: <%= $CLI_PARAM_ContainerOptions %>
+
+variables:
+- group: Authentication Variables
+- template: .vars/global.yml # Template reference to global variables
+//#if (hasEnvironments == "true")
+- template: .vars/${{ parameters.Environment }}.yml # Template reference to environment related variables
+//#endif
+- name: System.Debug
+  value: $[or(eq(variables['Agent.Diagnostic'], true), eq(variables['DebugMode'], true))]
+# Ad hoc security access token, for one-off runs without a pre-registered secret.
+# Leave blank to use SecurityAccessTokenSecretName instead. To set this, use the "Variables" tab
+# (not "Parameters") when queuing the run, and tick "Keep this value secret" - never set a real
+# token here or as a parameter, since parameter values are shown in plain text in the run summary.
+- name: SecurityAccessTokenOverride
+  value: ''
+
+parameters:
+//#if (hasEnvironments == "true")
+- name: Environment
+  displayName: Environment name
+  type: string
+  default: <%= $CLI_PARAM_DefaultEnvironment %>
+  values:
+<%= $CLI_PARAM_EnvironmentValues %>
+//#endif
+# Name of the secret pipeline variable (Library) holding the audit's security access token.
+# Ignored when SecurityAccessTokenOverride is set at queue time.
+- name: SecurityAccessTokenSecretName
+  displayName: Security Access Token Secret Name
+  type: string
+  default: <%= $CLI_PARAM_SecurityAccessTokenSecretName %>
+
+name: AuditReview-$(Build.BuildId)
+jobs:
+- template: .tasks/audit-review-job.yml
+  parameters:
+    UseReleaseManifest: false
+    SecurityAccessTokenSecretName: ${{ parameters.SecurityAccessTokenSecretName }}
+    SecurityAccessTokenOverride: $(SecurityAccessTokenOverride)

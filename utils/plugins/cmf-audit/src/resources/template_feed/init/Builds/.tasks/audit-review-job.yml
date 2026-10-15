@@ -1,0 +1,63 @@
+parameters:
+- name: Environment
+  type: string
+  default: ''
+- name: UseReleaseManifest
+  type: boolean
+  default: true
+# Name of a secret pipeline variable (e.g. from a Library variable group) holding the audit's
+# security access token. Ignored when SecurityAccessTokenOverride is set at runtime.
+- name: SecurityAccessTokenSecretName
+  type: string
+  default: ''
+# An ad hoc token value, resolved at runtime (e.g. $(MyQueueTimeVariable)); takes precedence over
+# SecurityAccessTokenSecretName when non-empty. Never pass a literal token here - callers should
+# reference a queue-time variable marked secret so the value stays masked in logs/UI.
+- name: SecurityAccessTokenOverride
+  type: string
+  default: ''
+
+jobs:
+- job: AuditReview
+  displayName: Audit Review
+  container: build-runner
+  workspace:
+    clean: all
+  steps:
+  # Audit reads the project's own sources (.project-config.json, cmfpackage.json, etc...)
+  - checkout: self
+
+  - ${{ if eq(parameters.UseReleaseManifest, true) }}:
+    # Read Release Manifest
+    - template: read-release-manifest.yml
+      parameters:
+        Environment: ${{ parameters.Environment }}
+
+  # Set node version
+  - template: use-node-version.yml
+
+  # cmf-audit ships a .NET apphost, so the runtime must be available on the agent
+  - template: use-dotnet-version.yml
+
+  # Install cmf-audit
+  - template: install-cmf-audit.yml
+
+  - ${{ if eq(parameters.UseReleaseManifest, false) }}:
+    # Read Project Config (only needed when there is no Release Manifest / EnvConfig available)
+    - template: read-project-config.yml
+
+  # Run Audit Review
+  - ${{ if eq(parameters.UseReleaseManifest, true) }}:
+    # Favor EnvConfig (from the Release Manifest) over the project's own config when available
+    - template: run-audit-review.yml
+      parameters:
+        SecurityAccessToken: $(${{ parameters.SecurityAccessTokenSecretName }})
+        SecurityAccessTokenOverride: ${{ parameters.SecurityAccessTokenOverride }}
+        HostAddress: $(EnvConfig.MES.APPLICATION_PUBLIC_HTTP_ADDRESS)
+        TenantName: $(EnvConfig.MES.TENANT_NAME)
+        UseSSL: $(EnvConfig.MES.APPLICATION_PUBLIC_HTTP_TLS_ENABLED)
+  - ${{ else }}:
+    - template: run-audit-review.yml
+      parameters:
+        SecurityAccessToken: $(${{ parameters.SecurityAccessTokenSecretName }})
+        SecurityAccessTokenOverride: ${{ parameters.SecurityAccessTokenOverride }}
