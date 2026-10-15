@@ -1,0 +1,121 @@
+name: Release plugin
+
+# Publishes a GitHub Release for a CLI plugin under utils/plugins/, attaching
+# its npm-packed tarball (npm/*.tgz). Like release.yml, nothing is rebuilt
+# here: the tarball is fetched from the persistent CI package store
+# (internal/ci-latest), where _build-changed.yml's "promote" job put it after
+# its build and unit tests passed. Publishing to npm is out of scope.
+on:
+  workflow_dispatch:
+    inputs:
+      plugin:
+        description: 'Plugin folder under utils/plugins/ to release (or "all")'
+        required: true
+        default: 'all'
+        type: string
+
+permissions:
+  contents: write
+
+jobs:
+  discover:
+    runs-on: ubuntu-latest
+    outputs:
+      plugins: ${{ steps.list.outputs.plugins }}
+    steps:
+    - uses: actions/checkout@v4
+    - name: List plugin directories to release
+      id: list
+      shell: bash
+      run: |
+        if [ "${{ inputs.plugin }}" != "all" ]; then
+          if [ ! -f "utils/plugins/${{ inputs.plugin }}/npm/package.json" ]; then
+            echo "::error::utils/plugins/${{ inputs.plugin }}/npm/package.json not found - is '${{ inputs.plugin }}' a plugin folder?"
+            exit 1
+          fi
+          PLUGINS=$(printf '%s\n' "${{ inputs.plugin }}" | jq -R -s -c 'split("\n")[:-1]')
+        else
+          PLUGINS=$(ls -d utils/plugins/*/npm/package.json | cut -d/ -f3 | jq -R -s -c 'split("\n")[:-1]')
+        fi
+        echo "Plugins to release: $PLUGINS"
+        echo "plugins=$PLUGINS" >> "$GITHUB_OUTPUT"
+
+  release:
+    needs: discover
+    strategy:
+      matrix:
+        plugin: ${{ fromJson(needs.discover.outputs.plugins) }}
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Read plugin version
+      id: version
+      shell: bash
+      run: |
+        NPM_PACKAGE="utils/plugins/${{ matrix.plugin }}/npm/package.json"
+        VERSION=$(jq -r '.version' "$NPM_PACKAGE")
+        # npm pack names the tarball "<name without @, / replaced by ->-<version>.tgz".
+        PREFIX=$(jq -r '.name | ltrimstr("@") | gsub("/"; "-")' "$NPM_PACKAGE")
+        PRERELEASE=false
+        [[ "$VERSION" == *-* ]] && PRERELEASE=true
+        echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+        echo "tarball=$PREFIX-$VERSION.tgz" >> "$GITHUB_OUTPUT"
+        echo "prerelease=$PRERELEASE" >> "$GITHUB_OUTPUT"
+        echo "tag=${{ matrix.plugin }}/v$VERSION" >> "$GITHUB_OUTPUT"
+
+    - name: Fetch ${{ steps.version.outputs.tarball }} from the CI package store
+      shell: bash
+      env:
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: |
+        mkdir -p dist
+        if ! gh release download internal/ci-latest --pattern "${{ steps.version.outputs.tarball }}" --dir dist --clobber; then
+          echo "::error::${{ steps.version.outputs.tarball }} was not found in the internal/ci-latest CI package store. Has a CI run ever built, tested and promoted it? A release cannot be produced from a package that was never actually tested."
+          exit 1
+        fi
+
+    - name: Generate release notes for ${{ matrix.plugin }}
+      id: notes
+      shell: bash
+      env:
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: |
+        git fetch --tags --force
+
+        # Scope "previous release" to this plugin's own tag lineage, so notes
+        # don't pull in commits from other features'/plugins' releases.
+        PREV_TAG=$(git tag --list "${{ matrix.plugin }}/v*" --sort=-creatordate | head -n1 || true)
+
+        if [ -n "$PREV_TAG" ]; then
+          BODY=$(gh api "repos/${{ github.repository }}/releases/generate-notes" \
+            -f tag_name="${{ steps.version.outputs.tag }}" \
+            -f target_commitish="${{ github.sha }}" \
+            -f previous_tag_name="$PREV_TAG" \
+            --jq .body)
+        else
+          BODY=$(gh api "repos/${{ github.repository }}/releases/generate-notes" \
+            -f tag_name="${{ steps.version.outputs.tag }}" \
+            -f target_commitish="${{ github.sha }}" \
+            --jq .body)
+        fi
+
+        {
+          echo "body<<RELEASE_NOTES_EOF"
+          echo "$BODY"
+          echo "RELEASE_NOTES_EOF"
+        } >> "$GITHUB_OUTPUT"
+
+    - name: Create GitHub release
+      uses: softprops/action-gh-release@v2
+      with:
+        tag_name: ${{ steps.version.outputs.tag }}
+        target_commitish: ${{ github.sha }}
+        name: "${{ matrix.plugin }} ${{ steps.version.outputs.version }}"
+        body: |
+          Download `${{ steps.version.outputs.tarball }}` below and install it with `npm install -g ./${{ steps.version.outputs.tarball }}`.
+
+          ${{ steps.notes.outputs.body }}
+        prerelease: ${{ steps.version.outputs.prerelease == 'true' }}
+        files: dist/*.tgz

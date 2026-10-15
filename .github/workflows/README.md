@@ -9,9 +9,10 @@ This directory implements the repo's build/test/release pipeline. It's built aro
 | File | Role |
 |---|---|
 | [`pr.yml`](pr.yml) | Trigger: pull requests. Validates a PR's changed packages build (no packing, no promotion). |
-| [`ci.yml`](ci.yml) | Trigger: push to `*/dev*`, `*/fix/*`, `*/feat/*`. Builds, packs, tests, and **promotes** changed packages. |
+| [`ci.yml`](ci.yml) | Trigger: push to `*/dev` (e.g. `11.2/dev`, i.e. a PR merge; not feature/fix branches, which `pr.yml` covers). Builds, packs, tests, and **promotes** changed packages. |
 | [`_build-changed.yml`](_build-changed.yml) | Reusable workflow shared by `pr.yml`/`ci.yml`. Does the actual discover → build → test → promote work. |
 | [`release.yml`](release.yml) | Trigger: manual (`workflow_dispatch`). Fetches already-tested packages from the CI store and publishes a GitHub Release. |
+| [`release-plugin.yml`](release-plugin.yml) | Trigger: manual (`workflow_dispatch`). Same idea for CLI plugins under `utils/plugins/`: fetches the already-tested `npm pack` tarball from the CI store and publishes a GitHub Release. |
 | [`../scripts/`](../scripts/) | Shell scripts shared across the workflows above (see [Scripts](#scripts) below). |
 
 ## Trigger map
@@ -19,17 +20,19 @@ This directory implements the repo's build/test/release pipeline. It's built aro
 ```mermaid
 flowchart LR
     PR["Pull request"] --> prYml["pr.yml"]
-    Push["Push to */dev*, */fix/*, */feat/*"] --> ciYml["ci.yml"]
+    Push["Push to */dev (PR merge)"] --> ciYml["ci.yml"]
     Manual["workflow_dispatch"] --> releaseYml["release.yml"]
+    Manual --> releasePluginYml["release-plugin.yml"]
 
     prYml -- "run-pack: false" --> buildChanged["_build-changed.yml"]
     ciYml -- "defaults (pack + promote on)" --> buildChanged
 
     buildChanged -. "promotes tested packages" .-> store[("CI package store<br/>internal/ci-latest<br/>(GitHub Release)")]
     releaseYml -- "fetches from" --> store
+    releasePluginYml -- "fetches from" --> store
 ```
 
-`pr.yml` and `ci.yml` call the *same* reusable workflow with different inputs — a PR only needs to prove the diff still builds, so it skips packing (and therefore skips promotion too, since there's nothing to promote). A push to a working branch does the full thing, including publishing to the CI store.
+`pr.yml` and `ci.yml` call the *same* reusable workflow with different inputs — a PR only needs to prove the diff still builds, so it skips packing (and therefore skips promotion too, since there's nothing to promote). A push to a dev branch (a merged PR) does the full thing, including publishing to the CI store.
 
 ## `_build-changed.yml`: discover → build → test → promote
 
@@ -67,12 +70,23 @@ A `Tests`-type package's own test run often needs a sibling package's build outp
 
 `preBuild`/`prePack` mean exactly what they say: before `cmf build`/`cmf pack` runs on `IoTMTConnect.Tests`, cmf builds/packs `../IoTMTConnect.IoT` first, landing its zip at `IoTMTConnect.Tests/Package/<packageId>.<version>.zip` — the same location `scripts/pack-iot-test-packages.sh`'s `iotTestPackages` config already points at. `build-tests` always runs both `cmf build --test` and `cmf pack` for a changed Tests package (regardless of the `run-pack` input - see Workflow inputs below), and `release.yml`'s sanity-check does the same, so that sibling is always freshly staged, in the same isolated runner/checkout, with no cross-job artifact shipping needed.
 
+## CLI plugins (`utils/plugins/`)
+
+Each `utils/plugins/<name>/` is an npm-distributed cmf CLI plugin, not a cmf package: a builder `package.json` at its root (`build:bundle`, `pack`, ... scripts) plus the publishable `npm/package.json`. Any `cmfpackage.json` inside a plugin is an embedded resource, so `discover` and `validate-package-ids-versions.sh` ignore everything under `utils/plugins/` when looking for cmf packages.
+
+- **`discover`** lists a plugin under its `plugins` output when any file under its folder changed (it must have both `package.json` and `npm/package.json`).
+- **`build-plugins`** (matrix per plugin, independent of `build`/`build-tests`): `npm ci`, then `dotnet test tests` if there is a `tests/*.csproj` (gated by `run-build` + `run-tests`), then `npm run pack` (or just `npm run build:bundle` when `run-pack` is `false`, i.e. on PRs). The resulting `npm/<prefix>-<version>.tgz` is uploaded as an artifact named after the tarball prefix (e.g. `criticalmanufacturing-audit`).
+- **`promote`** also waits on `build-plugins` (success or skipped) and stores the tarball in `internal/ci-latest` next to the zips.
+- **`release-plugin.yml`** (input: plugin folder name or `all`) reads `npm/package.json`'s name/version, downloads `<prefix>-<version>.tgz` from the store (hard failure if missing), and creates a GitHub Release tagged `<plugin>/v<version>` with the tarball attached. Versions with a prerelease suffix (e.g. `1.0.0-next.0`) are released as GitHub prereleases. Nothing is published to npm.
+
+To release a new plugin version: bump it (`npm run bump:patch` etc. in the plugin folder), push to a working branch so `ci.yml` builds, tests and promotes it, then run `release-plugin.yml`.
+
 ## The CI package store
 
 There are two tiers of "already built":
 
 - **`CI-TEMP`** — this run's own staging area (`$GITHUB_WORKSPACE/CI-TEMP`, uploaded as a per-package GitHub Actions artifact). Ephemeral: it dies with the workflow run.
-- **`internal/ci-latest`** — a hidden, prerelease **GitHub Release** that acts as a persistent, cross-run store. One zip asset per package (`<packageId>.<version>.zip`), overwritten (`gh release upload --clobber`) every time a package is promoted. It has no expiry (unlike Actions artifacts' ~90-day retention) and survives independently of any single workflow run.
+- **`internal/ci-latest`** — a hidden, prerelease **GitHub Release** that acts as a persistent, cross-run store. One asset per package (`<packageId>.<version>.zip`, or `<prefix>-<version>.tgz` for plugins), overwritten (`gh release upload --clobber`) every time a package is promoted. It has no expiry (unlike Actions artifacts' ~90-day retention) and survives independently of any single workflow run.
 
 ```mermaid
 flowchart LR
@@ -106,7 +120,7 @@ The Tests-type package is the one exception to "never rebuild": it's cheap to bu
 | Script | Used by | Purpose |
 |---|---|---|
 | [`validate-package-ids-versions.sh`](../scripts/validate-package-ids-versions.sh) | `_build-changed.yml` (`validate-versions`) | Every `packageId` is unique repo-wide; every package's version matches its feature's MES-derived prefix. |
-| [`promote-to-ci-store.sh`](../scripts/promote-to-ci-store.sh) | `_build-changed.yml` (`promote`) | Uploads a run's tested packages to `internal/ci-latest`, creating the release if needed and pruning stale same-package/different-version assets. |
+| [`promote-to-ci-store.sh`](../scripts/promote-to-ci-store.sh) | `_build-changed.yml` (`promote`) | Uploads a run's tested packages (cmf zips and plugin tarballs) to `internal/ci-latest`, creating the release if needed and pruning stale same-package/different-version assets. |
 | [`run-package-tests.sh`](../scripts/run-package-tests.sh) | `build-tests`, `release.yml` | The actual test-execution logic for a `Tests`-type package (packs IoT runtime deps, runs every MSTest/xUnit/NUnit assembly via `dotnet-test-rerun`). Shared so both callers run identical logic. |
 | [`pack-iot-test-packages.sh`](../scripts/pack-iot-test-packages.sh) | `run-package-tests.sh` | Assembles the local `IoTRepository/` used by `cmf dev iot rebuildDatabase`, from the repo root `package.json`'s `iotTestPackages` list (registry specs + the local sibling zip staged via the Tests package's own `relatedPackages` prePack hook). |
 
@@ -116,8 +130,8 @@ The Tests-type package is the one exception to "never rebuild": it's cheap to bu
 |---|---|---|---|
 | `run-restore` | *(default `true`)* | *(default `true`)* | Gates `cmf restore`. |
 | `run-build` | *(default `true`)* | *(default `true`)* | Gates `cmf build --test`. |
-| `run-pack` | `false` | *(default `true`)* | Gates `cmf pack` for non-Tests packages in `build`, the CI-TEMP artifact upload, **and** the `promote` job (nothing to promote if nothing was packed). Does **not** gate `build-tests`: a Tests package always packs, since that's what stages its `relatedPackages` sibling dependencies. |
-| `run-tests` | *(default `true`)* | *(default `true`)* | Gates actually running a Tests-type package's test suite, **and** the `promote` job. |
+| `run-pack` | `false` | *(default `true`)* | Gates `cmf pack` for non-Tests packages in `build`, `npm run pack` in `build-plugins`, the CI-TEMP artifact upload, **and** the `promote` job (nothing to promote if nothing was packed). Does **not** gate `build-tests`: a Tests package always packs, since that's what stages its `relatedPackages` sibling dependencies. |
+| `run-tests` | *(default `true`)* | *(default `true`)* | Gates actually running a Tests-type package's test suite (and a plugin's `tests/` project), **and** the `promote` job. |
 
 ## Permissions
 
