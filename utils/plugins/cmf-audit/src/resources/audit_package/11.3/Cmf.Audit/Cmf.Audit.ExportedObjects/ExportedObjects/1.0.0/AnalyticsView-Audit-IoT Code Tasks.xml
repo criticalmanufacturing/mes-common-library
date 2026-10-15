@@ -1,0 +1,45 @@
+<CMF.ExportFile version="1.0">
+	<Object type="Cmf.Foundation.BusinessObjects.AnalyticsView, Cmf.Foundation.BusinessObjects, Version=11.3.0.0, Culture=neutral, PublicKeyToken=6bbf07329f6aa8df">
+		<Folder type="Object">
+			<ObjectRef type="Cmf.Foundation.BusinessObjects.Folder, Cmf.Foundation.BusinessObjects, Version=11.3.0.0, Culture=neutral, PublicKeyToken=6bbf07329f6aa8df" ExportId="2609241200400000008_Folder" RefId="2609241200400000008" RefName="\Analytics Views\AuditPackage"/>
+		</Folder>
+		<IsSystem value="False" type="System.Boolean, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e"/>
+		<Keywords value="code-tasks;iot" type="System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e"/>
+		<Type value="Grafana" type="Cmf.Foundation.BusinessObjects.DataPlatform.AnalyticsViewType, Cmf.Foundation.BusinessObjects, Version=11.3.0.0, Culture=neutral, PublicKeyToken=6bbf07329f6aa8df"/>
+		<CurrentMainState isNull="True"/>
+		<CurrentStates isNull="True"/>
+		<IsTemplate value="False" type="System.Boolean, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e"/>
+		<RelationCollection isNull="True"/>
+		<Attributes type="Collection" actualtype="Cmf.Foundation.BusinessObjects.AttributeCollection, Cmf.Foundation.BusinessObjects, Version=11.3.0.0, Culture=neutral, PublicKeyToken=6bbf07329f6aa8df"/>
+		<Description value="Audit Package - for IoT Code Tasks" type="System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e"/>
+		<DocumentationURL isNull="True"/>
+		<Image isNull="True"/>
+		<EntityPicture isNull="True"/>
+		<Name value="Audit-IoT Code Tasks" type="System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e"/>
+		<CreatedBy value="admin" type="System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e"/>
+		<CreatedOn value="09/24/2026 12:25:43" type="System.DateTime, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e"/>
+		<DataGroupName isNull="True"/>
+		<Id value="2609241200400000045" type="System.Int64, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e"/>
+		<ModifiedBy value="admin" type="System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e"/>
+		<ModifiedOn value="09/24/2026 12:29:06" type="System.DateTime, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e"/>
+	</Object>
+	<Object type="Cmf.Foundation.BusinessObjects.EntityDocumentation, Cmf.Foundation.BusinessObjects, Version=11.3.0.0, Culture=neutral, PublicKeyToken=6bbf07329f6aa8df">
+		<ContentURL value="/d/892a2c3c-ef17-4aee-8b86-69631491d32c" type="System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e"/>
+		<Description value="" type="System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e"/>
+		<Filename value="" type="System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e"/>
+		<ReferredObject type="Object">
+			<ObjectRef type="Cmf.Foundation.BusinessObjects.AnalyticsView, Cmf.Foundation.BusinessObjects, Version=11.3.0.0, Culture=neutral, PublicKeyToken=6bbf07329f6aa8df" ExportId="2609241200400000045_AnalyticsView" RefId="2609241200400000045" RefName=""/>
+		</ReferredObject>
+		<StorageType value="External" type="Cmf.Foundation.BusinessObjects.ContentStorageType, Cmf.Foundation.BusinessObjects, Version=11.3.0.0, Culture=neutral, PublicKeyToken=6bbf07329f6aa8df"/>
+		<Type value="Data" type="System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e"/>
+		<Url value="/Entity/AnalyticsView/2609241200400000045/Attachments/2609241200400000045/Open" type="System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e"/>
+		<Scope value="Revision" type="Cmf.Foundation.BusinessObjects.EntityTypeSource, Cmf.Foundation.BusinessObjects, Version=11.3.0.0, Culture=neutral, PublicKeyToken=6bbf07329f6aa8df"/>
+		<ContentData isNull="True"/>
+		<CreatedBy value="admin" type="System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e"/>
+		<CreatedOn value="09/24/2026 12:25:44" type="System.DateTime, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e"/>
+		<DataGroupName isNull="True"/>
+		<Id value="2609241200400000045" type="System.Int64, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e"/>
+		<ModifiedBy value="admin" type="System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e"/>
+		<ModifiedOn value="09/24/2026 12:29:06" type="System.DateTime, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e"/>
+	</Object>
+</CMF.ExportFile>

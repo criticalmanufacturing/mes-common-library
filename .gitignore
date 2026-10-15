@@ -4,3 +4,5 @@ node_modules/
 # Scratch folder used by `npm run iot:test-packages` to pack IoT packages
 # for local `cmf dev iot rebuildDatabase` testing.
 /IoTRepository/
+utils/plugins/cmf-audit/cmf-audit.generated.sln
+utils/plugins/cmf-audit/cmf-audit.generated.sln

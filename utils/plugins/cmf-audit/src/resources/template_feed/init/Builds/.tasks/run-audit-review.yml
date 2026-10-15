@@ -1,0 +1,59 @@
+# HostAddress/TenantName/UseSSL default to .tasks/read-project-config.yml output when not overridden by the caller
+parameters:
+  SecurityAccessToken: ''
+  # Ad hoc token, resolved at runtime; wins over SecurityAccessToken when non-empty. Pass a
+  # queue-time variable marked secret here, never a literal value.
+  SecurityAccessTokenOverride: ''
+  HostAddress: '$(ProjectConfig.HostAddress)'
+  TenantName: '$(ProjectConfig.TenantName)'
+  UseSSL: '$(ProjectConfig.UseSSL)'
+
+steps:
+- script: |
+    set -e
+    hostAddress="${{ parameters.HostAddress }}"
+    tenantName="${{ parameters.TenantName }}"
+    useSSL="${{ parameters.UseSSL }}"
+    securityAccessToken="${SECURITY_ACCESS_TOKEN_OVERRIDE:-$SECURITY_ACCESS_TOKEN}"
+
+    # cmf-audit silently accepts empty values and --useSSL even swallows the next token,
+    # so validate here to fail with an actionable message instead
+    invalid=()
+    [ -n "$hostAddress" ] || invalid+=("hostAddress")
+    [ -n "$tenantName" ] || invalid+=("tenantName")
+    [ -n "$securityAccessToken" ] || invalid+=("securityAccessToken")
+    case "${useSSL,,}" in
+      true|false) useSSL="${useSSL,,}" ;;
+      *) invalid+=("useSSL (got '$useSSL', expected true or false)") ;;
+    esac
+    if [ ${#invalid[@]} -gt 0 ]; then
+      echo "##vso[task.logissue type=error]Missing or invalid audit review inputs: ${invalid[*]}"
+      echo "Check the Read Release Manifest / Read Project Config and Generate Token steps."
+      exit 1
+    fi
+
+    # securityAccessToken is masked down to its first/last char so it can't leak into build logs,
+    # regardless of whether the caller remembered to mark it as a secret
+    maskedToken="${securityAccessToken:0:1}***${securityAccessToken: -1}"
+    echo "cmf-audit review arguments:"
+    echo "  postEvent            = true"
+    echo "  hostAddress          = $hostAddress"
+    echo "  tenantName           = $tenantName"
+    echo "  useSSL               = $useSSL"
+    echo "  securityAccessToken  = $maskedToken"
+
+    cmf-audit -l Debug review . \
+      --postEvent true \
+      --clientId "MES" \
+      --hostAddress "$hostAddress" \
+      --tenantName "$tenantName" \
+      --useSSL "$useSSL" \
+      --securityAccessToken "$securityAccessToken"
+  displayName: Run Audit Review
+  workingDirectory: $(Build.SourcesDirectory)
+  env:
+    # Mapped explicitly (rather than interpolated via ${{ parameters.SecurityAccessToken }}) so that
+    # secret variables passed in are resolved securely; macro syntax ($(var)) is not substituted for
+    # secrets inside script text.
+    SECURITY_ACCESS_TOKEN: ${{ parameters.SecurityAccessToken }}
+    SECURITY_ACCESS_TOKEN_OVERRIDE: ${{ parameters.SecurityAccessTokenOverride }}
