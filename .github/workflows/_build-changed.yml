@@ -1,7 +1,8 @@
 name: Build changed packages
 
 # Reusable workflow shared by pr.yml and ci.yml: builds+packs only the
-# cmfpackage.json directories affected by the diff between base-sha and head-sha.
+# cmfpackage.json directories, and the npm-packed CLI plugins under
+# utils/plugins/, affected by the diff between base-sha and head-sha.
 on:
   workflow_call:
     inputs:
@@ -22,7 +23,7 @@ on:
         type: boolean
         default: true
       run-pack:
-        description: 'Whether to run cmf pack after build (skip for PR validation)'
+        description: 'Whether to run cmf pack / npm run pack after build (skip for PR validation)'
         required: false
         type: boolean
         default: true
@@ -50,6 +51,7 @@ jobs:
     outputs:
       packages: ${{ steps.list.outputs.packages }}
       test-packages: ${{ steps.list.outputs.test-packages }}
+      plugins: ${{ steps.list.outputs.plugins }}
     steps:
     - uses: actions/checkout@v4
       with:
@@ -81,7 +83,10 @@ jobs:
 
         # All package directories, deepest first, so a change in a nested
         # package (e.g. Foo/Foo.IoT) doesn't also mark its parent (Foo) as changed.
-        mapfile -t PKG_DIRS < <(find . -name cmfpackage.json -exec dirname {} \; | sed 's|^\./||' | awk '{ print length, $0 }' | sort -rn | cut -d' ' -f2-)
+        # utils/plugins/ is excluded: plugins are npm packages handled by the
+        # "plugins" output below, and any cmfpackage.json under them is an
+        # embedded resource, not a package of this repo.
+        mapfile -t PKG_DIRS < <(find . -name cmfpackage.json -not -path "./utils/plugins/*" -exec dirname {} \; | sed 's|^\./||' | awk '{ print length, $0 }' | sort -rn | cut -d' ' -f2-)
 
         declare -A CHANGED_PKGS
         while IFS= read -r file; do
@@ -120,7 +125,7 @@ jobs:
         while IFS= read -r pkg_file; do
           package_id=$(jq -r '.packageId // empty' "$pkg_file")
           [ -n "$package_id" ] && PACKAGE_ID_DIRS["$package_id"]="$(dirname "$pkg_file" | sed 's|^\./||')"
-        done < <(find . -name cmfpackage.json -not -path "*/node_modules/*" -not -path "*/bin/*")
+        done < <(find . -name cmfpackage.json -not -path "*/node_modules/*" -not -path "*/bin/*" -not -path "./utils/plugins/*")
 
         while IFS= read -r root_file; do
           [ "$(jq -r '.packageType // empty' "$root_file")" = "Root" ] || continue
@@ -139,9 +144,21 @@ jobs:
             test_dir="${PACKAGE_ID_DIRS[$test_id]:-}"
             [ -n "$test_dir" ] && TEST_PKGS_SET["$test_dir"]=1
           done < <(jq -r '.testPackages[]?.id // empty' "$root_file")
-        done < <(find . -name cmfpackage.json -not -path "*/node_modules/*" -not -path "*/bin/*")
+        done < <(find . -name cmfpackage.json -not -path "*/node_modules/*" -not -path "*/bin/*" -not -path "./utils/plugins/*")
 
         TEST_PKGS=("${!TEST_PKGS_SET[@]}")
+
+        # CLI plugins: every utils/plugins/<name>/ with both a builder
+        # package.json and an npm/package.json, changed if any file under it
+        # changed.
+        PLUGINS=()
+        for plugin_dir in utils/plugins/*/; do
+          plugin_dir="${plugin_dir%/}"
+          [ -f "$plugin_dir/package.json" ] && [ -f "$plugin_dir/npm/package.json" ] || continue
+          if grep -q "^$plugin_dir/" <<< "$CHANGED_FILES"; then
+            PLUGINS+=("$plugin_dir")
+          fi
+        done
 
         to_json_array() {
           if [ "$#" -eq 0 ]; then
@@ -153,11 +170,14 @@ jobs:
 
         PACKAGES=$(to_json_array "${NON_TEST_PKGS[@]}")
         TEST_PACKAGES=$(to_json_array "${TEST_PKGS[@]}")
+        PLUGIN_PACKAGES=$(to_json_array "${PLUGINS[@]}")
 
         echo "Changed packages: $PACKAGES"
         echo "Changed test packages: $TEST_PACKAGES"
         echo "packages=$PACKAGES" >> "$GITHUB_OUTPUT"
+        echo "Changed plugins: $PLUGIN_PACKAGES"
         echo "test-packages=$TEST_PACKAGES" >> "$GITHUB_OUTPUT"
+        echo "plugins=$PLUGIN_PACKAGES" >> "$GITHUB_OUTPUT"
 
   build:
     needs: [validate-versions, discover]
@@ -280,21 +300,91 @@ jobs:
       shell: bash
       run: .github/scripts/run-package-tests.sh "${{ matrix.package }}"
 
+  # CLI plugins under utils/plugins/ are npm packages, not cmf packages: each
+  # is built with its own package.json scripts ("build:bundle" = dotnet publish
+  # for every runtime into npm/dist, "pack" = build:bundle + npm pack), its
+  # unit tests (tests/*.csproj, if any) are run, and the resulting npm/*.tgz
+  # is uploaded as an artifact named after the tarball prefix (e.g.
+  # "criticalmanufacturing-audit"), so "promote" can store it alongside the
+  # cmf zips.
+  build-plugins:
+    needs: discover
+    if: needs.discover.outputs.plugins != '[]'
+    strategy:
+      fail-fast: false
+      matrix:
+        plugin: ${{ fromJson(needs.discover.outputs.plugins) }}
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+        working-directory: ${{ matrix.plugin }}
+    steps:
+    - uses: actions/checkout@v4
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: 8.0.x
+    - name: Use Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20.x'
+    - name: Install build tooling
+      run: npm ci
+
+    - name: Run unit tests for ${{ matrix.plugin }}
+      if: inputs.run-build && inputs.run-tests
+      run: |
+          if compgen -G "tests/*.csproj" > /dev/null; then
+            dotnet test tests -c Release
+          else
+            echo "${{ matrix.plugin }} has no tests/*.csproj - nothing to run."
+          fi
+
+    - name: Build${{ inputs.run-pack && ' and pack' || '' }} ${{ matrix.plugin }}
+      if: inputs.run-build || inputs.run-pack
+      env:
+        RUN_PACK: ${{ inputs.run-pack }}
+      run: |
+          if [ "$RUN_PACK" = "true" ]; then
+            rm -f npm/*.tgz
+            npm run pack
+          else
+            npm run build:bundle
+          fi
+
+    - name: Determine tarball name
+      id: tarball
+      if: inputs.run-pack
+      run: |
+          # npm pack names the tarball "<name without @, / replaced by ->-<version>.tgz".
+          PREFIX=$(jq -r '.name | ltrimstr("@") | gsub("/"; "-")' npm/package.json)
+          echo "prefix=$PREFIX" >> "$GITHUB_OUTPUT"
+
+    - name: Upload packed tarball to this run's CI-TEMP staging
+      if: inputs.run-pack
+      uses: actions/upload-artifact@v4
+      with:
+        name: ${{ steps.tarball.outputs.prefix }}
+        path: ${{ matrix.plugin }}/npm/*.tgz
+        if-no-files-found: error
+
   # Promotes this run's freshly-built packages into the persistent, cross-run
   # CI package store (see .github/scripts/promote-to-ci-store.sh) - but only
   # once the Tests flow has genuinely executed and passed, or was skipped
   # because this change has no Tests package. "build" is allowed to have
   # been skipped (e.g. this run only touched Tests-type packages) but not to
-  # have failed.
+  # have failed; the same goes for "build-plugins".
   promote:
-    needs: [validate-versions, discover, build, build-tests]
+    needs: [validate-versions, discover, build, build-tests, build-plugins]
     if: |
       !cancelled() &&
       inputs.run-pack &&
       inputs.run-tests &&
       needs.validate-versions.result == 'success' &&
       (needs.build.result == 'success' || needs.build.result == 'skipped') &&
-      (needs.build-tests.result == 'success' || needs.build-tests.result == 'skipped')
+      (needs.build-tests.result == 'success' || needs.build-tests.result == 'skipped') &&
+      (needs.build-plugins.result == 'success' || needs.build-plugins.result == 'skipped')
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4

@@ -3,7 +3,7 @@ name: CI
 on:
   workflow_dispatch:
   push:
-    branches: [ "*/dev*", "*/dev*/*", "*/fix/*", "*/feat/*" ]
+    branches: [ "*/dev" ]
 
 # contents: write is needed by _build-changed.yml's "promote" job, which
 # publishes tested package builds to the internal/ci-latest GitHub Release

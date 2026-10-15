@@ -2,14 +2,18 @@
 #
 # Promotes this run's freshly-built, tested packages into the persistent,
 # cross-run CI package store: a hidden/prerelease GitHub Release
-# ("internal/ci-latest") holding one zip asset per package. Only call this
+# ("internal/ci-latest") holding one asset per package: a cmf package zip, or
+# an npm-packed CLI plugin tarball (utils/plugins/). Only call this
 # after the Tests flow has actually run and passed for this run - see
 # _build-changed.yml's "promote" job condition.
 #
 # Usage: promote-to-ci-store.sh <downloadedArtifactsDir>
-#   <downloadedArtifactsDir> must contain one subdirectory per package,
-#   named after its packageId (i.e. artifacts downloaded WITHOUT
-#   merge-multiple), each holding that package's single "<packageId>.<version>.zip".
+#   <downloadedArtifactsDir> must contain one subdirectory per package
+#   (i.e. artifacts downloaded WITHOUT merge-multiple), each holding either:
+#     - a cmf package's single "<packageId>.<version>.zip", in a directory
+#       named after its packageId, or
+#     - a plugin's single "<prefix>-<version>.tgz" (npm pack output), in a
+#       directory named after that tarball prefix.
 set -euo pipefail
 
 ARTIFACTS_DIR="${1:?Usage: promote-to-ci-store.sh <downloadedArtifactsDir>}"
@@ -26,28 +30,33 @@ fi
 shopt -s nullglob
 for package_dir in "$ARTIFACTS_DIR"/*/; do
   package_id="$(basename "$package_dir")"
-  zip_files=("$package_dir"*.zip)
+  package_files=("$package_dir"*.zip "$package_dir"*.tgz)
 
-  if [ ${#zip_files[@]} -eq 0 ]; then
-    echo "::warning::No zip found under $package_dir for packageId '$package_id', skipping."
+  if [ ${#package_files[@]} -eq 0 ]; then
+    echo "::warning::No zip or tgz found under $package_dir for package '$package_id', skipping."
     continue
   fi
 
-  zip_file="${zip_files[0]}"
-  zip_name="$(basename "$zip_file")"
+  package_file="${package_files[0]}"
+  package_name="$(basename "$package_file")"
 
-  # Clean up any stale asset for the same packageId at a different version, so
+  # Clean up any stale asset for the same package at a different version, so
   # the store doesn't grow unbounded across version bumps. Assets are named
-  # "<packageId>.<version>.zip" - match that shape exactly for this packageId.
-  mapfile -t existing_assets < <(gh release view "$CI_STORE_TAG" --json assets --jq '.assets[].name')
+  # "<packageId>.<version>.zip" or "<prefix>-<version>.tgz" (npm versions may
+  # carry a prerelease suffix) - match that shape exactly for this package.
   escaped_id="$(printf '%s' "$package_id" | sed 's/[.[\*^$]/\\&/g')"
+  case "$package_name" in
+    *.tgz) stale_pattern="^${escaped_id}-[0-9]+\.[0-9]+\.[0-9]+(-[0-9A-Za-z.-]+)?\.tgz$" ;;
+    *)     stale_pattern="^${escaped_id}\.[0-9]+\.[0-9]+\.[0-9]+\.zip$" ;;
+  esac
+  mapfile -t existing_assets < <(gh release view "$CI_STORE_TAG" --json assets --jq '.assets[].name')
   for asset in "${existing_assets[@]}"; do
-    if [[ "$asset" =~ ^${escaped_id}\.[0-9]+\.[0-9]+\.[0-9]+\.zip$ ]] && [ "$asset" != "$zip_name" ]; then
-      echo "Removing stale CI store asset $asset (superseded by $zip_name)"
+    if [[ "$asset" =~ $stale_pattern ]] && [ "$asset" != "$package_name" ]; then
+      echo "Removing stale CI store asset $asset (superseded by $package_name)"
       gh release delete-asset "$CI_STORE_TAG" "$asset" --yes
     fi
   done
 
-  echo "Promoting $zip_name to the CI package store..."
-  gh release upload "$CI_STORE_TAG" "$zip_file" --clobber
+  echo "Promoting $package_name to the CI package store..."
+  gh release upload "$CI_STORE_TAG" "$package_file" --clobber
 done

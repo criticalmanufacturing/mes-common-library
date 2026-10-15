@@ -221,8 +221,11 @@ namespace specs
         private static void RunInit(string root, InitArguments args)
         {
             var cwd = Directory.GetCurrentDirectory();
+            // Init refuses to run on GitHub-hosted projects (including inside GitHub Actions), so neutralise it for the tests.
+            var githubActions = Environment.GetEnvironmentVariable("GITHUB_ACTIONS");
             try
             {
+                Environment.SetEnvironmentVariable("GITHUB_ACTIONS", null);
                 Directory.SetCurrentDirectory(root);
                 ExecutionContext.Initialize(new System.IO.Abstractions.FileSystem());
                 ExecutionContext.ServiceProvider = new ServiceCollection()
@@ -235,6 +238,7 @@ namespace specs
             finally
             {
                 Directory.SetCurrentDirectory(cwd);
+                Environment.SetEnvironmentVariable("GITHUB_ACTIONS", githubActions);
             }
         }
 

@@ -21,7 +21,10 @@ set -euo pipefail
 
 status=0
 
-mapfile -t ALL_PACKAGES < <(find . -name cmfpackage.json -not -path "*/node_modules/*"  -not -path "*/Release/*" -not -path "*/bin/*" | sort)
+# utils/plugins/ is excluded: plugins are npm packages (see the "plugins"
+# flow in _build-changed.yml), and any cmfpackage.json under them is an
+# embedded resource, not a package of this repo.
+mapfile -t ALL_PACKAGES < <(find . -name cmfpackage.json -not -path "*/node_modules/*"  -not -path "*/Release/*" -not -path "*/bin/*" -not -path "./utils/plugins/*" | sort)
 
 declare -A PACKAGE_ID_FILES
 
