@@ -42,8 +42,8 @@
     "typescript": "4.9.5"
   },
   "dependencies": {
-    "@criticalmanufacturing/connect-iot-common": "release-1133",
-    "@criticalmanufacturing/connect-iot-driver": "release-1133",
+    "@criticalmanufacturing/connect-iot-common": "11.3.6",
+    "@criticalmanufacturing/connect-iot-driver": "11.3.6",
     "edge-js": "22.1.2",
     "fs-extra": "11.1.0",
     "inversify": "6.0.2",

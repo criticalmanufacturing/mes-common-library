@@ -26,7 +26,7 @@ In summary, the sub-package installs `MTConnectDeviceDriver`, a Connect IoT `Dev
 - `global.json` pins the .NET SDK version (`8.0.309`, `rollForward: latestFeature`) used to build the feature.
 - `NuGet.Config` configures the CMF and nuget.org NuGet package sources and disables source-control integration for the solution.
 - `repositories.json` points the deployment framework at the local `CIPackages` and `Delivered` repositories under `deploymentdir/`.
-- `.project-config.json` records the CM scaffolding project settings for this feature: project name `IoTMTConnect`, `RepositoryType: Customization`, `BaseLayer: MES`, `MESVersion`/`NugetVersion`/`TestScenariosNugetVersion` all `11.3.3`, the CMF NPM/NuGet registries, and the deployment directory paths.
+- `.project-config.json` records the CM scaffolding project settings for this feature: project name `IoTMTConnect`, `RepositoryType: Customization`, `BaseLayer: MES`, `MESVersion`/`NugetVersion`/`TestScenariosNugetVersion` all `11.3.6`, the CMF NPM/NuGet registries, and the deployment directory paths.
 - `.config/dotnet-tools.json` declares the local .NET tool `dotnet-coverage` (version `17.6.0`) used for code coverage.
 - `.devcontainer/` configures the VS Code dev container, based on the `criticalmanufacturing.io/criticalmanufacturing/devcontainer:11` image, forwarding port `80` and running `cmf login sync` on folder open.
 
@@ -39,13 +39,13 @@ CM deployment framework manifests describe installable deployment packages. The 
 [`cmfpackage.json`](cmfpackage.json) has `packageType: "Root"`:
 
 - `packageId` identifies the feature as `Cmf.Community.IoTMTConnect`.
-- `version` identifies the feature release (`11331.0.0`).
+- `version` identifies the feature release (`11361.0.0`).
 - `description` is the generic CM Community customization deployment description.
 - `isInstallable: true` makes the root package installable.
 - `isUniqueInstall: false` means the package is not restricted to a single installation per environment.
 - `dependencies` pulls in the IoT child package and optional CM deployment dependencies:
-  - `Cmf.Environment` (`11.3.3`, `mandatory: false`) and `CriticalManufacturing.DeploymentMetadata` (`11.3.3`, `mandatory: false`) are optional dependencies for the MES environment/deployment framework; they are not required for the feature to install, but bring in environment and deployment metadata packages when present.
-  - `Cmf.Community.IoTMTConnect.IoT` (`11331.0.0`) is the required package that contains the actual Connect IoT driver.
+  - `Cmf.Environment` (`11.3.6`, `mandatory: false`) and `CriticalManufacturing.DeploymentMetadata` (`11.3.6`, `mandatory: false`) are optional dependencies for the MES environment/deployment framework; they are not required for the feature to install, but bring in environment and deployment metadata packages when present.
+  - `Cmf.Community.IoTMTConnect.IoT` (`11361.0.0`) is the required package that contains the actual Connect IoT driver.
 
 A root package is therefore the feature-level installation and dependency entry point. It does not itself pack the driver source; it composes the packages that do.
 
@@ -55,12 +55,12 @@ A root package is therefore the feature-level installation and dependency entry 
 
 ## Version and compatibility
 
-The current feature version is `11331.0.0`. The version follows the repository's CM release versioning convention and is aligned with MES `11.3.3`:
+The current feature version is `11361.0.0`. The version follows the repository's CM release versioning convention and is aligned with MES `11.3.6`:
 
-- Root package: `Cmf.Community.IoTMTConnect@11331.0.0`
-- IoT package: `Cmf.Community.IoTMTConnect.IoT@11331.0.0`
-- npm driver: `@criticalmanufacturing/connect-iot-driver-mtconnect@11331.0.0`
-- CM deployment dependencies (`Cmf.Environment`, `CriticalManufacturing.DeploymentMetadata`): `11.3.3`
+- Root package: `Cmf.Community.IoTMTConnect@11361.0.0`
+- IoT package: `Cmf.Community.IoTMTConnect.IoT@11361.0.0`
+- npm driver: `@criticalmanufacturing/connect-iot-driver-mtconnect@1.0.0` (versioned independently)
+- CM deployment dependencies (`Cmf.Environment`, `CriticalManufacturing.DeploymentMetadata`): `11.3.6`
 
 When creating a release, keep the root package, IoT package, and npm driver versions aligned. Update the CM dependency versions when targeting a different MES release.
 

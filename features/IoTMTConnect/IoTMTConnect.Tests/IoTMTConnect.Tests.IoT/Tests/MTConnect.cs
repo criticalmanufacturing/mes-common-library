@@ -27,7 +27,7 @@ namespace Cmf.Custom.Tests.IoT.Tests
     public class MTConnect
     {
         private static readonly string PACKAGES_LOCATION = FindIoTRepository();
-        private const string MANAGER = @"criticalmanufacturing-connect-iot-manager-11.3.3.tgz";
+        private const string MANAGER = @"criticalmanufacturing-connect-iot-manager-11.3.6.tgz";
         private static readonly string MASTERDATA_TEMPLATE = Path.Combine(AppContext.BaseDirectory, "Files", "1.0.0", "DemoMTController.json");
 
         private ScenarioConfiguration? Configuration;

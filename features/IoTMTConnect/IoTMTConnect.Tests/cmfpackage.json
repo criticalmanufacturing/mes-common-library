@@ -1,6 +1,6 @@
 {
   "packageId": "Cmf.Community.IoTMTConnect.Tests",
-  "version": "11331.0.0",
+  "version": "11361.0.0",
   "description": "This package tests Critical Manufacturing MES Demo Customization",
   "packageType": "Tests",
   "isInstallable": false,
