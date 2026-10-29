@@ -16,3 +16,5 @@ The table below describes the common configurations for this features:
 |:------------ | :-------- | :-------- | :-----------|
 
 ## Integrations
+* [ERP Features](/cmf-community-timetracking-help/cmf-custom-help.techspec>cmf-custom-help.erpintegration>cmf-custom-help.erpfeatures)
+* [ERP Handlers](/cmf-community-timetracking-help/cmf-custom-help.techspec>cmf-custom-help.erpintegration>cmf-custom-help.erphandlers)
