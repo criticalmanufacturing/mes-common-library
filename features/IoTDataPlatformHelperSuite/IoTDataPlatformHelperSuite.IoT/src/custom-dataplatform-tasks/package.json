@@ -1,6 +1,6 @@
 {
   "name": "@criticalmanufacturing/connect-iot-controller-engine-custom-dataplatform-tasks",
-  "version": "11331.0.0",
+  "version": "11361.0.0",
   "description": "Generated Task Library package",
   "main": "src/index.js",
   "typings": "src/index",
@@ -26,7 +26,7 @@
   ],
   "devDependencies": {
     "@criticalmanufacturing/node-package-bundler": "latest",
-    "cmf-core-connect-iot": "release-1133",
+    "cmf-core-connect-iot": "11.3.6",
     "@types/chai": "4.3.10",
     "@types/chai-spies": "1.0.6",
     "@types/mocha": "10.0.4",
@@ -42,9 +42,9 @@
     "typescript": "5.2.2"
   },
   "dependencies": {
-    "@criticalmanufacturing/connect-iot-common": "release-1133",
-    "@criticalmanufacturing/connect-iot-controller-engine": "release-1133",
-    "cmf-lbos": "release-1133",
+    "@criticalmanufacturing/connect-iot-common": "11.3.6",
+    "@criticalmanufacturing/connect-iot-controller-engine": "11.3.6",
+    "cmf-lbos": "11.3.6",
     "inversify": "6.0.2",
     "moment": "2.29.4",
     "odata-query": "^8.0.7",
