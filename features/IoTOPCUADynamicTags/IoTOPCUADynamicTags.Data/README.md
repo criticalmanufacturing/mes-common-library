@@ -10,7 +10,7 @@
 | Master data | [`MasterData/`](MasterData/) | Versioned automation protocol, controller, workflows, manager, and context-resolution definitions. |
 | Exported objects | [`ExportedObjects/`](ExportedObjects/) | Reserved package location for exported MES objects. |
 
-The current master-data version is `1331.0.0`. It includes:
+The current master-data version is `11361.0.0`. It includes:
 
 - `900_IoT_AutomationProtocol.json`, which defines the OPC UA protocol and dynamic-tags driver.
 - `901_IoT_DynamicTags.json`, which defines the `DynamicTags_Controller`, handler, and workflows.
@@ -29,7 +29,7 @@ The manifest packages the following content:
 | `MasterData/$(version)/*` | `MasterData/$(version)/` | `MasterData` |
 | `ExportedObjects/*` | `ExportedObjects` | `ExportedObjects` |
 
-`$(version)` is replaced with the package version, `11331.0.0`, during packaging. This package is installable and uniquely installable.
+`$(version)` is replaced with the package version, `11361.0.0`, during packaging. This package is installable and uniquely installable.
 
 ## Build and deployment
 

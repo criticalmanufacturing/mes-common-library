@@ -8,8 +8,8 @@ The package contains the same versioned upgrade script for both database targets
 
 | Database target | Script |
 | --- | --- |
-| Online | [`ONLINE/UpgradeScripts/1331.0.0/001-UpdatePropertyCustomIoTOPCUAExecutionContextST.sql`](ONLINE/UpgradeScripts/1331.0.0/001-UpdatePropertyCustomIoTOPCUAExecutionContextST.sql) |
-| ODS | [`ODS/UpgradeScripts/1331.0.0/001-UpdatePropertyCustomIoTOPCUAExecutionContextST.sql`](ODS/UpgradeScripts/1331.0.0/001-UpdatePropertyCustomIoTOPCUAExecutionContextST.sql) |
+| Online | [`ONLINE/UpgradeScripts/11361.0.0/001-UpdatePropertyCustomIoTOPCUAExecutionContextST.sql`](ONLINE/UpgradeScripts/11361.0.0/001-UpdatePropertyCustomIoTOPCUAExecutionContextST.sql) |
+| ODS | [`ODS/UpgradeScripts/11361.0.0/001-UpdatePropertyCustomIoTOPCUAExecutionContextST.sql`](ODS/UpgradeScripts/11361.0.0/001-UpdatePropertyCustomIoTOPCUAExecutionContextST.sql) |
 
 The script updates the `CustomIoTOPCUAExecutionContextST` property for the feature's OPC UA execution-context support. The Online and ODS copies keep both supported database targets aligned.
 
@@ -22,7 +22,7 @@ The manifest is a `Database` package and packs:
 | `ONLINE/UpgradeScripts/$(version)/*` | `Online/` |
 | `ODS/UpgradeScripts/$(version)/*` | `ODS/` |
 
-For this release, `$(version)` resolves to `1331.0.0` from package version `11331.0.0`. The package is installable and uniquely installable, with no additional package dependencies or custom deployment steps.
+For this release, `$(version)` resolves to `11361.0.0` from package version `11361.0.0`. The package is installable and uniquely installable, with no additional package dependencies or custom deployment steps.
 
 ## Deployment
 

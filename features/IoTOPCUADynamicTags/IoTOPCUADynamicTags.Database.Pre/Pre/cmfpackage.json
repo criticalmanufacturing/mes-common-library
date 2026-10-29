@@ -1,6 +1,6 @@
 {
   "packageId": "Cmf.Community.IoTOPCUADynamicTags.Database.Pre",
-  "version": "11331.0.0",
+  "version": "11361.0.0",
   "description": "Cmf.Custom.Database Community Database Scripts Package (Pre)",
   "packageType": "Database",
   "isInstallable": true,
