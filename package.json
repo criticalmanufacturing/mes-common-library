@@ -1,7 +1,7 @@
 {
   "name": "mes-common-library",
   "private": true,
-  "version": "11331.0.0",
+  "version": "11361.0.0",
   "description": "Repository-level tooling (git hooks, commit linting) for mes-common-library.",
   "scripts": {
     "prepare": "husky",
@@ -17,10 +17,10 @@
     "secretlint": "12.0.0"
   },
   "iotTestPackages": [
-    "./features/IoTMTConnect/**/Package/Cmf.Community.IoTMTConnect.IoT.11331.0.0.zip",
-    "@criticalmanufacturing/connect-iot-controller-engine-core-tasks@release-1133",
-    "@criticalmanufacturing/connect-iot-manager@release-1133",
-    "@criticalmanufacturing/connect-iot-monitor@release-1133",
-    "@criticalmanufacturing/connect-iot-controller@release-1133"
+    "./features/IoTMTConnect/**/Package/Cmf.Community.IoTMTConnect.IoT.11361.0.0.zip",
+    "@criticalmanufacturing/connect-iot-controller-engine-core-tasks@11.3.6",
+    "@criticalmanufacturing/connect-iot-manager@11.3.6",
+    "@criticalmanufacturing/connect-iot-monitor@11.3.6",
+    "@criticalmanufacturing/connect-iot-controller@11.3.6"
   ]
 }

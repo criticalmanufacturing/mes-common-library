@@ -178,7 +178,7 @@ jobs:
       with:
         node-version: '20.x'
     - name: Install @cmf/cli
-      run: npm install -g @criticalmanufacturing/cli
+      run: npm install -g @criticalmanufacturing/cli@6.0.0
     - name: Login cmf login
       run: cmf login -t ${{ secrets.Roque_CM_IO_TOKEN }}
     - name: Build and pack ${{ matrix.package }}
@@ -245,7 +245,7 @@ jobs:
       with:
         node-version: '20.x'
     - name: Install @cmf/cli
-      run: npm install -g @criticalmanufacturing/cli
+      run: npm install -g @criticalmanufacturing/cli@6.0.0
     - name: Login cmf login
       run: cmf login -t ${{ secrets.Roque_CM_IO_TOKEN }}
     # Tests-type packages always build AND pack, regardless of run-build/
