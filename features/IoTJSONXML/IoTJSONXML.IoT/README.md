@@ -19,7 +19,7 @@ For task inputs, outputs, development commands, and implementation details, see 
 
 ## `cmfpackage.json`
 
-This is an installable, non-unique `IoT` package with package version `11331.0.0`. Its manifest:
+This is an installable, non-unique `IoT` package with package version `11361.0.0`. Its manifest:
 
 | Source | Target | Purpose |
 | --- | --- | --- |

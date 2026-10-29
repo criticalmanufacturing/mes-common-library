@@ -8,7 +8,7 @@ The feature is delivered as a root package with one installable child package:
 | --- | --- |
 | [`IoTJSONXML.IoT`](IoTJSONXML.IoT/) | Connect IoT package containing the custom JSON/XML task library and designer metadata. |
 
-The root package uses version `11331.0.0` and targets MES `11.3.3`. It has optional dependencies on `Cmf.Environment` and `CriticalManufacturing.DeploymentMetadata`, both at version `11.3.3`.
+The root package uses version `11361.0.0` and targets MES `11.3.6`. It has optional dependencies on `Cmf.Environment` and `CriticalManufacturing.DeploymentMetadata`, both at version `11.3.6`.
 
 ## Capabilities
 
