@@ -20,7 +20,7 @@
       "Description": "DynamicTags_Controller",
       "IsTemplate": "No",
       "Type": "General",
-      "ControllerPackageVersion": "11.3.3",
+      "ControllerPackageVersion": "11.3.6",
       "ObjectType": "Resource",
       "TasksPackages": "[\"connect-iot-controller-engine-core-tasks\",\"connect-iot-controller-engine-custom-dynamic-events-tasks\",\"connect-iot-controller-engine-mes-tasks\",\"connect-iot-controller-engine-custom-utilities-tasks\"]",
       "Scope": "ConnectIoT",
@@ -28,7 +28,7 @@
       "Timeout": "",
       "LinkConnector": "Smooth",
       "LinkRouter": "Normal",
-      "TasksLibraryPackages": "[\"connect-iot-controller-engine-core-tasks@11.3.3\",\"connect-iot-controller-engine-mes-tasks@11.3.3\"]",
+      "TasksLibraryPackages": "[\"connect-iot-controller-engine-core-tasks@11.3.6\",\"connect-iot-controller-engine-mes-tasks@11.3.6\"]",
       "DefaultWorkflowType": "DataFlow"
     }
   },

@@ -6,8 +6,8 @@
       "Description": "DynamicTags_Manager",
       "Type": "General",
       "LogicalAddress": "DynamicTags_Manager",
-      "MonitorPackageVersion": "11.3.3",
-      "ManagerPackageVersion": "11.3.3",
+      "MonitorPackageVersion": "11.3.6",
+      "ManagerPackageVersion": "11.3.6",
       "Configuration": "",
       "DeploymentMode": "Manual",
       "DeploymentState": "Unknown"
