@@ -42,10 +42,10 @@
     "typescript": "5.2.2"
   },
   "dependencies": {
-    "@criticalmanufacturing/connect-iot-controller-engine": "release-1133",
+    "@criticalmanufacturing/connect-iot-controller-engine": "11.3.6",
     "ajv": "^8.17.1",
     "better-sqlite3": "^11.10.0",
-    "cmf-lbos": "release-1133",
+    "cmf-lbos": "11.3.6",
     "inversify": "6.0.2",
     "moment": "2.29.4",
     "reflect-metadata": "0.1.13",
