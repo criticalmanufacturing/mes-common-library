@@ -71,13 +71,13 @@ An IoT package is the deployment unit for Connect IoT task/driver libraries. Her
 
 ## Version and compatibility
 
-The current feature and IoT package version is `11331.0.0`. The package version follows the repository's CM release versioning convention and is aligned with MES `11.3.3`:
+The current feature and IoT package version is `11361.0.0`. The package version follows the repository's CM release versioning convention and is aligned with MES `11.3.6`:
 
-- Root package: `Cmf.Community.IoTAMQPDriver@11331.0.0`
-- IoT package: `Cmf.Community.IoTAMQPDriver.IoT@11331.0.0`
-- npm driver: `@criticalmanufacturing/connect-iot-driver-amqp@11331.0.0`
-- CM deployment dependencies: `11.3.3`
-- Connect IoT dependencies use the `release-1133` npm dist tag.
+- Root package: `Cmf.Community.IoTAMQPDriver@11361.0.0`
+- IoT package: `Cmf.Community.IoTAMQPDriver.IoT@11361.0.0`
+- npm driver: `@criticalmanufacturing/connect-iot-driver-amqp@11361.0.0`
+- CM deployment dependencies: `11.3.6`
+- Connect IoT dependencies are pinned to `11.3.6`.
 
 When creating a release, keep the root package, IoT package, and npm driver versions aligned. Update the CM dependency versions and the Connect IoT npm dist tag when targeting a different MES release.
 

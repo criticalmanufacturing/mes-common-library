@@ -2,7 +2,7 @@
   "name": "connect-iot-custom-root",
   "private": true,
   "packageId": "Cmf.Custom.IoT.Packages",
-  "version": "11331.0.0",
+  "version": "11361.0.0",
   "scripts": {
     "build": "npm run build -ws --if-present",
     "build:test:cover": "npm run build:test:cover -ws --if-present",
