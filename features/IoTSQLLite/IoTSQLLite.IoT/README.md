@@ -34,7 +34,7 @@ The tasks support parameterized queries, data validation through JSON schema, an
 The IoT manifest [`cmfpackage.json`](cmfpackage.json) has `packageType: "IoT"` and:
 
 - `packageId` identifies the installable package as `Cmf.Community.IoTSQLLite.IoT`.
-- `version` identifies the package release (`11331.0.0`).
+- `version` identifies the package release (`11361.0.0`).
 - `contentToPack` copies `src/*` into the deployed `node_modules` location, excluding files matched by `.npmignore`.
 - `xmlInjection` injects `ui.xml` into the deployment package so the repository configuration step is available during installation.
 - `isInstallable: true` makes the package installable.
@@ -45,12 +45,12 @@ An IoT package is the deployment unit for Connect IoT task/converter libraries. 
 
 ## Version and compatibility
 
-The current package version is `11331.0.0`. The package version follows the repository's CM release versioning convention and is aligned with MES `11.3.3`:
+The current package version is `11361.0.0`. The package version follows the repository's CM release versioning convention and is aligned with MES `11.3.6`:
 
-- IoT package: `Cmf.Community.IoTSQLLite.IoT@11331.0.0`
+- IoT package: `Cmf.Community.IoTSQLLite.IoT@11361.0.0`
 - npm tasks: `@criticalmanufacturing/connect-iot-controller-engine-custom-sqlite-tasks@0.0.0`
-- CM deployment dependencies: `11.3.3`
-- Connect IoT dependencies use the `release-1133` npm dist tag.
+- CM deployment dependencies: `11.3.6`
+- Connect IoT dependencies are pinned to `11.3.6`.
 
 ## Build, package, and test
 
@@ -81,7 +81,7 @@ Key runtime dependencies for SQLite operations:
 | Dependency | Purpose |
 | --- | --- |
 | `better-sqlite3@^11.10.0` | Synchronous SQLite database access. |
-| `@criticalmanufacturing/connect-iot-controller-engine@release-1133` | Connect IoT task execution framework. |
+| `@criticalmanufacturing/connect-iot-controller-engine@11.3.6` | Connect IoT task execution framework. |
 | `ajv@^8.17.1` | JSON schema validation for the schema validator task. |
 | `inversify@6.0.2` | Dependency injection container. |
 | `moment@2.29.4` | Date/time utilities. |

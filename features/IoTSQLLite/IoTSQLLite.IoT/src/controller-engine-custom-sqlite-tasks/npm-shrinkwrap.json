@@ -1,16 +1,17 @@
 {
-  "name": "@criticalmanufacturing/connect-iot-controller-engine-custom-sqllite-tasks",
+  "name": "@criticalmanufacturing/connect-iot-controller-engine-custom-sqlite-tasks",
   "version": "0.0.0",
   "lockfileVersion": 3,
   "requires": true,
   "packages": {
     "": {
-      "name": "@criticalmanufacturing/connect-iot-controller-engine-custom-sqllite-tasks",
+      "name": "@criticalmanufacturing/connect-iot-controller-engine-custom-sqlite-tasks",
       "version": "0.0.0",
       "dependencies": {
-        "@criticalmanufacturing/connect-iot-controller-engine": "release-1115",
+        "@criticalmanufacturing/connect-iot-controller-engine": "11.3.6",
+        "ajv": "^8.17.1",
         "better-sqlite3": "^11.10.0",
-        "cmf-lbos": "release-1115",
+        "cmf-lbos": "11.3.6",
         "inversify": "6.0.2",
         "moment": "2.29.4",
         "reflect-metadata": "0.1.13",
@@ -238,9 +239,9 @@
       }
     },
     "node_modules/@babel/runtime": {
-      "version": "7.27.6",
-      "resolved": "https://dev.criticalmanufacturing.io/repository/npm-public/@babel/runtime/-/runtime-7.27.6.tgz",
-      "integrity": "sha512-vbavdySgbTTrmFE+EsiqUTzlOr5bzlnJtUv9PynGCAKvfQqjIXbvFdumPM/GxMDfyuGMJaJAU6TO4zc1Jf1i8Q==",
+      "version": "7.29.10",
+      "resolved": "https://criticalmanufacturing.io/repository/npm/@babel/runtime/-/runtime-7.29.10.tgz",
+      "integrity": "sha512-NpugTzbKgGrNe45Ui32cN8vCFFMxVtP/9rtfwv0nP5FRDAjvYBxJcLVpYA9mr1jxP6cnIT7x9LUzuDTbWYYNRA==",
       "license": "MIT",
       "engines": {
         "node": ">=6.9.0"
@@ -295,11 +296,10 @@
       }
     },
     "node_modules/@criticalmanufacturing/connect-iot-controller-engine": {
-      "version": "11.1.5",
-      "resolved": "https://dev.criticalmanufacturing.io/repository/npm-public/@criticalmanufacturing/connect-iot-controller-engine/-/connect-iot-controller-engine-11.1.5.tgz",
-      "integrity": "sha512-4QzgfyS87340H4VTctUtXuOUHxtRzicp6TScnlN1EpjOm46JTiAlAHFWUSYrVNy+/j/K6FJFG9WH+7oFgmo69A==",
+      "version": "11.3.6",
+      "resolved": "https://criticalmanufacturing.io/repository/npm/@criticalmanufacturing/connect-iot-controller-engine/-/connect-iot-controller-engine-11.3.6.tgz",
       "dependencies": {
-        "mathjs": "13.0.0"
+        "mathjs": "15.2.0"
       },
       "peerDependencies": {
         "eventemitter2": "6.4.9",
@@ -878,6 +878,22 @@
         "node": ">=8"
       }
     },
+    "node_modules/ajv": {
+      "version": "8.20.0",
+      "resolved": "https://criticalmanufacturing.io/repository/npm/ajv/-/ajv-8.20.0.tgz",
+      "integrity": "sha512-Thbli+OlOj+iMPYFBVBfJ3OmCAnaSyNn4M1vz9T6Gka5Jt9ba/HIR56joy65tY6kx/FCF5VXNB819Y7/GUrBGA==",
+      "license": "MIT",
+      "dependencies": {
+        "fast-deep-equal": "^3.1.3",
+        "fast-uri": "^3.0.1",
+        "json-schema-traverse": "^1.0.0",
+        "require-from-string": "^2.0.2"
+      },
+      "funding": {
+        "type": "github",
+        "url": "https://github.com/sponsors/epoberezkin"
+      }
+    },
     "node_modules/ansi-colors": {
       "version": "4.1.1",
       "resolved": "https://dev.criticalmanufacturing.io/repository/npm-public/ansi-colors/-/ansi-colors-4.1.1.tgz",
@@ -940,13 +956,6 @@
       "engines": {
         "node": ">=8"
       }
-    },
-    "node_modules/archy": {
-      "version": "11331.0.0",
-      "resolved": "https://dev.criticalmanufacturing.io/repository/npm-public/archy/-/archy-1.0.0.tgz",
-      "integrity": "sha1-+cjBN1fMHde8N5rHeyxipcKGjEA=",
-      "dev": true,
-      "license": "MIT"
     },
     "node_modules/argparse": {
       "version": "2.0.1",
@@ -1329,9 +1338,8 @@
       }
     },
     "node_modules/cmf-lbos": {
-      "version": "11.1.5",
-      "resolved": "https://dev.criticalmanufacturing.io/repository/npm-public/cmf-lbos/-/cmf-lbos-11.1.5.tgz",
-      "integrity": "sha512-WAEKjroW+dXhd+WZlEtyHX8xgeeWdvLPiVQlrGkhl0WhG1E3UPB1VF4U+CEBsn025NWeBOYXJPaSD2RQCzysBA==",
+      "version": "11.3.6",
+      "resolved": "https://criticalmanufacturing.io/repository/npm/cmf-lbos/-/cmf-lbos-11.3.6.tgz",
       "peerDependencies": {
         "moment": "^2.29.4"
       }
@@ -1371,9 +1379,9 @@
       "license": "MIT"
     },
     "node_modules/complex.js": {
-      "version": "2.4.2",
-      "resolved": "https://dev.criticalmanufacturing.io/repository/npm-public/complex.js/-/complex.js-2.4.2.tgz",
-      "integrity": "sha512-qtx7HRhPGSCBtGiST4/WGHuW+zeaND/6Ld+db6PbrulIB1i2Ev/2UPiqcmpQNPSyfBKraC0EOvOKCB5dGZKt3g==",
+      "version": "2.4.3",
+      "resolved": "https://criticalmanufacturing.io/repository/npm/complex.js/-/complex.js-2.4.3.tgz",
+      "integrity": "sha512-UrQVSUur14tNX6tiP4y8T4w4FeJAX3bi2cIv0pu/DTLFNxoq7z2Yh83Vfzztj6Px3X/lubqQ9IrPp7Bpn6p4MQ==",
       "license": "MIT",
       "engines": {
         "node": "*"
@@ -1465,9 +1473,9 @@
       }
     },
     "node_modules/decimal.js": {
-      "version": "10.5.0",
-      "resolved": "https://dev.criticalmanufacturing.io/repository/npm-public/decimal.js/-/decimal.js-10.5.0.tgz",
-      "integrity": "sha512-8vDa8Qxvr/+d94hSh5P3IJwI5t8/c0KsMp+g8bNw9cY2icONa5aPfvKeieW1WlG0WQYwwhJ7mjui2xtiePQSXw==",
+      "version": "10.6.0",
+      "resolved": "https://criticalmanufacturing.io/repository/npm/decimal.js/-/decimal.js-10.6.0.tgz",
+      "integrity": "sha512-YpgQiITW3JXGntzdUmyUR1V812Hn8T1YVXhCu+wO3OpS4eU9l4YdD3qjyiKdV6mvV29zapkMeD390UVEf2lkUg==",
       "license": "MIT"
     },
     "node_modules/decompress-response": {
@@ -1552,6 +1560,13 @@
         "readable-stream": "^2.0.2"
       }
     },
+    "node_modules/duplexer2/node_modules/isarray": {
+      "version": "1.0.0",
+      "resolved": "https://criticalmanufacturing.io/repository/npm/isarray/-/isarray-1.0.0.tgz",
+      "integrity": "sha512-VLghIWNM6ELQzo7zwmcg0NmTVyWKYjvIeM83yjp0wRDTmUnrM678fQbcKBo6n2CJEF0szoG//ytg+TKla89ALQ==",
+      "dev": true,
+      "license": "MIT"
+    },
     "node_modules/duplexer2/node_modules/readable-stream": {
       "version": "2.3.8",
       "resolved": "https://dev.criticalmanufacturing.io/repository/npm-public/readable-stream/-/readable-stream-2.3.8.tgz",
@@ -1627,7 +1642,7 @@
     },
     "node_modules/escape-latex": {
       "version": "1.2.0",
-      "resolved": "https://dev.criticalmanufacturing.io/repository/npm-public/escape-latex/-/escape-latex-1.2.0.tgz",
+      "resolved": "https://criticalmanufacturing.io/repository/npm/escape-latex/-/escape-latex-1.2.0.tgz",
       "integrity": "sha512-nV5aVWW1K0wEiUIEdZ4erkGGH8mDxGyxSeqPzRNtWP7ataw+/olFObw7hujFWlVjNsaDFw5VZ5NzVSIqRgfTiw==",
       "license": "MIT"
     },
@@ -1673,6 +1688,28 @@
       "engines": {
         "node": ">=6"
       }
+    },
+    "node_modules/fast-deep-equal": {
+      "version": "3.1.3",
+      "resolved": "https://criticalmanufacturing.io/repository/npm/fast-deep-equal/-/fast-deep-equal-3.1.3.tgz",
+      "integrity": "sha512-f3qQ9oQy9j2AhBe/H9VC91wLmKBCCU/gDOnKNAYG5hswO7BLKj09Hc5HYNz9cGI++xlpDCIgDaitVs03ATR84Q==",
+      "license": "MIT"
+    },
+    "node_modules/fast-uri": {
+      "version": "3.1.9",
+      "resolved": "https://criticalmanufacturing.io/repository/npm/fast-uri/-/fast-uri-3.1.9.tgz",
+      "integrity": "sha512-hS/0Wt3Ya043oKXs0sIxrMpKQITXhMLIrVAKKXi4gozGC9v7YRWVnXIZzjNPTO02M9BdxLCWqK1yRXgNziVyJQ==",
+      "funding": [
+        {
+          "type": "github",
+          "url": "https://github.com/sponsors/fastify"
+        },
+        {
+          "type": "opencollective",
+          "url": "https://opencollective.com/fastify"
+        }
+      ],
+      "license": "BSD-3-Clause"
     },
     "node_modules/file-uri-to-path": {
       "version": "11331.0.0",
@@ -1753,15 +1790,15 @@
       }
     },
     "node_modules/fraction.js": {
-      "version": "4.3.7",
-      "resolved": "https://dev.criticalmanufacturing.io/repository/npm-public/fraction.js/-/fraction.js-4.3.7.tgz",
-      "integrity": "sha512-ZsDfxO51wGAXREY55a7la9LScWpwv9RxIrYABrlvOFBlH/ShPnrtsXeuUIfXKKOVicNxQ+o8JTbJvjS4M89yew==",
+      "version": "5.3.4",
+      "resolved": "https://criticalmanufacturing.io/repository/npm/fraction.js/-/fraction.js-5.3.4.tgz",
+      "integrity": "sha512-1X1NTtiJphryn/uLQz3whtY6jK3fTqoE3ohKs0tT+Ujr1W59oopxmoEh7Lu5p6vBaPbgoM0bzveAW4Qi5RyWDQ==",
       "license": "MIT",
       "engines": {
         "node": "*"
       },
       "funding": {
-        "type": "patreon",
+        "type": "github",
         "url": "https://github.com/sponsors/rawify"
       }
     },
@@ -1806,13 +1843,6 @@
       "engines": {
         "node": ">=14.14"
       }
-    },
-    "node_modules/fs.realpath": {
-      "version": "11331.0.0",
-      "resolved": "https://dev.criticalmanufacturing.io/repository/npm-public/fs.realpath/-/fs.realpath-1.0.0.tgz",
-      "integrity": "sha1-FQStJSMVjKpA20onh8sBQRmU6k8=",
-      "dev": true,
-      "license": "ISC"
     },
     "node_modules/fsevents": {
       "version": "2.3.3",
@@ -1929,6 +1959,13 @@
         "balanced-match": "^1.0.0",
         "concat-map": "0.0.1"
       }
+    },
+    "node_modules/glob/node_modules/fs.realpath": {
+      "version": "1.0.0",
+      "resolved": "https://criticalmanufacturing.io/repository/npm/fs.realpath/-/fs.realpath-1.0.0.tgz",
+      "integrity": "sha512-OO0pH2lK6a0hZnAdau5ItzHPI6pUlvI7jMVnxUQRtw4owF2wk8lOSabtGDCTP4Ggrg2MbGnWO9X8K1t4+fGMDw==",
+      "dev": true,
+      "license": "ISC"
     },
     "node_modules/glob/node_modules/minimatch": {
       "version": "3.1.2",
@@ -2188,13 +2225,6 @@
         "url": "https://github.com/sponsors/sindresorhus"
       }
     },
-    "node_modules/is-typedarray": {
-      "version": "11331.0.0",
-      "resolved": "https://dev.criticalmanufacturing.io/repository/npm-public/is-typedarray/-/is-typedarray-1.0.0.tgz",
-      "integrity": "sha1-5HnICFjfDBsR3dppQPlgEfzaSpo=",
-      "dev": true,
-      "license": "MIT"
-    },
     "node_modules/is-unicode-supported": {
       "version": "0.1.0",
       "resolved": "https://dev.criticalmanufacturing.io/repository/npm-public/is-unicode-supported/-/is-unicode-supported-0.1.0.tgz",
@@ -2217,13 +2247,6 @@
       "engines": {
         "node": ">=0.10.0"
       }
-    },
-    "node_modules/isarray": {
-      "version": "11331.0.0",
-      "resolved": "https://dev.criticalmanufacturing.io/repository/npm-public/isarray/-/isarray-1.0.0.tgz",
-      "integrity": "sha1-u5NdSFgsuhaMBoNJV6VKPgcSTxE=",
-      "dev": true,
-      "license": "MIT"
     },
     "node_modules/isexe": {
       "version": "2.0.0",
@@ -2288,6 +2311,13 @@
       "engines": {
         "node": ">=8"
       }
+    },
+    "node_modules/istanbul-lib-processinfo/node_modules/archy": {
+      "version": "1.0.0",
+      "resolved": "https://criticalmanufacturing.io/repository/npm/archy/-/archy-1.0.0.tgz",
+      "integrity": "sha512-Xg+9RwCg/0p32teKdGMPTPnVXKD0w3DfHnFTficozsAgsvq2XenPJq/MYpzzQ/v8zrOyJn6Ds39VA4JIDwFfqw==",
+      "dev": true,
+      "license": "MIT"
     },
     "node_modules/istanbul-lib-report": {
       "version": "3.0.1",
@@ -2377,8 +2407,8 @@
     },
     "node_modules/javascript-natural-sort": {
       "version": "0.7.1",
-      "resolved": "https://dev.criticalmanufacturing.io/repository/npm-public/javascript-natural-sort/-/javascript-natural-sort-0.7.1.tgz",
-      "integrity": "sha1-+eIwPUUH9tdDVac2ZNFED7Wg71k=",
+      "resolved": "https://criticalmanufacturing.io/repository/npm/javascript-natural-sort/-/javascript-natural-sort-0.7.1.tgz",
+      "integrity": "sha512-nO6jcEfZWQXDhOiBtG2KvKyEptz7RVbpGP4vTD2hLBdmNQSsCiicO2Ioinv6UI4y9ukqnBpy+XZ9H6uLNgJTlw==",
       "license": "MIT"
     },
     "node_modules/js-tokens": {
@@ -2413,6 +2443,12 @@
       "engines": {
         "node": ">=6"
       }
+    },
+    "node_modules/json-schema-traverse": {
+      "version": "1.0.0",
+      "resolved": "https://criticalmanufacturing.io/repository/npm/json-schema-traverse/-/json-schema-traverse-1.0.0.tgz",
+      "integrity": "sha512-NM8/P9n3XjXhIZn1lLhkFaACTOURQXjWhV4BA/RnOv8xvgqtqpAX9IO4mRQxSx1Rlo4tqzeqb0sOlruaOy3dug==",
+      "license": "MIT"
     },
     "node_modules/json5": {
       "version": "2.2.3",
@@ -2524,20 +2560,20 @@
       }
     },
     "node_modules/mathjs": {
-      "version": "13.0.0",
-      "resolved": "https://dev.criticalmanufacturing.io/repository/npm-public/mathjs/-/mathjs-13.0.0.tgz",
-      "integrity": "sha512-Jy9/01M5lTRLxlkxnvPmvWq6EFwzq8guIspeQ9p66AY+8Pih3Jf8Us5fSZ9kC8gl7iRNHUQ+SJpitX41aa6agw==",
+      "version": "15.2.0",
+      "resolved": "https://criticalmanufacturing.io/repository/npm/mathjs/-/mathjs-15.2.0.tgz",
+      "integrity": "sha512-UAQzSVob9rNLdGpqcFMYmSu9dkuLYy7Lr2hBEQS5SHQdknA9VppJz3cy2KkpMzTODunad6V6cNv+5kOLsePLow==",
       "license": "Apache-2.0",
       "dependencies": {
-        "@babel/runtime": "^7.24.6",
-        "complex.js": "^2.1.1",
+        "@babel/runtime": "^7.26.10",
+        "complex.js": "^2.2.5",
         "decimal.js": "^10.4.3",
         "escape-latex": "^1.2.0",
-        "fraction.js": "^4.3.7",
+        "fraction.js": "^5.2.1",
         "javascript-natural-sort": "^0.7.1",
         "seedrandom": "^3.0.5",
         "tiny-emitter": "^2.1.0",
-        "typed-function": "^4.1.1"
+        "typed-function": "^4.2.1"
       },
       "bin": {
         "mathjs": "bin/cli.js"
@@ -3044,6 +3080,19 @@
         "node": ">=8"
       }
     },
+    "node_modules/package-hash/node_modules/release-zalgo": {
+      "version": "1.0.0",
+      "resolved": "https://criticalmanufacturing.io/repository/npm/release-zalgo/-/release-zalgo-1.0.0.tgz",
+      "integrity": "sha512-gUAyHVHPPC5wdqX/LG4LWtRYtgjxyX78oanFNTMMyFEfOqdC54s3eE82imuWKbOeqYht2CrNf64Qb8vgmmtZGA==",
+      "dev": true,
+      "license": "ISC",
+      "dependencies": {
+        "es6-error": "^4.0.1"
+      },
+      "engines": {
+        "node": ">=4"
+      }
+    },
     "node_modules/path-exists": {
       "version": "4.0.0",
       "resolved": "https://dev.criticalmanufacturing.io/repository/npm-public/path-exists/-/path-exists-4.0.0.tgz",
@@ -3303,24 +3352,20 @@
       "integrity": "sha512-Ts1Y/anZELhSsjMcU605fU9RE4Oi3p5ORujwbIKXfWa+0Zxs510Qrmrce5/Jowq3cHSZSJqBjypxmHarc+vEWg==",
       "license": "Apache-2.0"
     },
-    "node_modules/release-zalgo": {
-      "version": "11331.0.0",
-      "resolved": "https://dev.criticalmanufacturing.io/repository/npm-public/release-zalgo/-/release-zalgo-1.0.0.tgz",
-      "integrity": "sha1-CXALflB0Mpc5Mw5TXFqQ+2eFFzA=",
-      "dev": true,
-      "license": "ISC",
-      "dependencies": {
-        "es6-error": "^4.0.1"
-      },
-      "engines": {
-        "node": ">=4"
-      }
-    },
     "node_modules/require-directory": {
       "version": "2.1.1",
       "resolved": "https://dev.criticalmanufacturing.io/repository/npm-public/require-directory/-/require-directory-2.1.1.tgz",
       "integrity": "sha1-jGStX9MNqxyXbiNE/+f3kqam30I=",
       "dev": true,
+      "license": "MIT",
+      "engines": {
+        "node": ">=0.10.0"
+      }
+    },
+    "node_modules/require-from-string": {
+      "version": "2.0.2",
+      "resolved": "https://criticalmanufacturing.io/repository/npm/require-from-string/-/require-from-string-2.0.2.tgz",
+      "integrity": "sha512-Xf0nWe6RseziFMu+Ap9biiUbmplq6S9/p+7w7YXP/JBHhrUDDUhwa+vANyubuqfZWTveU//DYVGsDG7RKL/vEw==",
       "license": "MIT",
       "engines": {
         "node": ">=0.10.0"
@@ -3402,7 +3447,7 @@
     },
     "node_modules/seedrandom": {
       "version": "3.0.5",
-      "resolved": "https://dev.criticalmanufacturing.io/repository/npm-public/seedrandom/-/seedrandom-3.0.5.tgz",
+      "resolved": "https://criticalmanufacturing.io/repository/npm/seedrandom/-/seedrandom-3.0.5.tgz",
       "integrity": "sha512-8OwmbklUNzwezjGInmZ+2clQmExQPvomqjL7LFqOYqtmuxRgQYqOD3mHaU+MvZn5FLUeVxVfQjwLZW/n/JFuqg==",
       "license": "MIT"
     },
@@ -3701,7 +3746,7 @@
     },
     "node_modules/tiny-emitter": {
       "version": "2.1.0",
-      "resolved": "https://dev.criticalmanufacturing.io/repository/npm-public/tiny-emitter/-/tiny-emitter-2.1.0.tgz",
+      "resolved": "https://criticalmanufacturing.io/repository/npm/tiny-emitter/-/tiny-emitter-2.1.0.tgz",
       "integrity": "sha512-NB6Dk1A9xgQPMoGqC5CVXn123gWyte215ONT5Pp5a0yt4nlEoO1ZWeCwpncaekPHXO60i47ihFnZPiRPjRMq4Q==",
       "license": "MIT"
     },
@@ -3961,9 +4006,9 @@
       }
     },
     "node_modules/typed-function": {
-      "version": "4.2.1",
-      "resolved": "https://dev.criticalmanufacturing.io/repository/npm-public/typed-function/-/typed-function-4.2.1.tgz",
-      "integrity": "sha512-EGjWssW7Tsk4DGfE+5yluuljS1OGYWiI1J6e8puZz9nTMM51Oug8CD5Zo4gWMsOhq5BI+1bF+rWTm4Vbj3ivRA==",
+      "version": "4.2.2",
+      "resolved": "https://criticalmanufacturing.io/repository/npm/typed-function/-/typed-function-4.2.2.tgz",
+      "integrity": "sha512-VwaXim9Gp1bngi/q3do8hgttYn2uC3MoT/gfuMWylnj1IeZBUAyPddHZlo1K05BDoj8DYPpMdiHqH1dDYdJf2A==",
       "license": "MIT",
       "engines": {
         "node": ">= 18"
@@ -3978,6 +4023,13 @@
       "dependencies": {
         "is-typedarray": "^1.0.0"
       }
+    },
+    "node_modules/typedarray-to-buffer/node_modules/is-typedarray": {
+      "version": "1.0.0",
+      "resolved": "https://criticalmanufacturing.io/repository/npm/is-typedarray/-/is-typedarray-1.0.0.tgz",
+      "integrity": "sha512-cyA56iCMHAh5CdzjJIa4aohJyeO1YbwLi3Jc35MmRU6poroFjIGZzUzupGiRPOjgHg9TLu43xbpwXk523fMxKA==",
+      "dev": true,
+      "license": "MIT"
     },
     "node_modules/typescript": {
       "version": "5.2.2",
@@ -4130,6 +4182,13 @@
         "signal-exit": "^3.0.2",
         "typedarray-to-buffer": "^3.1.5"
       }
+    },
+    "node_modules/write-file-atomic/node_modules/is-typedarray": {
+      "version": "1.0.0",
+      "resolved": "https://criticalmanufacturing.io/repository/npm/is-typedarray/-/is-typedarray-1.0.0.tgz",
+      "integrity": "sha512-cyA56iCMHAh5CdzjJIa4aohJyeO1YbwLi3Jc35MmRU6poroFjIGZzUzupGiRPOjgHg9TLu43xbpwXk523fMxKA==",
+      "dev": true,
+      "license": "MIT"
     },
     "node_modules/xml": {
       "version": "1.0.1",
