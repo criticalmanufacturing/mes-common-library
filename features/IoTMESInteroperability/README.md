@@ -9,7 +9,7 @@ The feature is delivered as a root package that bundles two installable packages
 | [`IoTMESInteroperability.Business`](IoTMESInteroperability.Business/) | Compiled Business assemblies containing the public orchestration and service implementations used by MES and Connect IoT integrations. |
 | [`IoTMESInteroperability.Data`](IoTMESInteroperability.Data/) | DEE actions and versioned master data that expose interoperability operations to Connect IoT and configure their MES definitions. |
 
-The root package also has optional dependencies on `Cmf.Environment` and `CriticalManufacturing.DeploymentMetadata`, both at version `11.3.3`. The feature packages use version `11331.0.0` and target MES `11.3.3`.
+The root package also has optional dependencies on `Cmf.Environment` and `CriticalManufacturing.DeploymentMetadata`, both at version `11.3.6`. The feature packages use version `11361.0.0` and target MES `11.3.6`.
 
 ## Capabilities
 

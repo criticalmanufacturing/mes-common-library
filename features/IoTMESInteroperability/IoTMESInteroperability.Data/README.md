@@ -10,7 +10,7 @@
 | Master data | [`MasterData/`](MasterData/) | Versioned DEE actions, rules, metadata resolutions, material tracking, recipe configuration, and operation definitions. |
 | Exported objects | [`ExportedObjects/`](ExportedObjects/) | Reserved package location for exported MES objects. |
 
-The current master-data version is `11331.0.0`. It configures operations including:
+The current master-data version is `11361.0.0`. It configures operations including:
 
 - Material operation execution and checking materials from a previous sub-resource.
 - Creating new recipes, terminating materials, detaching consumables, and adjusting resource state.
@@ -32,7 +32,7 @@ The manifest packages the following content:
 | `MasterData/$(version)/*` | `MasterData/$(version)/` | `MasterData` |
 | `ExportedObjects/*` | `ExportedObjects` | `ExportedObjects` |
 
-`$(version)` resolves to `11331.0.0` during packaging. This package is installable and uniquely installable. Its related-package configuration builds the sibling [`Business`](../IoTMESInteroperability.Business/) package before the Data package because the DEEs reference its compiled assemblies.
+`$(version)` resolves to `11361.0.0` during packaging. This package is installable and uniquely installable. Its related-package configuration builds the sibling [`Business`](../IoTMESInteroperability.Business/) package before the Data package because the DEEs reference its compiled assemblies.
 
 ## Build and deployment
 
