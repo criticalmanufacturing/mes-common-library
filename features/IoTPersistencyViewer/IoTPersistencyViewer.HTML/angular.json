@@ -460,6 +460,7 @@
     "schematicCollections": [
       "@criticalmanufacturing/ngx-schematics",
       "@angular-eslint/schematics"
-    ]
+    ],
+    "analytics": false
   }
 }
