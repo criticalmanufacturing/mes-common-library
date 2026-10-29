@@ -1,6 +1,6 @@
 {
   "packageId": "Cmf.Community.IoTAMQPDriver.IoT",
-  "version": "11331.0.0",
+  "version": "11361.0.0",
   "description": "Cmf Custom Community Cmf.Community.IoTAMQPDriver.IoT Package",
   "packageType": "IoT",
   "isInstallable": true,

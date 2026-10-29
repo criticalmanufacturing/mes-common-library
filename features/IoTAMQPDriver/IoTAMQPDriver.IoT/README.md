@@ -36,7 +36,7 @@ Running `npm` commands from this directory orchestrates the entire driver packag
 | Field | Value | Meaning |
 | --- | --- | --- |
 | `packageId` | `Cmf.Community.IoTAMQPDriver.IoT` | Unique identifier for this Connect IoT package. |
-| `version` | `11331.0.0` | Package version; must be kept in sync with the feature-level and npm package versions. |
+| `version` | `11361.0.0` | Package version; must be kept in sync with the feature-level and npm package versions. |
 | `packageType` | `IoT` | Indicates this is a Connect IoT driver/task library package (not Root or other types). |
 | `isInstallable` | `true` | This package can be installed via the CM deployment framework. |
 | `isToForceInstall` | `true` | Force installation even if dependencies are already present. |
