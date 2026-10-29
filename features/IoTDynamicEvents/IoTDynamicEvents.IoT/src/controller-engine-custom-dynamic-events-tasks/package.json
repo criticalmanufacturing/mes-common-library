@@ -1,6 +1,6 @@
 {
   "name": "@criticalmanufacturing/connect-iot-controller-engine-custom-dynamic-events-tasks",
-  "version": "11331.0.0",
+  "version": "11361.0.0",
   "description": "Generated Task Library package",
   "main": "src/index.js",
   "typings": "src/index",
@@ -41,11 +41,11 @@
     "typescript": "5.2.2"
   },
   "dependencies": {
-    "@criticalmanufacturing/connect-iot-controller-engine": "release-1133",
+    "@criticalmanufacturing/connect-iot-controller-engine": "11.3.6",
     "reflect-metadata": "0.1.13",
     "inversify": "6.0.2",
     "moment": "2.29.4",
-    "cmf-lbos": "release-1133",
+    "cmf-lbos": "11.3.6",
     "zone.js": "0.14.7",
     "node-cron": "2.0.3"
   },
