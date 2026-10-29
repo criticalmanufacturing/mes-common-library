@@ -6,9 +6,9 @@ This package is **UI-only** (MES-side customization). It talks to the controller
 
 ## Package layout
 
-Deployed as a root package (`cmfpackage.json`, `packageId: Cmf.Community.IoTPersistencyViewer`, MES 11.3.3) with a single mandatory dependency:
+Deployed as a root package (`cmfpackage.json`, `packageId: Cmf.Community.IoTPersistencyViewer`, MES 11.3.6) with a single mandatory dependency:
 
-- **`Cmf.Custom.HTML/`** — the Angular workspace (Angular 17.3, `cmf-mes-ui` release-1133) containing the whole feature, as the library `projects/customization-json-persistency/`:
+- **`Cmf.Custom.HTML/`** — the Angular workspace (Angular 17.3, `cmf-mes-ui` 11.3.6) containing the whole feature, as the library `projects/customization-json-persistency/`:
   - `customization-json-persistency.component.ts` — `CustomizationJsonPersistencyComponent`, the tab itself.
   - `json-tree-viewer.component.ts` — collapsible tree rendering of the JSON value.
   - `json-graph-view.component.ts` — node/edge diagram rendering of the JSON value (via `@swimlane/ngx-graph`).
@@ -50,6 +50,6 @@ The tab hooks the entity page's native reload rather than a custom button: it su
 
 ## Dependencies
 
-- Angular 17.3, `cmf-mes-ui` release-1133 (pulls in `cmf-core`, `cmf-core-controls`, `cmf-core-business-controls`).
+- Angular 17.3, `cmf-mes-ui` 11.3.6 (pulls in `cmf-core`, `cmf-core-controls`, `cmf-core-business-controls`).
 - `@swimlane/ngx-graph` (dagre-based layout) for the graph view.
 - `CodeEditorModule` for the raw-JSON edit mode.
