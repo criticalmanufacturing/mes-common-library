@@ -62,7 +62,7 @@ The [`cmfpackage.json`](cmfpackage.json) manifest declares how content is packag
 
 ### `$(version)` substitution
 
-The manifest uses `$(version)` as a placeholder for the package version (`11331.0.0`). During deployment, the framework replaces this token with the actual package version, allowing the same manifest structure to support multiple data versions. For example, `MasterData/$(version)/` becomes `MasterData/11331.0.0/` in the deployed package.
+The manifest uses `$(version)` as a placeholder for the package version (`11361.0.0`). During deployment, the framework replaces this token with the actual package version, allowing the same manifest structure to support multiple data versions. For example, `MasterData/$(version)/` becomes `MasterData/11361.0.0/` in the deployed package.
 
 ### Related packages
 

@@ -85,7 +85,7 @@ The three projects follow a layered architecture:
 [`cmfpackage.json`](cmfpackage.json) defines the deployment package:
 
 - `packageId` identifies this as `Cmf.Community.IoTCustomAutomationConfiguration.Business`.
-- `version` is `11331.0.0`, aligned with MES `11.3.3` and matching the root feature package version.
+- `version` is `11361.0.0`, aligned with MES `11.3.6` and matching the root feature package version.
 - `packageType: "Business"` indicates this is a server-tier business logic package installed into the MES server runtime.
 - `isInstallable: true` allows the package to be deployed via the CM deployment framework.
 - `isUniqueInstall: false` permits multiple installations if needed.
@@ -95,14 +95,14 @@ A Business package is therefore a runtime deployment unit for server-side .NET a
 
 ## Version and compatibility
 
-The current package version is `11331.0.0`. The version follows the repository's CM release versioning convention:
+The current package version is `11361.0.0`. The version follows the repository's CM release versioning convention:
 
-- Business package: `Cmf.Community.IoTCustomAutomationConfiguration.Business@11331.0.0`
-- MES target: `11.3.3`
+- Business package: `Cmf.Community.IoTCustomAutomationConfiguration.Business@11361.0.0`
+- MES target: `11.3.6`
 - Framework: `.NET 8.0`
 - Common dependencies:
-  - `Cmf.Foundation.BusinessObjects@11.3.3`
-  - `Cmf.Navigo.BusinessObjects@11.3.3`
+  - `Cmf.Foundation.BusinessObjects@11.3.6`
+  - `Cmf.Navigo.BusinessObjects@11.3.6`
   - `cmf.common.customactionutilities@11.3.0.1263488`
 
 Maintain version alignment across the feature when releasing updates.
