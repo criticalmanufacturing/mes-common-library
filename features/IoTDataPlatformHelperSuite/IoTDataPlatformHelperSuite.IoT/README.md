@@ -39,7 +39,7 @@ Located under `src/custom-dataplatform-tasks/src/converters/`. Converters are va
 The deployment manifest [`cmfpackage.json`](cmfpackage.json) has `packageType: "IoT"`:
 
 - `packageId: "Cmf.Community.IoTDataPlatformHelperSuite.IoT"` — identifies this installable package.
-- `version: "11331.0.0"` — aligned with feature release and MES 11.3.3.
+- `version: "11361.0.0"` — aligned with feature release and MES 11.3.6.
 - `contentToPack` copies `src/*` (the built Task Library package and all generated artifacts) into the deployed `node_modules` location, excluding files matched by `.npmignore` (TypeScript source, tests, build configuration).
 - `xmlInjection: ["ui.xml"]` — injects the deployment UI step into the installation wizard.
 - `isInstallable: true` / `isUniqueInstall: false` — marks this as an installable IoT package that may coexist with other packages of the same type.
@@ -95,16 +95,16 @@ Unit tests are located under `src/custom-dataplatform-tasks/test/unit/`. The bui
 
 Located in `src/custom-dataplatform-tasks/package.json`:
 
-- `@criticalmanufacturing/connect-iot-common` — Connect IoT platform common utilities (tag: `release-1133`).
-- `@criticalmanufacturing/connect-iot-controller-engine` — Controller Engine task/converter framework (tag: `release-1133`).
-- `cmf-lbos` — CM LBO client library (tag: `release-1133`).
+- `@criticalmanufacturing/connect-iot-common` — Connect IoT platform common utilities (tag: `11.3.6`).
+- `@criticalmanufacturing/connect-iot-controller-engine` — Controller Engine task/converter framework (tag: `11.3.6`).
+- `cmf-lbos` — CM LBO client library (tag: `11.3.6`).
 - `odata-query` — OData query builder library (`^8.0.7`).
 - `inversify` — Dependency injection container (`6.0.2`).
 - `moment`, `reflect-metadata`, `zone.js` — Utility and decorator-support libraries.
 
 ### Development dependencies
 
-- `cmf-core-connect-iot` — Connect IoT core testing and build tools (tag: `release-1133`).
+- `cmf-core-connect-iot` — Connect IoT core testing and build tools (tag: `11.3.6`).
 - `typescript` (`5.2.2`), ESLint (`^8.53.0`), Mocha (`10.2.0`), NYC (`15.1.0`) — Compilation, linting, and testing tools.
 - `@types/chai`, `@types/mocha`, `@types/node` — TypeScript type stubs.
 
@@ -112,10 +112,10 @@ Located in `src/custom-dataplatform-tasks/package.json`:
 
 The package version follows the repository's CM release versioning:
 
-- Package: `Cmf.Community.IoTDataPlatformHelperSuite.IoT@11331.0.0`
-- npm Task Library: `@criticalmanufacturing/connect-iot-controller-engine-custom-dataplatform-tasks@11331.0.0`
-- MES alignment: `11.3.3`
-- Connect IoT dependencies: `release-1133` dist tag
+- Package: `Cmf.Community.IoTDataPlatformHelperSuite.IoT@11361.0.0`
+- npm Task Library: `@criticalmanufacturing/connect-iot-controller-engine-custom-dataplatform-tasks@11361.0.0`
+- MES alignment: `11.3.6`
+- Connect IoT dependencies: `11.3.6` dist tag
 
 When updating this package for a new MES release, align the version numbers across `package.json` (root and `src/custom-dataplatform-tasks/`), `cmfpackage.json`, and Connect IoT npm dist tags.
 
