@@ -20,7 +20,7 @@ The registered utilities are intended to be consumed by other tasks through the 
 
 ## `cmfpackage.json`
 
-This is an installable, non-unique `IoT` package with package version `11331.0.0`. Its manifest:
+This is an installable, non-unique `IoT` package with package version `11361.0.0`. Its manifest:
 
 | Source | Target | Purpose |
 | --- | --- | --- |
