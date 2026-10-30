@@ -1,0 +1,129 @@
+{
+  "<ST>SmartTable": {
+    "1": {
+      "Name": "IoTStateModelContext",
+      "Description": "",
+      "HistoryRetentionTime": "",
+      "IsHistoryEnabled": "Yes",
+      "IsRepeatedValuesAllowed": "Yes",
+      "DataGroup": ""
+    }
+  },
+  "SmartTableProperties": {
+    "1": {
+      "SmartTable": "IoTStateModelContext",
+      "Name": "Driver",
+      "Position": "2",
+      "Description": "IoT Driver",
+      "IsKey": "Yes",
+      "IsIndexed": "No",
+      "IsMandatory": "No",
+      "ScalarType": "NVarChar",
+      "Size": "256",
+      "Precision": "",
+      "ReferenceType": "",
+      "ReferenceName": "",
+      "ValidationRange": "",
+      "ValidationRegex": "",
+      "DataGroup": ""
+    },
+    "2": {
+      "SmartTable": "IoTStateModelContext",
+      "Name": "StateModel",
+      "Position": "1",
+      "Description": "",
+      "IsKey": "Yes",
+      "IsIndexed": "No",
+      "IsMandatory": "Yes",
+      "ScalarType": "NVarChar",
+      "Size": "256",
+      "Precision": "",
+      "ReferenceType": "",
+      "ReferenceName": "",
+      "ValidationRange": "",
+      "ValidationRegex": "",
+      "DataGroup": ""
+    },
+    "3": {
+      "SmartTable": "IoTStateModelContext",
+      "Name": "ResourceType",
+      "Position": "3",
+      "Description": "Resource Type",
+      "IsKey": "Yes",
+      "IsIndexed": "No",
+      "IsMandatory": "No",
+      "ScalarType": "NVarChar",
+      "Size": "256",
+      "Precision": "",
+      "ReferenceType": "LookupValue",
+      "ReferenceName": "ResourceType",
+      "ValidationRange": "",
+      "ValidationRegex": "",
+      "DataGroup": ""
+    },
+    "4": {
+      "SmartTable": "IoTStateModelContext",
+      "Name": "Resource",
+      "Position": "4",
+      "Description": "Resource Name",
+      "IsKey": "Yes",
+      "IsIndexed": "No",
+      "IsMandatory": "No",
+      "ScalarType": "NVarChar",
+      "Size": "256",
+      "Precision": "",
+      "ReferenceType": "EntityType",
+      "ReferenceName": "Resource.Name",
+      "ValidationRange": "",
+      "ValidationRegex": "",
+      "DataGroup": ""
+    },
+    "5": {
+      "SmartTable": "IoTStateModelContext",
+      "Name": "StateModelState",
+      "Position": "5",
+      "Description": "",
+      "IsKey": "No",
+      "IsIndexed": "No",
+      "IsMandatory": "Yes",
+      "ScalarType": "NVarChar",
+      "Size": "256",
+      "Precision": "",
+      "ReferenceType": "",
+      "ReferenceName": "",
+      "ValidationRange": "",
+      "ValidationRegex": "",
+      "DataGroup": ""
+    },
+    "6": {
+      "SmartTable": "IoTStateModelContext",
+      "Name": "Values",
+      "Position": "6",
+      "Description": "",
+      "IsKey": "No",
+      "IsIndexed": "No",
+      "IsMandatory": "Yes",
+      "ScalarType": "NVarChar",
+      "Size": "256",
+      "Precision": "",
+      "ReferenceType": "",
+      "ReferenceName": "",
+      "ValidationRange": "",
+      "ValidationRegex": "",
+      "DataGroup": ""
+    }
+  },
+  "SmartTablePrecedenceKeys": {
+    "1": {
+      "SmartTable": "IoTStateModelContext",
+      "PrecedenceKey1": "StateModel+Driver+ResourceType+Resource",
+      "PrecedenceKey2": "StateModel+Driver+ResourceType",
+      "PrecedenceKey3": "StateModel+Driver+Resource",
+      "PrecedenceKey4": "StateModel+ResourceType+Resource",
+      "PrecedenceKey5": "StateModel+ResourceType",
+      "PrecedenceKey6": "StateModel+Resource",
+      "PrecedenceKey7": "StateModel+Driver",
+      "PrecedenceKey8": "StateModel"
+    }
+  }
+}

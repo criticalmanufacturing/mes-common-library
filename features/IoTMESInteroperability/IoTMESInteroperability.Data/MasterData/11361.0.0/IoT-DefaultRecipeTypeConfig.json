@@ -1,0 +1,10 @@
+{    
+  "<SM>Config": {
+	"1": {
+      "ParentPath": "/IoT/IoTUtilities/",
+      "Name": "DefaultRecipeType",
+      "Value": "General",
+      "ValueType": "String"
+    }
+  }
+}
