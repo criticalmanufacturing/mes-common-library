@@ -1,0 +1,74 @@
+[
+  {
+    "id": "cmf-custom-help.connectiot",
+    "menuGroupId": "cmf-custom-help.techspec",
+    "title": "Connect IoT",
+    "actionId": ""
+  },
+  {
+    "id": "cmf-custom-help.erpintegration",
+    "menuGroupId": "cmf-custom-help.techspec",
+    "title": "ERP Integration",
+    "actionId": ""
+  },
+  {
+    "id": "cmf-custom-help.features",
+    "menuGroupId": "cmf-custom-help.techspec",
+    "title": "Features",
+    "actionId": ""
+  },
+  {
+    "id": "index",
+    "menuGroupId": "cmf-custom-help.techspec",
+    "title": "MES Administration Useful Links",
+    "actionId": ""
+  },
+  {
+    "id": "cmf-custom-help.iotequipmenttypes",
+    "menuGroupId": "cmf-custom-help.connectiot",
+    "title": "Equipment Types",
+    "actionId": ""
+  },
+  {
+    "id": "cmf-custom-help.equipmenttypea",
+    "menuGroupId": "cmf-custom-help.iotequipmenttypes",
+    "title": "Equipment Type A",
+    "actionId": ""
+  },
+  {
+    "id": "cmf-custom-help.equipmenttypea-configuration",
+    "menuGroupId": "cmf-custom-help.equipmenttypea",
+    "title": "Configuration",
+    "actionId": ""
+  },
+  {
+    "id": "cmf-custom-help.equipmenttypea-features",
+    "menuGroupId": "cmf-custom-help.equipmenttypea",
+    "title": "Features",
+    "actionId": ""
+  },
+  {
+    "id": "cmf-custom-help.equipmenttypea-setup",
+    "menuGroupId": "cmf-custom-help.equipmenttypea",
+    "title": "Setup",
+    "actionId": ""
+  },
+  {
+    "id": "cmf-custom-help.equipmenttypea-workflows",
+    "menuGroupId": "cmf-custom-help.equipmenttypea",
+    "title": "Workflows",
+    "actionId": ""
+  },
+  {
+    "id": "cmf-custom-help.erpfeatures",
+    "menuGroupId": "cmf-custom-help.erpintegration",
+    "title": "ERP Features",
+    "actionId": ""
+  },
+  {
+    "id": "cmf-custom-help.erphandlers",
+    "menuGroupId": "cmf-custom-help.erpintegration",
+    "title": "ERP Handlers",
+    "actionId": ""
+  }
+]
