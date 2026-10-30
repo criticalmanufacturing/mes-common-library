@@ -1,0 +1,28 @@
+{
+  "event": [
+    {
+      "Name": "SampleReceived",
+      "Description": "SampleReceived will start producing sample results",
+      "DeviceEventId": "Sample",
+      "IsEnabled": true,
+      "ExtendedData": {},
+      "EventProperties": [
+        {
+          "Property": "header",
+          "Order": 1,
+          "ExtendedData": {}
+        },
+        {
+          "Property": "devices",
+          "Order": 2,
+          "ExtendedData": {}
+        },
+        {
+          "Property": "observations",
+          "Order": 3,
+          "ExtendedData": {}
+        }
+      ]
+    }
+  ]
+}

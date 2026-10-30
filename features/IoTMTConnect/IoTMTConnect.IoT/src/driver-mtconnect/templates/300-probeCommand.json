@@ -1,0 +1,19 @@
+{
+  "command": [
+    {
+      "Name": "Probe Command",
+      "Description": "Probe Command",
+      "DeviceCommandId": "ProbeCommand",
+      "ExtendedData": {
+        "commandType": "Probe"
+      },
+      "CommandParameters": [
+        {
+          "Name": "device",
+          "DataType": "String",
+          "AutomationProtocolDataType": "String"
+        }
+      ]
+    }
+  ]
+}
