@@ -1,0 +1,140 @@
+{
+  "<SM>NameGenerator": {
+    "1": {
+      "Name": "CustomAutomationConfigurationNameGenerator",
+      "Description": "Generate Name for Custom Automation Configuration",
+      "Sample": "",
+      "TokenName": "Name",
+      "TokenDescription": "Name of Custom Automation Configuration",
+      "TokenFormat": "",
+      "TokenOrder": "1",
+      "CalculationMethod": "DEE",
+      "CalendarPath": "",
+      "TokenValue": "CustomAutomationConfigurationNameGenerator"
+    },
+    "2": {
+      "Name": "CustomAutomationConfigurationValueNameGenerator",
+      "Description": "",
+      "Sample": "",
+      "TokenName": "Configuration",
+      "TokenDescription": "",
+      "TokenFormat": "",
+      "TokenOrder": "1",
+      "CalculationMethod": "Property",
+      "CalendarPath": "",
+      "TokenValue": "SourceEntity.Name"
+    },
+    "3": {
+      "Name": "CustomAutomationConfigurationValueNameGenerator",
+      "Description": "",
+      "Sample": "",
+      "TokenName": "Underscore",
+      "TokenDescription": "",
+      "TokenFormat": "",
+      "TokenOrder": "2",
+      "CalculationMethod": "Constant",
+      "CalendarPath": "",
+      "TokenValue": "-"
+    },
+    "4": {
+      "Name": "CustomAutomationConfigurationValueNameGenerator",
+      "Description": "",
+      "Sample": "",
+      "TokenName": "ParameterName",
+      "TokenDescription": "",
+      "TokenFormat": "",
+      "TokenOrder": "3",
+      "CalculationMethod": "Property",
+      "CalendarPath": "",
+      "TokenValue": "TargetEntity.Name"
+    },
+    "5": {
+      "Name": "CustomAutomationConfigurationStructureNameGenerator",
+      "Description": "",
+      "Sample": "",
+      "TokenName": "Configuration",
+      "TokenDescription": "",
+      "TokenFormat": "",
+      "TokenOrder": "1",
+      "CalculationMethod": "Property",
+      "CalendarPath": "",
+      "TokenValue": "SourceEntity.Name"
+    },
+    "6": {
+      "Name": "CustomAutomationConfigurationStructureNameGenerator",
+      "Description": "",
+      "Sample": "",
+      "TokenName": "Underscore",
+      "TokenDescription": "",
+      "TokenFormat": "",
+      "TokenOrder": "2",
+      "CalculationMethod": "Constant",
+      "CalendarPath": "",
+      "TokenValue": "-"
+    },
+    "7": {
+      "Name": "CustomAutomationConfigurationStructureNameGenerator",
+      "Description": "",
+      "Sample": "",
+      "TokenName": "ParameterName",
+      "TokenDescription": "",
+      "TokenFormat": "",
+      "TokenOrder": "3",
+      "CalculationMethod": "Property",
+      "CalendarPath": "",
+      "TokenValue": "TargetEntity.Name"
+    },
+    "8": {
+      "Name": "CustomAutomationConfigurationEntityNameGenerator",
+      "Description": "",
+      "Sample": "",
+      "TokenName": "Configuration",
+      "TokenDescription": "",
+      "TokenFormat": "",
+      "TokenOrder": "1",
+      "CalculationMethod": "Property",
+      "CalendarPath": "",
+      "TokenValue": "SourceEntity.Name"
+    },
+    "9": {
+      "Name": "CustomAutomationConfigurationEntityNameGenerator",
+      "Description": "",
+      "Sample": "",
+      "TokenName": "Underscore",
+      "TokenDescription": "",
+      "TokenFormat": "",
+      "TokenOrder": "2",
+      "CalculationMethod": "Constant",
+      "CalendarPath": "",
+      "TokenValue": "-"
+    },
+    "10": {
+      "Name": "CustomAutomationConfigurationEntityNameGenerator",
+      "Description": "",
+      "Sample": "",
+      "TokenName": "ParameterName",
+      "TokenDescription": "",
+      "TokenFormat": "",
+      "TokenOrder": "3",
+      "CalculationMethod": "Property",
+      "CalendarPath": "",
+      "TokenValue": "TargetEntity.Name"
+    }
+  },
+  "<ST>NameGeneratorContext": {
+    "1": {
+      "EntityType": "CustomAutomationConfiguration",
+      "EntityTypeType": "",
+      "Operation": "Create",
+      "NameGeneratorName": "CustomAutomationConfigurationNameGenerator",
+      "RevisionGeneratorName": ""
+    },
+    "2": {
+      "EntityType": "CustomAutomationConfigurationStructure",
+      "EntityTypeType": "",
+      "Operation": "Create",
+      "NameGeneratorName": "CustomAutomationConfigurationStructureNameGenerator",
+      "RevisionGeneratorName": ""
+    }
+  }
+}
