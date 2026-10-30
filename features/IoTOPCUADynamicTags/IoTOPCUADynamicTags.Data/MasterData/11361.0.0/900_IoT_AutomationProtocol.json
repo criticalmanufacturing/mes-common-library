@@ -5,7 +5,7 @@
       "Description": "OPCUA_Protocol",
       "Type": "General",
       "Package": "@criticalmanufacturing/connect-iot-driver-opcua",
-      "PackageVersion": "11.3.3"
+      "PackageVersion": "11.3.6"
     }
   },
   "AutomationProtocolParameter": {},

@@ -7,4 +7,7 @@
 		<AssemblyName>Cmf.Community.IoTOPCUADynamicTags.Actions</AssemblyName>
 		<RootNamespace>Cmf.Community.IoTOPCUADynamicTags.Actions</RootNamespace>
 	</PropertyGroup>
+	<ItemGroup>
+		<PackageReference Include="Cmf.Foundation.BusinessObjects" Version="11.3.6" />
+	</ItemGroup>
 </Project>

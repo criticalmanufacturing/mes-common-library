@@ -58,7 +58,7 @@ The root [`package.json`](package.json) defines an npm workspace that:
 
 - `packageId` identifies the package as `Cmf.Community.IoTCustomAutomationConfiguration.IoT`.
 - `packageType: "IoT"` marks this as a Connect IoT package for deployment into the IoT runtime environment.
-- `version` identifies the package release, aligned with the feature version `11331.0.0`.
+- `version` identifies the package release, aligned with the feature version `11361.0.0`.
 - `isInstallable: true` makes this package installable by the CM deployment framework.
 - `isToForceInstall: true` forces installation of this package when the deployment processes it, ensuring tasks are always available.
 - `forceRerunAfterDatabaseRestore: true` allows package installation to run again after a database restore, re-initializing IoT assets.
@@ -67,12 +67,12 @@ The root [`package.json`](package.json) defines an npm workspace that:
 
 ## Version and compatibility
 
-The current package version is `11331.0.0`, aligned with MES release `11.3.3`:
+The current package version is `11361.0.0`, aligned with MES release `11.3.6`:
 
-- IoT package: `Cmf.Community.IoTCustomAutomationConfiguration.IoT@11331.0.0`
-- npm tasks: `@criticalmanufacturing/connect-iot-custom-automationconfiguration-tasks@11331.0.0`
-- Connect IoT dependencies use the `release-1133` npm dist tag.
-- CM dependency versions: `11.3.3`
+- IoT package: `Cmf.Community.IoTCustomAutomationConfiguration.IoT@11361.0.0`
+- npm tasks: `@criticalmanufacturing/connect-iot-custom-automationconfiguration-tasks@11361.0.0`
+- Connect IoT dependencies are pinned to `11.3.6`.
+- CM dependency versions: `11.3.6`
 
 When creating a release, keep the root feature version, this IoT package version, and the npm package version aligned. Update dependency versions and npm dist tags when targeting a different MES release.
 

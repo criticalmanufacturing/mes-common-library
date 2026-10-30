@@ -4,11 +4,11 @@
   "peerDependencies": {
     "@angular/common": "^17.3.0",
     "@angular/core": "^17.3.0",
-    "@criticalmanufacturing/connect-iot-controller-engine": "release-1133",
-    "cmf-core": "release-1133",
-    "cmf-core-business-controls": "release-1133",
-    "cmf-core-connect-iot": "release-1133",
-    "cmf-core-controls": "release-1133"
+    "@criticalmanufacturing/connect-iot-controller-engine": "11.3.6",
+    "cmf-core": "11.3.6",
+    "cmf-core-business-controls": "11.3.6",
+    "cmf-core-connect-iot": "11.3.6",
+    "cmf-core-controls": "11.3.6"
   },
   "scripts": {
     "build": "npm run build:roslyn-host && npm run build:roslyn-compiler && concurrently \"npm run build:designer\" \"npm run build:runtime\" \"npm run build:tests\" -r",

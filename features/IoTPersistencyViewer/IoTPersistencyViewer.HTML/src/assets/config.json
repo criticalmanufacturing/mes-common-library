@@ -55,5 +55,5 @@
     "environmentName": "MES"
   },
   "cacheId": "",
-  "version": "IoTPersistencyViewer $(Build.BuildNumber) - 11.3.3"
+  "version": "IoTPersistencyViewer $(Build.BuildNumber) - 11.3.6"
 }

@@ -21,7 +21,7 @@ The feature's master data defines:
 - `DynamicTags_Manager`, deployed in manual mode.
 - Custom OPC UA recipe, execution-context, and data-collection context resolution definitions.
 
-The package version is `1.0.0`; the feature content targets MES version `11.3.3` and uses package content version `11331.0.0`.
+This feature targets MES `11.3.6` and uses package version `11361.0.0`.
 
 ## Deployment
 

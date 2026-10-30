@@ -1,1 +1,1 @@
-v<%= $CLI_PARAM_nodeVersion %>
+v20

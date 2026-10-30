@@ -38,7 +38,7 @@ See [`IoTSQLLite.IoT/README.md`](IoTSQLLite.IoT/README.md) for full implementati
 - `global.json` pins the .NET SDK (`8.0.301`, `rollForward: latestFeature`) used by the deployment tooling.
 - `NuGet.Config` points package restore at the CMF NuGet feed (`https://criticalmanufacturing.io/repository/nuget/index.json`) and `nuget.org`, with source-control integration disabled.
 - `repositories.json` configures the CI package repository and delivered-package repository paths under `deploymentdir/` for the deployment framework.
-- `.project-config.json` records the CM project scaffolding metadata for this feature: project name `IoTSQLLite`, repository type `Customization`, base layer `MES`, tenant `Community`, and MES/NuGet version `11.3.3`.
+- `.project-config.json` records the CM project scaffolding metadata for this feature: project name `IoTSQLLite`, repository type `Customization`, base layer `MES`, tenant `Community`, and MES/NuGet version `11.3.6`.
 - `.devcontainer/devcontainer.json` defines the dev container image (`criticalmanufacturing.io/criticalmanufacturing/devcontainer:11`) and features (CM CLI, Portal SDK, Docker-in-Docker, Chrome testing) used to develop and build this feature.
 - `.config/dotnet-tools.json` pins the local .NET tool `dotnet-coverage` (`17.6.0`) used for coverage collection.
 
@@ -51,14 +51,14 @@ CM deployment framework manifests describe installable deployment packages. The 
 [`cmfpackage.json`](cmfpackage.json) has `packageType: "Root"`:
 
 - `packageId` identifies the feature as `Cmf.Community.IoTSQLLite`.
-- `version` identifies the feature release (`11331.0.0`).
+- `version` identifies the feature release (`11361.0.0`).
 - `description` is the generic CM Community customization description.
 - `isInstallable: true` makes the root package installable.
 - `isUniqueInstall: false` allows the package to be installed alongside other instances/versions rather than requiring a single unique install.
 - `dependencies` pulls in the IoT child package and optional CM deployment dependencies:
-  - `Cmf.Environment` (`11.3.3`, `mandatory: false`) — optional dependency on the MES environment package.
-  - `CriticalManufacturing.DeploymentMetadata` (`11.3.3`, `mandatory: false`) — optional dependency on the deployment framework's metadata package.
-  - `Cmf.Community.IoTSQLLite.IoT` (`11331.0.0`) — the required child package that contains the actual Connect IoT SQLite tasks and is implicitly mandatory (no `mandatory` field, so it defaults to required).
+  - `Cmf.Environment` (`11.3.6`, `mandatory: false`) — optional dependency on the MES environment package.
+  - `CriticalManufacturing.DeploymentMetadata` (`11.3.6`, `mandatory: false`) — optional dependency on the deployment framework's metadata package.
+  - `Cmf.Community.IoTSQLLite.IoT` (`11361.0.0`) — the required child package that contains the actual Connect IoT SQLite tasks and is implicitly mandatory (no `mandatory` field, so it defaults to required).
 
 A root package is therefore the feature-level installation and dependency entry point. It does not itself pack the tasks source; it composes the packages that do.
 
@@ -67,7 +67,7 @@ A root package is therefore the feature-level installation and dependency entry 
 [`IoTSQLLite.IoT/cmfpackage.json`](IoTSQLLite.IoT/cmfpackage.json) has `packageType: "IoT"`:
 
 - `packageId` identifies the installable child as `Cmf.Community.IoTSQLLite.IoT`.
-- `version` matches the root package (`11331.0.0`).
+- `version` matches the root package (`11361.0.0`).
 - `contentToPack` copies `src/*` into the deployed `node_modules` location, excluding files matched by `.npmignore`.
 - `xmlInjection` injects `ui.xml` into the deployment package so the repository configuration step is available during installation.
 - `isInstallable: true` makes the IoT package installable on its own.
@@ -78,13 +78,13 @@ An IoT package is the deployment unit for Connect IoT task/converter libraries. 
 
 ## Version and compatibility
 
-The current root and IoT package version is `11331.0.0`. The package version follows the repository's CM release versioning convention and is aligned with MES `11.3.3`:
+The current root and IoT package version is `11361.0.0`. The package version follows the repository's CM release versioning convention and is aligned with MES `11.3.6`:
 
-- Root package: `Cmf.Community.IoTSQLLite@11331.0.0`
-- IoT package: `Cmf.Community.IoTSQLLite.IoT@11331.0.0`
+- Root package: `Cmf.Community.IoTSQLLite@11361.0.0`
+- IoT package: `Cmf.Community.IoTSQLLite.IoT@11361.0.0`
 - npm tasks: `@criticalmanufacturing/connect-iot-controller-engine-custom-sqlite-tasks@0.0.0`
-- CM deployment dependencies (`Cmf.Environment`, `CriticalManufacturing.DeploymentMetadata`): `11.3.3`
-- Connect IoT dependencies (`@criticalmanufacturing/connect-iot-controller-engine`) use the `release-1133` npm dist tag.
+- CM deployment dependencies (`Cmf.Environment`, `CriticalManufacturing.DeploymentMetadata`): `11.3.6`
+- Connect IoT dependencies (`@criticalmanufacturing/connect-iot-controller-engine`) are pinned to `11.3.6`.
 
 When creating a release, keep the root package and IoT package versions aligned, and update the optional CM dependency versions and the Connect IoT npm dist tag when targeting a different MES release.
 
