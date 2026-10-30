@@ -1,0 +1,123 @@
+{
+  "<ST>SmartTable": {
+    "1": {
+      "Name": "CustomAutomationConfigurationMetadata",
+      "Description": "Contains the metadata needed to create the Custom Automation Configuration Metada",
+      "HistoryRetentionTime": "180",
+      "IsHistoryEnabled": "Yes",
+      "IsRepeatedValuesAllowed": "Yes",
+      "DataGroup": "",
+      "PreValidationRule": ""
+    }
+  },
+  "SmartTableProperties": {
+    "1": {
+      "SmartTable": "CustomAutomationConfigurationMetadata",
+      "Name": "ConfigurationLayer",
+      "Position": "1",
+      "Description": "",
+      "IsKey": "Yes",
+      "IsIndexed": "No",
+      "IsMandatory": "Yes",
+      "ScalarType": "NVarChar",
+      "Size": "256",
+      "Precision": "0",
+      "ReferenceType": "LookupValue",
+      "ReferenceName": "CustomAutomationConfigurationMetadataConfigurationLayer"
+    },
+    "2": {
+      "SmartTable": "CustomAutomationConfigurationMetadata",
+      "Name": "AutomationController",
+      "Position": "2",
+      "Description": "",
+      "IsKey": "Yes",
+      "IsIndexed": "No",
+      "IsMandatory": "No",
+      "ScalarType": "NVarChar",
+      "Size": "256",
+      "Precision": "0",
+      "ReferenceType": "EntityDefinition",
+      "ReferenceName": "AutomationController.Name"
+    },
+    "3": {
+      "SmartTable": "CustomAutomationConfigurationMetadata",
+      "Name": "AutomationProtocol",
+      "Position": "3",
+      "Description": "",
+      "IsKey": "Yes",
+      "IsIndexed": "No",
+      "IsMandatory": "No",
+      "ScalarType": "NVarChar",
+      "Size": "256",
+      "Precision": "0",
+      "ReferenceType": "EntityDefinition",
+      "ReferenceName": "AutomationProtocol.Name"
+    },
+    "4": {
+      "SmartTable": "CustomAutomationConfigurationMetadata",
+      "Name": "AutomationDriverDefinition",
+      "Position": "4",
+      "Description": "",
+      "IsKey": "Yes",
+      "IsIndexed": "No",
+      "IsMandatory": "No",
+      "ScalarType": "NVarChar",
+      "Size": "256",
+      "Precision": "0",
+      "ReferenceType": "EntityDefinition",
+      "ReferenceName": "AutomationDriverDefinition.Name"
+    },
+    "5": {
+      "SmartTable": "CustomAutomationConfigurationMetadata",
+      "Name": "Parameter",
+      "Position": "5",
+      "Description": "",
+      "IsKey": "No",
+      "IsIndexed": "No",
+      "IsMandatory": "Yes",
+      "ScalarType": "NVarChar",
+      "Size": "256",
+      "Precision": "0",
+      "ReferenceType": "EntityType",
+      "ReferenceName": "Parameter.Name"
+    },
+    "6": {
+      "SmartTable": "CustomAutomationConfigurationMetadata",
+      "Name": "IsConfiguration",
+      "Position": "6",
+      "Description": "",
+      "IsKey": "No",
+      "IsIndexed": "No",
+      "IsMandatory": "No",
+      "ScalarType": "Bit",
+      "Size": "0",
+      "Precision": "0",
+      "ReferenceType": "None",
+      "ReferenceName": ""
+    },
+    "7": {
+      "SmartTable": "CustomAutomationConfigurationMetadata",
+      "Name": "DefaultValue",
+      "Position": "7",
+      "Description": "",
+      "IsKey": "No",
+      "IsIndexed": "No",
+      "IsMandatory": "No",
+      "ScalarType": "NVarChar",
+      "Size": "512",
+      "Precision": "0",
+      "ReferenceType": "None",
+      "ReferenceName": ""
+    }
+  },
+  "SmartTablePrecedenceKeys": {
+    "1": {
+      "SmartTable": "CustomAutomationConfigurationMetadata",
+      "PrecedenceKey1": "ConfigurationLayer+AutomationController",
+      "PrecedenceKey2": "ConfigurationLayer+AutomationProtocol+AutomationDriverDefinition",
+      "PrecedenceKey3": "ConfigurationLayer+AutomationDriverDefinition",
+      "PrecedenceKey4": "ConfigurationLayer+AutomationProtocol",
+      "PrecedenceKey5": "ConfigurationLayer"
+    }
+  }
+}

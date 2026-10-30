@@ -1,0 +1,109 @@
+{
+  "converters": [],
+  "tasks": [
+    {
+      "name": "loadAutomationConfiguration",
+      "displayName": "Load Automation Configuration",
+      "iconClass": "icon-core-nav-manufacturing",
+      "isProtocol": true,
+      "isController": true,
+      "lifecycle": "Productive",
+      "lifecycleMessage": "",
+      "dependsOnProtocol": [],
+      "dependsOnScope": [
+        "ConnectIoT"
+      ],
+      "inputs": {
+        "activate": {
+          "type": "Activate",
+          "dataType": "String",
+          "displayName": "Activate",
+          "defaultValue": ""
+        }
+      },
+      "outputs": {
+        "configuration": {
+          "type": "Static",
+          "dataType": "Object",
+          "displayName": "configuration"
+        },
+        "dynamicOutput": {
+          "type": "Dynamic",
+          "displayName": "Outputs",
+          "settings": {
+            "settingKey": "_outputs",
+            "tabName": "Outputs",
+            "canAdd": true,
+            "canDelete": true,
+            "canSort": true,
+            "captionKey": "name",
+            "subCaptionKey": "defaultValue",
+            "leafDefinition": [
+              {
+                "name": "name",
+                "displayName": "Name",
+                "settingKey": "name",
+                "dataType": "String",
+                "isMandatory": true
+              },
+              {
+                "name": "friendlyName",
+                "displayName": "Friendly Name",
+                "settingKey": "friendlyName",
+                "dataType": "String",
+                "isMandatory": false
+              },
+              {
+                "name": "valueType",
+                "displayName": "Type",
+                "settingKey": "valueType",
+                "dataType": "ComplexType",
+                "isMandatory": false
+              },
+              {
+                "name": "collectionType",
+                "displayName": "Collection type",
+                "settingKey": "collectionType",
+                "dataType": "Enum",
+                "isMandatory": false,
+                "settings": {
+                    "enumValues": ["Array", "Map", "None"]
+                }
+              }
+            ]
+          }
+        },
+        "success": {
+          "type": "Success",
+          "displayName": "Success"
+        },
+        "error": {
+          "type": "Error",
+          "displayName": "Error"
+        }
+      },
+      "triggers": {
+          "init": [
+              {
+                "type": "Reference",
+                "script": "fill_settings"
+              }
+          ],
+          "beforeSave": [
+              {
+                "type": "Reference",
+                "script": "strip_protocol_parameter"
+              }
+          ]
+      },
+      "settings": {
+        "General": {
+        }
+      },
+      "scripts": {
+          "strip_protocol_parameter": "${script(./scripts/loadAutomationConfiguration/strip_protocol_parameter.ts)}",
+          "fill_settings": "${script(./scripts/loadAutomationConfiguration/fill_settings.ts)}"
+      }
+    }
+  ]
+}
