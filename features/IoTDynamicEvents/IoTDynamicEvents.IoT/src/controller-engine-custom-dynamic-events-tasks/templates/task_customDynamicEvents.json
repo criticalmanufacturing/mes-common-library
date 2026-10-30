@@ -1,0 +1,112 @@
+{
+  "converters": [],
+  "tasks": [
+    {
+      "name": "customDynamicEvents",
+      "displayName": "Custom Dynamic Events",
+      "iconClass": "icon-core-tasks-connect-iot-lg-equipmentevent",
+      "isProtocol": true,
+      "isController": false,
+      "lifecycle": "Productive",
+      "lifecycleMessage": "",
+      "inputs": {
+        "activate": {
+          "type": "Activate",
+          "dataType": "String",
+          "displayName": "Activate",
+          "defaultValue": ""
+        }
+      },
+      "outputs": {
+        "resource": {
+          "type": "Static",
+          "displayName": "Resource",
+          "dataType": "String"
+        },
+        "resourceType": {
+          "type": "Static",
+          "displayName": "Resource Type",
+          "dataType": "String"
+        },
+        "eventTemplate": {
+          "type": "Static",
+          "displayName": "Event Template",
+          "dataType": "String"
+        },
+        "value": {
+          "type": "Static",
+          "displayName": "Value",
+          "dataType": "Any"
+        },
+        "success": {
+          "type": "Success",
+          "displayName": "Success"
+        },
+        "error": {
+          "type": "Error",
+          "displayName": "Error"
+        }
+      },
+      "settings": {
+        "General": {
+          "Task Settings": [
+            {
+              "name": "eventTemplateName",
+              "displayName": "Event Template Name",
+              "settingKey": "eventTemplateName",
+              "dataType": "string",
+              "infoMessage": "Name of the custom event template to register or subscribe to",
+              "defaultValue": ""
+            },
+            {
+              "name": "eventTagToken",
+              "displayName": "Event Tag Token",
+              "settingKey": "eventTagToken",
+              "dataType": "string",
+              "infoMessage": "Token in the event template that identifies the tag placeholder",
+              "defaultValue": ""
+            },
+            {
+              "name": "eventTagAliasName",
+              "displayName": "Event Tag Alias Name",
+              "settingKey": "eventTagAliasName",
+              "dataType": "string",
+              "infoMessage": "Alias containing the tag value used during registration",
+              "defaultValue": ""
+            },
+            {
+              "name": "resourceTypePersistedAlias",
+              "displayName": "Resource Type Persisted Alias",
+              "settingKey": "resourceTypePersistedAlias",
+              "dataType": "string",
+              "infoMessage": "Persisted alias containing the resource type",
+              "defaultValue": "ResourceType"
+            },
+            {
+              "name": "autoActivate",
+              "displayName": "Auto Activate",
+              "settingKey": "autoActivate",
+              "dataType": "boolean",
+              "infoMessage": "Refresh subscriptions after a driver reconnection",
+              "defaultValue": true
+            },
+            {
+              "name": "actionType",
+              "displayName": "Action Type",
+              "settingKey": "actionType",
+              "dataType": "Enum",
+              "settings": {
+                "enumValues": [
+                  "Register",
+                  "Subscribe"
+                ]
+              },
+              "infoMessage": "Operation to perform: Register or Subscribe",
+              "defaultValue": "Register"
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,76 @@
+{
+  "converters": [],
+  "tasks": [
+    {
+      "name": "customDriverSubscribe",
+      "displayName": "Custom Driver Subscribe",
+      "iconClass": "icon-core-tasks-connect-iot-lg-driverregister",
+      "isProtocol": true,
+      "isController": false,
+      "lifecycle": "Productive",
+      "lifecycleMessage": "",
+      "inputs": {
+        "activate": {
+          "type": "Activate",
+          "dataType": "String",
+          "displayName": "Activate",
+          "defaultValue": ""
+        },
+        "messageType": {
+          "type": "Static",
+          "dataType": "String",
+          "displayName": "Message Type",
+          "defaultValue": ""
+        },
+        "autoActivate": {
+          "type": "Static",
+          "dataType": "Boolean",
+          "displayName": "Auto Activate",
+          "defaultValue": true
+        }
+      },
+      "outputs": {
+        "type": {
+          "type": "Static",
+          "displayName": "Type",
+          "dataType": "String"
+        },
+        "message": {
+          "type": "Static",
+          "displayName": "Message",
+          "dataType": "Any"
+        },
+        "success": {
+          "type": "Success",
+          "displayName": "Success"
+        },
+        "error": {
+          "type": "Error",
+          "displayName": "Error"
+        }
+      },
+      "settings": {
+        "General": {
+          "Task Settings": [
+            {
+              "name": "autoActivate",
+              "displayName": "Auto Activate",
+              "settingKey": "autoActivate",
+              "dataType": "boolean",
+              "infoMessage": "Subscribe automatically when the task is initialized and when the driver reconnects",
+              "defaultValue": true
+            },
+            {
+              "name": "messageType",
+              "displayName": "Message Type",
+              "settingKey": "messageType",
+              "dataType": "string",
+              "infoMessage": "Driver message type or comma-separated message types to subscribe to",
+              "defaultValue": ""
+            }
+          ]
+        }
+      }
+    }
+  ]
+}
