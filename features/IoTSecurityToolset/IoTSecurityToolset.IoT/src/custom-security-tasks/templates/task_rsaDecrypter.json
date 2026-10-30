@@ -1,0 +1,46 @@
+{
+  "converters": [],
+  "tasks": [
+    {
+      "name": "rsaDecrypter",
+      "displayName": "RSA Decrypter",
+      "iconClass": "icon-coreatl-tasks-connect-iot-lg-checksum",
+      "isProtocol": false,
+      "isController": true,
+      "lifecycle": "Productive",
+      "lifecycleMessage": "",
+      "dependsOnProtocol": [],
+      "dependsOnScope": [],
+      "inputs": {
+        "encryptedBase64": {
+          "type": "Static",
+          "dataType": "String",
+          "displayName": "EncryptedBase64",
+          "defaultValue": ""
+        },
+        "activate": {
+          "type": "Activate",
+          "dataType": "String",
+          "displayName": "Activate",
+          "defaultValue": ""
+        }
+      },
+      "outputs": {
+        "value": {
+          "type": "Static",
+          "dataType": "String",
+          "displayName": "Value"
+        },
+        "success": {
+          "type": "Success",
+          "displayName": "Success"
+        },
+        "error": {
+          "type": "Error",
+          "displayName": "Error"
+        }
+      },
+      "settings": {}
+    }
+  ]
+}
