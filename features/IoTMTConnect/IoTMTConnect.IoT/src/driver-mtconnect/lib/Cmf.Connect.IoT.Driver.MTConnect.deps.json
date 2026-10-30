@@ -1,0 +1,147 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v10.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v10.0": {
+      "Cmf.Connect.IoT.Driver.MTConnect/1.0.0": {
+        "dependencies": {
+          "Costura.Fody": "5.3.0",
+          "MTConnect.NET-HTTP": "6.7.0",
+          "MTConnect.NET-XML": "6.7.0",
+          "Newtonsoft.Json": "13.0.3"
+        },
+        "runtime": {
+          "Cmf.Connect.IoT.Driver.MTConnect.dll": {}
+        }
+      },
+      "Costura.Fody/5.3.0": {
+        "runtime": {
+          "lib/netstandard1.0/Costura.dll": {
+            "assemblyVersion": "5.3.0.0",
+            "fileVersion": "5.3.0.0"
+          }
+        }
+      },
+      "MTConnect.NET-Common/6.7.0": {
+        "dependencies": {
+          "YamlDotNet": "13.7.1"
+        },
+        "runtime": {
+          "lib/net9.0/MTConnect.NET-Common.dll": {
+            "assemblyVersion": "0.0.0.0",
+            "fileVersion": "0.0.0.0"
+          }
+        }
+      },
+      "MTConnect.NET-HTTP/6.7.0": {
+        "dependencies": {
+          "MTConnect.NET-Common": "6.7.0",
+          "MTConnect.NET-TLS": "6.7.0"
+        },
+        "runtime": {
+          "lib/net9.0/MTConnect.NET-HTTP.dll": {
+            "assemblyVersion": "0.0.0.0",
+            "fileVersion": "0.0.0.0"
+          }
+        }
+      },
+      "MTConnect.NET-TLS/6.7.0": {
+        "dependencies": {
+          "MTConnect.NET-Common": "6.7.0"
+        },
+        "runtime": {
+          "lib/net9.0/MTConnect.NET-TLS.dll": {
+            "assemblyVersion": "0.0.0.0",
+            "fileVersion": "0.0.0.0"
+          }
+        }
+      },
+      "MTConnect.NET-XML/6.7.0": {
+        "dependencies": {
+          "MTConnect.NET-Common": "6.7.0"
+        },
+        "runtime": {
+          "lib/net9.0/MTConnect.NET-XML.dll": {
+            "assemblyVersion": "0.0.0.0",
+            "fileVersion": "0.0.0.0"
+          }
+        }
+      },
+      "Newtonsoft.Json/13.0.3": {
+        "runtime": {
+          "lib/net6.0/Newtonsoft.Json.dll": {
+            "assemblyVersion": "13.0.0.0",
+            "fileVersion": "13.0.3.27908"
+          }
+        }
+      },
+      "YamlDotNet/13.7.1": {
+        "runtime": {
+          "lib/net7.0/YamlDotNet.dll": {
+            "assemblyVersion": "13.0.0.0",
+            "fileVersion": "13.7.1.0"
+          }
+        }
+      }
+    }
+  },
+  "libraries": {
+    "Cmf.Connect.IoT.Driver.MTConnect/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Costura.Fody/5.3.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-fb04fy7bJ7dNV7u3Ys0yvuINePnICWSwzpmtRjvQKuOl9nm0xxccsk2B1U3mLMFFCrb1luSMyu6vp/YWFIZRqw==",
+      "path": "costura.fody/5.3.0",
+      "hashPath": "costura.fody.5.3.0.nupkg.sha512"
+    },
+    "MTConnect.NET-Common/6.7.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-pP9T44zco4CQ/ql8EX1/f/+F27SQ85lC+gePJUXKW6KUFyLGiWsn1yZlqS2VRlR0TjI+WzQAuhqMYrH08QMs6g==",
+      "path": "mtconnect.net-common/6.7.0",
+      "hashPath": "mtconnect.net-common.6.7.0.nupkg.sha512"
+    },
+    "MTConnect.NET-HTTP/6.7.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-6m6L/s/j0LVUFiHt4LMSlPP0tGhlBPsyvHJ1DDm1Ip/o8M3mgaPs23yK1kcbpCBJTYn1snTVMPS1CFXT87D31A==",
+      "path": "mtconnect.net-http/6.7.0",
+      "hashPath": "mtconnect.net-http.6.7.0.nupkg.sha512"
+    },
+    "MTConnect.NET-TLS/6.7.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-KfvbN2UNlCXRYqMnSD9zh1wlB0am2TW0XV6dd5IK0cZc+6ovllr097YLQ0lNUWE7TaCn5nwnWko3qgoWToG2zw==",
+      "path": "mtconnect.net-tls/6.7.0",
+      "hashPath": "mtconnect.net-tls.6.7.0.nupkg.sha512"
+    },
+    "MTConnect.NET-XML/6.7.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-A3/tqzo5XWQwPZ48UYwBRYVzYUYEo5Y6a7eWYoU3heGz5WVplxLKlmh07FUcKESnVjipiE2eQGXPFu/1NGnt9Q==",
+      "path": "mtconnect.net-xml/6.7.0",
+      "hashPath": "mtconnect.net-xml.6.7.0.nupkg.sha512"
+    },
+    "Newtonsoft.Json/13.0.3": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-HrC5BXdl00IP9zeV+0Z848QWPAoCr9P3bDEZguI+gkLcBKAOxix/tLEAAHC+UvDNPv4a2d18lOReHMOagPa+zQ==",
+      "path": "newtonsoft.json/13.0.3",
+      "hashPath": "newtonsoft.json.13.0.3.nupkg.sha512"
+    },
+    "YamlDotNet/13.7.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-X4m1PnFcJwvAj1sCDMntg/eZcX96CJLrWMiYnq41KqhFVZPuw63ZTSxIGqgdCwHWHvCAyTxheELC/VDf1HsU2A==",
+      "path": "yamldotnet/13.7.1",
+      "hashPath": "yamldotnet.13.7.1.nupkg.sha512"
+    }
+  }
+}
