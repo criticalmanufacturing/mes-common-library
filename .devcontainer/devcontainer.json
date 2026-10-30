@@ -1,9 +1,9 @@
 {
-    "image": "criticalmanufacturing.io/criticalmanufacturing/devcontainer:11",
+    "image": "criticalmanufacturing.io/criticalmanufacturing/devcontainer:12",
     "runArgs": [],
     "features": {
         "ghcr.io/criticalmanufacturing/cli/install:1": {
-            "version": "next"
+            "version": "6.x.x"
         },
         "ghcr.io/criticalmanufacturing/portal-sdk/install:1": {},
         "ghcr.io/devcontainers/features/docker-in-docker": {
@@ -17,17 +17,15 @@
     ],
     "containerEnv": {
         "DOCKER_REGISTRY": "docker.io",
-        "CM_DOCKER_REGISTRY": "criticalmanufacturing.io"
+        "CM_DOCKER_REGISTRY": "criticalmanufacturing.io",
+        "NG_CLI_ANALYTICS": "false"
     },
     "customizations": {
         "vscode": {
             "extensions": [
                 "formulahendry.docker-explorer",
                 "ms-azuretools.vscode-docker",
-                "ms-dotnettools.csdevkit@1.9.55",
-                "ms-dotnettools.csharp@2.39.29",
-                "ms-dotnettools.vscode-dotnet-runtime",
-                "ms-dotnettools.vscodeintellicode-csharp",
+                "ms-dotnettools.csdevkit",
                 "FullStackSpider.visual-nuget",
                 "actboy168.tasks"
             ],
@@ -64,7 +62,7 @@
     "forwardPorts": [
         80
     ],
-    "initializeCommand": "docker pull criticalmanufacturing.io/criticalmanufacturing/devcontainer:11",
+    "initializeCommand": "docker pull criticalmanufacturing.io/criticalmanufacturing/devcontainer:12",
     // Installs the repo's root-level devDependencies (husky, commitlint) and,
     // via the "prepare" script, registers the git hooks under .husky/ so
     // commit message and package version rules are enforced locally.
