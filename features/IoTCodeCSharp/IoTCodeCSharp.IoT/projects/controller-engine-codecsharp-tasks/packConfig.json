@@ -1,0 +1,72 @@
+{
+  "type": "TasksPackage",
+  "addons": [],
+  "postActions": [
+    {
+      "type": "ReplaceText",
+      "source": "${Temp}/index.js",
+      "search": "__nccwpck_require__(76174)(z.pathToFileURL(e).href)",
+      "replace": "(globalThis.__dirname=C.dirname(e),globalThis.__filename=e,new J.Script(await U.readFile(e,{encoding:\"utf8\"}),{importModuleDynamically:J.constants&&J.constants.USE_MAIN_CONTEXT_DEFAULT_LOADER}).runInThisContext())"
+    },
+    {
+      "type": "ReplaceText",
+      "source": "${Temp}/index.js",
+      "search": "typeof m<\"u\"))return;",
+      "replace": "false))return;"
+    },
+    {
+      "type": "ReplaceText",
+      "source": "${Temp}/index.js",
+      "search": "a={fs:e,crypto:t,ws:n,child_process:i}",
+      "replace": "a={fs:e,\"fs/promises\":U,crypto:t,ws:n,child_process:i,path:C,url:z,vm:J,tty:{isatty:function(){return false}}}"
+    },
+    {
+      "type": "ReplaceText",
+      "source": "${Temp}/index.js",
+      "search": "globalThis.require=function(r){return a[r]}",
+      "replace": "globalThis.require=function(r){var k=r.startsWith(\"node:\")?r.slice(5):r;if(k in a)return a[k];try{return m(k)}catch(e){return undefined}}"
+    },
+    {
+      "type": "ReplaceText",
+      "source": "${Temp}/index.js",
+      "search": "module.exports = require(\"node:fs/promises\");",
+      "replace": "module.exports = require(\"fs/promises\");"
+    },
+    {
+      "type": "ReplaceText",
+      "source": "${Temp}/index.js",
+      "search": "module.exports = require(\"node:fs\");",
+      "replace": "module.exports = require(\"fs\");"
+    },
+    {
+      "type": "ReplaceText",
+      "source": "${Temp}/index.js",
+      "search": "module.exports = require(\"node:child_process\");",
+      "replace": "module.exports = require(\"child_process\");"
+    },
+    {
+      "type": "ReplaceText",
+      "source": "${Temp}/index.js",
+      "search": "module.exports = require(\"node:crypto\");",
+      "replace": "module.exports = require(\"crypto\");"
+    },
+    {
+      "type": "ReplaceText",
+      "source": "${Temp}/index.js",
+      "search": "module.exports = require(\"node:path\");",
+      "replace": "module.exports = require(\"path\");"
+    },
+    {
+      "type": "ReplaceText",
+      "source": "${Temp}/index.js",
+      "search": "module.exports = require(\"node:url\");",
+      "replace": "module.exports = require(\"url\");"
+    },
+    {
+      "type": "ReplaceText",
+      "source": "${Temp}/index.js",
+      "search": "module.exports = require(\"node:vm\");",
+      "replace": "module.exports = require(\"vm\");"
+    }
+  ]
+}

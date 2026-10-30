@@ -1,0 +1,20 @@
+# Compiled Output
+*.d.ts
+*.js
+*.js.map
+
+# Tests
+/.nyc_output
+/coverage
+
+# Node
+/node_modules
+
+# On-disk WASM build cache for the C# Code task (DotNetJSManagerHandler) — populated at
+# runtime/test-time, never meant to be committed.
+/.cs-code-cache
+/.roslyn-code-cache
+/roslyn-host/publish
+
+.roslyn-code-cache-test/Code.dll
+!roslyn-compiler/wwwroot/compiler.js
