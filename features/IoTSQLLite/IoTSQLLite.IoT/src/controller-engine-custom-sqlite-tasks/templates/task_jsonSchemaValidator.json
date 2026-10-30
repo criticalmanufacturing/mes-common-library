@@ -1,0 +1,110 @@
+{
+  "converters": [],
+  "tasks": [
+    {
+      "name": "jsonSchemaValidator",
+      "displayName": "JSON Schema Validator",
+      "iconClass": "icon-core-et-lg-iotschema",
+      "isProtocol": false,
+      "isController": true,
+      "lifecycle": "Productive",
+      "lifecycleMessage": "",
+      "dependsOnProtocol": [],
+      "dependsOnScope": [],
+      "inputs": {
+        "_schemas": {
+          "type": "Dynamic",
+          "settings": {
+            "settingKey": "schemas",
+            "_tabName": "Inputs",
+            "canAdd": true,
+            "canDelete": true,
+            "canSort": true,
+            "captionKey": "name",
+            "destination": "InputAndOutput",
+            "addInOutSuffix": true,
+            "showPlaceholder": true,
+            "leafDefinition": [
+              {
+                "name": "name",
+                "displayName": "Name",
+                "settingKey": "name",
+                "dataType": "String",
+                "isMandatory": true
+              },
+              {
+                "name": "schema",
+                "displayName": "JSON Schema",
+                "settingKey": "schema",
+                "dataType": "Object",
+                "infoMessage": "JSON Schema to use for validation",
+                "isMandatory": true
+              }
+            ]
+          }
+        },
+        "activate": {
+          "type": "Activate",
+          "dataType": "String",
+          "displayName": "Activate",
+          "defaultValue": ""
+        }
+      },
+      "outputs": {
+        "_schemas": {
+          "type": "Dynamic",
+          "settings": {
+            "settingKey": "schemas",
+            "_tabName": "Outputs",
+            "canAdd": true,
+            "canDelete": true,
+            "canSort": true,
+            "captionKey": "name",
+            "destination": "InputAndOutput",
+            "addInOutSuffix": true,
+            "showPlaceholder": true,
+            "leafDefinition": [
+              {
+                "name": "name",
+                "displayName": "Name",
+                "settingKey": "name",
+                "dataType": "String",
+                "isMandatory": true
+              },
+              {
+                "name": "schema",
+                "displayName": "JSON Schema",
+                "settingKey": "schema",
+                "dataType": "Object",
+                "infoMessage": "JSON Schema to use for validation",
+                "isMandatory": true
+              }
+            ]
+          }
+        },
+        "success": {
+          "type": "Success",
+          "displayName": "Success"
+        },
+        "error": {
+          "type": "Error",
+          "displayName": "Error"
+        }
+      },
+      "settings": {
+        "General": {
+          "Settings": [
+            {
+              "name": "throwOnSchemaValidationFailure",
+              "displayName": "Throw Error on Schema Validation Failure",
+              "settingKey": "throwOnSchemaValidationFailure",
+              "dataType": "Boolean",
+              "infoMessage": "If there is a failure in validation of a json schemas should the task throw an error",
+              "defaultValue": false
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

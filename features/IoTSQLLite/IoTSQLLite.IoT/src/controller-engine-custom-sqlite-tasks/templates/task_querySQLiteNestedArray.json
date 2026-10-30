@@ -1,0 +1,101 @@
+{
+  "converters": [],
+  "tasks": [
+    {
+      "name": "querySQLiteNestedArray",
+      "displayName": "Query SQLite Nested Array",
+      "iconClass": "icon-coreatl-tasks-connect-iot-lg-retrieve-data",
+      "isProtocol": false,
+      "isController": true,
+      "lifecycle": "Productive",
+      "lifecycleMessage": "",
+      "dependsOnProtocol": [],
+      "dependsOnScope": [],
+      "inputs": {
+        "tableName": {
+          "type": "Static",
+          "dataType": "String",
+          "displayName": "tableName",
+          "defaultValue": ""
+        },
+        "arrayPath": {
+          "type": "Static",
+          "dataType": "String",
+          "displayName": "arrayPath",
+          "defaultValue": ""
+        },
+        "itemField": {
+          "type": "Static",
+          "dataType": "String",
+          "displayName": "itemField",
+          "defaultValue": ""
+        },
+        "itemValue": {
+          "type": "Static",
+          "dataType": "String",
+          "displayName": "itemValue",
+          "defaultValue": ""
+        },
+        "activate": {
+          "type": "Activate",
+          "dataType": "String",
+          "displayName": "Activate",
+          "defaultValue": ""
+        }
+      },
+      "outputs": {
+        "result": {
+          "type": "Static",
+          "dataType": "Object",
+          "displayName": "result"
+        },
+        "success": {
+          "type": "Success",
+          "displayName": "Success"
+        },
+        "error": {
+          "type": "Error",
+          "displayName": "Error"
+        }
+      },
+      "settings": {
+        "General": {
+          "Settings": [
+            {
+              "name": "tableName",
+              "displayName": "Default Table Name",
+              "settingKey": "tableName",
+              "dataType": "String",
+              "infoMessage": "Default Table Name",
+              "defaultValue": ""
+            },
+            {
+              "name": "arrayPath",
+              "displayName": "ArrayPath",
+              "settingKey": "arrayPath",
+              "dataType": "String",
+              "infoMessage": "Default Array Path",
+              "defaultValue": ""
+            },
+            {
+              "name": "itemField",
+              "displayName": "ItemField",
+              "settingKey": "itemField",
+              "dataType": "String",
+              "infoMessage": "Default Item Field",
+              "defaultValue": ""
+            },
+            {
+              "name": "itemValue",
+              "displayName": "ItemValue",
+              "settingKey": "itemValue",
+              "dataType": "String",
+              "infoMessage": "Default Item Value",
+              "defaultValue": ""
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

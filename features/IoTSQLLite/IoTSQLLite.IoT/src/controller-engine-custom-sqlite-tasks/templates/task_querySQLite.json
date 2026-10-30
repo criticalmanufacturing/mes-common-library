@@ -1,0 +1,65 @@
+{
+  "converters": [],
+  "tasks": [
+    {
+      "name": "querySQLite",
+      "displayName": "Query SQLite",
+      "iconClass": "icon-coreatl-tasks-connect-iot-lg-retrieve-data",
+      "isProtocol": false,
+      "isController": true,
+      "lifecycle": "Productive",
+      "lifecycleMessage": "",
+      "dependsOnProtocol": [],
+      "dependsOnScope": [],
+      "inputs": {
+        "query": {
+          "type": "Static",
+          "dataType": "String",
+          "displayName": "query",
+          "defaultValue": ""
+        },
+        "params": {
+          "type": "Static",
+          "dataType": "Object",
+          "displayName": "params",
+          "defaultValue": ""
+        },
+        "activate": {
+          "type": "Activate",
+          "dataType": "String",
+          "displayName": "Activate",
+          "defaultValue": ""
+        }
+      },
+      "outputs": {
+        "result": {
+          "type": "Static",
+          "dataType": "Object",
+          "displayName": "result"
+        },
+        "success": {
+          "type": "Success",
+          "displayName": "Success"
+        },
+        "error": {
+          "type": "Error",
+          "displayName": "Error"
+        }
+      },
+      "settings": {
+        "General": {
+          "Settings": [
+            {
+              "name": "query",
+              "displayName": "Query",
+              "settingKey": "query",
+              "dataType": "Text",
+              "infoMessage": "Default Query to execute",
+              "defaultValue": ""
+            }
+          ]
+        }
+      }
+    }
+  ]
+}
