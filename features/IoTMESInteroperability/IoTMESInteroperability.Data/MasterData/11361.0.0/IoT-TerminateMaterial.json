@@ -1,0 +1,20 @@
+{
+  "<SM>DEEAction": {
+    "1": {
+      "Action": "IoTTerminateMaterial",
+      "Description": "DEE to Terminate Material",
+      "CodeFileRelativePath": "ConnectIoT//IoTTerminateMaterial.cs",
+      "IsEnabled": "Yes",
+      "Classification": "ConnectIoT"
+    }
+  },
+  "DEEActionOrder": {},
+  "<DM>Rule": {
+    "1": {
+      "Name": "IoTTerminateMaterial",
+      "Description": "DEE to Terminate Material",
+      "Scope": "ConnectIoT",
+      "DEERule": "IoTTerminateMaterial"
+    }
+  }
+}

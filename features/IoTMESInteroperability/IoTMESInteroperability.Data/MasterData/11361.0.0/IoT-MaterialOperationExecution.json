@@ -1,0 +1,33 @@
+{
+  "<SM>DEEAction": {
+    "1": {
+      "Action": "IoTMaterialOperation",
+      "Description": "Material Operation Execution for IoT to load Entities",
+      "CodeFileRelativePath": "ConnectIoT//IoTMaterialOperation.cs",
+      "IsEnabled": "Yes",
+      "Classification": "ConnectIoT"
+    },
+    "2": {
+      "Action": "IoTCheckGetMaterialsFromPreviousSubResource",
+      "Description": "Material Operation Execution for IoT to CheckGetMaterialsFromPreviousSubResource",
+      "CodeFileRelativePath": "ConnectIoT//IoTCheckGetMaterialsFromPreviousSubResource.cs",
+      "IsEnabled": "Yes",
+      "Classification": "ConnectIoT"
+    }
+  },
+  "DEEActionOrder": {},
+  "<DM>Rule": {
+    "1": {
+      "Name": "IoTMaterialOperation",
+      "Description": "Material Operation Execution for IoT to load Entities",
+      "Scope": "ConnectIoT",
+      "DEERule": "IoTMaterialOperation"
+    },
+    "2": {
+      "Name": "IoTCheckGetMaterialsFromPreviousSubResource",
+      "Description": "Material Operation Execution for IoT to CheckGetMaterialsFromPreviousSubResource",
+      "Scope": "ConnectIoT",
+      "DEERule": "IoTCheckGetMaterialsFromPreviousSubResource"
+    }
+  }
+}
