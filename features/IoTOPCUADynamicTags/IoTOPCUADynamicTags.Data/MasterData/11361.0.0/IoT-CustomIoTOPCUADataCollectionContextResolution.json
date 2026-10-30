@@ -1,0 +1,309 @@
+{
+    "<SM>DEEAction": {
+        "1": {
+            "Action": "CustomIoTOPCUADataCollectionContextST",
+            "Description": "Send production order confirmation on Step with MarksProductCompletion",
+            "CodeFileRelativePath": "ConnectIoT//CustomIoTOPCUADataCollectionContextST.cs",
+            "IsEnabled": "Yes",
+            "Classification": "ConnectIoT"
+        }
+    },
+    "DEEActionOrder": {},
+    "<DM>Rule": {
+        "1": {
+            "Name": "CustomIoTOPCUADataCollectionContextST",
+            "Description": "Validate the data added in the CustomIoTOPCUADataCollectionContext SmartTable",
+            "Scope": "SmartTable",
+            "DEERule": "CustomIoTOPCUADataCollectionContextST"
+        }
+    },
+    "<SM>LocalizedMessageKey": {
+        "1": {
+            "Name": "CustomIoTDataCollectionSTEmptyExpected",
+            "Description": "Error message thrown after adding non-empty value in the Smart Table CustomIoTOPCUADataCollectionContext.",
+            "MessageType": "Message",
+            "en-US": "The value '{0}' of Column '{1}' should be empty when '{2}' is defined.",
+            "de-DE": "",
+            "zh-CN": "",
+            "pt-PT": "",
+            "zh-TW": "",
+            "UsageType": "Biz"
+        },
+        "2": {
+            "Name": "CustomIoTDataCollectionSTNotEmptyExpected",
+            "Description": "Error message thrown after adding empty value in the Smart Table CustomIoTOPCUADataCollectionContext.",
+            "MessageType": "Message",
+            "en-US": "The Column '{0}' should not be empty when '{1}' is defined.",
+            "de-DE": "",
+            "zh-CN": "",
+            "pt-PT": "",
+            "zh-TW": "",
+            "UsageType": "Biz"
+        },
+        "3": {
+            "Name": "CustomIoTDataCollectionSTWrongValue",
+            "Description": "Error message thrown after adding a wrong value in the Smart Table CustomIoTOPCUADataCollectionContext.",
+            "MessageType": "Message",
+            "en-US": "The value of Column '{0}' should not be '{1}' when '{2}' is defined..",
+            "de-DE": "",
+            "zh-CN": "",
+            "pt-PT": "",
+            "zh-TW": "",
+            "UsageType": "Biz"
+        },
+        "4": {
+            "Name": "CustomIoTDataCollectionSTInvalidInterval",
+            "Description": "Error message thrown after adding a wrong value in the Smart Table CustomIoTOPCUADataCollectionContext.",
+            "MessageType": "Message",
+            "en-US": "Invalid value of '{0}' for Interval. Should be greater than zero and less than 20000.",
+            "de-DE": "",
+            "zh-CN": "",
+            "pt-PT": "",
+            "zh-TW": "",
+            "UsageType": "Biz"
+        }
+    },
+    "<ST>SmartTable": {
+        "1": {
+            "Name": "CustomIoTOPCUADataCollectionContext",
+            "Description": "Generic table to hold OPC Tags to be fed into DataCollection dinamically",
+            "HistoryRetentionTime": "180",
+            "IsHistoryEnabled": "Yes",
+            "IsRepeatedValuesAllowed": "Yes",
+            "DataGroup": "",
+            "PreValidationRule": "CustomIoTOPCUADataCollectionContextST",
+            "PostValidationRule": ""
+        }
+    },
+    "SmartTableProperties": {
+        "1": {
+            "SmartTable": "CustomIoTOPCUADataCollectionContext",
+            "Name": "ResourceType",
+            "Position": "0",
+            "Description": "Resource Type",
+            "IsKey": "Yes",
+            "IsIndexed": "No",
+            "IsMandatory": "No",
+            "ScalarType": "NVarChar",
+            "Size": "256",
+            "ReferenceType": "LookupValue",
+            "ReferenceName": "ResourceType"
+        },
+        "2": {
+            "SmartTable": "CustomIoTOPCUADataCollectionContext",
+            "Name": "Resource",
+            "Position": "1",
+            "Description": "Resource Name",
+            "IsKey": "Yes",
+            "IsIndexed": "No",
+            "IsMandatory": "No",
+            "ScalarType": "NVarChar",
+            "Size": "256",
+            "ReferenceType": "EntityType",
+            "ReferenceName": "Resource.Name"
+        },
+        "3": {
+            "SmartTable": "CustomIoTOPCUADataCollectionContext",
+            "Name": "Property",
+            "Position": "2",
+            "Description": "Property Name",
+            "IsKey": "No",
+            "IsIndexed": "No",
+            "IsMandatory": "Yes",
+            "ScalarType": "NVarChar",
+            "Size": "256",
+            "ReferenceType": "None",
+            "ReferenceName": ""
+        },
+        "4": {
+            "SmartTable": "CustomIoTOPCUADataCollectionContext",
+            "Name": "Tag",
+            "Position": "3",
+            "Description": "OPCUA Node ID",
+            "IsKey": "No",
+            "IsIndexed": "No",
+            "IsMandatory": "Yes",
+            "ScalarType": "NVarChar",
+            "Size": "256",
+            "ReferenceType": "None",
+            "ReferenceName": ""
+        },
+        "5": {
+            "SmartTable": "CustomIoTOPCUADataCollectionContext",
+            "Name": "DataType",
+            "Position": "4",
+            "Description": "OPCUA Node ID Data Type",
+            "IsKey": "No",
+            "IsIndexed": "No",
+            "IsMandatory": "Yes",
+            "ScalarType": "Int",
+            "Size": "0",
+            "ReferenceType": "Enum",
+            "ReferenceName": "Cmf.Foundation.BusinessObjects.AutomationDataType"
+        },
+        "6": {
+            "SmartTable": "CustomIoTOPCUADataCollectionContext",
+            "Name": "DeviceType",
+            "Position": "5",
+            "Description": "Automation Protocol Data Type",
+            "IsKey": "No",
+            "IsIndexed": "No",
+            "IsMandatory": "Yes",
+            "ScalarType": "NVarChar",
+            "Size": "256",
+            "ReferenceType": "None",
+            "ReferenceName": ""
+        },
+        "7": {
+            "SmartTable": "CustomIoTOPCUADataCollectionContext",
+            "Name": "Event",
+            "Position": "6",
+            "Description": "Event Name",
+            "IsKey": "No",
+            "IsIndexed": "No",
+            "IsMandatory": "Yes",
+            "ScalarType": "NVarChar",
+            "Size": "256",
+            "ReferenceType": "None",
+            "ReferenceName": ""
+        },
+        "8": {
+            "SmartTable": "CustomIoTOPCUADataCollectionContext",
+            "Name": "DataCollection",
+            "Position": "7",
+            "Description": "Data Collection Name",
+            "IsKey": "No",
+            "IsIndexed": "No",
+            "IsMandatory": "No",
+            "ScalarType": "NVarChar",
+            "Size": "256",
+            "ReferenceType": "EntityDefinition",
+            "ReferenceName": "DataCollection.Name"
+        },
+        "9": {
+            "SmartTable": "CustomIoTOPCUADataCollectionContext",
+            "Name": "Parameter",
+            "Position": "8",
+            "Description": "Parameter Name",
+            "IsKey": "No",
+            "IsIndexed": "No",
+            "IsMandatory": "No",
+            "ScalarType": "NVarChar",
+            "Size": "256",
+            "ReferenceType": "EntityType",
+            "ReferenceName": "Parameter.Name"
+        },
+        "10": {
+            "SmartTable": "CustomIoTOPCUADataCollectionContext",
+            "Name": "CycleCounter",
+            "Position": "9",
+            "Description": "Event Cycle Counter",
+            "IsKey": "No",
+            "IsIndexed": "No",
+            "IsMandatory": "No",
+            "ScalarType": "Int",
+            "Size": "0",
+            "ReferenceType": "None",
+            "ReferenceName": ""
+        },
+        "11": {
+            "SmartTable": "CustomIoTOPCUADataCollectionContext",
+            "Name": "CronExpression",
+            "Position": "10",
+            "Description": "Cron Time Expression",
+            "IsKey": "No",
+            "IsIndexed": "No",
+            "IsMandatory": "No",
+            "ScalarType": "NVarChar",
+            "Size": "256",
+            "ReferenceType": "None",
+            "ReferenceName": ""
+        },
+        "12": {
+            "SmartTable": "CustomIoTOPCUADataCollectionContext",
+            "Name": "IsCheckLimits",
+            "Position": "11",
+            "Description": "Is to validate recipe limits?",
+            "IsKey": "No",
+            "IsIndexed": "No",
+            "IsMandatory": "Yes",
+            "ScalarType": "Bit",
+            "Size": "0",
+            "ReferenceType": "None",
+            "ReferenceName": ""
+        },
+        "13": {
+            "SmartTable": "CustomIoTOPCUADataCollectionContext",
+            "Name": "IsTrigger",
+            "Position": "12",
+            "Description": "Is to trigger the event?",
+            "IsKey": "No",
+            "IsIndexed": "No",
+            "IsMandatory": "Yes",
+            "ScalarType": "Bit",
+            "Size": "0",
+            "ReferenceType": "None",
+            "ReferenceName": ""
+        },
+        "14": {
+            "SmartTable": "CustomIoTOPCUADataCollectionContext",
+            "Name": "IsState",
+            "Position": "13",
+            "Description": "Is machine change state?",
+            "IsKey": "No",
+            "IsIndexed": "No",
+            "IsMandatory": "Yes",
+            "ScalarType": "Bit",
+            "Size": "0",
+            "ReferenceType": "None",
+            "ReferenceName": ""
+        },
+        "15": {
+            "SmartTable": "CustomIoTOPCUADataCollectionContext",
+            "Name": "IsShot",
+            "Position": "14",
+            "Description": "Is shot happened?",
+            "IsKey": "No",
+            "IsIndexed": "No",
+            "IsMandatory": "Yes",
+            "ScalarType": "Bit",
+            "Size": "0",
+            "ReferenceType": "None",
+            "ReferenceName": ""
+        },
+        "16": {
+            "SmartTable": "CustomIoTOPCUADataCollectionContext",
+            "Name": "Interval",
+            "Position": "15",
+            "Description": "Interval Value",
+            "IsKey": "No",
+            "IsIndexed": "No",
+            "IsMandatory": "No",
+            "ScalarType": "Int",
+            "Size": "0",
+            "ReferenceType": "None",
+            "ReferenceName": ""
+        },
+        "17": {
+            "SmartTable": "CustomIoTOPCUADataCollectionContext",
+            "Name": "CollectionMode",
+            "Position": "16",
+            "Description": "Collection Mode",
+            "IsKey": "No",
+            "IsIndexed": "No",
+            "IsMandatory": "No",
+            "ScalarType": "NVarChar",
+            "Size": "256",
+            "ReferenceType": "None",
+            "ReferenceName": ""
+        }
+    },
+    "SmartTablePrecedenceKeys": {
+        "1": {
+            "SmartTable": "CustomIoTOPCUADataCollectionContext",
+            "PrecedenceKey1": "ResourceType+Resource",
+            "PrecedenceKey2": "ResourceType",
+            "PrecedenceKey3": "Resource"
+        }
+    }
+}
