@@ -1,0 +1,79 @@
+{
+  "converters": [],
+  "tasks": [
+    {
+      "name": "storeSQLite",
+      "displayName": "Store SQLite",
+      "iconClass": "icon-coreatl-tasks-connect-iot-lg-store-data",
+      "isProtocol": false,
+      "isController": true,
+      "lifecycle": "Productive",
+      "lifecycleMessage": "",
+      "dependsOnProtocol": [],
+      "dependsOnScope": [],
+      "inputs": {
+        "_inputs": {
+          "type": "Dynamic",
+          "settings": {
+            "settingKey": "inputs",
+            "tabName": "Inputs",
+            "canAdd": true,
+            "canDelete": true,
+            "canSort": true,
+            "captionKey": "name",
+            "showPlaceholder": true,
+            "leafDefinition": [
+              {
+                "name": "name",
+                "displayName": "Name",
+                "settingKey": "name",
+                "dataType": "String",
+                "isMandatory": true
+              },
+              {
+                "name": "tableName",
+                "displayName": "Table Name",
+                "settingKey": "tableName",
+                "dataType": "String",
+                "infoMessage": "If no value specified will use the name",
+                "isMandatory": false
+              },
+              {
+                "name": "idElement",
+                "displayName": "Id Element",
+                "settingKey": "idElement",
+                "dataType": "String",
+                "infoMessage": "If no value specified will use a random GUID",
+                "isMandatory": false
+              },
+              {
+                "name": "ttl",
+                "displayName": "Time To Live",
+                "settingKey": "ttl",
+                "dataType": "Integer",
+                "isMandatory": false,
+                "infoMessage": "Time to Live for the inserted row in seconds"
+              }
+            ]
+          }
+        },
+        "activate": {
+          "type": "Activate",
+          "dataType": "String",
+          "displayName": "Activate",
+          "defaultValue": ""
+        }
+      },
+      "outputs": {
+        "success": {
+          "type": "Success",
+          "displayName": "Success"
+        },
+        "error": {
+          "type": "Error",
+          "displayName": "Error"
+        }
+      }
+    }
+  ]
+}
