@@ -1,0 +1,142 @@
+{
+  "<ST>SmartTable": {
+    "1": {
+      "Name": "CustomIoTOPCUARecipeContext",
+      "Description": "Smart table to hold OPC Tags to be used in Recipe Management dinamically",
+      "HistoryRetentionTime": "180",
+      "IsHistoryEnabled": "Yes",
+      "IsRepeatedValuesAllowed": "Yes",
+      "DataGroup": "",
+      "PreValidationRule": "",
+      "PostValidationRule": ""
+    }
+  },
+  "SmartTableProperties": {
+    "1": {
+      "SmartTable": "CustomIoTOPCUARecipeContext",
+      "Name": "ResourceType",
+      "Position": "0",
+      "Description": "Resource Type",
+      "IsKey": "Yes",
+      "IsIndexed": "No",
+      "IsMandatory": "No",
+      "ScalarType": "NVarChar",
+      "Size": "256",
+      "ReferenceType": "LookupValue",
+      "ReferenceName": "ResourceType"
+    },
+    "2": {
+      "SmartTable": "CustomIoTOPCUARecipeContext",
+      "Name": "Resource",
+      "Position": "1",
+      "Description": "Resource Name",
+      "IsKey": "Yes",
+      "IsIndexed": "No",
+      "IsMandatory": "No",
+      "ScalarType": "NVarChar",
+      "Size": "256",
+      "ReferenceType": "EntityType",
+      "ReferenceName": "Resource.Name"
+    },
+    "3": {
+      "SmartTable": "CustomIoTOPCUARecipeContext",
+      "Name": "Tag",
+      "Position": "2",
+      "Description": "OPCUA Node ID",
+      "IsKey": "No",
+      "IsIndexed": "No",
+      "IsMandatory": "Yes",
+      "ScalarType": "NVarChar",
+      "Size": "256",
+      "ReferenceType": "None",
+      "ReferenceName": ""
+    },
+    "4": {
+      "SmartTable": "CustomIoTOPCUARecipeContext",
+      "Name": "DataType",
+      "Position": "3",
+      "Description": "OPCUA Node ID Data Type",
+      "IsKey": "No",
+      "IsIndexed": "No",
+      "IsMandatory": "Yes",
+      "ScalarType": "Int",
+      "Size": "0",
+      "ReferenceType": "Enum",
+      "ReferenceName": "Cmf.Foundation.BusinessObjects.AutomationDataType"
+    },
+    "5": {
+      "SmartTable": "CustomIoTOPCUARecipeContext",
+      "Name": "DeviceType",
+      "Position": "4",
+      "Description": "Automation Protocol Data Type",
+      "IsKey": "No",
+      "IsIndexed": "No",
+      "IsMandatory": "Yes",
+      "ScalarType": "NVarChar",
+      "Size": "256",
+      "ReferenceType": "None",
+      "ReferenceName": ""
+    },
+    "6": {
+      "SmartTable": "CustomIoTOPCUARecipeContext",
+      "Name": "Recipe",
+      "Position": "5",
+      "Description": "Recipe Name",
+      "IsKey": "No",
+      "IsIndexed": "No",
+      "IsMandatory": "Yes",
+      "ScalarType": "NVarChar",
+      "Size": "256",
+      "ReferenceType": "None",
+      "ReferenceName": ""
+    },
+    "7": {
+      "SmartTable": "CustomIoTOPCUARecipeContext",
+      "Name": "IsToSet",
+      "Position": "6",
+      "Description": "Is to set?",
+      "IsKey": "No",
+      "IsIndexed": "No",
+      "IsMandatory": "Yes",
+      "ScalarType": "Bit",
+      "Size": "0",
+      "ReferenceType": "None",
+      "ReferenceName": ""
+    },
+    "8": {
+      "SmartTable": "CustomIoTOPCUARecipeContext",
+      "Name": "IsToDownloadFromEquipment",
+      "Position": "7",
+      "Description": "Is to Download Recipe from Equipment?",
+      "IsKey": "No",
+      "IsIndexed": "No",
+      "IsMandatory": "Yes",
+      "ScalarType": "Bit",
+      "Size": "0",
+      "ReferenceType": "None",
+      "ReferenceName": ""
+    },
+    "9": {
+      "SmartTable": "CustomIoTOPCUARecipeContext",
+      "Name": "Parameter",
+      "Position": "8",
+      "Description": "Recipe Parameter mapping",
+      "IsKey": "No",
+      "IsIndexed": "No",
+      "IsMandatory": "No",
+      "ScalarType": "NVarChar",
+      "Size": "256",
+      "ReferenceType": "EntityType",
+      "ReferenceName": "Parameter.Name"
+    }
+  },
+  "SmartTablePrecedenceKeys": {
+    "1": {
+      "SmartTable": "CustomIoTOPCUARecipeContext",
+      "PrecedenceKey1": "ResourceType+Resource+Recipe",
+      "PrecedenceKey2": "Resource+Recipe",
+      "PrecedenceKey3": "Resource",
+      "PrecedenceKey4": "Recipe"
+    }
+  }
+}
