@@ -93,24 +93,6 @@ export class DocsAreaCmfCustomHelpMetadataService extends PackageMetadata {
                 menuGroupId: 'Shell.cmf-custom-help',
                 title: 'Technical Specification',
                 actionId: ''
-              },
-              {
-                id: 'cmf-custom-help.userguide',
-                menuGroupId: 'Shell.cmf-custom-help',
-                title: 'User Guide',
-                actionId: ''
-              },
-              {
-                id: 'cmf-custom-help.releasenotes',
-                menuGroupId: 'Shell.cmf-custom-help',
-                title: 'Release Notes',
-                actionId: ''
-              },
-              {
-                id: 'cmf-custom-help.faq',
-                menuGroupId: 'Shell.cmf-custom-help',
-                title: 'FAQ',
-                actionId: ''
               }
         ];
     }
