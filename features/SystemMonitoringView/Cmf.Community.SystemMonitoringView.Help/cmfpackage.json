@@ -1,0 +1,18 @@
+{
+  "packageId": "Cmf.Community.SystemMonitoringView.Help",
+  "version": "11361.0.0",
+  "description": "Cmf Custom Community Cmf.Community.SystemMonitoringView.Help Package",
+  "packageType": "Help",
+  "targetLayer": "reference",
+  "isInstallable": true,
+  "isUniqueInstall": false,
+  "contentToPack": [
+    {
+      "source": "dist/documentation-portal/**",
+      "target": "",
+      "ignoreFiles": [
+        ".npmignore"
+      ]
+    }
+  ]
+}

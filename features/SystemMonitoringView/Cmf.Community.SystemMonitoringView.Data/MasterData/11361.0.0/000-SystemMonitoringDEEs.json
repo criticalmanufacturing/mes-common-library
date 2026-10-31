@@ -1,0 +1,18 @@
+{
+  "<SM>DEEAction": {
+    "1": {
+      "Action": "CustomAppendInstalledCustomizationPackages",
+      "Description": "Appends the installed customization packages matching the configured patterns to System Monitoring > Application > Versioning",
+      "CodeFileRelativePath": "Monitoring/CustomAppendInstalledCustomizationPackages.cs",
+      "IsEnabled": "Yes",
+      "Classification": "General"
+    }
+  },
+  "DEEActionOrder": {
+    "1": {
+      "ActionGroup": "ApplicationMonitoringManagement.ApplicationMonitoringManagementOrchestration.GetApplicationMonitoringInformation.Post",
+      "Action": "CustomAppendInstalledCustomizationPackages",
+      "Order": "1"
+    }
+  }
+}

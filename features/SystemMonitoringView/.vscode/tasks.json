@@ -1,0 +1,93 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "cmf": true,
+            "label": "download-daily-backup",
+            "type": "shell",
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "command": "cmf dev local downloadBackup -cc -f"
+        },
+        {
+            "cmf": true,
+            "label": "stack-up",
+            "type": "shell",
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "command": "cmf dev local stack up -c .localenv/seleniumgrid"
+        },
+        {
+            "cmf": true,
+            "label": "stack-up-envmanager-boot-package",
+            "type": "shell",
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "command": "npx --yes cross-env ENV_MANAGER_BOOT_PACKAGE='${input:envManagerBootPackage}' cmf dev local stack up -c .localenv/seleniumgrid"
+        },
+        {
+            "cmf": true,
+            "label": "stack-up-extended",
+            "type": "shell",
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "command": "cmf dev local stack up --profile tools -c .localenv/extended -c .localenv/seleniumgrid"
+        },
+        {
+            "cmf": true,
+            "label": "stack-up-iot-manager",
+            "type": "shell",
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "command": "npx --yes cross-env CONNECT_IOT_MANAGER_NAME='${input:managerName}' cmf dev local stack up -c .localenv/iotmanager"
+        },
+        {
+            "cmf": true,
+            "label": "stack-up-data-platform",
+            "type": "shell",
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "command": "cmf dev local stack up -c .localenv/dataplatform"
+        },
+        {
+            "cmf": true,
+            "label": "stack-down",
+            "type": "shell",
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "command": "cmf dev local stack down -c .localenv/seleniumgrid"
+        },
+        {
+            "cmf": true,
+            "label": "stack-down-remove-volumes",
+            "type": "shell",
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "command": "cmf dev local stack down --remove-volumes"
+        }
+    ],
+    "inputs": [
+        {
+            "cmf": true,
+            "id": "envManagerBootPackage",
+            "description": "EnvManager boot package (<packageId>@<version>)",
+            "type": "promptString",
+            "default": "Cmf.Community.SystemMonitoringView@11361.0.0"
+        },
+        {
+            "cmf": true,
+            "id": "managerName",
+            "description": "Manager Name",
+            "type": "promptString",
+            "default": "TestManager"
+        }
+    ]
+}
