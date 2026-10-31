@@ -1,6 +1,6 @@
 {
   "name": "@criticalmanufacturing/audit",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Plugin used to audit CM CLI based projects",
   "bin": {
     "cmf-audit": "./run.js"
