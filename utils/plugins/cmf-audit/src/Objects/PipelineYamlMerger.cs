@@ -9,17 +9,19 @@ namespace audit.Objects
     /// </summary>
     internal static class PipelineYamlMerger
     {
-        public const string AuditJobTemplate = ".tasks/audit-review-job.yml";
-        public const string RunAuditReviewVariable = "RunAuditReview";
+        public const string AuditReviewTemplate = ".tasks/audit-review.yml";
+        public const string AuditStageName = "AuditReview";
+        public const string AuditPackageVariable = "CmfAuditPackageToInstall";
 
         private static readonly Regex TopLevelKey = new(@"^[A-Za-z_][\w.-]*\s*:");
 
         #region Readers
 
         /// <summary>
-        /// Whether the CD-Containers pipeline already references the audit job.
+        /// Whether the CD-Containers pipeline already includes the audit review.
         /// </summary>
-        public static bool IsAuditMerged(string cdContainers) => cdContainers.Contains(AuditJobTemplate);
+        public static bool IsAuditMerged(string cdContainers) =>
+            cdContainers.Contains(AuditReviewTemplate) || HasStage(cdContainers, AuditStageName);
 
         /// <summary>
         /// Whether the pipeline declares a stage named <paramref name="stageName"/>.
@@ -201,14 +203,14 @@ namespace audit.Objects
         }
 
         /// <summary>
-        /// Merges the audit (runtime parameters, variables and the AuditReview stage) into a CD-Containers pipeline.
-        /// The stage is appended at the end of the stages so that no existing stage starts implicitly depending on it.
+        /// Merges the AuditReview stage into a CD-Containers pipeline, right after the Installation stage: it installs the
+        /// Cmf.Audit package into the environment and runs the audit against it. RestorePoint, when it was waiting for
+        /// Installation, now waits for AuditReview.
         /// </summary>
         /// <param name="cdContainers">The pipeline content.</param>
         /// <param name="environmentExpression">Expression that resolves the target environment (see <see cref="ResolveEnvironmentExpression"/>).</param>
-        /// <param name="securityAccessTokenSecretName">Default name of the secret variable holding the audit's security access token.</param>
-        /// <param name="runAuditReviewVariableValue">When set, also declares the RunAuditReview variable in the pipeline itself (used when there is no global.yml).</param>
-        public static string MergeIntoCdContainers(string cdContainers, string environmentExpression, string securityAccessTokenSecretName, string? runAuditReviewVariableValue = null)
+        /// <param name="auditPackageToInstall">When set, also declares the CmfAuditPackageToInstall variable in the pipeline itself (used when there is no global.yml).</param>
+        public static string MergeIntoCdContainers(string cdContainers, string environmentExpression, string? auditPackageToInstall = null)
         {
             if (IsAuditMerged(cdContainers))
             {
@@ -218,89 +220,98 @@ namespace audit.Objects
             var newline = DetectNewline(cdContainers);
             var lines = Split(cdContainers);
 
-            // Stage (appended first, as it sits at the end of the file and does not shift the other blocks)
-            var stagesStart = FindTopLevelKey(lines, "stages");
-            if (stagesStart < 0)
+            var installation = lines.FindIndex(l => Regex.IsMatch(l, @"^\s*-\s*stage\s*:\s*Installation\s*$"));
+            if (installation < 0)
             {
-                throw new InvalidOperationException("No top-level 'stages' block found.");
+                throw new InvalidOperationException("No 'Installation' stage found.");
             }
-            InsertListItems(lines, stagesStart, FindBlockEnd(lines, stagesStart),
+            var stageIndent = new string(' ', Indentation(lines[installation]));
+            var nonProdOnly = cdContainers.Contains("IsProdBranch");
+            var hasTimeout = cdContainers.Contains("DeploymentTimeoutMinutes");
+
+            // RestorePoint first, as it usually comes after Installation and the insertions below would shift it
+            var restorePoint = lines.FindIndex(l => Regex.IsMatch(l, @"^\s*-\s*stage\s*:\s*RestorePoint\s*$"));
+            if (restorePoint >= 0)
+            {
+                var end = FindStageEnd(lines, restorePoint);
+                for (var i = restorePoint; i < end; i++)
+                {
+                    lines[i] = Regex.Replace(lines[i], @"(?<=dependsOn\s*:\s*)Installation\b", AuditStageName);
+                    lines[i] = Regex.Replace(lines[i],
+                        @"eq\(dependencies\.Installation\.result,\s*'Succeeded'\)",
+                        $"in(dependencies.{AuditStageName}.result, 'Succeeded', 'SucceededWithIssues')");
+                }
+            }
+
+            // Stage, after Installation
+            List<string> stage =
             [
                 "",
-                "- stage: AuditReview",
+                $"- stage: {AuditStageName}",
                 "  displayName: Audit Review",
-                "  dependsOn: RunTests",
+                "  dependsOn: Installation",
                 "  condition: |",
                 "    and(",
-                "      or(",
-                $"        and(eq('${{{{ parameters.ExecuteAllStages }}}}', true), in(dependencies.RunTests.result, 'Succeeded', 'SucceededWithIssues'), eq(variables['{RunAuditReviewVariable}'], true)),",
-                $"        and(eq('${{{{ parameters.ExecuteAllStages }}}}', false), eq('${{{{ parameters.{RunAuditReviewVariable} }}}}', true))",
-                "      ),",
+                .. nonProdOnly ? new[] { "      eq(variables['IsProdBranch'], 'False')," } : Array.Empty<string>(),
+                "      in(dependencies.Installation.result, 'Succeeded', 'Skipped'),",
                 "      not(failed()),",
                 "      not(canceled())",
                 "    )",
                 "  jobs:",
-                $"  - template: {AuditJobTemplate}",
-                "    parameters:",
-                $"      Environment: {environmentExpression}",
-                "      SecurityAccessTokenSecretName: ${{ parameters.SecurityAccessTokenSecretName }}",
-                "      SecurityAccessTokenOverride: $(SecurityAccessTokenOverride)",
-            ]);
-
-            // Runtime parameters, right after the RunTests one when present
-            List<string> parameters =
-            [
-                $"- name: {RunAuditReviewVariable}",
-                "  displayName: Run Audit Review",
-                "  type: boolean",
-                "  default: false",
-                "# Name of the secret pipeline variable (Library) holding the audit's security access token.",
-                "# Ignored when SecurityAccessTokenOverride is set at queue time.",
-                "- name: SecurityAccessTokenSecretName",
-                "  displayName: Audit Review Security Access Token Secret Name",
-                "  type: string",
-                $"  default: {securityAccessTokenSecretName}",
+                "  - job: AuditReview",
+                "    displayName: Audit Review",
+                "    container: build-runner",
+                .. hasTimeout ? new[] { "    timeoutInMinutes: ${{ variables.DeploymentTimeoutMinutes }}" } : Array.Empty<string>(),
+                "    workspace:",
+                "      clean: all",
+                "    steps:",
+                "    # Audit reads the project's own sources (.project-config.json, cmfpackage.json, etc...)",
+                "    - checkout: self",
+                "",
+                "    # Read Release Manifest",
+                "    - template: .tasks/read-release-manifest.yml",
+                "      parameters:",
+                $"        Environment: {environmentExpression}",
+                "        CustomerPortalPAT: $(EnvironmentCustomerPortalPAT)",
+                "",
+                "    # Login with CP token",
+                "    - template: .tasks/cmf-login.yml",
+                "      parameters:",
+                "        CustomerPortalPAT: $(EnvironmentCustomerPortalPAT)",
+                "",
+                "    # Assembling Audit Package",
+                "    - template: .tasks/assembling-audit-package.yml",
+                "",
+                "    # Audit Package Installation",
+                "    - template: .tasks/portal-deploy.yml",
+                "      parameters:",
+                "        PackageToInstall: '$(CmfAuditPackageToInstall)'",
+                "        displayName: Audit Package Installation",
+                "        CustomerPortalPAT: $(EnvironmentCustomerPortalPAT)",
+                "",
+                "    # Install cmf-audit, generate PAT and run the Audit Review",
+                $"    - template: {AuditReviewTemplate}",
             ];
-            var parametersStart = FindTopLevelKey(lines, "parameters");
-            if (parametersStart < 0)
-            {
-                lines.InsertRange(stagesStart, ["parameters:", .. parameters, ""]);
-            }
-            else
-            {
-                var parametersEnd = FindBlockEnd(lines, parametersStart);
-                var runTests = FindParameter(lines, "RunTests");
-                var insertAt = runTests >= 0 ? FindListItemEnd(lines, runTests, parametersEnd) : parametersEnd;
-                InsertListItems(lines, parametersStart, insertAt, parameters);
-            }
+            lines.InsertRange(FindStageEnd(lines, installation), stage.Select(item => item.Length == 0 ? item : stageIndent + item));
 
-            // Variables
-            List<string> variables =
-            [
-                "# Ad hoc security access token for the Audit Review stage, for one-off runs without a pre-registered secret.",
-                "# Leave blank to use SecurityAccessTokenSecretName instead. To set this, use the \"Variables\" tab",
-                "# (not \"Parameters\") when queuing the run, and tick \"Keep this value secret\" - never set a real",
-                "# token here or as a parameter, since parameter values are shown in plain text in the run summary.",
-                "- name: SecurityAccessTokenOverride",
-                "  value: ''",
-            ];
-            if (runAuditReviewVariableValue != null)
+            // Variable
+            if (auditPackageToInstall != null)
             {
-                variables.AddRange(
+                List<string> variables =
                 [
-                    "# Defines if the CD-Containers should run the Audit Review after Run Tests",
-                    $"- name: {RunAuditReviewVariable}",
-                    $"  value: {runAuditReviewVariableValue}",
-                ]);
-            }
-            var variablesStart = FindTopLevelKey(lines, "variables");
-            if (variablesStart < 0)
-            {
-                lines.InsertRange(FindTopLevelKey(lines, "parameters"), ["variables:", .. variables, ""]);
-            }
-            else
-            {
-                InsertListItems(lines, variablesStart, FindBlockEnd(lines, variablesStart), variables);
+                    "# Cmf.Audit customization package installed by the CD-Containers Audit Review stage (Id@version)",
+                    $"- name: {AuditPackageVariable}",
+                    $"  value: '{auditPackageToInstall}'",
+                ];
+                var variablesStart = FindTopLevelKey(lines, "variables");
+                if (variablesStart < 0)
+                {
+                    lines.InsertRange(FindTopLevelKey(lines, "stages"), ["variables:", .. variables, ""]);
+                }
+                else
+                {
+                    InsertListItems(lines, variablesStart, FindBlockEnd(lines, variablesStart), variables);
+                }
             }
 
             return Join(lines, newline);
@@ -336,6 +347,27 @@ namespace audit.Objects
                 end++;
             }
             while (end - 1 > start && (string.IsNullOrWhiteSpace(lines[end - 1]) || lines[end - 1].StartsWith('#')))
+            {
+                end--;
+            }
+            return end;
+        }
+
+        /// <summary>
+        /// Index right after the last content line of the stage that starts at <paramref name="start"/>
+        /// (stopping at the next sibling stage, or at the next top-level key).
+        /// </summary>
+        private static int FindStageEnd(List<string> lines, int start)
+        {
+            var indent = Indentation(lines[start]);
+            var end = start + 1;
+            while (end < lines.Count
+                   && !TopLevelKey.IsMatch(lines[end])
+                   && !(Indentation(lines[end]) == indent && Regex.IsMatch(lines[end], @"^\s*-\s*stage\s*:")))
+            {
+                end++;
+            }
+            while (end - 1 > start && string.IsNullOrWhiteSpace(lines[end - 1]))
             {
                 end--;
             }

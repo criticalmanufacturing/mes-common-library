@@ -1,12 +1,8 @@
-# HostAddress/TenantName/UseSSL default to .tasks/read-project-config.yml output when not overridden by the caller
 parameters:
   SecurityAccessToken: ''
-  # Ad hoc token, resolved at runtime; wins over SecurityAccessToken when non-empty. Pass a
-  # queue-time variable marked secret here, never a literal value.
-  SecurityAccessTokenOverride: ''
-  HostAddress: '$(ProjectConfig.HostAddress)'
-  TenantName: '$(ProjectConfig.TenantName)'
-  UseSSL: '$(ProjectConfig.UseSSL)'
+  HostAddress: '$(EnvConfig.MES.APPLICATION_PUBLIC_HTTP_ADDRESS)'
+  TenantName: '$(EnvConfig.MES.TENANT_NAME)'
+  UseSSL: '$(EnvConfig.MES.APPLICATION_PUBLIC_HTTP_TLS_ENABLED)'
 
 steps:
 - script: |
@@ -14,7 +10,7 @@ steps:
     hostAddress="${{ parameters.HostAddress }}"
     tenantName="${{ parameters.TenantName }}"
     useSSL="${{ parameters.UseSSL }}"
-    securityAccessToken="${SECURITY_ACCESS_TOKEN_OVERRIDE:-$SECURITY_ACCESS_TOKEN}"
+    securityAccessToken="$SECURITY_ACCESS_TOKEN"
 
     # cmf-audit silently accepts empty values and --useSSL even swallows the next token,
     # so validate here to fail with an actionable message instead
@@ -28,12 +24,11 @@ steps:
     esac
     if [ ${#invalid[@]} -gt 0 ]; then
       echo "##vso[task.logissue type=error]Missing or invalid audit review inputs: ${invalid[*]}"
-      echo "Check the Read Release Manifest / Read Project Config and Generate Token steps."
+      echo "Check the Read Release Manifest and Generate MES PAT steps."
       exit 1
     fi
 
-    # securityAccessToken is masked down to its first/last char so it can't leak into build logs,
-    # regardless of whether the caller remembered to mark it as a secret
+    # securityAccessToken is masked down to its first/last char so it can't leak into build logs
     maskedToken="${securityAccessToken:0:1}***${securityAccessToken: -1}"
     echo "cmf-audit review arguments:"
     echo "  postEvent            = true"
@@ -52,8 +47,6 @@ steps:
   displayName: Run Audit Review
   workingDirectory: $(Build.SourcesDirectory)
   env:
-    # Mapped explicitly (rather than interpolated via ${{ parameters.SecurityAccessToken }}) so that
-    # secret variables passed in are resolved securely; macro syntax ($(var)) is not substituted for
-    # secrets inside script text.
+    # Mapped explicitly so that secret variables are resolved securely; macro syntax ($(var))
+    # is not substituted for secrets inside script text.
     SECURITY_ACCESS_TOKEN: ${{ parameters.SecurityAccessToken }}
-    SECURITY_ACCESS_TOKEN_OVERRIDE: ${{ parameters.SecurityAccessTokenOverride }}
