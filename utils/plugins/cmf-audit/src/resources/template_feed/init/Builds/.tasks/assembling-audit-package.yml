@@ -1,0 +1,19 @@
+parameters:
+  PackageToInstall: '$(CmfAuditPackageToInstall)'
+
+steps:
+# Copy the Cmf.Audit package archive to the Release Candidates Share
+- script: |
+    CandidatePackages="/mnt/volumes/$(EnvConfig.MES.SYSTEM_NAME)/packages"
+    # Copy the repositories.json file here
+    cp '$(ReleaseManifestDirectory)/repositories.json' .
+
+    # Create the folders if they do not yet exist
+    mkdir -p "$CandidatePackages"
+
+    cmf-pipeline package download --case-correction \
+                                  --workingDir "$CandidatePackages" \
+                                  --packages "${{ parameters.PackageToInstall }}"
+  displayName: Assembling Audit Package
+  env:
+    cmf_cli_feature__use_repository_clients: true

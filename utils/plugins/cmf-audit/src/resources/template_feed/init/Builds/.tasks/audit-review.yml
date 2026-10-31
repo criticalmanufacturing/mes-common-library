@@ -1,0 +1,16 @@
+# Installs cmf-audit, generates a MES PAT for the environment under audit and runs the Audit Review.
+# Requires the Release Manifest to have been read (EnvConfig) and a cmf login (CollabHub npm registry credentials).
+
+steps:
+# cmf-audit is a Node package that ships a .NET apphost
+- template: use-node-version.yml
+- template: use-dotnet-version.yml
+
+- template: install-cmf-audit.yml
+
+# Generate MES PAT
+- template: generate-pat.yml
+
+- template: run-audit-review.yml
+  parameters:
+    SecurityAccessToken: $(MESPersonalAccessToken.Value)
