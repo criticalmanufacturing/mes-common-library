@@ -8,10 +8,6 @@
   "dependencies": [],
   "steps": [],
   "contentToPack": [
-    {
-      "source": "ONLINE/UpgradeScripts/$(version)/*",
-      "target": "Online/"
-    },
 	{
       "source": "ONLINE/UserDataModel/Tables/*",
       "target": "Online/"
@@ -36,10 +32,6 @@
       "source": "ONLINE/UserDataModel/User Defined Types/*",
       "target": "Online/"
     },
-    {
-      "source": "ODS/UpgradeScripts/$(version)/*",
-      "target": "ODS/"
-    },
 	{
       "source": "ODS/UserDataModel/Tables/*",
       "target": "ODS/"
@@ -63,10 +55,6 @@
 	{
       "source": "ODS/UserDataModel/User Defined Types/*",
       "target": "ODS/"
-    },
-	{
-      "source": "DWH/UpgradeScripts/$(version)/*",
-      "target": "DWH/"
     },
 	{
       "source": "DWH/UserDataModel/Tables/*",

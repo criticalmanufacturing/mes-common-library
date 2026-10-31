@@ -58,8 +58,6 @@
     <Folder Include="Properties" />
     <Folder Include="Security" />
     <Folder Include="Security\Schemas" />
-    <Folder Include="UpgradeScripts" />
-    <Folder Include="UpgradeScripts\1.1.0" />
     <Folder Include="UserDataModel" />
     <Folder Include="UserDataModel\Functions" />
     <Folder Include="UserDataModel\Stored Procedures" />
@@ -72,6 +70,5 @@
     <None Include="Security\Schemas\UserDataModel.sql" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="UpgradeScripts\1.1.0\001-CreateUserDataModel.sql" />
   </ItemGroup>
 </Project>

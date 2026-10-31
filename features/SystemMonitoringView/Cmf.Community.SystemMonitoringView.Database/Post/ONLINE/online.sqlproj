@@ -57,8 +57,6 @@
   <Import Condition="'$(SQLDBExtensionsRefPath)' == ''" Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets" />
   <ItemGroup>
     <Folder Include="Properties" />    
-    <Folder Include="UpgradeScripts" />
-    <Folder Include="UpgradeScripts\11361.0.0" />
     <Folder Include="Security" />
     <Folder Include="Security\Schemas" />
     <Folder Include="UserDataModel" />
@@ -71,7 +69,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Security\Schemas\UserDataModel.sql" /> 
-    <None Include="UpgradeScripts\11361.0.0\001-CreateUserDataModel.sql" />
     <None Include="UserDataModel\Views\V_InstalledPackage.sql" />
   </ItemGroup>
 </Project>
