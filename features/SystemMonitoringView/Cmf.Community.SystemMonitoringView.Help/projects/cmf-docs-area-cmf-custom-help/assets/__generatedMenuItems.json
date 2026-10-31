@@ -1,0 +1,14 @@
+[
+  {
+    "id": "cmf-custom-help.features",
+    "menuGroupId": "cmf-custom-help.techspec",
+    "title": "Features",
+    "actionId": ""
+  },
+  {
+    "id": "cmf-custom-help.systemmonitoringversioning",
+    "menuGroupId": "cmf-custom-help.features",
+    "title": "System Monitoring - Installed Customization Packages",
+    "actionId": ""
+  }
+]
