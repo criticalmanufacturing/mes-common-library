@@ -22,7 +22,6 @@ namespace Cmf.Cli.Plugin.Audit.Commands.install
     public class Init : TemplateCommand
     {
         public const string AuditPackageName = "Cmf.Audit";
-        public const string DefaultSecurityAccessTokenSecretName = "AuditSecurityAccessToken";
 
         /// <summary>
         /// Pipeline files owned by the audit: written on a clean init, only overwritten with --force.
@@ -30,14 +29,14 @@ namespace Cmf.Cli.Plugin.Audit.Commands.install
         internal static readonly string[] AuditBuildFiles =
         [
             "CD-AuditReview.yml",
-            ".tasks/audit-review-job.yml",
+            ".tasks/assembling-audit-package.yml",
+            ".tasks/audit-review.yml",
             ".tasks/install-cmf-audit.yml",
-            ".tasks/read-project-config.yml",
             ".tasks/run-audit-review.yml",
         ];
 
         /// <summary>
-        /// Generic tasks the audit job depends on, which projects initialized by cmf-pipeline already have:
+        /// Generic tasks the audit depends on, which projects initialized by cmf-pipeline already have:
         /// only written when missing, never overwritten.
         /// </summary>
         internal static readonly string[] SharedBuildFiles =
@@ -78,7 +77,7 @@ namespace Cmf.Cli.Plugin.Audit.Commands.install
 
             cmd.AddOption(new Option<bool?>(
                 aliases: ["--includeInCDContainers"],
-                description: "Whether to merge the Audit Review stage into Builds/CD-Containers.yml. Prompted when not provided (default: true)"));
+                description: "Whether to merge the Audit Review stage (installs Cmf.Audit and runs the audit) into Builds/CD-Containers.yml. Prompted when not provided (default: true)"));
 
             cmd.AddOption(new Option<string>(
                 aliases: ["--agentPool"],
@@ -87,11 +86,6 @@ namespace Cmf.Cli.Plugin.Audit.Commands.install
             cmd.AddOption(new Option<string>(
                 aliases: ["--defaultServiceConnection"],
                 description: "Service connection used to pull the build-runner image. Defaults to the one used by CD-Containers or global.yml"));
-
-            cmd.AddOption(new Option<string>(
-                aliases: ["--securityAccessTokenSecretName"],
-                description: "Name of the secret pipeline variable holding the MES security access token used by the audit",
-                getDefaultValue: () => DefaultSecurityAccessTokenSecretName));
 
             cmd.AddOption(new Option<string>(
                 aliases: ["--cmfAuditVersion"],
@@ -107,15 +101,14 @@ namespace Cmf.Cli.Plugin.Audit.Commands.install
                 aliases: ["--force"],
                 description: "Overwrite the audit files (Cmf.Audit package and audit pipelines) if they already exist"));
 
-            cmd.Handler = CommandHandler.Create<bool?, bool?, string, string, string, string, Uri, bool>(
-                (azureDevOps, includeInCDContainers, agentPool, defaultServiceConnection, securityAccessTokenSecretName, cmfAuditVersion, cmfAuditRegistry, force) =>
+            cmd.Handler = CommandHandler.Create<bool?, bool?, string, string, string, Uri, bool>(
+                (azureDevOps, includeInCDContainers, agentPool, defaultServiceConnection, cmfAuditVersion, cmfAuditRegistry, force) =>
                     Execute(new InitArguments
                     {
                         AzureDevOps = azureDevOps,
                         IncludeInCDContainers = includeInCDContainers,
                         AgentPool = agentPool,
                         DefaultServiceConnection = defaultServiceConnection,
-                        SecurityAccessTokenSecretName = securityAccessTokenSecretName,
                         CmfAuditVersion = cmfAuditVersion,
                         CmfAuditRegistry = cmfAuditRegistry,
                         Force = force,
@@ -136,7 +129,7 @@ namespace Cmf.Cli.Plugin.Audit.Commands.install
                 throw new CliException("'audit init' is currently not supported for projects hosted on GitHub.");
             }
 
-            CopyAuditPackage(projectRoot, args.Force);
+            var auditPackage = CopyAuditPackage(projectRoot, args.Force);
 
             var azureDevOps = Ask(args.AzureDevOps, "Is this project using [green]Azure DevOps[/] pipelines?", defaultValue: true);
             if (!azureDevOps)
@@ -150,6 +143,7 @@ namespace Cmf.Cli.Plugin.Audit.Commands.install
             var cdContainers = cdContainersFile.Exists ? this.fileSystem.File.ReadAllText(cdContainersFile.FullName) : null;
 
             GenerateAuditPipelines(builds, cdContainers, args);
+            var declaredInGlobalYml = DeclareAuditPackageInGlobalYml(builds, auditPackage);
 
             if (cdContainers == null)
             {
@@ -157,7 +151,7 @@ namespace Cmf.Cli.Plugin.Audit.Commands.install
             }
             else if (Ask(args.IncludeInCDContainers, "Include the [green]Audit Review[/] stage in CD-Containers?", defaultValue: true))
             {
-                MergeIntoCdContainers(builds, cdContainersFile, cdContainers, args);
+                MergeIntoCdContainers(builds, cdContainersFile, cdContainers, declaredInGlobalYml ? null : auditPackage);
             }
 
             Log.Information("Audit initialization finished.");
@@ -193,10 +187,11 @@ namespace Cmf.Cli.Plugin.Audit.Commands.install
         }
 
         /// <summary>
-        /// Copies the Cmf.Audit package matching the project's MES version to the project root,
-        /// and registers it as a dependency of the project's root package.
+        /// Copies the Cmf.Audit package matching the project's MES version to the project root.
+        /// It is deliberately not a dependency of the project's root package: the audit pipelines install it
+        /// into the environment on their own, so it has its own lifecycle. Returns it as "Id@version".
         /// </summary>
-        private void CopyAuditPackage(IDirectoryInfo projectRoot, bool force)
+        private string CopyAuditPackage(IDirectoryInfo projectRoot, bool force)
         {
             var mesVersion = CLI.Core.Objects.ExecutionContext.Instance.ProjectConfig?.MESVersion
                 ?? throw new CliException("Could not resolve the project's MES version from .project-config.json.");
@@ -214,7 +209,9 @@ namespace Cmf.Cli.Plugin.Audit.Commands.install
                 Log.Information($"Copied the '{AuditPackageName}' package for MES {mesVersion.ToString(3)} to '{target}'.");
             }
 
-            RegisterInRootPackage(projectRoot, target);
+            var auditPackage = JObject.Parse(this.fileSystem.File.ReadAllText(this.fileSystem.Path.Combine(target, "cmfpackage.json")));
+            var version = auditPackage["version"]?.Value<string>() ?? throw new CliException($"'{AuditPackageName}' has no version in its cmfpackage.json.");
+            return $"{AuditPackageName}@{version}";
         }
 
         /// <summary>
@@ -273,29 +270,30 @@ namespace Cmf.Cli.Plugin.Audit.Commands.install
         }
 
         /// <summary>
-        /// Adds Cmf.Audit as a dependency of the project's root package (the cmfpackage.json at the project root).
+        /// Declares the package the audit pipelines install (CmfAuditPackageToInstall) in Builds/.vars/global.yml.
+        /// Creates the file when the project has none. Returns whether the variable ended up declared there.
         /// </summary>
-        private void RegisterInRootPackage(IDirectoryInfo projectRoot, string auditPackageDir)
+        private bool DeclareAuditPackageInGlobalYml(IDirectoryInfo builds, string auditPackage)
         {
-            var rootPackageFile = this.fileSystem.FileInfo.New(this.fileSystem.Path.Combine(projectRoot.FullName, "cmfpackage.json"));
-            if (!rootPackageFile.Exists)
+            var globalYmlPath = this.fileSystem.Path.Combine(builds.FullName, ".vars", "global.yml");
+            var globalYml = ReadIfExists(globalYmlPath);
+            if (globalYml == null)
             {
-                Log.Warning($"No root cmfpackage.json found in '{projectRoot.FullName}', '{AuditPackageName}' must be added to the root package dependencies manually.");
-                return;
+                // CD-AuditReview always references .vars/global.yml, so give it one when the project has none yet
+                this.fileSystem.Directory.CreateDirectory(this.fileSystem.Path.GetDirectoryName(globalYmlPath)!);
+                globalYml = "variables:\n";
+                this.fileSystem.File.WriteAllText(globalYmlPath, globalYml);
+                Log.Information("Created 'Builds/.vars/global.yml'.");
             }
 
-            var rootPackage = CmfPackage.Load(rootPackageFile, setDefaultValues: false, this.fileSystem);
-            if (rootPackage.Dependencies?.Any(dependency => dependency.Id.Equals(AuditPackageName, StringComparison.OrdinalIgnoreCase)) == true)
+            var updated = PipelineYamlMerger.AddVariable(globalYml, PipelineYamlMerger.AuditPackageVariable, $"'{auditPackage}'",
+                "Cmf.Audit customization package installed by the audit pipelines (Id@version)");
+            if (updated != globalYml)
             {
-                Log.Debug($"'{AuditPackageName}' is already a dependency of '{rootPackage.PackageId}'.");
-                return;
+                this.fileSystem.File.WriteAllText(globalYmlPath, updated);
+                Log.Information($"Added the '{PipelineYamlMerger.AuditPackageVariable}' variable to 'Builds/.vars/global.yml'.");
             }
-
-            var auditPackage = JObject.Parse(this.fileSystem.File.ReadAllText(this.fileSystem.Path.Combine(auditPackageDir, "cmfpackage.json")));
-            var version = auditPackage["version"]?.Value<string>() ?? throw new CliException($"'{AuditPackageName}' has no version in its cmfpackage.json.");
-
-            RegisterAsDependencyInParent(AuditPackageName, version, projectRoot.FullName);
-            Log.Information($"Added '{AuditPackageName}@{version}' to the dependencies of '{rootPackage.PackageId}'.");
+            return true;
         }
 
         /// <summary>
@@ -343,11 +341,8 @@ namespace Cmf.Cli.Plugin.Audit.Commands.install
                     "--hasEnvironments", (environments.Count > 0).ToString().ToLowerInvariant(),
                     "--defaultEnvironment", defaultEnvironment ?? string.Empty,
                     "--environmentValues", string.Join("\n", environments.Select(env => $"    - {env}")),
-                    "--securityAccessTokenSecretName", args.SecurityAccessTokenSecretName ?? DefaultSecurityAccessTokenSecretName,
                     "--cmfAuditVersion", cmfAuditVersion,
                     "--cmfAuditRegistry", cmfAuditRegistry,
-                    // the CollabHub registry requires the credentials set by a cmf-cli login
-                    "--portalLogin", cmfAuditRegistry.Contains("cm-collaborationhub.io", StringComparison.OrdinalIgnoreCase).ToString().ToLowerInvariant(),
                 });
 
                 foreach (var file in AuditBuildFiles)
@@ -392,9 +387,9 @@ namespace Cmf.Cli.Plugin.Audit.Commands.install
         }
 
         /// <summary>
-        /// Merges the Audit Review stage into the project's CD-Containers, and declares the RunAuditReview toggle.
+        /// Merges the Audit Review stage (Cmf.Audit installation + audit) into the project's CD-Containers.
         /// </summary>
-        private void MergeIntoCdContainers(IDirectoryInfo builds, IFileInfo cdContainersFile, string cdContainers, InitArguments args)
+        private void MergeIntoCdContainers(IDirectoryInfo builds, IFileInfo cdContainersFile, string cdContainers, string? auditPackageToDeclare)
         {
             if (PipelineYamlMerger.IsAuditMerged(cdContainers))
             {
@@ -408,48 +403,32 @@ namespace Cmf.Cli.Plugin.Audit.Commands.install
             {
                 missing.Add("a target environment (an 'Environment' parameter or the CustomerEnvironmentCodename/CustomerEnvironmentName variable)");
             }
-            if (!PipelineYamlMerger.HasStage(cdContainers, "RunTests"))
+            if (!PipelineYamlMerger.HasStage(cdContainers, "Installation"))
             {
-                missing.Add("a 'RunTests' stage");
+                missing.Add("an 'Installation' stage");
             }
-            if (!PipelineYamlMerger.HasParameter(cdContainers, "ExecuteAllStages"))
+            if (!cdContainers.Contains("EnvironmentCustomerPortalPAT"))
             {
-                missing.Add("an 'executeAllStages' parameter");
+                missing.Add("an 'EnvironmentCustomerPortalPAT' variable");
             }
             if (missing.Count > 0)
             {
-                Log.Warning($"Could not merge the Audit Review stage into CD-Containers, it does not have {string.Join(", ", missing)}. Please add it manually using '{PipelineYamlMerger.AuditJobTemplate}'.");
+                Log.Warning($"Could not merge the Audit Review stage into CD-Containers, it does not have {string.Join(", ", missing)}. Please add it manually, following 'Builds/CD-AuditReview.yml'.");
                 return;
             }
 
-            if (!this.fileSystem.File.Exists(this.fileSystem.Path.Combine(builds.FullName, ".tasks", "read-release-manifest.yml")))
+            foreach (var task in new[] { "read-release-manifest.yml", "cmf-login.yml", "portal-deploy.yml", "generate-pat.yml" })
             {
-                Log.Warning("'Builds/.tasks/read-release-manifest.yml' was not found, the Audit Review stage of CD-Containers requires it.");
-            }
-
-            // The RunAuditReview toggle lives in global.yml, next to the other CD-Containers toggles, when there is one
-            const string runAuditReviewDefault = "false";
-            var globalYmlPath = this.fileSystem.Path.Combine(builds.FullName, ".vars", "global.yml");
-            var globalYml = ReadIfExists(globalYmlPath);
-            if (globalYml != null)
-            {
-                var updated = PipelineYamlMerger.AddVariable(globalYml, PipelineYamlMerger.RunAuditReviewVariable, runAuditReviewDefault,
-                    "Defines if the CD-Containers should run the Audit Review after Run Tests");
-                if (updated != globalYml)
+                if (!this.fileSystem.File.Exists(this.fileSystem.Path.Combine(builds.FullName, ".tasks", task)))
                 {
-                    this.fileSystem.File.WriteAllText(globalYmlPath, updated);
-                    Log.Information($"Added the '{PipelineYamlMerger.RunAuditReviewVariable}' variable to 'Builds/.vars/global.yml'.");
+                    Log.Warning($"'Builds/.tasks/{task}' was not found, the Audit Review stage requires it.");
                 }
             }
 
-            var merged = PipelineYamlMerger.MergeIntoCdContainers(
-                cdContainers,
-                environmentExpression!,
-                args.SecurityAccessTokenSecretName ?? DefaultSecurityAccessTokenSecretName,
-                runAuditReviewVariableValue: globalYml == null ? runAuditReviewDefault : null);
+            var merged = PipelineYamlMerger.MergeIntoCdContainers(cdContainers, environmentExpression!, auditPackageToDeclare);
             this.fileSystem.File.WriteAllText(cdContainersFile.FullName, merged);
 
-            Log.Information($"Merged the Audit Review stage into 'Builds/CD-Containers.yml'. It is disabled by default: set '{PipelineYamlMerger.RunAuditReviewVariable}' to true once the '{args.SecurityAccessTokenSecretName}' secret variable is available to the pipeline.");
+            Log.Information("Merged the Audit Review stage into 'Builds/CD-Containers.yml', right after the Installation stage. It installs the Cmf.Audit package and runs the audit on every non-production run.");
         }
 
         /// <summary>
@@ -564,7 +543,6 @@ namespace Cmf.Cli.Plugin.Audit.Commands.install
         public bool? IncludeInCDContainers { get; set; }
         public string? AgentPool { get; set; }
         public string? DefaultServiceConnection { get; set; }
-        public string? SecurityAccessTokenSecretName { get; set; }
         public string? CmfAuditVersion { get; set; }
         public Uri? CmfAuditRegistry { get; set; }
         public bool Force { get; set; }

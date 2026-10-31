@@ -1,4 +1,5 @@
 # CM DS Audit Review Pipeline
+# Installs the Cmf.Audit package into the environment and runs the audit against it
 pool:
   name: <%= $CLI_PARAM_AgentPool %>
 
@@ -23,12 +24,6 @@ variables:
 //#endif
 - name: System.Debug
   value: $[or(eq(variables['Agent.Diagnostic'], true), eq(variables['DebugMode'], true))]
-# Ad hoc security access token, for one-off runs without a pre-registered secret.
-# Leave blank to use SecurityAccessTokenSecretName instead. To set this, use the "Variables" tab
-# (not "Parameters") when queuing the run, and tick "Keep this value secret" - never set a real
-# token here or as a parameter, since parameter values are shown in plain text in the run summary.
-- name: SecurityAccessTokenOverride
-  value: ''
 
 parameters:
 //#if (hasEnvironments == "true")
@@ -39,17 +34,41 @@ parameters:
   values:
 <%= $CLI_PARAM_EnvironmentValues %>
 //#endif
-# Name of the secret pipeline variable (Library) holding the audit's security access token.
-# Ignored when SecurityAccessTokenOverride is set at queue time.
-- name: SecurityAccessTokenSecretName
-  displayName: Security Access Token Secret Name
-  type: string
-  default: <%= $CLI_PARAM_SecurityAccessTokenSecretName %>
 
 name: AuditReview-$(Build.BuildId)
-jobs:
-- template: .tasks/audit-review-job.yml
-  parameters:
-    UseReleaseManifest: false
-    SecurityAccessTokenSecretName: ${{ parameters.SecurityAccessTokenSecretName }}
-    SecurityAccessTokenOverride: $(SecurityAccessTokenOverride)
+stages:
+- stage: AuditReview
+  displayName: Audit Review
+  jobs:
+  - job: AuditReview
+    displayName: Audit Review
+    container: build-runner
+    workspace:
+      clean: all
+    steps:
+    # Audit reads the project's own sources (.project-config.json, cmfpackage.json, etc...)
+    - checkout: self
+
+    # Read Release Manifest
+    - template: .tasks/read-release-manifest.yml
+      parameters:
+        Environment: ${{ parameters.Environment }}
+        CustomerPortalPAT: $(CustomerPortalPAT)
+
+    # Login with CP token
+    - template: .tasks/cmf-login.yml
+      parameters:
+        CustomerPortalPAT: $(CustomerPortalPAT)
+
+    # Assembling Audit Package
+    - template: .tasks/assembling-audit-package.yml
+
+    # Audit Package Installation
+    - template: .tasks/portal-deploy.yml
+      parameters:
+        PackageToInstall: '$(CmfAuditPackageToInstall)'
+        displayName: Audit Package Installation
+        CustomerPortalPAT: $(CustomerPortalPAT)
+
+    # Install cmf-audit, generate PAT and run the Audit Review
+    - template: .tasks/audit-review.yml

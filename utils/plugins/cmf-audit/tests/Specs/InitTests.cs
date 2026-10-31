@@ -11,7 +11,7 @@ namespace specs
 {
     public class InitTests
     {
-        private const string CdContainers = """
+        internal const string CdContainers = """
             # CM DS Continuous Deployment Containers Pipeline
             pool:
               name: MyPool
@@ -28,6 +28,10 @@ namespace specs
             - template: .vars/${{ parameters.Environment }}.yml
             - name: Foo
               value: bar
+            - name: IsProdBranch
+              value: false
+            - name: EnvironmentCustomerPortalPAT
+              value: x
 
             # Setted in runtime
             parameters:
@@ -56,6 +60,20 @@ namespace specs
               - job: RunTests
                 steps:
                 - checkout: none
+
+            - stage: Installation
+              jobs: []
+
+            - stage: RestorePoint
+              dependsOn: Installation
+              condition: |
+                and(
+                  or(
+                    and(eq('${{ parameters.ExecuteAllStages }}', true), eq(dependencies.Installation.result, 'Succeeded'))
+                  ),
+                  not(failed())
+                )
+              jobs: []
 
             - stage: ManualApproval
               dependsOn: RunTests
@@ -94,44 +112,44 @@ namespace specs
         #region PipelineYamlMerger writers
 
         [Fact]
-        public void MergeIntoCdContainers_AddsVariablesParametersAndStage()
+        public void MergeIntoCdContainers_AddsStageAfterInstallationAndChainsRestorePoint()
         {
-            var merged = PipelineYamlMerger.MergeIntoCdContainers(CdContainers, "${{ parameters.Environment }}", "MySecret");
+            var merged = PipelineYamlMerger.MergeIntoCdContainers(CdContainers, "${{ parameters.Environment }}");
             var lines = merged.Split('\n').ToList();
 
-            // variable at the end of the variables block, before the column-0 comment of the next key
-            var overrideIndex = lines.IndexOf("- name: SecurityAccessTokenOverride");
-            Assert.True(overrideIndex > lines.IndexOf("  value: bar"));
-            Assert.True(overrideIndex < lines.IndexOf("# Setted in runtime"));
+            // stage between Installation and RestorePoint
+            var audit = lines.IndexOf("- stage: AuditReview");
+            Assert.True(audit > lines.IndexOf("- stage: Installation"));
+            Assert.True(audit < lines.IndexOf("- stage: RestorePoint"));
+            Assert.Contains("      eq(variables['IsProdBranch'], 'False'),", lines);
+            Assert.Contains("        Environment: ${{ parameters.Environment }}", lines);
+            Assert.Contains("    - template: .tasks/assembling-audit-package.yml", lines);
+            Assert.Contains("        PackageToInstall: '$(CmfAuditPackageToInstall)'", lines);
+            Assert.Contains("    - template: .tasks/audit-review.yml", lines);
+            Assert.DoesNotContain(lines, line => line.Contains("timeoutInMinutes"));
 
-            // parameters right after RunTests, before the comment documenting the next parameter
-            var runAuditReviewIndex = lines.IndexOf("- name: RunAuditReview");
-            Assert.True(runAuditReviewIndex > lines.IndexOf("- name: RunTests"));
-            Assert.True(runAuditReviewIndex < lines.IndexOf("# Documents the next parameter"));
-            Assert.Contains("  default: MySecret", lines);
-
-            // stage appended at the end
-            Assert.True(lines.IndexOf("- stage: AuditReview") > lines.IndexOf("- stage: ManualApproval"));
-            Assert.Contains("      Environment: ${{ parameters.Environment }}", lines);
-            Assert.Contains("        and(eq('${{ parameters.ExecuteAllStages }}', false), eq('${{ parameters.RunAuditReview }}', true))", lines);
+            // RestorePoint waits for the audit instead of the installation
+            var restoreLines = lines.Skip(lines.IndexOf("- stage: RestorePoint")).ToList();
+            Assert.Contains("  dependsOn: AuditReview", restoreLines);
+            Assert.Contains("        and(eq('${{ parameters.ExecuteAllStages }}', true), in(dependencies.AuditReview.result, 'Succeeded', 'SucceededWithIssues'))", restoreLines);
             Assert.True(PipelineYamlMerger.IsAuditMerged(merged));
 
             // idempotent
-            Assert.Equal(merged, PipelineYamlMerger.MergeIntoCdContainers(merged, "${{ parameters.Environment }}", "MySecret"));
+            Assert.Equal(merged, PipelineYamlMerger.MergeIntoCdContainers(merged, "${{ parameters.Environment }}"));
         }
 
         [Fact]
-        public void MergeIntoCdContainers_WithoutGlobalYml_DeclaresRunAuditReviewVariable()
+        public void MergeIntoCdContainers_WithoutGlobalYml_DeclaresAuditPackageVariable()
         {
-            var merged = PipelineYamlMerger.MergeIntoCdContainers(CdContainers, "$(CustomerEnvironmentName)", "MySecret", runAuditReviewVariableValue: "false");
+            var merged = PipelineYamlMerger.MergeIntoCdContainers(CdContainers, "$(CustomerEnvironmentName)", "Cmf.Audit@1.0.0");
 
-            Assert.Contains("- name: RunAuditReview\n  value: false", merged);
+            Assert.Contains("- name: CmfAuditPackageToInstall\n  value: 'Cmf.Audit@1.0.0'", merged);
         }
 
         [Fact]
         public void MergeIntoCdContainers_PreservesCrLf()
         {
-            var merged = PipelineYamlMerger.MergeIntoCdContainers(CdContainers.Replace("\n", "\r\n"), "$(CustomerEnvironmentName)", "MySecret");
+            var merged = PipelineYamlMerger.MergeIntoCdContainers(CdContainers.Replace("\n", "\r\n"), "$(CustomerEnvironmentName)");
 
             Assert.DoesNotContain("\n", merged.Replace("\r\n", ""));
         }
@@ -188,7 +206,7 @@ namespace specs
 
         #endregion
 
-        private const string RootCmfPackage = """
+        internal const string RootCmfPackage = """
             {
               "packageId": "Cmf.Custom.Package",
               "version": "1.0.0",
@@ -218,7 +236,7 @@ namespace specs
             return root;
         }
 
-        private static void RunInit(string root, InitArguments args)
+        internal static void RunInit(string root, InitArguments args)
         {
             var cwd = Directory.GetCurrentDirectory();
             // Init refuses to run on GitHub-hosted projects (including inside GitHub Actions), so neutralise it for the tests.
@@ -252,7 +270,6 @@ namespace specs
                 {
                     AzureDevOps = true,
                     IncludeInCDContainers = true,
-                    SecurityAccessTokenSecretName = "MySecret",
                     CmfAuditVersion = "1.2.3",
                     CmfAuditRegistry = new Uri("https://cm-collaborationhub.io/api/npm/feed/"),
                 });
@@ -274,15 +291,19 @@ namespace specs
                 Assert.Contains("    endpoint: my-connection", auditReview);
                 Assert.Contains("    options: '--volume /mnt:/mnt'", auditReview);
                 Assert.Contains("  default: Env2\n  values:\n    - Env1\n    - Env2\n", auditReview);
-                Assert.Contains("  default: MySecret", auditReview);
+                Assert.Contains("    - template: .tasks/assembling-audit-package.yml", auditReview);
+                Assert.Contains("PackageToInstall: '$(CmfAuditPackageToInstall)'", auditReview);
 
                 var installAudit = File.ReadAllText(Path.Combine(builds, ".tasks", "install-cmf-audit.yml"));
                 Assert.Contains("CmfAuditVersion: '1.2.3'", installAudit);
                 Assert.Contains("CmfAuditRegistry: 'https://cm-collaborationhub.io/api/npm/feed/'", installAudit);
-                Assert.Contains("login --token", installAudit);
+                Assert.DoesNotContain("login --token", installAudit);
 
                 Assert.True(PipelineYamlMerger.IsAuditMerged(File.ReadAllText(Path.Combine(builds, "CD-Containers.yml"))));
-                Assert.Contains("RunAuditReview: false", File.ReadAllText(Path.Combine(builds, ".vars", "global.yml")));
+                Assert.Contains("CmfAuditPackageToInstall: 'Cmf.Audit@1.0.0'", File.ReadAllText(Path.Combine(builds, ".vars", "global.yml")));
+
+                // the audit package has its own lifecycle: not a dependency of the root package
+                Assert.Equal(RootCmfPackage, File.ReadAllText(Path.Combine(root, "cmfpackage.json")));
             }
             finally
             {
@@ -301,7 +322,7 @@ namespace specs
                 var builds = Path.Combine(root, "Builds");
                 Assert.True(File.Exists(Path.Combine(builds, "CD-AuditReview.yml")));
                 Assert.Equal(CdContainers, File.ReadAllText(Path.Combine(builds, "CD-Containers.yml")));
-                Assert.DoesNotContain("login --token", File.ReadAllText(Path.Combine(builds, ".tasks", "install-cmf-audit.yml")));
+                Assert.Contains("CmfAuditPackageToInstall: 'Cmf.Audit@1.0.0'", File.ReadAllText(Path.Combine(builds, ".vars", "global.yml")));
             }
             finally
             {
@@ -323,11 +344,8 @@ namespace specs
                 var auditPackage = JObject.Parse(File.ReadAllText(Path.Combine(root, Init.AuditPackageName, "cmfpackage.json")));
                 Assert.Equal("11.3.7", auditPackage["dependencies"]!.Single(dependency => dependency["id"]!.Value<string>() == "Cmf.Environment")["version"]!.Value<string>());
 
-                // registered in the root package, only once
-                RunInit(root, new InitArguments { AzureDevOps = false });
-                var rootDependencies = JObject.Parse(File.ReadAllText(Path.Combine(root, "cmfpackage.json")))["dependencies"]!;
-                Assert.Single(rootDependencies, dependency => dependency["id"]!.Value<string>() == Init.AuditPackageName);
-                Assert.Contains(rootDependencies, dependency => dependency["id"]!.Value<string>() == "Cmf.Custom.Business");
+                // not registered in the root package
+                Assert.Equal(RootCmfPackage, File.ReadAllText(Path.Combine(root, "cmfpackage.json")));
             }
             finally
             {
