@@ -42,4 +42,4 @@ Behaviour:
 
 User Story | Type | Title | Description
 :--------- | :--- | :---- | :----------
-AB#132 | User Story | System Monitoring: show installed customization packages in Application / Versioning | Lists the installed customization packages in Application / Versioning.
+criticalmanufacturing/mes-common-library#22 | Feature request | System Monitoring View Extensions | Lists the installed customization packages in Application / Versioning.
