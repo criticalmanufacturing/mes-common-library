@@ -1,0 +1,19 @@
+{
+    "<SM>DEEAction": {
+      "1": {
+        "Action": "CustomAutoCheckInEmployee",
+        "Description": "DEE Action to Automatically CheckIn an employee into a Resource before a TrackIn.",
+        "ActionGroup": "",
+        "CodeFileRelativePath": "TimeTracking//CustomAutoCheckInEmployee.cs",
+        "IsEnabled": "Yes",
+        "Classification": ""
+      }
+    },
+    "DEEActionOrder": {
+      "1": {
+        "ActionGroup": "BusinessObjects.MaterialCollection.TrackIn.Pre",
+        "Action": "CustomAutoCheckInEmployee",
+        "Order": "1"
+      }
+    }
+}
