@@ -1,6 +1,6 @@
 {
   "packageId": "Cmf.Community.ExternalSystemsSimulator.IoT.Packages",
-  "version": "1.0.0",
+  "version": "1136.1.0.0",
   "description": "Cmf Custom Community Cmf.Community.ExternalSystemsSimulator.IoT.Packages Package",
   "packageType": "IoT",
   "isInstallable": true,
