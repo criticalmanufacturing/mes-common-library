@@ -1,0 +1,36 @@
+{
+  "packageId": "Cmf.Community.SystemMonitoringView",
+  "version": "11361.0.0",
+  "description": "This package deploys Critical Manufacturing Community Customization",
+  "packageType": "Root",
+  "isInstallable": true,
+  "isUniqueInstall": false,
+  "dependencies": [
+    {
+      "id": "Cmf.Environment",
+      "version": "11.3.6",
+      "mandatory": false
+    },
+    {
+      "id": "CriticalManufacturing.DeploymentMetadata",
+      "version": "11.3.6",
+      "mandatory": false
+    },
+    {
+      "id": "Cmf.Community.SystemMonitoringView.Business",
+      "version": "11361.0.0"
+    },
+    {
+      "id": "Cmf.Community.SystemMonitoringView.Data",
+      "version": "11361.0.0"
+    },
+    {
+      "id": "Cmf.Community.SystemMonitoringView.Database.Post",
+      "version": "11361.0.0"
+    },
+    {
+      "id": "Cmf.Community.SystemMonitoringView.Help",
+      "version": "11361.0.0"
+    }
+  ]
+}

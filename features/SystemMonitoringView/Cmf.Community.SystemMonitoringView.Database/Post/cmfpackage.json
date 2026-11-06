@@ -1,0 +1,16 @@
+{
+  "packageId": "Cmf.Community.SystemMonitoringView.Database.Post",
+  "version": "11361.0.0",
+  "description": "Cmf.Community.SystemMonitoringView.Database Community Database Scripts Package (Post)",
+  "packageType": "Database",
+  "isInstallable": true,
+  "isUniqueInstall": true,
+  "dependencies": [],
+  "steps": [],
+  "contentToPack": [
+    {
+      "source": "ONLINE/UserDataModel/Views/*",
+      "target": "Online/"
+    }
+  ]
+}

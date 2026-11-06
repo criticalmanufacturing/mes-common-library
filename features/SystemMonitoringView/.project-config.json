@@ -1,0 +1,22 @@
+{
+  "ProjectName": "SystemMonitoringView",
+  "RepositoryType": "Customization",
+  "BaseLayer": "MES",
+  "NPMRegistry": "https://criticalmanufacturing.io/repository/npm/",
+  "NuGetRegistry": "https://criticalmanufacturing.io/repository/nuget/index.json",
+  "EnvironmentName": "MES",
+  "DefaultDomain": "",
+  "RESTPort": "80",
+  "Tenant": "Community",
+  "MESVersion": "11.3.6",
+  "NGXSchematicsVersion": "11.0.16",
+  "NugetVersion": "11.3.6",
+  "TestScenariosNugetVersion": "11.3.6",
+  "IsSslEnabled": "False",
+  "vmHostname": "cmf-common.local",
+  "HTMLPort": "80",
+  "ReleaseEnvironmentConfig": "env.json",
+  "DeploymentDir": "/workspaces/mes-common-library/features/SystemMonitoringView/deploymentdir",
+  "DeliveredRepo": "/workspaces/mes-common-library/features/SystemMonitoringView/deploymentdir/Delivered",
+  "CIRepo": "/workspaces/mes-common-library/features/SystemMonitoringView/deploymentdir/CIPackages"
+}

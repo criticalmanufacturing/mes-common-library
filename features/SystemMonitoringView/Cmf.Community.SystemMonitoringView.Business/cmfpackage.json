@@ -1,0 +1,14 @@
+{
+  "packageId": "Cmf.Community.SystemMonitoringView.Business",
+  "version": "11361.0.0",
+  "description": "Cmf Custom Community Cmf.Community.SystemMonitoringView.Business Package",
+  "packageType": "Business",
+  "isInstallable": true,
+  "isUniqueInstall": false,
+  "contentToPack": [
+    {
+      "source": "Release/*.dll",
+      "target": ""
+    }
+  ]
+}

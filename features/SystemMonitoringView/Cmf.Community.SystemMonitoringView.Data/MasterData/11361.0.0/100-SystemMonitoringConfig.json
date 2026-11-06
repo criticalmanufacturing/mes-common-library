@@ -1,0 +1,11 @@
+{
+  "<SM>Config": {
+    "1": {
+      "ParentPath": "/Community/SystemMonitoringView/",
+      "Name": "InstalledPackagePatterns",
+      "Value": "Cmf.Community.%",
+      "ValueType": "String",
+      "Description": "Semicolon-separated SQL LIKE patterns of the package ids shown in System Monitoring > Application > Versioning. Read live by the DEE; no redeploy is needed to change it."
+    }
+  }
+}

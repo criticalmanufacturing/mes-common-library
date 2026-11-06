@@ -1,0 +1,13 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<TargetFramework>net8.0</TargetFramework>
+		<OutputType>Library</OutputType>
+		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+		<AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+		<AssemblyName>Cmf.Community.SystemMonitoringView.Actions</AssemblyName>
+		<RootNamespace>Cmf.Community.SystemMonitoringView.Actions</RootNamespace>
+	</PropertyGroup>
+	<ItemGroup>
+		<PackageReference Include="Cmf.Foundation.BusinessObjects" Version="11.3.6" />
+	</ItemGroup>
+</Project>

@@ -270,5 +270,5 @@ Tests/packages/
 
 Package/
 Dependencies/
-.localenv/session.json
+.localenv
 .localenv/envmanager/.env
