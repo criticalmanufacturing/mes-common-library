@@ -1,4 +1,4 @@
-using Cmf.Navigo.BusinessObjects.Abstractions;
+﻿using Cmf.Navigo.BusinessObjects.Abstractions;
 
 namespace Cmf.Custom.Common.SD.Utilities.Helpers.Abstractions;
 
@@ -37,6 +37,9 @@ public interface IEmployeeHelpers
     /// <param name="numbers">
     ///     EmployeeNumbers to filter by
     /// </param>
+    /// <param name="clockedState">
+    ///     The clocked state to filter by.
+    /// </param>
     /// <returns>
     ///     A list of Employees
     /// </returns>
@@ -46,5 +49,6 @@ public interface IEmployeeHelpers
     /// Get Resource Employees
     /// </summary>
     /// <param name="resource">The resource</param>
+    /// <returns>The employees associated with the resource.</returns>
     public IEmployeeCollection GetResourceEmployees(IResource resource);
 }

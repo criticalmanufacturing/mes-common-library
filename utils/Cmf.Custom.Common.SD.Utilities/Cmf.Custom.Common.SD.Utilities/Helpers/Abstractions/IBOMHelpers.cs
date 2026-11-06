@@ -8,11 +8,10 @@ namespace Cmf.Custom.Common.SD.Utilities.Helpers.Abstractions;
 internal interface IBOMHelpers
 {
     /// <summary>
-    /// Searched the production order for a specific component
+    /// Gets the BOMs associated with BOM products whose product names match the specified names.
     /// </summary>
-    /// <param name="productionOrder">Production order to search</param>
-    /// <param name="LotNumber">Lot to search on production order</param>
-    /// <param name="OriginalQuantity">Original quantity of Lot</param>
+    /// <param name="productNames">The product names to search for.</param>
+    /// <returns>A collection of BOMs associated with the matching products.</returns>
     public IBOMCollection GetBOMAssociatedWithProducts(IList<string> productNames);
 
     /// <summary>

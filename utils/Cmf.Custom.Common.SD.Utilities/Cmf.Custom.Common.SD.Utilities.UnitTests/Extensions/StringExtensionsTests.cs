@@ -1,4 +1,4 @@
-﻿using Cmf.Custom.Common.SD.Utilities.Extensions;
+using Cmf.Custom.Common.SD.Utilities.Extensions;
 using FluentAssertions;
 
 namespace Cmf.Custom.Common.SD.Utilities.UnitTests.Extensions;
@@ -79,5 +79,14 @@ public class StringExtensionsTests
 
         // Assert
         hash1.Should().NotBe(hash2);
+    }
+
+    [Theory]
+    [InlineData("Hello World", "B10A8DB164E0754105B7A99BE72E3FE5")]
+    [InlineData("TestValue", "88CD0DDD513F40D78832BED84AAE6C6D")]
+    [InlineData("", "D41D8CD98F00B204E9800998ECF8427E")]
+    public void CreateHashFromString_MatchesExistingHashUtilityResults(string value, string expected)
+    {
+        value.CreateHash().Should().Be(expected);
     }
 }

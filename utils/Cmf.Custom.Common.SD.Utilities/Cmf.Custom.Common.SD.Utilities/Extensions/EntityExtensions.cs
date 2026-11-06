@@ -1,4 +1,3 @@
-using Cmf.Common.CustomActionUtilities.Extensions;
 using Cmf.Foundation.BusinessObjects;
 using Cmf.Foundation.BusinessObjects.Abstractions;
 using System.Collections.ObjectModel;
@@ -285,4 +284,166 @@ public static class EntityExtensions
     }
 
     #endregion References
+
+    public static void RemoveNullAttributes(this IEntity obj)
+    {
+        RemoveNullAttributes(obj.Attributes);
+    }
+
+    public static void RemoveNullAttributes(this IEntityVersion obj)
+    {
+        RemoveNullAttributes(obj.Attributes);
+        RemoveNullAttributes(obj.RelatedAttributes);
+    }
+
+    private static void RemoveNullAttributes(IAttributeCollection? attributeCollection)
+    {
+        if (attributeCollection is null)
+        {
+            return;
+        }
+
+        Collection<string> keysToRemove = [];
+        foreach (KeyValuePair<string, object> attribute in attributeCollection)
+        {
+            if (attribute.Value is null || attribute.Value is string value && string.IsNullOrEmpty(value))
+            {
+                keysToRemove.Add(attribute.Key);
+            }
+        }
+
+        foreach (string key in keysToRemove)
+        {
+            attributeCollection.Remove(key);
+        }
+    }
+
+    /// <summary>Returns a typed attribute value from an entity instance.</summary>
+    /// <typeparam name="T">The attribute value type.</typeparam>
+    /// <param name="entity">The entity containing the attribute.</param>
+    /// <param name="attributeName">The attribute name.</param>
+    /// <param name="loadAttribute">Whether to load the attribute before reading it.</param>
+    /// <returns>The value, or the default value for <typeparamref name="T"/> if missing or of another type.</returns>
+    public static T GetAttribute<T>(this IEntityInstance entity, string attributeName, bool loadAttribute = false)
+    {
+        T attributeValue = default(T);
+        if (entity != null)
+        {
+            if (loadAttribute)
+            {
+                entity.LoadAttributes(new Collection<string> { attributeName });
+            }
+            if (entity.Attributes != null && entity.Attributes.ContainsKey(attributeName)
+                && entity.Attributes[attributeName] != null && entity.Attributes[attributeName] is T)
+            {
+                attributeValue = (T)entity.Attributes[attributeName];
+            }
+        }
+        return attributeValue;
+    }
+
+    /// <summary>Returns a new instance of a reloaded entity.</summary>
+    /// <typeparam name="T">The entity type.</typeparam>
+    /// <param name="entity">The entity to reload.</param>
+    /// <returns>A new entity instance loaded from the entity identifier.</returns>
+    public static T ReloadEntity<T>(this T entity) where T : IEntity
+    {
+        T reloadedEntity = (T)entity.EntityType.GetInstance();
+        reloadedEntity.Load(entity.Id);
+        return reloadedEntity;
+    }
+
+    /// <summary>Validates that mandatory attributes on an entity type have values.</summary>
+    /// <param name="entityType">The entity type metadata.</param>
+    /// <param name="attributeValues">The attribute values to validate.</param>
+    public static void ValidateMandatoryAttributes(this IEntityType entityType, IAttributeCollection attributeValues)
+    {
+        List<string> missingProperties = new List<string>();
+        entityType.LoadProperties();
+        foreach (IEntityTypeProperty prop in entityType.Properties)
+        {
+            if (prop.PropertyType == EntityTypePropertyType.Attribute && (prop.Description ?? "").ToLower().Contains("mandatory"))
+            {
+                if (attributeValues == null
+                    || !attributeValues.ContainsKey(prop.Name)
+                    || string.IsNullOrWhiteSpace(attributeValues[prop.Name].ToString()))
+                {
+                    missingProperties.Add(prop.Name);
+                }
+            }
+        }
+        if (missingProperties.Count > 0)
+        {
+            throw new MissingMandatoryPropertyCmfException(missingProperties.ToArray(), entityType.Name, true);
+        }
+    }
+
+    /// <summary>Loads a change set and optionally requests its approval.</summary>
+    /// <param name="changeSet">The change set to load.</param>
+    /// <param name="requestApproval">Whether to request approval after loading.</param>
+    public static void RequestApproval(this IChangeSet changeSet, bool requestApproval = false)
+    {
+        if (changeSet != null && changeSet.ObjectExists())
+        {
+            changeSet.Load();
+            if (requestApproval)
+            {
+                changeSet.RequestApproval();
+            }
+        }
+    }
+
+    /// <summary>Checks whether an entity has relations with the specified name.</summary>
+    /// <param name="obj">The entity to inspect.</param>
+    /// <param name="relationName">The relation name.</param>
+    /// <param name="loadRelation">Whether to load the relation before checking.</param>
+    /// <returns>True when the relation collection contains at least one relation.</returns>
+    public static bool HasRelations(this IEntity obj, string relationName, bool loadRelation = false)
+    {
+        bool hasRelations = false;
+        if (obj != null && !string.IsNullOrEmpty(relationName))
+        {
+            if (loadRelation)
+            {
+                if (obj is IEntityVersion version)
+                {
+                    version.LoadRelations(relationName);
+                }
+                else if (obj is IEntityInstance instance)
+                {
+                    instance.LoadRelations(relationName);
+                }
+            }
+            if (obj.RelationCollection != null && obj.RelationCollection.ContainsKey(relationName)
+                && obj.RelationCollection[relationName] != null && obj.RelationCollection[relationName].Count > 0)
+            {
+                hasRelations = true;
+            }
+        }
+        return hasRelations;
+    }
+
+    /// <summary>Checks whether an entity version has related relations with the specified name.</summary>
+    /// <param name="obj">The entity version to inspect.</param>
+    /// <param name="relationName">The related relation name.</param>
+    /// <param name="loadRelation">Whether to load the relation before checking.</param>
+    /// <returns>True when the related relation collection contains at least one relation.</returns>
+    public static bool HasRelatedRelations(this IEntityVersion obj, string relationName, bool loadRelation = false)
+    {
+        bool hasRelations = false;
+        if (obj != null && !string.IsNullOrEmpty(relationName))
+        {
+            if (loadRelation)
+            {
+                obj.LoadRelations(relationName);
+            }
+            if (obj.RelatedRelationCollection != null && obj.RelatedRelationCollection.ContainsKey(relationName)
+                && obj.RelatedRelationCollection[relationName] != null && obj.RelatedRelationCollection[relationName].Count > 0)
+            {
+                hasRelations = true;
+            }
+        }
+        return hasRelations;
+    }
+
 }

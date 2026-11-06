@@ -1,5 +1,7 @@
-﻿using Cmf.Custom.Common.SD.Utilities.Helpers;
+using Cmf.Custom.Common.SD.Utilities.Helpers;
+using Cmf.Custom.Common.SD.Utilities.Extensions;
 using Cmf.Foundation.BusinessObjects.Abstractions;
+using Cmf.Foundation.BaseTestsUtils.Extensions;
 using Cmf.Foundation.BusinessObjects.QueryObject;
 using Cmf.Foundation.BusinessOrchestration.Abstractions;
 using Cmf.Foundation.Common.Abstractions;
@@ -151,4 +153,22 @@ public class DataCollectionHelperTests
                 dc => dc.Name == "LatestDC")),
             Times.Once);
     }
+
+    [Fact]
+    public void LoadDCInstance_ShouldLoadInstanceAndDataCollectionPointRelations()
+    {
+        var instance = new Mock<IDataCollectionInstance>();
+        _entityFactoryMock.Setup(f => f.Create<IDataCollectionInstance>()).Returns(instance.Object);
+        var helper = new DataCollectionHelper(_entityFactoryMock.Object, _localizationOrchestrationMock.Object);
+
+        IDataCollectionInstance result = helper.LoadDCInstance(42);
+
+        result.Should().BeSameAs(instance.Object);
+        instance.Verify(i => i.LoadRelations(Cmf.Navigo.Common.Constants.DataCollectionPoint), Times.Once);
+    }
+
+
+
+
+
 }

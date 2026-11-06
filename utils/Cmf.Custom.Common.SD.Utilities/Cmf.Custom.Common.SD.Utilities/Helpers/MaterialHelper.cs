@@ -1,7 +1,14 @@
-﻿using Cmf.Common.CustomActionUtilities.Extensions;
 using Cmf.Custom.Common.SD.Utilities.Extensions;
+using Cmf.Custom.Common.SD.Utilities.DataStructures;
+using Cmf.Foundation.BusinessOrchestration;
+using Cmf.Navigo.BusinessObjects;
+using Cmf.Navigo.BusinessOrchestration.Abstractions;
+using Cmf.Navigo.BusinessOrchestration.MaterialManagement.InputObjects;
+using Cmf.Navigo.BusinessOrchestration.MaterialManagement.OutputObjects;
+using System.Linq;
 using Cmf.Custom.Common.SD.Utilities.Helpers.Abstractions;
 using Cmf.Foundation.BusinessObjects.Abstractions;
+using Cmf.Foundation.BusinessObjects;
 using Cmf.Foundation.BusinessObjects.QueryObject;
 using Cmf.Foundation.BusinessObjects.QueryObject.Enums;
 using Cmf.Foundation.BusinessOrchestration.Abstractions;
@@ -27,10 +34,13 @@ namespace Cmf.Custom.Common.SD.Utilities.Helpers;
 /// <param name="genericServiceOrchestration">
 ///     The generic service orchestration.
 /// </param>
-public class MaterialHelper(IEntityFactory entityFactory, IGenericServiceOrchestration genericServiceOrchestration) : IMaterialHelpers
+public class MaterialHelper(IEntityFactory entityFactory, IGenericServiceOrchestration genericServiceOrchestration, IDEEHelper deeHelper, IMaterialOrchestration materialOrchestration) : IMaterialHelpers
 {
     private readonly IEntityFactory _entityFactory = entityFactory;
     private readonly IGenericServiceOrchestration _genericServiceOrchestration = genericServiceOrchestration;
+    private readonly IDEEHelper _deeHelper = deeHelper;
+    private readonly IMaterialOrchestration _materialOrchestration = materialOrchestration;
+    private readonly IFlowSearchHelper _flowSearchHelper = new FlowSearchHelper(entityFactory);
 
     /// <inheritdoc/>
     public DataSet GetChecklistInstanceForMaterial(long materialId)
@@ -190,4 +200,185 @@ public class MaterialHelper(IEntityFactory entityFactory, IGenericServiceOrchest
 
         return materialCharacteristics;
     }
+
+    /// <inheritdoc/>
+    public void MoveMaterialToStep(IMaterial material, string flowPath, BaseOutput serviceOutput = null, BaseInput serviceInput = null, string comment = null)
+    {
+        string serviceComment = serviceInput.GetAppendedServiceComment(comment);
+        MoveMaterialToStepOutput result = _materialOrchestration.MoveMaterialToStep(new MoveMaterialToStepInput { FlowPath = flowPath, Material = material, ServiceComments = serviceComment });
+        serviceOutput.MergeServiceOutputMessages(result);
+    }
+
+    /// <inheritdoc/>
+    public IMaterial RenameMaterial(IMaterial material, string newName, BaseOutput serviceOutput = null, BaseInput serviceInput = null, string comment = null, string feedbackMessage = null)
+    {
+        string serviceComment = serviceInput.GetAppendedServiceComment(comment);
+        IMaterialContainer newContainer = null;
+        material.LoadRelations("MaterialContainer");
+        if (material.MaterialContainer != null && material.MaterialContainer.Count > 0)
+        {
+            IMaterialContainer oldContainer = material.MaterialContainer.FirstOrDefault();
+            if (oldContainer != null)
+            {
+                newContainer = _entityFactory.Create<IMaterialContainer>();
+                newContainer.TargetEntity = oldContainer.TargetEntity;
+                newContainer.Position = oldContainer.Position;
+            }
+            oldContainer.TargetEntity.DisassociateMaterials(material.MaterialContainer);
+        }
+
+        ISplitInputSubMaterialCollection splitSubMaterials = null;
+        if (material.SubMaterialCount > 0)
+        {
+            splitSubMaterials = new SplitInputSubMaterialCollection();
+            material.LoadChildren();
+            foreach (IMaterial subMaterial in material.SubMaterials) splitSubMaterials.Add(new SplitInputSubMaterial { SubMaterial = subMaterial });
+        }
+        ISplitInputParameters splitParameters = new SplitInputParameters
+        {
+            Name = newName,
+            PrimaryQuantity = material.PrimaryQuantity ?? 0,
+            SecondaryQuantity = material.SecondaryQuantity,
+            MaterialContainer = newContainer,
+            SubMaterials = splitSubMaterials
+        };
+        SplitMaterialOutput splitOutput = _materialOrchestration.SplitMaterial(new SplitMaterialInput
+        {
+            Material = material,
+            ChildMaterials = new SplitInputParametersCollection { splitParameters },
+            TerminateOnZeroQuantity = true,
+            ToCopyFutureGeneralActions = true,
+            ServiceComments = serviceComment
+        });
+        IMaterial renamed = splitOutput.ChildMaterials?.FirstOrDefault();
+        FeedbackMessage additionalMessage = string.IsNullOrWhiteSpace(feedbackMessage) ? null : new FeedbackMessage { Message = feedbackMessage, MessageType = FeedbackMessageType.Information };
+        serviceOutput.MergeServiceOutputMessages(splitOutput, additionalMessage);
+        return renamed;
+    }
+
+    /// <inheritdoc/>
+    public IMaterialCollection GetLotsInContainer(IContainer container)
+    {
+        IMaterialCollection lots = null;
+        container.LoadRelations("MaterialContainer");
+        if (container.ContainerMaterials != null && container.ContainerMaterials.Count > 0)
+        {
+            IMaterialCollection materials = _entityFactory.CreateCollection<IMaterialCollection>();
+            foreach (IMaterialContainer materialContainer in container.ContainerMaterials) materials.Add(materialContainer.SourceEntity);
+            lots = GetLotsInMaterialStructure(materials);
+        }
+        return lots;
+    }
+
+    /// <inheritdoc/>
+    public IMaterialCollection GetMaterialsInMaterialStructure(IMaterialCollection materials, string form)
+    {
+        IMaterialCollection result = null;
+        if (materials != null && materials.Count > 0)
+        {
+            HashSet<long> processedIds = new();
+            Dictionary<long, IMaterial> found = new();
+            foreach (IMaterial topMost in materials.Select(material => material.GetTopMostMaterial()))
+            {
+                if (topMost == null || !processedIds.Add(topMost.Id)) continue;
+                if ((string.IsNullOrEmpty(form) || topMost.Form == form) && !found.ContainsKey(topMost.Id)) found.Add(topMost.Id, topMost);
+                INgpDataSet children = topMost.GetAllChildren(null);
+                DataSet dataSet = children == null ? null : NgpDataSet.ToDataSet(children);
+                if (dataSet == null) continue;
+                using DataTableReader reader = dataSet.CreateDataReader();
+                while (reader.Read())
+                {
+                    long childId = (long)reader["MaterialId"];
+                    if (!processedIds.Add(childId)) continue;
+                    IMaterial child = _entityFactory.Create<IMaterial>();
+                    child.Load(childId);
+                    if ((string.IsNullOrEmpty(form) || child.Form == form) && !found.ContainsKey(child.Id)) found.Add(child.Id, child);
+                }
+            }
+            if (found.Count > 0)
+            {
+                result = _entityFactory.CreateCollection<IMaterialCollection>();
+                foreach (IMaterial material in found.Values) result.Add(material);
+            }
+        }
+        return result;
+    }
+
+    /// <inheritdoc/>
+    public IMaterialCollection GetMaterialsInMaterialStructure(IMaterial material, string form)
+    {
+        IMaterialCollection materials = _entityFactory.CreateCollection<IMaterialCollection>();
+        materials.Add(material);
+        return GetMaterialsInMaterialStructure(materials, form);
+    }
+
+    /// <inheritdoc/>
+    public IMaterialCollection GetLotsInMaterialStructure(IMaterialCollection materials) => GetMaterialsInMaterialStructure(materials, "Lot");
+
+    /// <inheritdoc/>
+    public IMaterialCollection GetLotsInMaterialStructure(IMaterial material)
+    {
+        IMaterialCollection materials = _entityFactory.CreateCollection<IMaterialCollection>();
+        materials.Add(material);
+        return GetLotsInMaterialStructure(materials);
+    }
+
+    /// <inheritdoc/>
+    public AttachedConsumableCollection GetAttachedConsumables(IResource mainResource, short consumableFeedSearchDepth = 1)
+    {
+        AttachedConsumableCollection result = new();
+        mainResource.GetDescendentResources(consumableFeedSearchDepth);
+        if (mainResource.SubResources != null && mainResource.SubResources.Count > 0)
+        {
+            foreach (IResource feed in mainResource.SubResources.Where(resource => resource.ProcessingType == ProcessingType.ConsumableFeed))
+            {
+                IResourceMaterialInformationCollection materialInfo = feed.GetResourceMaterialInformation(true);
+                if (materialInfo == null) continue;
+                foreach (IResourceMaterialInformation info in materialInfo)
+                {
+                    result.Add(new AttachedConsumable { Consumable = info.Material, ConsumableFeed = feed, Order = info.Order });
+                }
+            }
+        }
+        return result;
+    }
+
+    /// <inheritdoc/>
+    public IFlow GetStepParentFlow(IMaterial material)
+    {
+        string[] parts = material.FlowPath.Split('/');
+        if (parts.Length == 2) return material.Flow;
+        string flowName = material.FlowPath.Substring(0, material.FlowPath.LastIndexOf('/'));
+        flowName = flowName.Substring(0, flowName.LastIndexOf(':'));
+        flowName = flowName.Substring(flowName.LastIndexOf('/') + 1);
+        IFlow flow = _entityFactory.Create<IFlow>();
+        flow.Load(flowName);
+        return flow;
+    }
+
+    /// <inheritdoc/>
+    public IBOMProductCollection ResolveBOMProducts(IMaterial material)
+    {
+        IBOMProductCollection result = _entityFactory.CreateCollection<IBOMProductCollection>();
+        _flowSearchHelper.GetFlowStepFromFlowPath(material.FlowPath, out IFlowCollection flows, out IStep step);
+        IFilterCollection filters = new FilterCollection
+        {
+            new Filter { Name = Navigo.Common.Constants.Product, Operator = FieldOperator.IsEqualTo, Value = material.Product.Name },
+            new Filter { Name = Navigo.Common.Constants.Flow, Operator = FieldOperator.IsEqualTo, Value = flows.Last().Name }
+        };
+        step.LoadBomContexts(filters);
+        DataSet contextDataSet = NgpDataSet.ToDataSet(step.StepBomContexts);
+        if (contextDataSet.HasData())
+        {
+            string bomName = contextDataSet.Tables[0].Rows[0][Navigo.Common.Constants.BOM].ToString();
+            IBOM bom = _entityFactory.Create<IBOM>();
+            bom.Load(bomName);
+            bom.LoadRelations(Navigo.Common.Constants.BOMProduct);
+            result = bom.BomProducts;
+        }
+        return result;
+    }
+
+
+
 }

@@ -67,6 +67,22 @@ public static class XmlExtensions
 
         return xml;
     }
+
+    public static string ConvertToXML<T>(this T objectToConvert, Type[] types)
+    {
+        XmlSerializer serializer = new(typeof(T), types);
+        using StringWriter stringWriter = new();
+        using XmlWriter writer = XmlWriter.Create(stringWriter);
+        serializer.Serialize(writer, objectToConvert);
+        return stringWriter.ToString();
+    }
+
+    public static T DeserializeXML<T>(this string xmlContent)
+    {
+        XmlSerializer serializer = new(typeof(T));
+        using StringReader reader = new(xmlContent);
+        return (T)serializer.Deserialize(reader)!;
+    }
 }
 
 public class Utf8StringWriter : StringWriter

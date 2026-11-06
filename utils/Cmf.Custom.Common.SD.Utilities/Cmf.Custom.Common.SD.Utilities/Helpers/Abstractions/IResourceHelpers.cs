@@ -40,11 +40,11 @@ public interface IResourceHelpers
     DataSet GetChecklistInstanceForResource(long resourceId, List<string> checklistTypes);
 
     /// <summary>
-    /// Attach a set of Material to a Resource
+    /// Attaches the specified materials as consumables to a resource.
     /// </summary>
-    /// <param name="instance"></param>
-    /// <param name="materials"></param>
-    /// <param name="order"></param>
+    /// <param name="instance">The resource to which the consumables are attached.</param>
+    /// <param name="materials">The materials to attach as consumables.</param>
+    /// <param name="order">The order assigned to each attached consumable.</param>
     public void AttachConsumablesToResource(IResource instance, IMaterialCollection materials, int order = 0);
 }
 

@@ -1,4 +1,6 @@
-﻿using Cmf.Custom.Common.SD.Utilities.Extensions;
+using Cmf.Navigo.BusinessObjects;
+using Cmf.Custom.Common.SD.Utilities.Exceptions;
+using Cmf.Custom.Common.SD.Utilities.Extensions;
 using Cmf.Foundation.BusinessObjects;
 using Cmf.Foundation.BusinessObjects.Abstractions;
 using FluentAssertions;
@@ -77,5 +79,34 @@ public class IntegrationEntryExtensionsTests
 
         // Assert
         result.Should().BeNull();
+    }
+
+    [Theory]
+    [InlineData(IntegrationEntrySystemState.Received, true)]
+    [InlineData(IntegrationEntrySystemState.Processing, true)]
+    [InlineData(IntegrationEntrySystemState.Processed, false)]
+    [InlineData(IntegrationEntrySystemState.Rejected, false)]
+    [InlineData(IntegrationEntrySystemState.Failed, true)]
+    public void TryWaitForParentToBeProcessedOrRejected_ReturnsForProcessedStatesAndThrowsForFailure(IntegrationEntrySystemState state, bool throws)
+    {
+        Mock<IIntegrationEntry> parent = new();
+        parent.SetupAllProperties();
+        parent.Object.Name = "parent-1";
+        parent.Object.SystemState = state;
+        Mock<IIntegrationEntry> entry = new();
+        entry.SetupAllProperties();
+        entry.Object.ParentIntegrationEntry = parent.Object;
+        Action act = () => entry.Object.TryWaitForParentToBeProcessedOrRejected(0, 0);
+        if (throws)
+        {
+            act.Should().Throw<ParentIntegrationEntryNotProcessedCmfException>().Which.Message.Should().Contain("parent-1");
+        }
+        else
+        {
+            act.Should().NotThrow();
+        }
+        parent.Verify(x => x.Load(), Times.Once);
+        entry.Object.ParentIntegrationEntry = null;
+        entry.Object.TryWaitForParentToBeProcessedOrRejected(0, 0);
     }
 }

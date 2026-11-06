@@ -1,11 +1,20 @@
-﻿using Cmf.Custom.Common.SD.Utilities.Helpers;
+using Cmf.Custom.Common.SD.Utilities.Helpers;
+using Cmf.Custom.Common.SD.Utilities.Extensions;
+using Cmf.Foundation.BaseTestsUtils.Extensions;
 using Cmf.Foundation.BusinessObjects.Abstractions;
+using Cmf.Custom.Common.SD.Utilities.Helpers.Abstractions;
+using Cmf.Navigo.BusinessOrchestration.Abstractions;
+using Cmf.Navigo.BusinessOrchestration.MaterialManagement.InputObjects;
+using Cmf.Navigo.BusinessOrchestration.MaterialManagement.OutputObjects;
 using Cmf.Foundation.BusinessObjects.QueryObject;
 using Cmf.Foundation.BusinessOrchestration.Abstractions;
 using Cmf.Foundation.BusinessOrchestration.GenericServiceManagement.InputObjects;
+using Cmf.Foundation.Common;
+using Cmf.Foundation.BusinessOrchestration;
 using Cmf.Foundation.BusinessOrchestration.GenericServiceManagement.OutputObjects;
 using Cmf.Foundation.Common.Abstractions;
 using Cmf.Navigo.BusinessObjects.Abstractions;
+using Cmf.Navigo.BusinessObjects;
 using FluentAssertions;
 using Moq;
 using System.Data;
@@ -54,7 +63,9 @@ public class MaterialHelperTests
 
         var helper = new MaterialHelper(
             _entityFactoryMock.Object,
-            _genericServiceOrchestrationMock.Object);
+            _genericServiceOrchestrationMock.Object,
+            Mock.Of<IDEEHelper>(),
+            Mock.Of<IMaterialOrchestration>());
 
         // Act
         DataSet result = helper.GetChecklistInstanceForMaterial(100);
@@ -110,7 +121,9 @@ public class MaterialHelperTests
 
         var helper = new MaterialHelper(
             _entityFactoryMock.Object,
-            _genericServiceOrchestrationMock.Object);
+            _genericServiceOrchestrationMock.Object,
+            Mock.Of<IDEEHelper>(),
+            Mock.Of<IMaterialOrchestration>());
 
         // Act
         IMaterialCharacteristicCollection result =
@@ -150,7 +163,9 @@ public class MaterialHelperTests
 
         var helper = new MaterialHelper(
             _entityFactoryMock.Object,
-            _genericServiceOrchestrationMock.Object);
+            _genericServiceOrchestrationMock.Object,
+            Mock.Of<IDEEHelper>(),
+            Mock.Of<IMaterialOrchestration>());
 
         // Act
         IMaterialCharacteristicCollection result =
@@ -195,7 +210,9 @@ public class MaterialHelperTests
 
         var helper = new MaterialHelper(
             _entityFactoryMock.Object,
-            _genericServiceOrchestrationMock.Object);
+            _genericServiceOrchestrationMock.Object,
+            Mock.Of<IDEEHelper>(),
+            Mock.Of<IMaterialOrchestration>());
 
         // Act
         IMaterialCharacteristicCollection result =
@@ -208,4 +225,100 @@ public class MaterialHelperTests
             c => c.AddRange(It.IsAny<IEnumerable<IMaterialCharacteristic>>()),
             Times.Never);
     }
+
+    [Fact]
+    public void TotalPrimaryQuantity_ShouldIncludeSubMaterialQuantities()
+    {
+        var material = new Mock<IMaterial>();
+        material.SetupGet(m => m.PrimaryQuantity).Returns(4m);
+        material.SetupGet(m => m.SubMaterialsPrimaryQuantity).Returns(7m);
+        var helper = new MaterialHelper(_entityFactoryMock.Object, _genericServiceOrchestrationMock.Object, Mock.Of<IDEEHelper>(), Mock.Of<IMaterialOrchestration>());
+
+        helper.GetMaterialsInMaterialStructure((IMaterialCollection)null, "Lot").Should().BeNull();
+        helper.GetLotsInMaterialStructure((IMaterialCollection)null).Should().BeNull();
+        helper.GetLotsInContainer(Mock.Of<IContainer>()).Should().BeNull();
+        helper.GetAttachedConsumables(Mock.Of<IResource>()).Should().BeEmpty();
+
+        var consumable = Mock.Of<IMaterial>();
+        var feed = new Mock<IResource>();
+        feed.SetupGet(r => r.ProcessingType).Returns(ProcessingType.ConsumableFeed);
+        var materialInfo = new Mock<IResourceMaterialInformation>();
+        materialInfo.SetupGet(i => i.Material).Returns(consumable);
+        materialInfo.SetupGet(i => i.Order).Returns(3);
+        var materialInfos = new Mock<IResourceMaterialInformationCollection>();
+        materialInfos.MockCollectionWithList(new List<IResourceMaterialInformation> { materialInfo.Object });
+        feed.Setup(r => r.GetResourceMaterialInformation(true)).Returns(materialInfos.Object);
+        var subResources = new Mock<IResourceCollection>();
+        subResources.MockCollectionWithList(new List<IResource> { feed.Object });
+        var mainResource = new Mock<IResource>();
+        mainResource.SetupGet(r => r.SubResources).Returns(subResources.Object);
+        var attached = helper.GetAttachedConsumables(mainResource.Object, 2);
+        attached.Should().ContainSingle();
+        attached[0].Consumable.Should().BeSameAs(consumable);
+        attached[0].ConsumableFeed.Should().BeSameAs(feed.Object);
+        attached[0].Order.Should().Be(3);
+    }
+
+    [Fact]
+    public void GetStepParentFlow_ShouldReturnMaterialFlow_WhenFlowPathHasNoNestedFlow()
+    {
+        var flow = Mock.Of<IFlow>();
+        var material = new Mock<IMaterial>();
+        material.SetupGet(m => m.FlowPath).Returns("Flow-A:1:1/Step-A:2");
+        material.SetupGet(m => m.Flow).Returns(flow);
+        var helper = new MaterialHelper(_entityFactoryMock.Object, _genericServiceOrchestrationMock.Object, Mock.Of<IDEEHelper>(), Mock.Of<IMaterialOrchestration>());
+
+        helper.GetStepParentFlow(material.Object).Should().BeSameAs(flow);
+
+        var nestedFlow = new Mock<IFlow>();
+        var nestedMaterial = new Mock<IMaterial>();
+        nestedMaterial.SetupGet(m => m.FlowPath).Returns("Flow-A:1:1/Subflow:2/Step-A:4");
+        _entityFactoryMock.Setup(f => f.Create<IFlow>()).Returns(nestedFlow.Object);
+        helper.GetStepParentFlow(nestedMaterial.Object).Should().BeSameAs(nestedFlow.Object);
+        nestedFlow.Verify(f => f.Load("Subflow"), Times.Once);
+
+        var bomFlows = new Mock<IFlowCollection>();
+        bomFlows.MockCollectionWithList(new List<IFlow>());
+        var bomStep = new Mock<IStep>();
+        var emptyBoms = new Mock<IBOMProductCollection>();
+        _entityFactoryMock.Setup(f => f.CreateCollection<IFlowCollection>()).Returns(bomFlows.Object);
+        _entityFactoryMock.Setup(f => f.Create<IStep>()).Returns(bomStep.Object);
+        _entityFactoryMock.Setup(f => f.CreateCollection<IBOMProductCollection>()).Returns(emptyBoms.Object);
+        var bomMaterial = new Mock<IMaterial>();
+        bomMaterial.SetupGet(m => m.FlowPath).Returns("Subflow:2:1/Step-A:4");
+        bomMaterial.SetupGet(m => m.Product).Returns(Mock.Of<IProduct>(p => p.Name == "Product-A"));
+        helper.ResolveBOMProducts(bomMaterial.Object).Should().BeSameAs(emptyBoms.Object);
+    }
+
+    [Fact]
+    public void MoveMaterialToStep_ShouldAppendCommentAndMergeServiceOutput()
+    {
+        var orchestration = new Mock<IMaterialOrchestration>();
+        var output = new TestServiceOutput { Message = "original" };
+        var moveOutput = new Cmf.Navigo.BusinessOrchestration.MaterialManagement.OutputObjects.MoveMaterialToStepOutput { Message = "moved" };
+        orchestration.Setup(o => o.MoveMaterialToStep(It.IsAny<Cmf.Navigo.BusinessOrchestration.MaterialManagement.InputObjects.MoveMaterialToStepInput>())).Returns(moveOutput);
+        var helper = new MaterialHelper(_entityFactoryMock.Object, _genericServiceOrchestrationMock.Object, Mock.Of<IDEEHelper>(), orchestration.Object);
+        var material = Mock.Of<IMaterial>();
+        var input = new TestServiceInput { ServiceComments = "existing" };
+
+        helper.MoveMaterialToStep(material, "Flow-A:1:1/Step-A:1", output, input, "moving");
+
+        orchestration.Verify(o => o.MoveMaterialToStep(It.Is<Cmf.Navigo.BusinessOrchestration.MaterialManagement.InputObjects.MoveMaterialToStepInput>(i => i.Material == material && i.ServiceComments == $"existing{Environment.NewLine}moving")), Times.Once);
+        output.Message.Should().Be($"original{Environment.NewLine}moved");
+
+        var renameMaterial = new Mock<IMaterial>();
+        renameMaterial.SetupGet(m => m.SubMaterialCount).Returns(0);
+        renameMaterial.SetupGet(m => m.PrimaryQuantity).Returns(1m);
+        renameMaterial.SetupGet(m => m.SecondaryQuantity).Returns(2m);
+        var splitOutput = new SplitMaterialOutput { Message = "split" };
+        orchestration.Setup(o => o.SplitMaterial(It.IsAny<SplitMaterialInput>())).Returns(splitOutput);
+        helper.RenameMaterial(renameMaterial.Object, "Renamed", output, input, "rename", "renamed").Should().BeNull();
+        orchestration.Verify(o => o.SplitMaterial(It.Is<SplitMaterialInput>(i => i.ChildMaterials[0].Name == "Renamed" && i.ServiceComments == $"existing{Environment.NewLine}rename")), Times.Once);
+        output.Message.Should().Be($"original{Environment.NewLine}moved{Environment.NewLine}split");
+        output.FeedbackMessages.Should().ContainSingle().Which.Message.Should().Be("renamed");
+    }
+
+    private sealed class TestServiceInput : BaseInput { }
+    private sealed class TestServiceOutput : BaseOutput { }
+
 }

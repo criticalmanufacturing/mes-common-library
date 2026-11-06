@@ -16,6 +16,21 @@ public class XmlExtensionsTests
         public int Age { get; set; }
     }
 
+    public class XmlContainer
+    {
+        public XmlBaseValue? Item { get; set; }
+    }
+
+    public class XmlBaseValue
+    {
+        public string? Name { get; set; }
+    }
+
+    public class XmlDerivedValue : XmlBaseValue
+    {
+        public string? Extra { get; set; }
+    }
+
     [Fact]
     public void GetValueByXPath_ShouldReturnInnerText_WhenNodeExists()
     {
@@ -111,5 +126,36 @@ public class XmlExtensionsTests
         xml.Should().Contain("<Age>30</Age>");
         xml.Should().NotContain("xmlns:xsi");
         xml.Should().NotContain("xmlns:xsd");
+    }
+
+    [Fact]
+    public void ConvertToXML_ShouldSerializeKnownDerivedTypes()
+    {
+        XmlContainer container = new()
+        {
+            Item = new XmlDerivedValue
+            {
+                Name = "base value",
+                Extra = "known type value"
+            }
+        };
+
+        string xml = container.ConvertToXML([typeof(XmlDerivedValue)]);
+
+        xml.Should().Contain("<Extra>known type value</Extra>");
+        xml.Should().Contain("base value");
+    }
+
+    [Theory]
+    [InlineData("<TestModel><Name>John</Name><Age>30</Age></TestModel>", "John", 30)]
+    [InlineData("<TestModel><Name>Jane</Name><Age>42</Age></TestModel>", "Jane", 42)]
+    public void DeserializeXML_ShouldRestoreObjectAndRejectInvalidXml(string xml, string name, int age)
+    {
+        TestModel model = xml.DeserializeXML<TestModel>();
+
+        model.Name.Should().Be(name);
+        model.Age.Should().Be(age);
+        Action invalidXml = () => "<TestModel><Age>invalid</Age></TestModel>".DeserializeXML<TestModel>();
+        invalidXml.Should().Throw<InvalidOperationException>();
     }
 }

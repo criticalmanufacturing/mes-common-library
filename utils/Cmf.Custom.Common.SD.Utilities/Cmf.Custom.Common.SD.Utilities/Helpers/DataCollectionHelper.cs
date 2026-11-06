@@ -1,4 +1,3 @@
-﻿using Cmf.Common.CustomActionUtilities.Extensions;
 using Cmf.Custom.Common.SD.Utilities.Extensions;
 using Cmf.Custom.Common.SD.Utilities.Helpers.Abstractions;
 using Cmf.Foundation.BusinessObjects.Abstractions;
@@ -8,6 +7,7 @@ using Cmf.Foundation.BusinessOrchestration.GenericServiceManagement.InputObjects
 using Cmf.Foundation.Common;
 using Cmf.Foundation.Common.Abstractions;
 using Cmf.Navigo.BusinessObjects.Abstractions;
+using Cmf.Navigo.BusinessObjects;
 using System.Data;
 
 namespace Cmf.Custom.Common.SD.Utilities.Helpers;
@@ -24,6 +24,19 @@ namespace Cmf.Custom.Common.SD.Utilities.Helpers;
 public class DataCollectionHelper(IEntityFactory entityFactory, ILocalizationOrchestration localizationOrchestration) : IDataCollectionHelpers
 {
     private readonly IEntityFactory _entityFactory = entityFactory;
+
+    /// <inheritdoc/>
+    public IDataCollectionInstance LoadDCInstance(long dcInstanceId)
+    {
+        IDataCollectionInstance instance = _entityFactory.Create<IDataCollectionInstance>();
+        instance.Load(dcInstanceId);
+        instance.LoadRelations(Cmf.Navigo.Common.Constants.DataCollectionPoint);
+        return instance;
+    }
+
+
+
+
 
     /// <inheritdoc/>
     public IDataCollectionInstanceCollection GetDataCollectionInstancesForMaterials(List<long> materialIds)

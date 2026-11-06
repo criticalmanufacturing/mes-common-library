@@ -7,7 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="cmf.common.customactionutilities" Version="11.3.0.1263488" />
     <PackageReference Include="cmf.foundation.businessobjects" Version="11.3.6" />
     <PackageReference Include="cmf.foundation.businessorchestration" Version="11.3.6" />
     <PackageReference Include="cmf.navigo.businessobjects" Version="11.3.6" />

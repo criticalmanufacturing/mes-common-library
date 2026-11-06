@@ -1,4 +1,7 @@
-﻿using Cmf.Custom.Common.SD.Utilities.Helpers;
+using Cmf.Custom.Common.SD.Utilities.Helpers;
+using Cmf.Custom.Common.SD.Utilities.Extensions;
+using Cmf.Custom.Common.SD.Utilities.Extensions;
+using FluentAssertions;
 using Cmf.Foundation.BusinessObjects.Abstractions;
 using Cmf.Foundation.BusinessObjects.QueryObject;
 using Cmf.Foundation.BusinessOrchestration.Abstractions;
@@ -37,7 +40,6 @@ public class ProductHelperTests
             .Returns(new Mock<IProductCharacteristic>().Object);
     }
 
-
     [Fact]
     public void GetProductCharacteristics_ShouldReturnCharacteristics_WhenQueryReturnsData()
     {
@@ -71,16 +73,13 @@ public class ProductHelperTests
                 ]
             });
 
-
         var productHelper = new ProductHelper(
             _entityFactoryMock.Object,
             _genericServiceOrchestrationMock.Object);
 
-
         // Act
         IProductCharacteristicCollection result =
             productHelper.GetProductCharacteristics(productMock.Object);
-
 
         // Assert
         result.Should().NotBeNull();
@@ -92,13 +91,11 @@ public class ProductHelperTests
                         input.Filter.Count == 2)),
             Times.Once);
 
-
         _productCharacteristicCollectionMock.Verify(
             pc =>
                 pc.AddRange(It.IsAny<IEnumerable<IProductCharacteristic>>()),
             Times.Once);
     }
-
 
     [Fact]
     public void GetProductCharacteristics_ShouldReturnEmptyCollection_WhenQueryReturnsNoData()
@@ -107,41 +104,33 @@ public class ProductHelperTests
         var productMock = new Mock<IProduct>();
         productMock.Setup(p => p.Id).Returns(10);
 
-
         var emptyDataSet = TestUtilities.CreateDataSet(
             [new("Id", typeof(long))],
             _ => { });
-
 
         _queryObjectMock
             .Setup(q => q.Execute(false, It.IsAny<QueryParameterCollection>()))
             .Returns(emptyDataSet);
 
-
         var productHelper = new ProductHelper(
             _entityFactoryMock.Object,
             _genericServiceOrchestrationMock.Object);
-
 
         // Act
         IProductCharacteristicCollection result =
             productHelper.GetProductCharacteristics(productMock.Object);
 
-
         // Assert
         result.Should().NotBeNull();
-
 
         _genericServiceOrchestrationMock.Verify(
             gs => gs.GetObjectsByFilter(It.IsAny<GetObjectsByFilterInput>()),
             Times.Never);
 
-
         _productCharacteristicCollectionMock.Verify(
             pc => pc.AddRange(It.IsAny<IEnumerable<IProductCharacteristic>>()),
             Times.Never);
     }
-
 
     [Fact]
     public void GetBomProducts_ShouldReturnDataSet_WhenQueryReturnsData()
@@ -155,7 +144,6 @@ public class ProductHelperTests
         _entityFactoryMock
             .Setup(ef => ef.Create<IEntityTypeProperty>())
             .Returns(materialPropertyMock.Object);
-
 
         var productMock = new Mock<IProduct>();
         productMock.Setup(p => p.Name).Returns("PRODUCT1");
@@ -172,7 +160,6 @@ public class ProductHelperTests
             .Setup(ef => ef.Create<IMaterial>())
             .Returns(materialMock.Object);
 
-
         var dataSet = TestUtilities.CreateDataSet(
         [
             new("__cmf_html_Product_Name", typeof(string)),
@@ -187,16 +174,13 @@ public class ProductHelperTests
                 "ASSEMBLY_STEP");
         });
 
-
         _queryObjectMock
             .Setup(q => q.Execute(false, It.IsAny<QueryParameterCollection>()))
             .Returns(dataSet);
 
-
         var productHelper = new ProductHelper(
             _entityFactoryMock.Object,
             _genericServiceOrchestrationMock.Object);
-
 
         // Act
         DataSet result = productHelper.GetBomProducts(
@@ -206,7 +190,6 @@ public class ProductHelperTests
             },
             "BOM1",
             new FilterCollection());
-
 
         // Assert
         result.Should().NotBeNull();
@@ -227,7 +210,6 @@ public class ProductHelperTests
             .BeTrue();
     }
 
-
     [Fact]
     public void GetBomProducts_ShouldReturnEmptyDataSet_WhenQueryHasNoData()
     {
@@ -237,33 +219,27 @@ public class ProductHelperTests
         materialPropertyMock.SetupAllProperties();
         materialPropertyMock.Setup(m => m.Id).Returns(50);
 
-
         _entityFactoryMock
             .Setup(ef => ef.Create<IEntityTypeProperty>())
             .Returns(materialPropertyMock.Object);
-
 
         var dataSet = TestUtilities.CreateDataSet(
             [new("Id", typeof(long))],
             _ => { });
 
-
         _queryObjectMock
             .Setup(q => q.Execute(false, It.IsAny<QueryParameterCollection>()))
             .Returns(dataSet);
 
-
         var productHelper = new ProductHelper(
             _entityFactoryMock.Object,
             _genericServiceOrchestrationMock.Object);
-
 
         // Act
         DataSet result = productHelper.GetBomProducts(
             [],
             "BOM1",
             new FilterCollection());
-
 
         // Assert
         result.Should().NotBeNull();
@@ -272,4 +248,8 @@ public class ProductHelperTests
             .Should()
             .Be(0);
     }
+
+
+
+
 }

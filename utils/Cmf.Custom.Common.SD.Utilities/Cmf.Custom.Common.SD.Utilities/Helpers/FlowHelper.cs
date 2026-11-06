@@ -1,5 +1,7 @@
-﻿using Cmf.Common.CustomActionUtilities.Extensions;
+using Cmf.Custom.Common.SD.Utilities.Extensions;
 using Cmf.Custom.Common.SD.Utilities.Helpers.Abstractions;
+using Cmf.Navigo.BusinessObjects;
+using System.Linq;
 using Cmf.Foundation.BusinessObjects.Abstractions;
 using Cmf.Foundation.BusinessObjects.QueryObject;
 using Cmf.Foundation.Common;
@@ -18,9 +20,78 @@ namespace Cmf.Custom.Common.SD.Utilities.Helpers;
 /// <param name="entityFactory">
 ///     The entity factory.
 /// </param>
-public class FlowHelpers(IEntityFactory entityFactory) : IFlowHelpers
+public class FlowHelpers(IEntityFactory entityFactory, IGenericHelper genericHelper) : IFlowHelpers
 {
     private readonly IEntityFactory _entityFactory = entityFactory;
+    private readonly IGenericHelper _genericHelper = genericHelper;
+
+
+
+    private static string GetFirstFlowPathForFlow(IFlow flow, long? flowCorrelationId)
+    {
+        string result = null;
+        flow.LoadFlowItems();
+        var firstItem = flow.FlowItems.OrderBy(item => item.Position).FirstOrDefault();
+        if (firstItem != null)
+        {
+            result = firstItem.Type == FlowItemType.Flow
+                ? string.Format("{0}:{1}:{2}/{3}", flow.Name, flow.Revision, flowCorrelationId, GetFirstFlowPathForFlow(firstItem.Flow, firstItem.CorrelationId))
+                : string.Format("{0}:{1}:{2}/{3}:{4}", flow.Name, flow.Revision, flowCorrelationId, firstItem.Step.Name, firstItem.CorrelationId);
+        }
+        return result;
+    }
+
+
+
+    private static string GetLastFlowPathForFlow(IFlow flow, long? flowCorrelationId)
+    {
+        string result = null;
+        flow.LoadFlowItems();
+        var lastItem = flow.FlowItems.OrderByDescending(item => item.Position).FirstOrDefault();
+        if (lastItem != null)
+        {
+            result = lastItem.Type == FlowItemType.Flow
+                ? string.Format("{0}:{1}:{2}/{3}", flow.Name, flow.Revision, flowCorrelationId, GetLastFlowPathForFlow(lastItem.Flow, lastItem.CorrelationId))
+                : string.Format("{0}:{1}:{2}/{3}:{4}", flow.Name, flow.Revision, flowCorrelationId, lastItem.Step.Name, lastItem.CorrelationId);
+        }
+        return result;
+    }
+
+
+
+
+
+    private static IStep GetStepOfFlow(IFlow flow, bool first)
+    {
+        flow.LoadFlowItems();
+        var item = first
+            ? flow.FlowItems.OrderBy(flowItem => flowItem.Position).FirstOrDefault()
+            : flow.FlowItems.OrderByDescending(flowItem => flowItem.Position).FirstOrDefault();
+        if (item == null) return null;
+        return item.Type == FlowItemType.Flow ? GetStepOfFlow(item.Flow, first) : item.Step;
+    }
+
+    /// <inheritdoc/>
+    public IStepCollection GetAllStepsOfFlow(IFlow flow, bool loadFlow = true)
+    {
+        IStepCollection result = _entityFactory.CreateCollection<IStepCollection>();
+        if (loadFlow) flow.LoadFullFlowStructure(true);
+        foreach (var item in flow.FlowItems.Where(flowItem => flowItem.Type == FlowItemType.Step)) result.Add(item.Step);
+        foreach (var item in flow.FlowItems.Where(flowItem => flowItem.Type == FlowItemType.Flow)) result.AddRange(GetAllStepsOfFlow(item.Flow, false));
+        return result;
+    }
+
+    /// <inheritdoc/>
+    public IFlowCollection GetAllFlowsWithStep(IFlow flow, string stepName, bool loadFlow = true)
+    {
+        IFlowCollection result = _entityFactory.CreateCollection<IFlowCollection>();
+        if (loadFlow) flow.LoadFullFlowStructure(true);
+        if (flow.FlowItems.Where(item => item.Type == FlowItemType.Step).Any(item => item.Step.Name.IgnoreCaseEquals(stepName))) result.Add(flow);
+        foreach (var item in flow.FlowItems.Where(flowItem => flowItem.Type == FlowItemType.Flow)) result.AddRange(GetAllFlowsWithStep(item.Flow, stepName, false));
+        return result;
+    }
+
+
 
     /// <inheritdoc/>
     public IFlow GetFlowByHash(string hash, string hashAttributeName)

@@ -1,4 +1,4 @@
-﻿using Cmf.Custom.Common.SD.Utilities.Extensions;
+using Cmf.Custom.Common.SD.Utilities.Extensions;
 using Cmf.Custom.Common.SD.Utilities.Helpers.Abstractions;
 using Cmf.Foundation.BusinessObjects.Abstractions;
 using Cmf.Foundation.BusinessObjects.QueryObject;
@@ -12,6 +12,7 @@ using Cmf.Navigo.BusinessOrchestration.Abstractions;
 using Cmf.Navigo.BusinessOrchestration.LaborManagement.InputObjects;
 using Cmf.Navigo.BusinessOrchestration.LaborManagement.OutputObjects;
 using Cmf.Navigo.BusinessOrchestration.ResourceManagement.InputObjects;
+using System.Linq;
 using System.Data;
 
 namespace Cmf.Custom.Common.SD.Utilities.Helpers;
@@ -31,7 +32,7 @@ namespace Cmf.Custom.Common.SD.Utilities.Helpers;
 /// <param name="areaHelpers">
 ///     The area helpers.
 /// </param>
-public class ResourceHelper(IEntityFactory entityFactory, ILaborOrchestration laborOrchestration, IAreaHelpers areaHelpers, IResourceOrchestration resourceOrchestration) : IResourceHelpers
+public class ResourceHelper(IEntityFactory entityFactory, ILaborOrchestration laborOrchestration, IAreaHelpers areaHelpers, IResourceOrchestration resourceOrchestration) : IResourceHelpers, IResourceHelper
 {
     private readonly IEntityFactory _entityFactory = entityFactory;
     private readonly ILaborOrchestration _laborOrchestration = laborOrchestration;
@@ -171,4 +172,25 @@ public class ResourceHelper(IEntityFactory entityFactory, ILaborOrchestration la
             _resourceOrchestration.AttachConsumablesToResource(input);
         }
     }
+
+
+    /// <inheritdoc/>
+    public void ChangeState(IResource resource, string newState, string reason = null)
+    {
+        if (!resource.ObjectExists()) return;
+        resource.CurrentMainState.StateModel.Load();
+        IStateModelTransitionCollection transitions = resource.CurrentMainState.StateModel.GetPossibleTransitionsForState(resource.CurrentMainState.CurrentState);
+        IStateModelState state = resource.CurrentMainState.StateModel.States.FirstOrDefault(candidate => candidate.Name == newState);
+        if (state == null) throw new CmfBaseException(string.Format("The state {0} is not a valid one for the Resource {1}", newState, resource.Name));
+        IStateModelTransition transition = transitions.FirstOrDefault(candidate => candidate.ToState.Id == state.Id);
+        if (transition == null) throw new CmfBaseException(string.Format("There is no valid state transition from the current state to {0}", newState));
+        _resourceOrchestration.ComplexLogResourceEvent(new ComplexLogResourceEventInput
+        {
+            Resource = resource,
+            StateModel = resource.CurrentMainState.StateModel,
+            StateModelTransition = transition,
+            Reason = reason
+        });
+    }
+
 }

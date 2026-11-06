@@ -1,4 +1,6 @@
 using Cmf.Foundation.Common;
+using Cmf.Foundation.Configuration;
+using System.Linq;
 using Cmf.Foundation.Configuration.Abstractions;
 using System.Security;
 
@@ -74,4 +76,50 @@ public static class ConfigExtensions
 
         return config.GetDecryptedConfigValue();
     }
+
+    /// <summary>Finds a child configuration whose path contains the supplied path fragment.</summary>
+    /// <param name="parentConfig">The parent configuration.</param>
+    /// <param name="path">The path fragment to find.</param>
+    /// <param name="loadChilds">Whether to load child configurations first.</param>
+    /// <returns>The matching child configuration.</returns>
+    /// <exception cref="CmfBaseException">Thrown when no child configuration matches.</exception>
+    public static IConfig GetChildConfigByPath(this IConfig parentConfig, string path, bool loadChilds = false)
+    {
+        IConfig childConfig = null;
+        if (loadChilds)
+        {
+            parentConfig.LoadChildConfigs();
+        }
+        if (parentConfig.ChildConfigs != null && parentConfig.ChildConfigs.Any())
+        {
+            childConfig = parentConfig.ChildConfigs.FirstOrDefault(x => x.Path.Contains(path));
+        }
+        if (childConfig == null)
+        {
+            throw new Cmf.Foundation.Common.CmfBaseException(string.Format("Specified child config does not exist path: {0}", path));
+        }
+        return childConfig;
+    }
+
+    /// <summary>Gets a configuration value by path.</summary>
+    /// <typeparam name="T">The value type.</typeparam>
+    /// <param name="configPath">The configuration path.</param>
+    /// <param name="throwExceptionIfEmpty">Preserved for source compatibility.</param>
+    /// <returns>The configuration value.</returns>
+    /// <exception cref="CmfBaseException">Thrown when the configuration is missing or empty.</exception>
+    public static T GetConfigValue<T>(string configPath, bool throwExceptionIfEmpty = false)
+    {
+        Cmf.Foundation.Configuration.Config.TryGetConfig(configPath, out IConfig config);
+        object returnValue;
+        if (config != null && config.Value != null)
+        {
+            returnValue = config.Value;
+        }
+        else
+        {
+            throw new Cmf.Foundation.Common.CmfBaseException(string.Format("Specified config does not exist path: {0}", configPath));
+        }
+        return (T)returnValue;
+    }
+
 }

@@ -17,4 +17,17 @@ public interface IDataCollectionHelpers
     ///     An <see cref="IDataCollectionInstanceCollection"/> containing the latest Data Collection Instance for each material.
     /// </returns>
     public IDataCollectionInstanceCollection GetDataCollectionInstancesForMaterials(List<long> materialIds);
+
+    /// <summary>
+    ///     Loads a Data Collection Instance and its Data Collection Points.
+    /// </summary>
+    /// <param name="dcInstanceId">
+    ///     The identifier of the Data Collection Instance. This identifier is assumed to exist.
+    /// </param>
+    /// <returns>
+    ///     The Data Collection Instance loaded with its Data Collection Points.
+    /// </returns>
+    public IDataCollectionInstance LoadDCInstance(long dcInstanceId);
+
+
 }

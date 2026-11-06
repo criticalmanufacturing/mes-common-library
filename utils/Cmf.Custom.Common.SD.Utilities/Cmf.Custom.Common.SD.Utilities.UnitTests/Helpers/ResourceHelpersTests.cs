@@ -1,4 +1,4 @@
-﻿using Cmf.Custom.Common.SD.Utilities.Helpers;
+using Cmf.Custom.Common.SD.Utilities.Helpers;
 using Cmf.Custom.Common.SD.Utilities.Helpers.Abstractions;
 using Cmf.Foundation.BaseTestsUtils.Extensions;
 using Cmf.Foundation.BusinessObjects.Abstractions;
@@ -10,6 +10,7 @@ using Cmf.Navigo.BusinessOrchestration.Abstractions;
 using Cmf.Navigo.BusinessOrchestration.LaborManagement.InputObjects;
 using Cmf.Navigo.BusinessOrchestration.LaborManagement.OutputObjects;
 using Cmf.Navigo.BusinessOrchestration.ResourceManagement.InputObjects;
+using Cmf.Foundation.BusinessObjects.Abstractions;
 using FluentAssertions;
 using Moq;
 using System.Data;
@@ -126,4 +127,38 @@ public class ResourceHelperTests
         // Assert
         resourceOrchestrationMock.Verify(ro => ro.AttachConsumablesToResource(It.IsAny<AttachConsumablesToResourceInput>()), Times.Once);
     }
+
+    [Fact]
+    public void ChangeState_ShouldLogResourceEventForAvailableTransition()
+    {
+        var state = new Mock<IStateModelState>();
+        state.SetupGet(s => s.Name).Returns("Ready");
+        state.SetupGet(s => s.Id).Returns(2);
+        var states = new Mock<IStateModelStateCollection>();
+        states.Setup(s => s.GetEnumerator()).Returns(() => new List<IStateModelState> { state.Object }.GetEnumerator());
+        var transition = new Mock<IStateModelTransition>();
+        transition.SetupGet(t => t.ToState).Returns(state.Object);
+        var transitions = new Mock<IStateModelTransitionCollection>();
+        transitions.Setup(t => t.GetEnumerator()).Returns(() => new List<IStateModelTransition> { transition.Object }.GetEnumerator());
+        var stateModel = new Mock<IStateModel>();
+        stateModel.SetupGet(m => m.States).Returns(states.Object);
+        stateModel.Setup(m => m.GetPossibleTransitionsForState(It.IsAny<IStateModelState>())).Returns(transitions.Object);
+        var mainState = new Mock<ICurrentEntityState>();
+        mainState.SetupGet(s => s.StateModel).Returns(stateModel.Object);
+        var resource = new Mock<IResource>();
+        resource.Setup(r => r.ObjectExists()).Returns(true);
+        resource.SetupGet(r => r.CurrentMainState).Returns(mainState.Object);
+        var resourceOrchestration = new Mock<IResourceOrchestration>();
+        var helper = new ResourceHelper(_entityFactoryMock.Object, _laborOrchestrationMock.Object, _areaHelpersMock.Object, resourceOrchestration.Object);
+
+        helper.ChangeState(resource.Object, "Ready", "operator request");
+
+        resourceOrchestration.Verify(o => o.ComplexLogResourceEvent(It.Is<ComplexLogResourceEventInput>(i => i.Resource == resource.Object && i.StateModelTransition == transition.Object && i.Reason == "operator request")), Times.Once);
+        Action invalidState = () => helper.ChangeState(resource.Object, "Missing");
+        invalidState.Should().Throw<Cmf.Foundation.Common.CmfBaseException>();
+        transitions.Setup(t => t.GetEnumerator()).Returns(() => Enumerable.Empty<IStateModelTransition>().GetEnumerator());
+        Action invalidTransition = () => helper.ChangeState(resource.Object, "Ready");
+        invalidTransition.Should().Throw<Cmf.Foundation.Common.CmfBaseException>();
+    }
+
 }

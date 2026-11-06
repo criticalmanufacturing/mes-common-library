@@ -1,4 +1,4 @@
-﻿using Cmf.Custom.Common.SD.Utilities.Extensions;
+using Cmf.Custom.Common.SD.Utilities.Extensions;
 using Cmf.Foundation.Common;
 using Cmf.Foundation.Configuration.Abstractions;
 using FluentAssertions;
@@ -172,5 +172,27 @@ public class ConfigExtensionsTests
 
         // Assert
         result.Should().Be("decrypted");
+    }
+
+    [Fact]
+    public void GetChildConfigByPath_FindsPathAndRetainsDefaults()
+    {
+        var child = new Mock<IConfig>();
+        child.SetupGet(config => config.Path).Returns("Root/Child/Target");
+        var children = new Mock<IConfigCollection>();
+        children.SetupGet(collection => collection.Count).Returns(1);
+        children.As<IEnumerable<IConfig>>().Setup(collection => collection.GetEnumerator())
+            .Returns(() => new[] { child.Object }.AsEnumerable().GetEnumerator());
+        var parent = new Mock<IConfig>();
+        parent.SetupGet(config => config.ChildConfigs).Returns(children.Object);
+        parent.Object.GetChildConfigByPath("Target").Should().BeSameAs(child.Object);
+        parent.Object.GetChildConfigByPath("Target", true).Should().BeSameAs(child.Object);
+        parent.Verify(config => config.LoadChildConfigs(), Times.Once);
+        Action missing = () => parent.Object.GetChildConfigByPath("Missing");
+        missing.Should().Throw<CmfBaseException>().WithMessage("*Specified child config does not exist path: Missing");
+        typeof(ConfigExtensions).GetMethod(nameof(ConfigExtensions.GetChildConfigByPath))!
+            .GetParameters()[2].DefaultValue.Should().Be(false);
+        typeof(ConfigExtensions).GetMethod(nameof(ConfigExtensions.GetConfigValue))!
+            .GetParameters()[1].DefaultValue.Should().Be(false);
     }
 }

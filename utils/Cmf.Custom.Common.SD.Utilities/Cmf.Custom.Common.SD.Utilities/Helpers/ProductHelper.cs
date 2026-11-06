@@ -1,9 +1,9 @@
-﻿
-using Cmf.Common.CustomActionUtilities.Extensions;
+
 using Cmf.Custom.Common.SD.Utilities.Extensions;
 using Cmf.Custom.Common.SD.Utilities.Helpers.Abstractions;
 using Cmf.Foundation.BusinessObjects.Abstractions;
 using Cmf.Foundation.BusinessObjects.QueryObject;
+using Cmf.Foundation.BusinessObjects;
 using Cmf.Foundation.BusinessObjects.QueryObject.Enums;
 using Cmf.Foundation.BusinessOrchestration.Abstractions;
 using Cmf.Foundation.BusinessOrchestration.GenericServiceManagement.InputObjects;
@@ -31,6 +31,7 @@ public class ProductHelper(IEntityFactory entityFactory, IGenericServiceOrchestr
 {
     private readonly IEntityFactory _entityFactory = entityFactory;
     private readonly IGenericServiceOrchestration _genericServiceOrchestration = genericServiceOrchestration;
+
 
     /// <inheritdoc/>
     public IProductCharacteristicCollection GetProductCharacteristics(IProduct product)
