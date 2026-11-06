@@ -6,7 +6,6 @@ on:
       feature:
         description: 'Feature folder under features/ to release (or "all")'
         required: true
-        default: 'all'
         type: string
       mes-version:
         description: 'MES version to tag against (default: each feature''s own Cmf.Environment dependency version)'
