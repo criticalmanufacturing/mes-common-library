@@ -15,6 +15,27 @@ This library focuses on providing:
 * **Samples:**  Reusable master data that can be imported into an empty system.
 * **Tools:**  Scripts or applications that aid in the development, testing, or deployment of CM MES customizations.
 
+## Features Index
+
+This section works as a catalog of the features currently published in this repository. Each entry is added once a feature completes its release and publish process (see [CONTRIBUTING.md](CONTRIBUTING.md) for the feature lifecycle), and links to the feature's own folder/README for usage, versioning, and compatibility details.
+
+| Feature | Description | MES Compatibility | Latest Version |
+| ------- | ------------ | ------------------ | --------------- |
+| [IoTAMQPDriver](features/IoTAMQPDriver) | Connect IoT driver for AMQP brokers; publishes Connect IoT commands as JSON messages. | 11.3.3 | 11331.0.0 |
+| [IoTCodeCSharp](features/IoTCodeCSharp) | Connect IoT Controller Engine C# Roslyn Code task to write and run C# directly in the flow designer. | 11.3.3 | 11331.0.0 |
+| [IoTCodeUtilities](features/IoTCodeUtilities) | Reusable Connect IoT utility tasks for MES object access, configuration mapping, value translation and encoding/conversion. | 11.3.3 | 11331.0.0 |
+| [IoTCustomAutomationConfiguration](features/IoTCustomAutomationConfiguration) | Data model and server-side logic to store, retrieve and apply custom automation configuration for IoT-connected equipment. | 11.3.3 | 11331.0.0 |
+| [IoTDataPlatformHelperSuite](features/IoTDataPlatformHelperSuite) | Connect IoT helper tasks for the Data Platform and ML Platform, plus a general-purpose Python scripting task. | 11.3.3 | 11331.0.0 |
+| [IoTDynamicEvents](features/IoTDynamicEvents) | Connect IoT tasks to register, subscribe to and handle dynamic automation events, with timer support. | 11.3.3 | 11331.0.0 |
+| [IoTJSONXML](features/IoTJSONXML) | Connect IoT tasks to convert JSON to XML strings and parse XML strings into JSON objects. | 11.3.3 | 11331.0.0 |
+| [IoTMESInteroperability](features/IoTMESInteroperability) | Business and data extensions integrating Connect IoT workflows with MES material, recipe, resource, metadata and document operations. | 11.3.3 | 11331.0.0 |
+| [IoTMTConnect](features/IoTMTConnect) | Connect IoT driver for MTConnect agents that reads device data through the MTConnect protocol. | 11.3.3 | 11331.0.0 |
+| [IoTOPCUADynamicTags](features/IoTOPCUADynamicTags) | Ready-to-deploy OPC UA dynamic-tags configuration: controllers, custom events, context resolution and controller configuration. | 11.3.3 | 11331.0.0 |
+| [IoTPersistencyViewer](features/IoTPersistencyViewer) | "Persistency Viewer" tab on the AutomationControllerInstance page to view and edit controller edge-layer persistency data. | 11.3.3 | 11331.0.0 |
+| [IoTSQLLite](features/IoTSQLLite) | Connect IoT tasks to store and query data in SQLite databases, with parameterized queries and JSON schema validation. | 11.3.3 | 11331.0.0 |
+| [IoTSecurityToolset](features/IoTSecurityToolset) | Connect IoT cryptographic tasks for RSA key setup, encryption and decryption. | 11.3.3 | 11331.0.0 |
+| [TimeTracking](features/TimeTracking) | Employee time tracking: automatic check-in on track-in and automatic check-out when checking in to a new resource. | 11.3.5 | 11351.0.0 |
+
 ## File Structure
 
 The repository is organized as follows:
@@ -60,11 +81,8 @@ We support the following branch types:
 | Name         | Convention                                            | Description                                                                                        | Example                                  |
 | ------------ | ----------------------------------------------------- | -------------------------------------------------------------------------------------------------- | ---------------------------------------- |
 | Dev          | `{MES_MAJOR}.{MES_MINOR}/dev`                         | Development branch for features targeting a specific MES major/minor version.                      | `11.2/dev`                               |
-| Dev (Patch)  | `{MES_MAJOR}.{MES_MINOR}.{PATCH}/dev`                 | Development branch for features targeting a specific MES patch version.                            | `11.2.3/dev`                             |
 | Feature      | `{MES_MAJOR}.{MES_MINOR}/feature/{ID}-{Summary}`      | Branch used during development of a specific feature. Should be deleted after merging to dev.      | `11.2/feature/123-add-custom-validation` |
-| Feature (Patch) | `{MES_MAJOR}.{MES_MINOR}.{PATCH}/feature/{ID}-{Summary}` | Feature branch targeting a specific patch version. Should be deleted after merging to dev.   | `11.2/3/feature/123-patch-fix`         |
 | Bug          | `{MES_MAJOR}.{MES_MINOR}/bug/{ID}-{Summary}`          | Branch used during development of a bug fix. Should be deleted after merging to dev.               | `11.2/bug/456-fix-material-handling`     |
-| Bug (Patch)  | `{MES_MAJOR}.{MES_MINOR}.{PATCH}/bug/{ID}-{Summary}`  | Bug fix branch targeting a specific patch version. Should be deleted after merging to dev.         | `11.2.3/bug/456-hotfix`                  |
 | Main         | `main`                                                | The main branch containing repository documentation and usage guidelines.                        | `main`                                   |
 
 ## Release Tags and Versioning Convention

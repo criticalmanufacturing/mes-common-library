@@ -4,42 +4,103 @@ First off, thanks for taking the time to contribute! ❤️
 
 All types of contributions are encouraged and valued. See the [Table of Contents](#table-of-contents) for different ways to help and details about how this project handles them. Please make sure to read the relevant section before making your contribution. It will make it a lot easier for us maintainers and smooth out the experience for all involved. The community looks forward to your contributions. 🎉
 
-> And if you like the project, but just don't have time to contribute, that's fine. There are other easy ways to support the project and show your appreciation, which we would also be very happy about:
-> - Star the project
-> - Tweet about it
-> - Refer this project in your project's readme
-> - Mention the project at local meetups and tell your friends/colleagues
-
 ## Table of Contents
 
 - [Contributing to mes-common-library](#contributing-to-mes-common-library)
   - [Table of Contents](#table-of-contents)
   - [I Have a Question](#i-have-a-question)
+  - [Feature Lifecycle](#feature-lifecycle)
+    - [1. Identify](#1-identify)
+    - [2. Approval](#2-approval)
+    - [3. Implementation / Migration](#3-implementation--migration)
+      - [Ground rules](#ground-rules)
+    - [4. Internal Demo](#4-internal-demo)
+    - [5. Release and Publish](#5-release-and-publish)
+    - [6. Global Demo](#6-global-demo)
   - [I Want To Contribute](#i-want-to-contribute)
     - [Legal Notice](#legal-notice)
     - [Reporting Bugs](#reporting-bugs)
       - [Before Submitting a Bug Report](#before-submitting-a-bug-report)
       - [How Do I Submit a Good Bug Report?](#how-do-i-submit-a-good-bug-report)
-    - [Suggesting Enhancements](#suggesting-enhancements)
-      - [Before Submitting an Enhancement](#before-submitting-an-enhancement)
-      - [How Do I Submit a Good Enhancement Suggestion?](#how-do-i-submit-a-good-enhancement-suggestion)
     - [Your First Code Contribution](#your-first-code-contribution)
+    - [Commit Message \& Hook Enforcement](#commit-message--hook-enforcement)
 
 
 
 ## I Have a Question
 
-> If you want to ask a question, we assume that you have read the available [Documentation](https://criticalmanufacturing.github.io/mes-common-library).
+> If you want to ask a question, we assume that you have read this and the [README](https://criticalmanufacturing.github.io/mes-common-library) file as well.
 
-Before you ask a question, it is best to search for existing [Issues](https://github.com/cmf-moreira/mes-common-library/issues) that might help you. In case you have found a suitable issue and still need clarification, you can write your question in this issue. It is also advisable to search the internet for answers first.
+It is best to search for existing [Issues](https://github.com/criticalmanufacturing/mes-common-library/issues) that might help you. In case you have found a suitable issue and still need clarification, you can write your question at the issue's comments section.
 
 If you then still feel the need to ask a question and need clarification, we recommend the following:
 
-- Open an [Issue](https://github.com/cmf-moreira/mes-common-library/issues/new).
+- Open an [Issue](https://github.com/criticalmanufacturing/mes-common-library/issues/new).
 - Provide as much context as you can about what you're running into.
 - Provide project and platform versions (nodejs, npm, etc), depending on what seems relevant.
 
 We will then take care of the issue as soon as possible.
+
+## Feature Lifecycle
+
+New features proposed for the Common Library — whether built from scratch or migrated from an existing customization project/template — must go through the following lifecycle before they become part of the repository. Project Teams and Portfolio Management can identify candidates at any time; the feature owner assigned to the Issue is responsible for steering the feature through the remaining phases.
+
+### 1. Identify
+
+**Who:** Project Teams (Engineers + Functional Analysts), Portfolio Management.
+
+Candidate features are identified in your own project or in another team's project. A candidate can either be not yet built (planned in a project's backlog) or already implemented in a project/template and considered generic enough to be adapted and migrated into Common.
+
+To propose a feature:
+
+1. Navigate to the [GitHub repository](https://github.com/criticalmanufacturing/mes-common-library) and select **Issues**.
+2. Create a new Issue tagged `feature-request`, with an explicit and complete explanation of the feature to be implemented or incorporated into the repo.
+3. Assign a **feature owner** (assignee) — the person initially responsible for implementation and review. This can be changed later.
+
+Once created, the Issue is ready to move into Approval (which can be done in parallel with further internal refinement).
+
+### 2. Approval
+
+**Who:** A selected group of maintainers/advocates (Engineering Leads and Architecture & Advocacy).
+
+Maintainers log into the repository and review proposed feature requests (via a dedicated view listing them), weighing scope and feasibility. As a result, feature requests are either approved or rejected.
+
+### 3. Implementation / Migration
+
+**Who:** The feature-assigned team (from the Issue).
+
+Implementation includes unit testing and documentation, and is approved through **Pull Requests**. This applies both to features implemented from scratch and to features migrated from another project — if a migrated feature did not already have unit tests, they must be developed. Bugs, change requests and version updates follow the same validation process (see [Reporting Bugs](#reporting-bugs)).
+
+Automatic PR and CI pipelines build, pack and test only the changed/target features (not every feature in the repo); once CI-tested, candidate packages are ready to be installed and demonstrated.
+
+#### Ground rules
+
+- **Commit messages:** use conventional prefixes on every commit (`feat:`, `fix:`, `chore:`, ...) — see [Commit Message & Hook Enforcement](#commit-message--hook-enforcement).
+- **Pull Request approval:** implementation, documentation and unit tests are mandatory. Every PR must be approved by the feature owner (or another designated reviewer) and linked to an Issue for full traceability.
+- **Integration tests:** test the feature integrated into your own project before approving the implementation.
+- **One process for all changes:** bugs, change requests and version updates follow the same validation process as new features.
+
+### 4. Internal Demo
+
+*Optional phase, decided by the Feature Owner.*
+
+**Who:** The feature-assigned team.
+
+The implemented functionality is demonstrated to interested parties as a first validation. After internal approval, the feature is ready to be officially released.
+
+### 5. Release and Publish
+
+**Who:** The feature-assigned engineering team.
+
+After official approval, the feature is published and ready to be used in implementation projects. The feature is added to the index in the root [README.md](README.md#features-index) (which works as a feature catalog) on the `main` branch, pointing to the feature's own README for usage, versioning and compatibility details.
+
+### 6. Global Demo
+
+*Optional phase, decided by the Feature Owner.*
+
+**Who:** The feature-assigned functional team (e.g., Functional Analyst(s) or Product Managers).
+
+The new feature (or enhancements to an existing one) is presented to the global Solution Delivery forum (e.g., SD Talks) as a knowledge transfer to the rest of the implementation teams.
 
 ## I Want To Contribute
 
@@ -54,53 +115,31 @@ When contributing to this project, you must agree that you have authored 100% of
 A good bug report shouldn't leave others needing to chase you up for more information. Therefore, we ask you to investigate carefully, collect information and describe the issue in detail in your report. Please complete the following steps in advance to help us fix any potential bug as fast as possible.
 
 - Make sure that you are using the latest version.
-- Determine if your bug is really a bug and not an error on your side e.g. using incompatible environment components/versions (Make sure that you have read the [documentation](https://criticalmanufacturing.github.io/mes-common-library). If you are looking for support, you might want to check [this section](#i-have-a-question)).
-- To see if other users have experienced (and potentially already solved) the same issue you are having, check if there is not already a bug report existing for your bug or error in the [bug tracker](https://github.com/cmf-moreira/mes-common-library/issues?q=label%3Abug).
-- Also make sure to search the internet (including Stack Overflow) to see if users outside of the GitHub community have discussed the issue.
+- Determine if your bug is really a bug and not an error on your side e.g. using incompatible environment components/versions (make sure that you have read the feature's documentation. If you are looking for support, you might want to check [this section](#i-have-a-question)).
+- To see if other users have experienced (and potentially already solved) the same issue you are having, check if there is not already a bug report existing for your bug or error in the [bug tracker](https://github.com/criticalmanufacturing/mes-common-library/issues?q=label%3Abug).
 - Collect information about the bug:
-- Stack trace (Traceback)
-- OS, Platform and Version (Windows, Linux, macOS, x86, ARM)
-- Version of the interpreter, compiler, SDK, runtime environment, package manager, depending on what seems relevant.
-- Possibly your input and the output
-- Can you reliably reproduce the issue? And can you also reproduce it with older versions?
-
+  - Stack trace (Traceback)
+  - OS, Platform and Version (Windows, Linux, macOS, x86, ARM)
+  - Version of the interpreter, compiler, SDK, runtime environment, package manager, depending on what seems relevant.
+  - Possibly your input and the output
+  - Can you reliably reproduce the issue? And can you also reproduce it with older versions?
+  
 #### How Do I Submit a Good Bug Report?
 
-You must never report security related issues, vulnerabilities or bugs including sensitive information to the issue tracker, or elsewhere in public. Instead sensitive bugs must be sent by email to <>.
+You must never report security related issues, vulnerabilities or bugs including sensitive information to the issue tracker, or elsewhere in public.
 
 We use GitHub issues to track bugs and errors. If you run into an issue with the project:
 
-- Open an [Issue](https://github.com/cmf-moreira/mes-common-library/issues/new). (Since we can't be sure at this point whether it is a bug or not, we ask you not to talk about a bug yet and not to label the issue.)
+- Open an [Issue](https://github.com/criticalmanufacturing/mes-common-library/issues/new).
 - Explain the behavior you would expect and the actual behavior.
 - Please provide as much context as possible and describe the *reproduction steps* that someone else can follow to recreate the issue on their own. This usually includes your code. For good bug reports you should isolate the problem and create a reduced test case.
 - Provide the information you collected in the previous section.
 
-Once it's filed:
+Please note that there isn't always a dedicated team assigned to a given feature, so if you're able to, you're encouraged to [implement the fix yourself](#your-first-code-contribution). __Before opening a Pull Request, confirm with the feature owner (or, if there isn't one assigned, any maintainer)__ whether the fix is actually appropriate and should be approved.
 
-- The project team will label the issue accordingly.
-- A team member will try to reproduce the issue with your provided steps. If there are no reproduction steps or no obvious way to reproduce the issue, the team will ask you for those steps and mark the issue as `needs-repro`. Bugs with the `needs-repro` tag will not be addressed until they are reproduced.
-- If the team is able to reproduce the issue, it will be marked `needs-fix`, as well as possibly other tags (such as `critical`), and the issue will be left to be [implemented by someone](#your-first-code-contribution).
+Bug fixes, change requests and version updates don't go through the [Identify](#1-identify)/[Approval](#2-approval) phases of the [Feature Lifecycle](#feature-lifecycle) — they go straight through the same PR-based validation process described in [Implementation / Migration](#3-implementation--migration).
 
-### Suggesting Enhancements
-
-This section guides you through submitting an enhancement suggestion for mes-common-library, **including completely new features and minor improvements to existing functionality**. Following these guidelines will help maintainers and the community to understand your suggestion and find related suggestions.
-
-#### Before Submitting an Enhancement
-
-- Make sure that you are using the latest version.
-- Read the [documentation](https://criticalmanufacturing.github.io/mes-common-library) carefully and find out if the functionality is already covered, maybe by an individual configuration.
-- Perform a [search](https://github.com/cmf-moreira/mes-common-library/issues) to see if the enhancement has already been suggested. If it has, add a comment to the existing issue instead of opening a new one.
-- Find out whether your idea fits with the scope and aims of the project. It's up to you to make a strong case to convince the project's developers of the merits of this feature. Keep in mind that we want features that will be useful to the majority of our users and not just a small subset. If you're just targeting a minority of users, consider writing an add-on/plugin library.
-
-#### How Do I Submit a Good Enhancement Suggestion?
-
-Enhancement suggestions are tracked as [GitHub issues](https://github.com/cmf-moreira/mes-common-library/issues).
-
-- Use a **clear and descriptive title** for the issue to identify the suggestion.
-- Provide a **step-by-step description of the suggested enhancement** in as many details as possible.
-- **Describe the current behavior** and **explain which behavior you expected to see instead** and why. At this point you can also tell which alternatives do not work for you.
-- You may want to **include screenshots or screen recordings** which help you demonstrate the steps or point out the part which the suggestion is related to. You can use [LICEcap](https://www.cockos.com/licecap/) to record GIFs on macOS and Windows, and the built-in [screen recorder in GNOME](https://help.gnome.org/users/gnome-help/stable/screen-shot-record.html.en) or [SimpleScreenRecorder](https://github.com/MaartenBaert/ssr) on Linux. <!-- this should only be included if the project has a GUI -->
-- **Explain why this enhancement would be useful** to most mes-common-library users. You may also want to point out the other projects that solved it better and which could serve as inspiration.
+> **Suggesting a new feature?** Instead of a generic enhancement suggestion, new feature ideas for this repository follow the dedicated [Feature Lifecycle](#feature-lifecycle) process below, starting at [Identify](#1-identify).
 
 ### Your First Code Contribution
 
