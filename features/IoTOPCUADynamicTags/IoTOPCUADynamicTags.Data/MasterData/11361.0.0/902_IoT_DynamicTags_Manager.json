@@ -1,0 +1,16 @@
+{
+  "<DM>AutomationManager": {
+    "1": {
+      "Name": "DynamicTags_Manager",
+      "IsTemplate": "No",
+      "Description": "DynamicTags_Manager",
+      "Type": "General",
+      "LogicalAddress": "DynamicTags_Manager",
+      "MonitorPackageVersion": "12.0.0",
+      "ManagerPackageVersion": "12.0.0",
+      "Configuration": "",
+      "DeploymentMode": "Manual",
+      "DeploymentState": "Unknown"
+    }
+  }
+}
