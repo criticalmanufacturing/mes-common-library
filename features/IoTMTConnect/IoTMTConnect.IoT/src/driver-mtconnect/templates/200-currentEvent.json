@@ -1,0 +1,28 @@
+{
+  "event": [
+    {
+      "Name": "CurrentReceived",
+      "Description": "CurrentReceived should receive one after start",
+      "DeviceEventId": "Current",
+      "IsEnabled": true,
+      "ExtendedData": {},
+      "EventProperties": [
+        {
+          "Property": "header",
+          "Order": 1,
+          "ExtendedData": {}
+        },
+        {
+          "Property": "devices",
+          "Order": 2,
+          "ExtendedData": {}
+        },
+        {
+          "Property": "observations",
+          "Order": 3,
+          "ExtendedData": {}
+        }
+      ]
+    }
+  ]
+}

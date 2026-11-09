@@ -1,0 +1,29 @@
+{
+  "command": [
+    {
+      "Name": "Current Command",
+      "Description": "Current Command",
+      "DeviceCommandId": "CurrentCommand",
+      "ExtendedData": {
+        "commandType": "Current"
+      },
+      "CommandParameters": [
+        {
+          "Name": "device",
+          "DataType": "String",
+          "AutomationProtocolDataType": "String"
+        },
+        {
+          "Name": "path",
+          "DataType": "String",
+          "AutomationProtocolDataType": "String"
+        },
+        {
+          "Name": "at",
+          "DataType": "Integer",
+          "AutomationProtocolDataType": "Integer"
+        }
+      ]
+    }
+  ]
+}

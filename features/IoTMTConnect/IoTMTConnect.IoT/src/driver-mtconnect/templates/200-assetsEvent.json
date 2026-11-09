@@ -1,0 +1,23 @@
+{
+  "event": [
+    {
+      "Name": "AssetsReceived",
+      "Description": "AssetsReceived will surface initial assets",
+      "DeviceEventId": "Assets",
+      "IsEnabled": true,
+      "ExtendedData": {},
+      "EventProperties": [
+        {
+          "Property": "header",
+          "Order": 1,
+          "ExtendedData": {}
+        },
+        {
+          "Property": "assets",
+          "Order": 2,
+          "ExtendedData": {}
+        }
+      ]
+    }
+  ]
+}
