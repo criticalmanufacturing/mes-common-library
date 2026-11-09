@@ -1,0 +1,29 @@
+{
+  "packageId": "Cmf.Community.ExternalSystemsSimulator",
+  "version": "11361.0.0",
+  "description": "This package deploys Critical Manufacturing Community Customization",
+  "packageType": "Root",
+  "isInstallable": true,
+  "isUniqueInstall": false,
+  "dependencies": [
+    {
+      "id": "Cmf.Environment",
+      "version": "11.3.6",
+      "mandatory": false
+    },
+    {
+      "id": "CriticalManufacturing.DeploymentMetadata",
+      "version": "11.3.6",
+      "mandatory": false
+    },{
+      "id": "Cmf.Community.ExternalSystemsSimulator.IoT",
+      "version": "11361.0.0"
+    }
+  ],
+  "testPackages": [
+    {
+      "id": "Cmf.Community.ExternalSystemsSimulator.Tests",
+      "version": "11361.0.0"
+    }
+  ]
+}

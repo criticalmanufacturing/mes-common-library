@@ -1,0 +1,14 @@
+{
+  "packageId": "Cmf.Community.ExternalSystemsSimulator.Tests",
+  "version": "11361.0.0",
+  "description": "This package tests Critical Manufacturing MES Community Customization",
+  "packageType": "Tests",
+  "isInstallable": false,
+  "isUniqueInstall": false,
+  "contentToPack": [
+    {
+      "source": "Release/**",
+      "target": ""
+    }
+  ]
+}

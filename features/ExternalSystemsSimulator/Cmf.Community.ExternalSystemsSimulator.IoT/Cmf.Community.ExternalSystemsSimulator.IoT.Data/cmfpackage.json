@@ -1,0 +1,20 @@
+{
+  "packageId": "Cmf.Community.ExternalSystemsSimulator.IoT.Data",
+  "version": "11361.0.0",
+  "description": "Cmf Custom Community Cmf.Community.ExternalSystemsSimulator.IoT.Data Package",
+  "packageType": "IoTData",
+  "isInstallable": true,
+  "isUniqueInstall": true,
+  "contentToPack": [
+    {
+      "source": "MasterData/$(version)/*",
+      "target": "MasterData/$(version)",
+      "contentType": "MasterData"
+    },
+    {
+      "source": "AutomationWorkFlows/*",
+      "target": "AutomationWorkFlows",
+      "contentType": "AutomationWorkFlows"
+    }
+  ]
+}
