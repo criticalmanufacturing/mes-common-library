@@ -1,6 +1,6 @@
 {
   "packageId": "Cmf.Community.ExternalSystemsSimulator.IoT",
-  "version": "1136.1.0.0",
+  "version": "11361.0.0",
   "description": "Cmf Custom Community Cmf.Community.ExternalSystemsSimulator.IoT Package",
   "packageType": "Root",
   "isInstallable": true,
@@ -8,11 +8,11 @@
   "dependencies": [
     {
       "id": "Cmf.Community.ExternalSystemsSimulator.IoT.Packages",
-      "version": "1136.1.0.0"
+      "version": "11361.0.0"
     },
 	  {
       "id": "Cmf.Community.ExternalSystemsSimulator.IoT.Data",
-      "version": "1136.1.0.0"
+      "version": "11361.0.0"
     }
   ]
 }
