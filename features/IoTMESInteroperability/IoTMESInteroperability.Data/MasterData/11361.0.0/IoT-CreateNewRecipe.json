@@ -1,0 +1,20 @@
+{
+  "<SM>DEEAction": {
+    "1": {
+      "Action": "IoTCreateNewRecipe",
+      "Description": "DEE to create and set a new recipe",
+      "CodeFileRelativePath": "ConnectIoT//IoTCreateNewRecipe.cs",
+      "IsEnabled": "Yes",
+      "Classification": "ConnectIoT"
+    }
+  },
+  "DEEActionOrder": {},
+  "<DM>Rule": {
+    "1": {
+      "Name": "IoTCreateNewRecipe",
+      "Description": "DEE to create and set a new recipe",
+      "Scope": "ConnectIoT",
+      "DEERule": "IoTCreateNewRecipe"
+    }
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "<SM>DEEAction": {
+    "1": {
+      "Action": "IoTCreateExternalDocuments",
+      "Description": "DEE to create external documents",
+      "CodeFileRelativePath": "ConnectIoT//IoTCreateExternalDocuments.cs",
+      "IsEnabled": "Yes",
+      "Classification": "ConnectIoT"
+    }
+  },
+  "DEEActionOrder": {},
+  "<DM>Rule": {
+    "1": {
+      "Name": "IoTCreateExternalDocuments",
+      "Description": "DEE to create external documents",
+      "Scope": "ConnectIoT",
+      "DEERule": "IoTCreateExternalDocuments"
+    }
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "<SM>DEEAction": {
+    "1": {
+      "Action": "IoTDetachConsumables",
+      "Description": "DEE to Detach Consumables",
+      "CodeFileRelativePath": "ConnectIoT//IoTDetachConsumables.cs",
+      "IsEnabled": "Yes",
+      "Classification": "ConnectIoT"
+    }
+  },
+  "DEEActionOrder": {},
+  "<DM>Rule": {
+    "1": {
+      "Name": "IoTDetachConsumables",
+      "Description": "DEE to Detach Consumables",
+      "Scope": "ConnectIoT",
+      "DEERule": "IoTDetachConsumables"
+    }
+  }
+}

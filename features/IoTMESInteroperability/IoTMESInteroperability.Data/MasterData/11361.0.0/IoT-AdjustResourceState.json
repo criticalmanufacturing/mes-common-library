@@ -1,0 +1,20 @@
+{
+  "<SM>DEEAction": {
+    "1": {
+      "Action": "IoTAdjustResourceState",
+      "Description": "DEE to change resource state",
+      "CodeFileRelativePath": "ConnectIoT//IoTAdjustResourceState.cs",
+      "IsEnabled": "Yes",
+      "Classification": "ConnectIoT"
+    }
+  },
+  "DEEActionOrder": {},
+  "<DM>Rule": {
+    "1": {
+      "Name": "IoTAdjustResourceState",
+      "Description": "DEE to change resource state",
+      "Scope": "ConnectIoT",
+      "DEERule": "IoTAdjustResourceState"
+    }
+  }
+}
