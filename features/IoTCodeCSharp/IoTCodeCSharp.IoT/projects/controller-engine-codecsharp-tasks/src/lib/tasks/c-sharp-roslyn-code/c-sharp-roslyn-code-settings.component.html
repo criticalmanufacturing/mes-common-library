@@ -1,0 +1,54 @@
+<cmf-core-connect-iot-taskSettings [showInputsTab]="true" [showOutputsTab]="true" selectedTab="Code" [saveOnKeyboardShortcut]="true">
+
+    <cmf-core-controls-baseWidget mainTitle="Settings">
+        <cmf-core-business-controls-propertyContainer>
+            <cmf-core-business-controls-propertyEditor
+                label="Expiration Time"
+                [(value)]="settings.contextExpirationInMilliseconds"
+                [required]="true"
+                [min]="0"
+                valueType="Integer"
+                infoMessage="Expiration time for values received in the same context without updates (0 = never)">
+            </cmf-core-business-controls-propertyEditor>
+
+            <cmf-core-business-controls-propertyEditor
+                label="Execution Timeout (ms)"
+                [(value)]="settings.executionTimeoutMs"
+                [required]="true"
+                [min]="0"
+                valueType="Integer"
+                infoMessage="Maximum time the compiled C# code may run before it is stopped (0 = disabled)">
+            </cmf-core-business-controls-propertyEditor>
+
+            <cmf-core-business-controls-propertyEditor
+                label="Warm Pool Enabled"
+                [(value)]="settings.warmPoolEnabled"
+                valueType="Boolean"
+                infoMessage="Keep a pool of warm C# execution processes alive and reuse them across executions, instead of starting a new one for every call">
+            </cmf-core-business-controls-propertyEditor>
+
+            <cmf-core-business-controls-propertyEditor
+                label="Warm Pool Size"
+                [(value)]="settings.warmPoolSize"
+                [disabled]="!settings.warmPoolEnabled"
+                [required]="true"
+                [min]="1"
+                valueType="Integer"
+                infoMessage="Number of warm C# execution processes to keep alive when Warm Pool Enabled is on">
+            </cmf-core-business-controls-propertyEditor>
+        </cmf-core-business-controls-propertyContainer>
+    </cmf-core-controls-baseWidget>
+
+    <cmf-core-connect-iot-taskSettingsTab mainTitle="Code" [fullHeight]="true" tab-id="Code">
+        <div class="codeEditor">
+            <cmf-core-controls-codeEditor
+                [autoIndent]="true"
+                [language]="CodeEditorLanguage.CSharp"
+                [value]="_source"
+                (valueChange)="onSourceValueChange($event)"
+                (editorChange)="onEditorChange($event)">
+            </cmf-core-controls-codeEditor>
+        </div>
+    </cmf-core-connect-iot-taskSettingsTab>
+
+</cmf-core-connect-iot-taskSettings>
