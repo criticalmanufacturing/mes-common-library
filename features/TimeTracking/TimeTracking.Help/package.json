@@ -1,0 +1,46 @@
+{
+  "name": "documentation-portal",
+  "version": "12.0.0",
+  "scripts": {
+    "ng": "ng",
+    "start": "ng serve",
+    "build": "ng build",
+    "docs-shell": "node ./node_modules/cmf-docs-shell/scripts/index.js",
+    "build-db": "npm run docs-shell build-db",
+    "check-md-links": "npm run docs-shell check-md-links",
+    "watch": "ng build --watch --configuration development",
+    "extract-i18n": "ng extract-i18n --output-path ./src/assets/ --format json",
+    "serve": "cross-env NODE_OPTIONS=--max-old-space-size=8192 npm run start -- --host 0.0.0.0 --disable-host-check --port 7001"
+  },
+  "private": true,
+  "dependencies": {
+    "@angular/common": "^22.2.4",
+    "@angular/compiler": "^22.2.4",
+    "@angular/core": "^22.2.4",
+    "@angular/platform-browser": "^22.2.4",
+    "@angular/router": "^22.2.4",
+    "@angular/service-worker": "^22.2.4",
+    "cmf-core": "12.0.0",
+    "cmf-core-business-controls": "12.0.0",
+    "cmf-core-controls": "12.0.0",
+    "cmf-core-shell": "12.0.0",
+    "cmf-docs-area-designsystem": "12.0.0",
+    "cmf-docs-controls": "12.0.0",
+    "cmf-docs-shell": "12.0.0",
+    "jquery-ui": "^1.13.2",
+    "mermaid": "^11.16.1",
+    "monaco-editor": "^0.56.0",
+    "tslib": "^2.3.0",
+    "zone.js": "~0.15.1"
+  },
+  "devDependencies": {
+    "@angular-devkit/build-angular": "^22.2.5",
+    "@angular-eslint/schematics": "22.6.0",
+    "@angular/compiler-cli": "^22.2.4",
+    "@criticalmanufacturing/ngx-schematics": "12.0.0",
+    "cross-env": "^7.0.3",
+    "istanbul-lib-instrument": "^6.0.3",
+    "ng-packagr": "^22.2.5",
+    "typescript": "~6.0.3"
+  }
+}

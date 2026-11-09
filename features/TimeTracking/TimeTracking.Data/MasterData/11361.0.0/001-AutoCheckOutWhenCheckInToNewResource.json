@@ -1,0 +1,30 @@
+{
+  "<SM>EntityTypeProperty": {
+    "1": {
+      "EntityType": "Resource",
+      "Name": "IsEmployeeExclusive",
+      "Description": "Used to define if the Resource is exclusive for TimeTracking",
+      "PropertyType": "Attribute",
+      "CopyOnClone": "No",
+      "BelongsTo": "Definition",
+      "ScalarType": "Bit",
+      "ScalarSize": "",
+      "ScalarPrecision": "",
+      "ReferenceType": "None",
+      "ReferenceName": "",
+      "DefaultValue": "",
+      "IsArray": "No",
+      "IsEnabled": "Yes",
+      "IsHistoryEnable": "Yes",
+      "IsIndexed": "No",
+      "IsMandatory": "No",
+      "AccessLevel": "",
+      "ValidationRange": "",
+      "ValidationRegex": "",
+      "DataGroup": "",
+      "LoadToDWH": "Yes",
+      "LocalizedMessageKey": "",
+      "IsReportable": "Yes"
+    }
+  }
+}

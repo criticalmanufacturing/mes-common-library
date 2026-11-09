@@ -1,0 +1,43 @@
+{
+  "ref": "Help",
+  "debug": {
+    "isEnabled": true
+  },
+  "host": {
+    "rest": {
+      "enableSsl": false,
+      "address": "",
+      "port": 0,
+      "timeout": 120000
+    },
+    "tenant": {
+      "name": ""
+    },
+    "loadBalancer": {
+      "enableSsl": false,
+      "address": "",
+      "urlSuffix": "discoveryservice",
+      "port": 0,
+      "timeout": 120000
+    },
+    "useExternalAuthentication": false,
+    "isLoadBalancerEnabled": false
+  },
+  "general": {
+    "supportedCultures": [
+      "en-US",
+      "zh-CN"
+    ],
+    "supportedThemes": [
+      "cmf.style.light",
+      "cmf.style.light.accessibility"
+    ],
+    "defaultDomain": "",
+    "startup": {
+      "startupCulture": "en-US",
+      "startupTheme": "cmf.style.light"
+    },
+    "localizationFiles": ""
+  },
+  "version": "12.0.0"
+}

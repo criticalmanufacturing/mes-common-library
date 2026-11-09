@@ -1,0 +1,341 @@
+{
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "version": 1,
+  "newProjectRoot": "projects",
+  "projects": {
+    "DocumentationPortal": {
+      "projectType": "application",
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "less"
+        }
+      },
+      "root": "",
+      "sourceRoot": "src",
+      "prefix": "cmf-docs-app",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:application",
+          "options": {
+            "outputPath": {
+              "base": "dist/documentation-portal",
+              "browser": ""
+            },
+            "index": "src/index.html",
+            "browser": "src/main.ts",
+            "polyfills": [
+              "@angular/localize/init",
+              "zone.js"
+            ],
+            "tsConfig": "tsconfig.app.json",
+            "preserveSymlinks": true,
+            "inlineStyleLanguage": "less",
+            "allowedCommonJsDependencies": [
+              "core-js",
+              "backbone",
+              "dompurify",
+              "he",
+              "html2canvas",
+              "jquery",
+              "jsonata",
+              "katex",
+              "less",
+              "lodash",
+              "marked-katex",
+              "moment",
+              "moment-duration-format",
+              "prismjs",
+              "raf",
+              "rgbcolor"
+            ],
+            "assets": [
+              "src/assets",
+              "src/manifest.webmanifest",
+              {
+                "glob": "favicon.ico",
+                "input": "node_modules/cmf-core/assets/img",
+                "output": ""
+              },
+              {
+                "glob": "**/icon-*.png",
+                "input": "node_modules/cmf-core/assets/img/icons",
+                "output": "assets/icons"
+              },
+              {
+                "glob": "**/*",
+                "input": "node_modules/cmf-core/assets/img/themes",
+                "output": "assets/themes"
+              },
+              {
+                "glob": "artoolkit_wasm.wasm",
+                "input": "node_modules/cmf-artoolkit",
+                "output": "cmf-artoolkit"
+              },
+              {
+                "glob": "camera_para.dat",
+                "input": "node_modules/cmf-artoolkit",
+                "output": "cmf-artoolkit"
+              },
+              {
+                "glob": "**/*",
+                "input": "node_modules/cmf-docs-shell/assets",
+                "output": "assets/cmf-docs-shell"
+              },
+              {
+                "glob": "**/*",
+                "input": "node_modules/cmf-docs-area-designsystem/assets",
+                "output": "assets/cmf-docs-area-designsystem"
+              },
+              {
+                "glob": "**/*",
+                "input": "node_modules/cmf-docs-area-designsystem/src/lib/components",
+                "output": "assets/cmf-docs-area-designsystem/components"
+              },
+              {
+                "glob": "**/*",
+                "input": "node_modules/cmf-docs-area-designsystem/src/lib/templates",
+                "output": "assets/cmf-docs-area-designsystem/templates"
+              },
+              {
+                "glob": "**/*",
+                "input": "node_modules/cmf-docs-area-designsystem/src/lib/pages",
+                "output": "assets/cmf-docs-area-designsystem/pages"
+              },
+              {
+                "glob": "**/*",
+                "input": "projects/cmf-docs-area-cmf-custom-help/assets",
+                "output": "assets/cmf-docs-area-cmf-custom-help"
+              },
+              {
+                "glob": "**/*",
+                "input": "node_modules/cmf-core-iot/assets",
+                "output": "assets/iot"
+              },
+              {
+                "glob": "**/*.wasm",
+                "input": "node_modules/zxing-wasm/dist/reader",
+                "output": "zxing-wasm/reader"
+              },
+              {
+                "glob": "**/*.generated.schema.json",
+                "input": "node_modules/cmf-core-ui/assets/ui-page-schemas",
+                "output": "assets/generated-schemas"
+              }
+            ],
+            "styles": [
+              "src/styles.less",
+              "node_modules/toastr/toastr.less",
+              "node_modules/bootstrap/dist/css/bootstrap.css",
+              "node_modules/jquery-ui/themes/base/dialog.css",
+              "node_modules/jquery-ui/themes/base/core.css",
+              "node_modules/cmf-core/assets/style/styles.less",
+              "node_modules/katex/dist/katex.min.css",
+              "node_modules/prismjs/themes/prism.css",
+              "node_modules/cmf-docs-shell/assets/icons/icon-cp-icon-font.less",
+              "node_modules/cmf-docs-shell/assets/icons/icon-sr-font.less",
+              "node_modules/cmf-docs-shell/assets/icons/icon-tut-font.less",
+              "node_modules/cmf-docs-shell/assets/icons/icon-docs-icon-font.less",
+              "node_modules/cmf-docs-shell/assets/icons/entitytypes/icon-mes-et-font.less",
+              "node_modules/cmf-docs-shell/assets/icons/meskpi/icon-mes-kpi-font.less",
+              "node_modules/cmf-docs-shell/assets/icons/navigation/icon-mes-nav-font.less",
+              "node_modules/cmf-docs-shell/assets/icons/other/icon-other-font.less",
+              "node_modules/cmf-docs-shell/assets/icons/static/icon-mes-st-font.less",
+              "node_modules/cmf-core/assets/style/themes/cmf.style.light/cmf.style.light.less",
+              "node_modules/cmf-core/assets/style/vendor/kendo-ui.scss"
+            ],
+            "scripts": [
+              "node_modules/jquery/dist/jquery.min.js",
+              "node_modules/toastr/toastr.js",
+              "node_modules/bootstrap/js/collapse.js",
+              "node_modules/bootstrap/js/transition.js",
+              "node_modules/bootstrap/js/dropdown.js"
+            ],
+            "serviceWorker": "ngsw-config.json",
+            "loader": {
+              ".css": "empty"
+            }
+          },
+          "configurations": {
+            "production": {
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "12mb",
+                  "maximumError": "15.0mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "2kb",
+                  "maximumError": "4kb"
+                }
+              ],
+              "outputHashing": "all"
+            },
+            "development": {
+              "optimization": false,
+              "extractLicenses": false,
+              "sourceMap": {
+                "scripts": true,
+                "styles": true,
+                "vendor": true,
+                "hidden": false
+              },
+              "namedChunks": true
+            },
+            "i18n-extract": {
+              "externalDependencies": [
+                "cmf-core",
+                "cmf-core-admin-config",
+                "cmf-core-admin-dee",
+                "cmf-core-admin-entitytype",
+                "cmf-core-admin-erp",
+                "cmf-core-admin-host",
+                "cmf-core-admin-i18n",
+                "cmf-core-admin-messagebus",
+                "cmf-core-admin-queries",
+                "cmf-core-admin-shortcuts",
+                "cmf-core-admin-statemodel",
+                "cmf-core-admin-tables",
+                "cmf-core-app",
+                "cmf-core-augmentedreality",
+                "cmf-core-business-controls",
+                "cmf-core-camera",
+                "cmf-core-changeset",
+                "cmf-core-chatbot",
+                "cmf-core-checklist",
+                "cmf-core-connect-iot",
+                "cmf-core-controls",
+                "cmf-core-dashboards",
+                "cmf-core-documents",
+                "cmf-core-enterprise",
+                "cmf-core-event",
+                "cmf-core-fablive",
+                "cmf-core-folder",
+                "cmf-core-genai",
+                "cmf-core-iot",
+                "cmf-core-iotevents",
+                "cmf-core-masterdata",
+                "cmf-core-multimedia",
+                "cmf-core-notification",
+                "cmf-core-reports",
+                "cmf-core-rule",
+                "cmf-core-search",
+                "cmf-core-security",
+                "cmf-core-shell",
+                "cmf-core-site",
+                "cmf-core-ui",
+                "cmf-core-workflow"
+              ]
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "configurations": {
+            "production": {
+              "buildTarget": "DocumentationPortal:build:production"
+            },
+            "development": {
+              "buildTarget": "DocumentationPortal:build:development"
+            }
+          },
+          "defaultConfiguration": "development"
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "buildTarget": "DocumentationPortal:build"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "src/test.ts",
+            "polyfills": [
+              "zone.js",
+              "zone.js/testing"
+            ],
+            "tsConfig": "tsconfig.spec.json",
+            "inlineStyleLanguage": "less",
+            "assets": [
+              "src/favicon.ico",
+              "src/assets",
+              "src/manifest.webmanifest"
+            ],
+            "styles": [
+              "src/styles.less"
+            ],
+            "scripts": []
+          }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": [
+              "src/**/*.ts",
+              "src/**/*.html"
+            ]
+          }
+        }
+      }
+    },
+    "cmf-docs-area-cmf-custom-help": {
+      "projectType": "library",
+      "root": "projects/cmf-docs-area-cmf-custom-help",
+      "sourceRoot": "projects/cmf-docs-area-cmf-custom-help/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "project": "projects/cmf-docs-area-cmf-custom-help/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/cmf-docs-area-cmf-custom-help/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/cmf-docs-area-cmf-custom-help/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "tsConfig": "projects/cmf-docs-area-cmf-custom-help/tsconfig.spec.json",
+            "polyfills": [
+              "zone.js",
+              "zone.js/testing"
+            ]
+          }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": [
+              "projects/cmf-docs-area-cmf-custom-help/**/*.ts",
+              "projects/cmf-docs-area-cmf-custom-help/**/*.html"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "cli": {
+    "analytics": false,
+    "schematicCollections": [
+      "@criticalmanufacturing/ngx-schematics",
+      "@angular-eslint/schematics"
+    ]
+  },
+  "schematics": {
+    "@angular-eslint/schematics:application": {
+      "setParserOptionsProject": true
+    },
+    "@angular-eslint/schematics:library": {
+      "setParserOptionsProject": true
+    }
+  }
+}
