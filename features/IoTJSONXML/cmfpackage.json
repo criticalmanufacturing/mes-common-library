@@ -1,0 +1,24 @@
+{
+  "packageId": "Cmf.Community.IoTJSONXML",
+  "version": "12001.0.0",
+  "description": "This package deploys Critical Manufacturing Community Customization",
+  "packageType": "Root",
+  "isInstallable": true,
+  "isUniqueInstall": false,
+  "dependencies": [
+    {
+      "id": "Cmf.Environment",
+      "version": "12.0.0",
+      "mandatory": false
+    },
+    {
+      "id": "CriticalManufacturing.DeploymentMetadata",
+      "version": "12.0.0",
+      "mandatory": false
+    },
+    {
+      "id": "Cmf.Community.IoTJSONXML.IoT",
+      "version": "12001.0.0"
+    }
+  ]
+}
