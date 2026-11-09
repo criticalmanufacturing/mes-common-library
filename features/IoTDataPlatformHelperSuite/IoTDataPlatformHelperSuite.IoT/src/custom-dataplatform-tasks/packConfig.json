@@ -1,0 +1,25 @@
+{
+    "type": "TasksLibrary",
+    "templates": "${Source}/templates/",
+    "_UN_UNDERSCORE_NEXT_LINE_FOR_ENABLING_FONTS:": "",
+    "_font": "${Source}/font/config.json",
+    "postActions": [
+        {
+            "type": "DeleteFiles",
+            "filter": "^\\d+\\.index\\.js$",
+            "source": "${Temp}"
+        },
+        {
+            "type": "DeleteDirectory",
+            "source": "${Temp}/proto"
+        },
+        {
+            "type": "DeleteDirectory",
+            "source": "${Temp}/xds"
+        },
+        {
+            "type": "DeleteDirectory",
+            "source": "${Temp}/protoc-gen-validate"
+        }
+    ]
+}
