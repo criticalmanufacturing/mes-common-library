@@ -196,7 +196,7 @@ jobs:
     - name: Use Node.js
       uses: actions/setup-node@v4
       with:
-        node-version: '20.x'
+        node-version: '22.x'
     - name: Install @cmf/cli
       run: npm install -g @criticalmanufacturing/cli
     - name: Login cmf login
@@ -263,7 +263,7 @@ jobs:
     - name: Use Node.js
       uses: actions/setup-node@v4
       with:
-        node-version: '20.x'
+        node-version: '22.x'
     - name: Install @cmf/cli
       run: npm install -g @criticalmanufacturing/cli
     - name: Login cmf login
@@ -328,7 +328,7 @@ jobs:
     - name: Use Node.js
       uses: actions/setup-node@v4
       with:
-        node-version: '20.x'
+        node-version: '22.x'
     - name: Install build tooling
       run: npm ci
 
