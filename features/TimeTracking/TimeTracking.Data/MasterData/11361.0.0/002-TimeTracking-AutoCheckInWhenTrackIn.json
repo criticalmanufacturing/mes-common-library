@@ -1,0 +1,42 @@
+{
+    "<SM>EntityTypeProperty": {
+      "1": {
+        "EntityType": "Resource",
+        "Name": "IsToCheckInAtTrackIn",
+        "Description": "Attribute to enable Employee automatic check-in feature when Material TrackIn to Resource",
+        "PropertyType": "Attribute",
+        "CopyOnClone": "No",
+        "BelongsTo": "Definition",
+        "ScalarType": "Bit",
+        "ScalarSize": "",
+        "ScalarPrecision": "",
+        "ReferenceType": "None",
+        "ReferenceName": "",
+        "DefaultValue": "",
+        "IsArray": "No",
+        "IsEnabled": "Yes",
+        "IsHistoryEnable": "Yes",
+        "IsIndexed": "No",
+        "IsMandatory": "No",
+        "AccessLevel": "",
+        "ValidationRange": "",
+        "ValidationRegex": "",
+        "DataGroup": "",
+        "LoadToDWH": "Yes",
+        "LocalizedMessageKey": "",
+        "IsReportable": "Yes"
+      }
+    },
+    "<SM>LocalizedMessageKey": {
+        "1": {
+            "Name": "CustomNoEmployeeForUser",
+            "Description": "Error message used when trying to CheckIn a User without a valid Employee",
+            "MessageType": "Message",
+            "pt-PT": "",
+            "de-DE": "",
+            "en-US": "No valid Employee for user: '{0}'.",
+            "zh-CN": "",
+            "zh-TW": ""
+        }
+    }
+  }
